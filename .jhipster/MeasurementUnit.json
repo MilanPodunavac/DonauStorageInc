@@ -1,0 +1,24 @@
+{
+  "applications": "*",
+  "changelogDate": "20230108200223",
+  "dto": "mapstruct",
+  "embedded": false,
+  "entityTableName": "measurement_unit",
+  "fields": [
+    {
+      "fieldName": "name",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "abbreviation",
+      "fieldType": "String"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "MeasurementUnit",
+  "pagination": "no",
+  "readOnly": false,
+  "relationships": [],
+  "service": "serviceClass"
+}

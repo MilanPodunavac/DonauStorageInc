@@ -1,0 +1,26 @@
+{
+  "donauStorageIncApp": {
+    "businessYear": {
+      "home": {
+        "title": "Business Years",
+        "refreshListLabel": "Liste aktualisieren",
+        "createLabel": "Business Year erstellen",
+        "createOrEditLabel": "Business Year erstellen oder bearbeiten",
+        "notFound": "Keine Business Years gefunden"
+      },
+      "created": "Business Year erstellt mit ID {{ param }}",
+      "updated": "Business Year aktualisiert mit ID {{ param }}",
+      "deleted": "Business Year gelöscht mit ID {{ param }}",
+      "delete": {
+        "question": "Soll Business Year {{ id }} wirklich dauerhaft gelöscht werden?"
+      },
+      "detail": {
+        "title": "Business Year"
+      },
+      "id": "ID",
+      "yearCode": "Year Code",
+      "completed": "Completed",
+      "company": "Company"
+    }
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "donauStorageIncApp": {
+    "businessYear": {
+      "home": {
+        "title": "Business Years",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Kreiraj novi Business Year",
+        "createOrEditLabel": "Kreirajte ili izmenite Business Year",
+        "notFound": "No Business Years found"
+      },
+      "created": "Kreiran je novi Business Year pod nazivom {{ param }}",
+      "updated": "Business Year pod nazivom {{ param }} je ažuriran",
+      "deleted": "Business Year pod nazivom {{ param }} je obrisan",
+      "delete": {
+        "question": "Da li ste sigurni da želite da obrišete Business Year pod nazivom {{ id }}?"
+      },
+      "detail": {
+        "title": "Business Year"
+      },
+      "id": "ID",
+      "yearCode": "Year Code",
+      "completed": "Completed",
+      "company": "Company"
+    }
+  }
+}

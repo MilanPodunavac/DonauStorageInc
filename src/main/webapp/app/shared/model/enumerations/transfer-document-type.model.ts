@@ -1,0 +1,7 @@
+export enum TransferDocumentType {
+  RECEIVING = 'RECEIVING',
+
+  DISPATCHING = 'DISPATCHING',
+
+  INTERSTORAGE = 'INTERSTORAGE',
+}

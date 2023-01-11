@@ -1,0 +1,196 @@
+import React, { useState, useEffect } from 'react';
+import { Link, useNavigate, useParams } from 'react-router-dom';
+import { Button, Row, Col, FormText } from 'reactstrap';
+import { isNumber, Translate, translate, ValidatedField, ValidatedForm, ValidatedBlobField } from 'react-jhipster';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+
+import { convertDateTimeFromServer, convertDateTimeToServer, displayDefaultDateTime } from 'app/shared/util/date-utils';
+import { mapIdList } from 'app/shared/util/entity-utils';
+import { useAppDispatch, useAppSelector } from 'app/config/store';
+
+import { IContactInfo } from 'app/shared/model/contact-info.model';
+import { getEntities as getContactInfos } from 'app/entities/contact-info/contact-info.reducer';
+import { IPerson } from 'app/shared/model/person.model';
+import { Gender } from 'app/shared/model/enumerations/gender.model';
+import { getEntity, updateEntity, createEntity, reset } from './person.reducer';
+
+export const PersonUpdate = () => {
+  const dispatch = useAppDispatch();
+
+  const navigate = useNavigate();
+
+  const { id } = useParams<'id'>();
+  const isNew = id === undefined;
+
+  const contactInfos = useAppSelector(state => state.contactInfo.entities);
+  const personEntity = useAppSelector(state => state.person.entity);
+  const loading = useAppSelector(state => state.person.loading);
+  const updating = useAppSelector(state => state.person.updating);
+  const updateSuccess = useAppSelector(state => state.person.updateSuccess);
+  const genderValues = Object.keys(Gender);
+
+  const handleClose = () => {
+    navigate('/person');
+  };
+
+  useEffect(() => {
+    if (isNew) {
+      dispatch(reset());
+    } else {
+      dispatch(getEntity(id));
+    }
+
+    dispatch(getContactInfos({}));
+  }, []);
+
+  useEffect(() => {
+    if (updateSuccess) {
+      handleClose();
+    }
+  }, [updateSuccess]);
+
+  const saveEntity = values => {
+    const entity = {
+      ...personEntity,
+      ...values,
+      contactInfo: contactInfos.find(it => it.id.toString() === values.contactInfo.toString()),
+    };
+
+    if (isNew) {
+      dispatch(createEntity(entity));
+    } else {
+      dispatch(updateEntity(entity));
+    }
+  };
+
+  const defaultValues = () =>
+    isNew
+      ? {}
+      : {
+          gender: 'MALE',
+          ...personEntity,
+          contactInfo: personEntity?.contactInfo?.id,
+        };
+
+  return (
+    <div>
+      <Row className="justify-content-center">
+        <Col md="8">
+          <h2 id="donauStorageIncApp.person.home.createOrEditLabel" data-cy="PersonCreateUpdateHeading">
+            <Translate contentKey="donauStorageIncApp.person.home.createOrEditLabel">Create or edit a Person</Translate>
+          </h2>
+        </Col>
+      </Row>
+      <Row className="justify-content-center">
+        <Col md="8">
+          {loading ? (
+            <p>Loading...</p>
+          ) : (
+            <ValidatedForm defaultValues={defaultValues()} onSubmit={saveEntity}>
+              {!isNew ? (
+                <ValidatedField
+                  name="id"
+                  required
+                  readOnly
+                  id="person-id"
+                  label={translate('global.field.id')}
+                  validate={{ required: true }}
+                />
+              ) : null}
+              <ValidatedField
+                label={translate('donauStorageIncApp.person.firstName')}
+                id="person-firstName"
+                name="firstName"
+                data-cy="firstName"
+                type="text"
+                validate={{
+                  required: { value: true, message: translate('entity.validation.required') },
+                }}
+              />
+              <ValidatedField
+                label={translate('donauStorageIncApp.person.middleName')}
+                id="person-middleName"
+                name="middleName"
+                data-cy="middleName"
+                type="text"
+              />
+              <ValidatedField
+                label={translate('donauStorageIncApp.person.lastName')}
+                id="person-lastName"
+                name="lastName"
+                data-cy="lastName"
+                type="text"
+                validate={{
+                  required: { value: true, message: translate('entity.validation.required') },
+                }}
+              />
+              <ValidatedField
+                label={translate('donauStorageIncApp.person.maidenName')}
+                id="person-maidenName"
+                name="maidenName"
+                data-cy="maidenName"
+                type="text"
+              />
+              <ValidatedField
+                label={translate('donauStorageIncApp.person.gender')}
+                id="person-gender"
+                name="gender"
+                data-cy="gender"
+                type="select"
+              >
+                {genderValues.map(gender => (
+                  <option value={gender} key={gender}>
+                    {translate('donauStorageIncApp.Gender.' + gender)}
+                  </option>
+                ))}
+              </ValidatedField>
+              <ValidatedBlobField
+                label={translate('donauStorageIncApp.person.profilePicture')}
+                id="person-profilePicture"
+                name="profilePicture"
+                data-cy="profilePicture"
+                isImage
+                accept="image/*"
+              />
+              <ValidatedField
+                id="person-contactInfo"
+                name="contactInfo"
+                data-cy="contactInfo"
+                label={translate('donauStorageIncApp.person.contactInfo')}
+                type="select"
+                required
+              >
+                <option value="" key="0" />
+                {contactInfos
+                  ? contactInfos.map(otherEntity => (
+                      <option value={otherEntity.id} key={otherEntity.id}>
+                        {otherEntity.id}
+                      </option>
+                    ))
+                  : null}
+              </ValidatedField>
+              <FormText>
+                <Translate contentKey="entity.validation.required">This field is required.</Translate>
+              </FormText>
+              <Button tag={Link} id="cancel-save" data-cy="entityCreateCancelButton" to="/person" replace color="info">
+                <FontAwesomeIcon icon="arrow-left" />
+                &nbsp;
+                <span className="d-none d-md-inline">
+                  <Translate contentKey="entity.action.back">Back</Translate>
+                </span>
+              </Button>
+              &nbsp;
+              <Button color="primary" id="save-entity" data-cy="entityCreateSaveButton" type="submit" disabled={updating}>
+                <FontAwesomeIcon icon="save" />
+                &nbsp;
+                <Translate contentKey="entity.action.save">Save</Translate>
+              </Button>
+            </ValidatedForm>
+          )}
+        </Col>
+      </Row>
+    </div>
+  );
+};
+
+export default PersonUpdate;

@@ -1,0 +1,9 @@
+{
+  "donauStorageIncApp": {
+    "CensusDocumentStatus": {
+      "null": "",
+      "INCOMPLETE": "INCOMPLETE",
+      "ACCOUNTED": "ACCOUNTED"
+    }
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "donauStorageIncApp": {
+    "transferDocumentItem": {
+      "home": {
+        "title": "Transfer Document Items",
+        "refreshListLabel": "Liste aktualisieren",
+        "createLabel": "Transfer Document Item erstellen",
+        "createOrEditLabel": "Transfer Document Item erstellen oder bearbeiten",
+        "notFound": "Keine Transfer Document Items gefunden"
+      },
+      "created": "Transfer Document Item erstellt mit ID {{ param }}",
+      "updated": "Transfer Document Item aktualisiert mit ID {{ param }}",
+      "deleted": "Transfer Document Item gelöscht mit ID {{ param }}",
+      "delete": {
+        "question": "Soll Transfer Document Item {{ id }} wirklich dauerhaft gelöscht werden?"
+      },
+      "detail": {
+        "title": "Transfer Document Item"
+      },
+      "id": "ID",
+      "amount": "Amount",
+      "price": "Price",
+      "value": "Value",
+      "transferDocument": "Transfer Document",
+      "resource": "Resource",
+      "help": {
+        "value": "amount x price"
+      }
+    }
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "donauStorageIncApp": {
+    "measurementUnit": {
+      "home": {
+        "title": "Measurement Units",
+        "refreshListLabel": "Liste aktualisieren",
+        "createLabel": "Measurement Unit erstellen",
+        "createOrEditLabel": "Measurement Unit erstellen oder bearbeiten",
+        "notFound": "Keine Measurement Units gefunden"
+      },
+      "created": "Measurement Unit erstellt mit ID {{ param }}",
+      "updated": "Measurement Unit aktualisiert mit ID {{ param }}",
+      "deleted": "Measurement Unit gelöscht mit ID {{ param }}",
+      "delete": {
+        "question": "Soll Measurement Unit {{ id }} wirklich dauerhaft gelöscht werden?"
+      },
+      "detail": {
+        "title": "Measurement Unit"
+      },
+      "id": "ID",
+      "name": "Name",
+      "abbreviation": "Abbreviation"
+    }
+  }
+}

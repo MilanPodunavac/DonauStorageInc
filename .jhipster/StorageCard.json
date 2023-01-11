@@ -1,0 +1,103 @@
+{
+  "applications": "*",
+  "changelogDate": "20230108200227",
+  "dto": "mapstruct",
+  "embedded": false,
+  "entityTableName": "storage_card",
+  "fields": [
+    {
+      "fieldName": "id",
+      "fieldType": "String",
+      "javadoc": "Generated based on year, storage and resource",
+      "options": {
+        "id": true
+      }
+    },
+    {
+      "fieldName": "startingAmount",
+      "fieldType": "Float",
+      "fieldValidateRules": ["required"],
+      "javadoc": "sr: Pocetno stanje kolicinski"
+    },
+    {
+      "fieldName": "receivedAmount",
+      "fieldType": "Float",
+      "fieldValidateRules": ["required"],
+      "javadoc": "sr: Promet ulaza kolicinski"
+    },
+    {
+      "fieldName": "dispatchedAmount",
+      "fieldType": "Float",
+      "fieldValidateRules": ["required"],
+      "javadoc": "sr: Promet izlaza kolicinski"
+    },
+    {
+      "fieldName": "totalAmount",
+      "fieldType": "Float",
+      "javadoc": "[startingAmount] + [receivedAmount] - [dispatchedAmount]\\nsr: Ukupna kolicina"
+    },
+    {
+      "fieldName": "startingValue",
+      "fieldType": "Float",
+      "fieldValidateRules": ["required"],
+      "javadoc": "sr: Pocetno stanje vrednosno"
+    },
+    {
+      "fieldName": "receivedValue",
+      "fieldType": "Float",
+      "fieldValidateRules": ["required"],
+      "javadoc": "sr: Promet ulaza vrednosno"
+    },
+    {
+      "fieldName": "dispatchedValue",
+      "fieldType": "Float",
+      "fieldValidateRules": ["required"],
+      "javadoc": "sr: Promet izlaza vrednosno"
+    },
+    {
+      "fieldName": "totalValue",
+      "fieldType": "Float",
+      "javadoc": "[startingValue] + [receivedValue] - [dispatchedValue]\\nsr: Ukupna vrednost"
+    },
+    {
+      "fieldName": "price",
+      "fieldType": "Float",
+      "fieldValidateRules": ["required"]
+    }
+  ],
+  "fluentMethods": true,
+  "javadoc": "sr: Magacinska kartica",
+  "jpaMetamodelFiltering": true,
+  "name": "StorageCard",
+  "pagination": "pagination",
+  "readOnly": false,
+  "relationships": [
+    {
+      "javadoc": "Prevent deletion",
+      "otherEntityName": "storageCardTraffic",
+      "otherEntityRelationshipName": "storageCard",
+      "relationshipName": "storageCardTraffic",
+      "relationshipType": "one-to-many"
+    },
+    {
+      "otherEntityName": "businessYear",
+      "relationshipName": "businessYear",
+      "relationshipType": "many-to-one",
+      "relationshipValidateRules": "required"
+    },
+    {
+      "otherEntityName": "resource",
+      "relationshipName": "resource",
+      "relationshipType": "many-to-one",
+      "relationshipValidateRules": "required"
+    },
+    {
+      "otherEntityName": "storage",
+      "otherEntityRelationshipName": "storageCard",
+      "relationshipName": "storage",
+      "relationshipType": "many-to-one",
+      "relationshipValidateRules": "required"
+    }
+  ],
+  "service": "serviceImpl"
+}

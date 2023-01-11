@@ -1,0 +1,29 @@
+{
+  "donauStorageIncApp": {
+    "city": {
+      "home": {
+        "title": "Cities",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Kreirati City",
+        "createOrEditLabel": "Kreirati ili urediti City",
+        "notFound": "Nije nađeno Cities"
+      },
+      "created": "Kreiran je City sa identifikatorom {{ param }}",
+      "updated": "Ažuriran je City sa identifikatorom {{ param }}",
+      "deleted": "Obrisan je City sa identifikatorom {{ param }}",
+      "delete": {
+        "question": "Da li ste sigurni da želite obrisati City {{ id }}?"
+      },
+      "detail": {
+        "title": "City"
+      },
+      "id": "ID",
+      "name": "Name",
+      "postalCode": "Postal Code",
+      "country": "Country",
+      "help": {
+        "postalCode": "Base postal code of city"
+      }
+    }
+  }
+}

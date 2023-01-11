@@ -1,0 +1,45 @@
+{
+  "applications": "*",
+  "changelogDate": "20230108200218",
+  "dto": "mapstruct",
+  "embedded": false,
+  "entityTableName": "business_partner",
+  "fields": [],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "BusinessPartner",
+  "pagination": "pagination",
+  "readOnly": false,
+  "relationships": [
+    {
+      "javadoc": "Cascade delete",
+      "otherEntityName": "businessContact",
+      "ownerSide": true,
+      "relationshipName": "businessContact",
+      "relationshipType": "one-to-one",
+      "relationshipValidateRules": "required"
+    },
+    {
+      "javadoc": "Cascade delete",
+      "otherEntityName": "legalEntity",
+      "ownerSide": true,
+      "relationshipName": "legalEntityInfo",
+      "relationshipType": "one-to-one",
+      "relationshipValidateRules": "required"
+    },
+    {
+      "otherEntityName": "transferDocument",
+      "otherEntityRelationshipName": "businessPartner",
+      "relationshipName": "transferDocument",
+      "relationshipType": "one-to-many"
+    },
+    {
+      "otherEntityName": "company",
+      "otherEntityRelationshipName": "businessPartner",
+      "relationshipName": "company",
+      "relationshipType": "many-to-one",
+      "relationshipValidateRules": "required"
+    }
+  ],
+  "service": "serviceClass"
+}

@@ -1,0 +1,33 @@
+{
+  "donauStorageIncApp": {
+    "employee": {
+      "home": {
+        "title": "Employees",
+        "refreshListLabel": "Liste aktualisieren",
+        "createLabel": "Employee erstellen",
+        "createOrEditLabel": "Employee erstellen oder bearbeiten",
+        "notFound": "Keine Employees gefunden"
+      },
+      "created": "Employee erstellt mit ID {{ param }}",
+      "updated": "Employee aktualisiert mit ID {{ param }}",
+      "deleted": "Employee gelöscht mit ID {{ param }}",
+      "delete": {
+        "question": "Soll Employee {{ id }} wirklich dauerhaft gelöscht werden?"
+      },
+      "detail": {
+        "title": "Employee"
+      },
+      "id": "ID",
+      "uniqueIdentificationNumber": "Unique Identification Number",
+      "birthDate": "Birth Date",
+      "disability": "Disability",
+      "employment": "Employment",
+      "address": "Address",
+      "personalInfo": "Personal Info",
+      "company": "Company",
+      "help": {
+        "uniqueIdentificationNumber": "sr: Jedinstveni maticni broj Cityjana (JMBG)"
+      }
+    }
+  }
+}

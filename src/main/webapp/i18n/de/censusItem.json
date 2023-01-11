@@ -1,0 +1,26 @@
+{
+  "donauStorageIncApp": {
+    "censusItem": {
+      "home": {
+        "title": "Census Items",
+        "refreshListLabel": "Liste aktualisieren",
+        "createLabel": "Census Item erstellen",
+        "createOrEditLabel": "Census Item erstellen oder bearbeiten",
+        "notFound": "Keine Census Items gefunden"
+      },
+      "created": "Census Item erstellt mit ID {{ param }}",
+      "updated": "Census Item aktualisiert mit ID {{ param }}",
+      "deleted": "Census Item gelöscht mit ID {{ param }}",
+      "delete": {
+        "question": "Soll Census Item {{ id }} wirklich dauerhaft gelöscht werden?"
+      },
+      "detail": {
+        "title": "Census Item"
+      },
+      "id": "ID",
+      "amount": "Amount",
+      "censusDocument": "Census Document",
+      "resource": "Resource"
+    }
+  }
+}

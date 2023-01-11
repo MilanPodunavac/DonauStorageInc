@@ -1,0 +1,37 @@
+{
+  "donauStorageIncApp": {
+    "censusDocument": {
+      "home": {
+        "title": "Census Documents",
+        "refreshListLabel": "Liste aktualisieren",
+        "createLabel": "Census Document erstellen",
+        "createOrEditLabel": "Census Document erstellen oder bearbeiten",
+        "notFound": "Keine Census Documents gefunden"
+      },
+      "created": "Census Document erstellt mit ID {{ param }}",
+      "updated": "Census Document aktualisiert mit ID {{ param }}",
+      "deleted": "Census Document gelöscht mit ID {{ param }}",
+      "delete": {
+        "question": "Soll Census Document {{ id }} wirklich dauerhaft gelöscht werden?"
+      },
+      "detail": {
+        "title": "Census Document"
+      },
+      "id": "ID",
+      "censusDate": "Census Date",
+      "status": "Status",
+      "accountingDate": "Accounting Date",
+      "leveling": "Leveling",
+      "censusItem": "Census Item",
+      "businessYear": "Business Year",
+      "president": "President",
+      "deputy": "Deputy",
+      "censusTaker": "Census Taker",
+      "storage": "Storage",
+      "help": {
+        "censusDate": "sr: Popis",
+        "accountingDate": "sr: Knjizenje"
+      }
+    }
+  }
+}

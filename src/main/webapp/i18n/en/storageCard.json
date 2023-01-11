@@ -1,0 +1,47 @@
+{
+  "donauStorageIncApp": {
+    "storageCard": {
+      "home": {
+        "title": "Storage Cards",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Storage Card",
+        "createOrEditLabel": "Create or edit a Storage Card",
+        "notFound": "No Storage Cards found"
+      },
+      "created": "A new Storage Card is created with identifier {{ param }}",
+      "updated": "A Storage Card is updated with identifier {{ param }}",
+      "deleted": "A Storage Card is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Storage Card {{ id }}?"
+      },
+      "detail": {
+        "title": "Storage Card"
+      },
+      "id": "Id",
+      "startingAmount": "Starting Amount",
+      "receivedAmount": "Received Amount",
+      "dispatchedAmount": "Dispatched Amount",
+      "totalAmount": "Total Amount",
+      "startingValue": "Starting Value",
+      "receivedValue": "Received Value",
+      "dispatchedValue": "Dispatched Value",
+      "totalValue": "Total Value",
+      "price": "Price",
+      "storageCardTraffic": "Storage Card Traffic",
+      "businessYear": "Business Year",
+      "resource": "Resource",
+      "storage": "Storage",
+      "help": {
+        "id": "Generated based on year, storage and resource",
+        "startingAmount": "sr: Pocetno stanje kolicinski",
+        "receivedAmount": "sr: Promet ulaza kolicinski",
+        "dispatchedAmount": "sr: Promet izlaza kolicinski",
+        "totalAmount": "[startingAmount] + [receivedAmount] - [dispatchedAmount]\nsr: Ukupna kolicina",
+        "startingValue": "sr: Pocetno stanje vrednosno",
+        "receivedValue": "sr: Promet ulaza vrednosno",
+        "dispatchedValue": "sr: Promet izlaza vrednosno",
+        "totalValue": "[startingValue] + [receivedValue] - [dispatchedValue]\nsr: Ukupna vrednost"
+      }
+    }
+  }
+}

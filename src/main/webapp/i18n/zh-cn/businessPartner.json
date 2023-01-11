@@ -1,0 +1,27 @@
+{
+  "donauStorageIncApp": {
+    "businessPartner": {
+      "home": {
+        "title": "Business Partners",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "创建新 Business Partner",
+        "createOrEditLabel": "创建或编辑 Business Partner",
+        "notFound": "No Business Partners found"
+      },
+      "created": "Business Partner {{ param }} 创建成功",
+      "updated": "Business Partner {{ param }} 更新成功",
+      "deleted": "Business Partner {{ param }} 删除成功",
+      "delete": {
+        "question": "你确定要删除 Business Partner {{ id }} 吗？"
+      },
+      "detail": {
+        "title": "Business Partner"
+      },
+      "id": "ID",
+      "businessContact": "Business Contact",
+      "legalEntityInfo": "Legal Entity Info",
+      "transferDocument": "Transfer Document",
+      "company": "Company"
+    }
+  }
+}

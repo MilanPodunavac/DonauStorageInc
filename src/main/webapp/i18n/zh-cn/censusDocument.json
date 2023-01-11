@@ -1,0 +1,37 @@
+{
+  "donauStorageIncApp": {
+    "censusDocument": {
+      "home": {
+        "title": "Census Documents",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "创建新 Census Document",
+        "createOrEditLabel": "创建或编辑 Census Document",
+        "notFound": "No Census Documents found"
+      },
+      "created": "Census Document {{ param }} 创建成功",
+      "updated": "Census Document {{ param }} 更新成功",
+      "deleted": "Census Document {{ param }} 删除成功",
+      "delete": {
+        "question": "你确定要删除 Census Document {{ id }} 吗？"
+      },
+      "detail": {
+        "title": "Census Document"
+      },
+      "id": "ID",
+      "censusDate": "Census Date",
+      "status": "Status",
+      "accountingDate": "Accounting Date",
+      "leveling": "Leveling",
+      "censusItem": "Census Item",
+      "businessYear": "Business Year",
+      "president": "President",
+      "deputy": "Deputy",
+      "censusTaker": "Census Taker",
+      "storage": "Storage",
+      "help": {
+        "censusDate": "sr: Popis",
+        "accountingDate": "sr: Knjizenje"
+      }
+    }
+  }
+}

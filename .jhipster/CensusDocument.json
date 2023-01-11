@@ -1,0 +1,81 @@
+{
+  "applications": "*",
+  "changelogDate": "20230108200229",
+  "dto": "mapstruct",
+  "embedded": false,
+  "entityTableName": "census_document",
+  "fields": [
+    {
+      "fieldName": "censusDate",
+      "fieldType": "LocalDate",
+      "fieldValidateRules": ["required"],
+      "javadoc": "sr: Popis"
+    },
+    {
+      "fieldName": "status",
+      "fieldType": "CensusDocumentStatus",
+      "fieldTypeJavadoc": "sr: Status popisnog dokumenta",
+      "fieldValues": "INCOMPLETE,ACCOUNTED",
+      "fieldValuesJavadocs": {
+        "ACCOUNTED": "sr: PROKNJIZEN",
+        "INCOMPLETE": "sr: NEDOVRSEN"
+      }
+    },
+    {
+      "fieldName": "accountingDate",
+      "fieldType": "LocalDate",
+      "javadoc": "sr: Knjizenje"
+    },
+    {
+      "fieldName": "leveling",
+      "fieldType": "Boolean"
+    }
+  ],
+  "fluentMethods": true,
+  "javadoc": "sr: Popisni dokument",
+  "jpaMetamodelFiltering": true,
+  "name": "CensusDocument",
+  "pagination": "pagination",
+  "readOnly": false,
+  "relationships": [
+    {
+      "javadoc": "Cascade delete",
+      "otherEntityName": "censusItem",
+      "otherEntityRelationshipName": "censusDocument",
+      "relationshipName": "censusItem",
+      "relationshipType": "one-to-many"
+    },
+    {
+      "otherEntityName": "businessYear",
+      "relationshipName": "businessYear",
+      "relationshipType": "many-to-one",
+      "relationshipValidateRules": "required"
+    },
+    {
+      "otherEntityName": "employee",
+      "relationshipName": "president",
+      "relationshipType": "many-to-one",
+      "relationshipValidateRules": "required"
+    },
+    {
+      "otherEntityName": "employee",
+      "relationshipName": "deputy",
+      "relationshipType": "many-to-one",
+      "relationshipValidateRules": "required"
+    },
+    {
+      "otherEntityName": "employee",
+      "relationshipName": "censusTaker",
+      "relationshipType": "many-to-one",
+      "relationshipValidateRules": "required"
+    },
+    {
+      "otherEntityName": "storage",
+      "otherEntityRelationshipName": "censusDocument",
+      "relationshipName": "storage",
+      "relationshipType": "many-to-one",
+      "relationshipValidateRules": "required"
+    }
+  ],
+  "service": "serviceImpl"
+}

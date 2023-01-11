@@ -1,0 +1,55 @@
+{
+  "applications": "*",
+  "changelogDate": "20230108200222",
+  "dto": "mapstruct",
+  "embedded": false,
+  "entityTableName": "resource",
+  "fields": [
+    {
+      "fieldName": "name",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "type",
+      "fieldType": "ResourceType",
+      "fieldValidateRules": ["required"],
+      "fieldValues": "MATERIAL,PRODUCT,HALF_PRODUCT,ENERGY_SOURCE,WRITE_OFF"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": true,
+  "name": "Resource",
+  "pagination": "pagination",
+  "readOnly": false,
+  "relationships": [
+    {
+      "javadoc": "Prevent deletion",
+      "otherEntityName": "censusItem",
+      "otherEntityRelationshipName": "resource",
+      "relationshipName": "censusItem",
+      "relationshipType": "one-to-many"
+    },
+    {
+      "javadoc": "Prevent deletion",
+      "otherEntityName": "transferDocumentItem",
+      "otherEntityRelationshipName": "resource",
+      "relationshipName": "transferDocumentItem",
+      "relationshipType": "one-to-many"
+    },
+    {
+      "otherEntityName": "measurementUnit",
+      "relationshipName": "unit",
+      "relationshipType": "many-to-one",
+      "relationshipValidateRules": "required"
+    },
+    {
+      "otherEntityName": "company",
+      "otherEntityRelationshipName": "resource",
+      "relationshipName": "company",
+      "relationshipType": "many-to-one",
+      "relationshipValidateRules": "required"
+    }
+  ],
+  "service": "serviceClass"
+}

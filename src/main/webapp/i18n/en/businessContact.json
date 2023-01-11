@@ -1,0 +1,24 @@
+{
+  "donauStorageIncApp": {
+    "businessContact": {
+      "home": {
+        "title": "Business Contacts",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Business Contact",
+        "createOrEditLabel": "Create or edit a Business Contact",
+        "notFound": "No Business Contacts found"
+      },
+      "created": "A new Business Contact is created with identifier {{ param }}",
+      "updated": "A Business Contact is updated with identifier {{ param }}",
+      "deleted": "A Business Contact is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Business Contact {{ id }}?"
+      },
+      "detail": {
+        "title": "Business Contact"
+      },
+      "id": "ID",
+      "personalInfo": "Personal Info"
+    }
+  }
+}

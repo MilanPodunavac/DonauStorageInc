@@ -1,0 +1,34 @@
+{
+  "donauStorageIncApp": {
+    "storageCardTraffic": {
+      "home": {
+        "title": "Storage Card Traffics",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "创建新 Storage Card Traffic",
+        "createOrEditLabel": "创建或编辑 Storage Card Traffic",
+        "notFound": "No Storage Card Traffics found"
+      },
+      "created": "Storage Card Traffic {{ param }} 创建成功",
+      "updated": "Storage Card Traffic {{ param }} 更新成功",
+      "deleted": "Storage Card Traffic {{ param }} 删除成功",
+      "delete": {
+        "question": "你确定要删除 Storage Card Traffic {{ id }} 吗？"
+      },
+      "detail": {
+        "title": "Storage Card Traffic"
+      },
+      "id": "ID",
+      "type": "Type",
+      "direction": "Direction",
+      "amount": "Amount",
+      "price": "Price",
+      "value": "Value",
+      "document": "Document",
+      "date": "Date",
+      "storageCard": "Storage Card",
+      "help": {
+        "value": "amount x price"
+      }
+    }
+  }
+}

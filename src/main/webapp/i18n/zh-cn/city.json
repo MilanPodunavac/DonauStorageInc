@@ -1,0 +1,29 @@
+{
+  "donauStorageIncApp": {
+    "city": {
+      "home": {
+        "title": "Cities",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "创建新 City",
+        "createOrEditLabel": "创建或编辑 City",
+        "notFound": "No Cities found"
+      },
+      "created": "City {{ param }} 创建成功",
+      "updated": "City {{ param }} 更新成功",
+      "deleted": "City {{ param }} 删除成功",
+      "delete": {
+        "question": "你确定要删除 City {{ id }} 吗？"
+      },
+      "detail": {
+        "title": "City"
+      },
+      "id": "ID",
+      "name": "Name",
+      "postalCode": "Postal Code",
+      "country": "Country",
+      "help": {
+        "postalCode": "Base postal code of city"
+      }
+    }
+  }
+}

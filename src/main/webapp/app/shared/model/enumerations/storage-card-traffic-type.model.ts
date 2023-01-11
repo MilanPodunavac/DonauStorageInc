@@ -1,0 +1,11 @@
+export enum StorageCardTrafficType {
+  STARTING_BALANCE = 'STARTING_BALANCE',
+
+  TRANSFER = 'TRANSFER',
+
+  LEVELING = 'LEVELING',
+
+  CORRECTION = 'CORRECTION',
+
+  REVERSAL = 'REVERSAL',
+}

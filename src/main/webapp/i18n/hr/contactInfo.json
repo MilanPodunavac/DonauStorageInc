@@ -1,0 +1,25 @@
+{
+  "donauStorageIncApp": {
+    "contactInfo": {
+      "home": {
+        "title": "Contact Infos",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Kreirati Contact Info",
+        "createOrEditLabel": "Kreirati ili urediti Contact Info",
+        "notFound": "Nije nađeno Contact Infos"
+      },
+      "created": "Kreiran je Contact Info sa identifikatorom {{ param }}",
+      "updated": "Ažuriran je Contact Info sa identifikatorom {{ param }}",
+      "deleted": "Obrisan je Contact Info sa identifikatorom {{ param }}",
+      "delete": {
+        "question": "Da li ste sigurni da želite obrisati Contact Info {{ id }}?"
+      },
+      "detail": {
+        "title": "Contact Info"
+      },
+      "id": "ID",
+      "email": "Email",
+      "phoneNumber": "Phone Number"
+    }
+  }
+}

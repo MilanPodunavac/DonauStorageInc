@@ -1,0 +1,91 @@
+{
+  "applications": "*",
+  "changelogDate": "20230108200225",
+  "dto": "mapstruct",
+  "embedded": false,
+  "entityTableName": "transfer_document",
+  "fields": [
+    {
+      "fieldName": "type",
+      "fieldType": "TransferDocumentType",
+      "fieldTypeJavadoc": "sr: Vrsta prometnog dokumenta",
+      "fieldValidateRules": ["required"],
+      "fieldValues": "RECEIVING,DISPATCHING,INTERSTORAGE",
+      "fieldValuesJavadocs": {
+        "DISPATCHING": "sr: OTPREMNICA",
+        "INTERSTORAGE": "sr: MEDJUMAGACINSKO POSLOVANJE",
+        "RECEIVING": "sr: PRIMKA"
+      }
+    },
+    {
+      "fieldName": "transferDate",
+      "fieldType": "LocalDate",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "status",
+      "fieldType": "TransferDocumentStatus",
+      "fieldTypeJavadoc": "sr: Status prometnog dokumenta",
+      "fieldValidateRules": ["required"],
+      "fieldValues": "IN_PREPARATION,ACCOUNTED,REVERSED",
+      "fieldValuesJavadocs": {
+        "ACCOUNTED": "sr: PROKNJIZEN",
+        "IN_PREPARATION": "sr: U IZRADI",
+        "REVERSED": "sr: STORNIRAN"
+      }
+    },
+    {
+      "fieldName": "accountingDate",
+      "fieldType": "LocalDate",
+      "javadoc": "sr: Knjizenje"
+    },
+    {
+      "fieldName": "reversalDate",
+      "fieldType": "LocalDate",
+      "javadoc": "sr: Storniranje"
+    }
+  ],
+  "fluentMethods": true,
+  "javadoc": "sr: Prometni dokument",
+  "jpaMetamodelFiltering": true,
+  "name": "TransferDocument",
+  "pagination": "pagination",
+  "readOnly": false,
+  "relationships": [
+    {
+      "javadoc": "Cascade delete",
+      "otherEntityName": "transferDocumentItem",
+      "otherEntityRelationshipName": "transferDocument",
+      "relationshipName": "transferDocumentItem",
+      "relationshipType": "one-to-many"
+    },
+    {
+      "otherEntityName": "businessYear",
+      "relationshipName": "businessYear",
+      "relationshipType": "many-to-one",
+      "relationshipValidateRules": "required"
+    },
+    {
+      "javadoc": "en: Storage that receives goods (if RECEIVING or INTERSTORAGE it is NOT NULL, if DISPATCHING it is NULL)\\nsr: Magacin koji prima robu (u slucaju primke i medjumagacinskog poslovanja NOT NULL, u slucaju otpremnice NULL)",
+      "otherEntityName": "storage",
+      "otherEntityRelationshipName": "received",
+      "relationshipName": "receivingStorage",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "javadoc": "en: Storage that receives goods (if DISPATCHING or INTERSTORAGE it is NOT NULL, if RECEIVING it is NULL)\\nsr: Magacin koji otprema robu (u slucaju otpremnice i medjumagacinskog poslovanja NOT NULL, u slucaju primke NULL)",
+      "otherEntityName": "storage",
+      "otherEntityRelationshipName": "dispatched",
+      "relationshipName": "dispatchingStorage",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "javadoc": "en: Storage that receives goods (if RECEIVING or DISPATCHING it is NOT NULL, if INTERSTORAGE it is NULL)\\nsr: Poslovni partner koji prima ili otprema robu (u slucaju primke i otpremnice NOT NULL, u slucaju medjumagacinskog poslovanja NULL)",
+      "otherEntityName": "businessPartner",
+      "otherEntityRelationshipName": "transferDocument",
+      "relationshipName": "businessPartner",
+      "relationshipType": "many-to-one"
+    }
+  ],
+  "service": "serviceImpl"
+}

@@ -1,0 +1,25 @@
+{
+  "donauStorageIncApp": {
+    "contactInfo": {
+      "home": {
+        "title": "Contact Infos",
+        "refreshListLabel": "Liste aktualisieren",
+        "createLabel": "Contact Info erstellen",
+        "createOrEditLabel": "Contact Info erstellen oder bearbeiten",
+        "notFound": "Keine Contact Infos gefunden"
+      },
+      "created": "Contact Info erstellt mit ID {{ param }}",
+      "updated": "Contact Info aktualisiert mit ID {{ param }}",
+      "deleted": "Contact Info gelöscht mit ID {{ param }}",
+      "delete": {
+        "question": "Soll Contact Info {{ id }} wirklich dauerhaft gelöscht werden?"
+      },
+      "detail": {
+        "title": "Contact Info"
+      },
+      "id": "ID",
+      "email": "Email",
+      "phoneNumber": "Phone Number"
+    }
+  }
+}

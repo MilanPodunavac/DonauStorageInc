@@ -1,0 +1,10 @@
+{
+  "donauStorageIncApp": {
+    "TransferDocumentType": {
+      "null": "",
+      "RECEIVING": "RECEIVING",
+      "DISPATCHING": "DISPATCHING",
+      "INTERSTORAGE": "INTERSTORAGE"
+    }
+  }
+}

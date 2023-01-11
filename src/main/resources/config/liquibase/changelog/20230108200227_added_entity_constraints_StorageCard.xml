@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+    <!--
+        Added the constraints for entity StorageCard.
+    -->
+    <changeSet id="20230108200227-2" author="jhipster">
+
+        <addForeignKeyConstraint baseColumnNames="business_year_id"
+                                 baseTableName="storage_card"
+                                 constraintName="fk_storage_card__business_year_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="business_year"/>
+
+        <addForeignKeyConstraint baseColumnNames="resource_id"
+                                 baseTableName="storage_card"
+                                 constraintName="fk_storage_card__resource_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="resource"/>
+
+        <addForeignKeyConstraint baseColumnNames="storage_id"
+                                 baseTableName="storage_card"
+                                 constraintName="fk_storage_card__storage_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="storage"/>
+    </changeSet>
+</databaseChangeLog>

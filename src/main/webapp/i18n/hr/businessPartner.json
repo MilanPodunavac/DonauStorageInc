@@ -1,0 +1,27 @@
+{
+  "donauStorageIncApp": {
+    "businessPartner": {
+      "home": {
+        "title": "Business Partners",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Kreirati Business Partner",
+        "createOrEditLabel": "Kreirati ili urediti Business Partner",
+        "notFound": "Nije nađeno Business Partners"
+      },
+      "created": "Kreiran je Business Partner sa identifikatorom {{ param }}",
+      "updated": "Ažuriran je Business Partner sa identifikatorom {{ param }}",
+      "deleted": "Obrisan je Business Partner sa identifikatorom {{ param }}",
+      "delete": {
+        "question": "Da li ste sigurni da želite obrisati Business Partner {{ id }}?"
+      },
+      "detail": {
+        "title": "Business Partner"
+      },
+      "id": "ID",
+      "businessContact": "Business Contact",
+      "legalEntityInfo": "Legal Entity Info",
+      "transferDocument": "Transfer Document",
+      "company": "Company"
+    }
+  }
+}

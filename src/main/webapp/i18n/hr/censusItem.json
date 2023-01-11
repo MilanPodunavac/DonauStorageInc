@@ -1,0 +1,26 @@
+{
+  "donauStorageIncApp": {
+    "censusItem": {
+      "home": {
+        "title": "Census Items",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Kreirati Census Item",
+        "createOrEditLabel": "Kreirati ili urediti Census Item",
+        "notFound": "Nije nađeno Census Items"
+      },
+      "created": "Kreiran je Census Item sa identifikatorom {{ param }}",
+      "updated": "Ažuriran je Census Item sa identifikatorom {{ param }}",
+      "deleted": "Obrisan je Census Item sa identifikatorom {{ param }}",
+      "delete": {
+        "question": "Da li ste sigurni da želite obrisati Census Item {{ id }}?"
+      },
+      "detail": {
+        "title": "Census Item"
+      },
+      "id": "ID",
+      "amount": "Amount",
+      "censusDocument": "Census Document",
+      "resource": "Resource"
+    }
+  }
+}

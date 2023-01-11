@@ -1,0 +1,183 @@
+
+entity Country {
+	name String required
+}
+
+entity City {
+	name String required,
+	/** Base postal code of city */
+    postalCode String required
+}
+
+entity Address {
+	streetName String required,
+	streetCode String required pattern(/[0-9]+[a-zA-Z]?|bb|BB/),
+	/** Local postal code */
+	postalCode String required
+}
+
+entity Person {
+	firstName String required,
+    middleName String,
+	lastName String required,
+	maidenName String,
+    gender Gender required,
+	profilePicture ImageBlob
+}
+
+entity LegalEntity {
+	name String required,
+	/** sr: Poreski identifikacioni broj (PIB) */
+    taxIdentificationNumber String required pattern(/[0-9]{10}/),
+	/** sr: Maticni broj (MB) */
+    identificationNumber String required pattern(/[0-9]{8}/)
+}
+
+entity Employee {
+	/** sr: Jedinstveni maticni broj gradjana (JMBG) */
+    uniqueIdentificationNumber String required pattern(/[0-9]{13}/),
+    birthDate ZonedDateTime required,
+    disability Boolean required,
+    employment Boolean
+}
+
+entity ContactInfo {
+	email String required unique pattern (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/),
+	phoneNumber String required pattern(/((\+[0-9]{1,3})|0)[0-9]{7,10}/)
+}
+
+enum Gender {
+    MALE, FEMALE, OTHER
+}
+
+entity BusinessPartner
+
+entity BusinessContact 
+
+entity Company 
+
+entity BusinessYear {
+	yearCode String required,
+    completed Boolean required
+}
+
+entity Resource {
+	name String required,
+    type ResourceType required
+}
+
+enum ResourceType {
+	MATERIAL, PRODUCT, HALF_PRODUCT, ENERGY_SOURCE, WRITE_OFF
+}
+
+entity MeasurementUnit {
+	name String,
+    abbreviation String
+}
+
+
+relationship ManyToOne {
+	City{country required} 
+	to 
+	/** Cascade delete */
+	Country,
+
+    Address{city required} 
+	to 
+	/** Cascade delete */
+	City,
+
+	Resource{unit required} to MeasurementUnit
+}
+
+relationship OneToOne {
+	/** 
+	Email and phone number 
+	Cascade delete
+	*/ 
+	Person{contactInfo required} 
+	to 
+	/** Prevent delete */
+	ContactInfo,
+
+    /** 
+	Email and phone number 
+	Cascade delete
+	*/ 
+	LegalEntity{contactInfo required} 
+	to 
+	/** Prevent delete */
+	ContactInfo
+
+
+	/** Cascade delete */
+	Employee{address required} 
+	to 
+	/** Prevent delete */
+	Address
+
+	/** Cascade delete */
+	BusinessPartner{businessContact required} 
+	to 
+	/** Prevent delete */
+	BusinessContact
+
+
+	/** Cascade delete */
+	BusinessContact{personalInfo required} 
+	to 
+	/** Prevent delete */
+	Person,
+
+	/** Cascade delete */
+	Employee{personalInfo required} 
+	to 
+	/** Prevent delete */
+	Person
+
+
+	/** Cascade delete */
+	BusinessPartner{legalEntityInfo required} 
+	to 
+	/** Prevent delete */
+	LegalEntity,
+
+	/** Cascade delete */
+	Company{legalEntityInfo required} 
+	to 
+	/** Prevent delete */
+	LegalEntity
+}
+
+relationship OneToMany {
+	/** Cascade delete */
+	Company 
+	to 
+	Resource{company required},
+
+	/** Cascade delete */
+    Company 
+	to 
+	BusinessPartner{company required},
+    
+	/** Cascade delete */
+	Company 
+	to 
+	BusinessYear{company required},
+    
+	/** Cascade delete */
+	Company 
+	to 
+	Employee{company required}
+}
+
+paginate Country, City, Company with infinite-scroll
+paginate Employee, BusinessPartner, BusinessYear, Resource with pagination
+
+dto * with mapstruct
+
+service Employee, BusinessYear with serviceClass
+
+//search * with elasticsearch
+
+filter BusinessYear, Employee, Resource

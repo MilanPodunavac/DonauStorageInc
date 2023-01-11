@@ -1,0 +1,33 @@
+{
+  "donauStorageIncApp": {
+    "storage": {
+      "home": {
+        "title": "Storages",
+        "refreshListLabel": "Liste aktualisieren",
+        "createLabel": "Storage erstellen",
+        "createOrEditLabel": "Storage erstellen oder bearbeiten",
+        "notFound": "Keine Storages gefunden"
+      },
+      "created": "Storage erstellt mit ID {{ param }}",
+      "updated": "Storage aktualisiert mit ID {{ param }}",
+      "deleted": "Storage gelöscht mit ID {{ param }}",
+      "delete": {
+        "question": "Soll Storage {{ id }} wirklich dauerhaft gelöscht werden?"
+      },
+      "detail": {
+        "title": "Storage"
+      },
+      "id": "Id",
+      "name": "Name",
+      "address": "Address",
+      "storageCard": "Storage Card",
+      "received": "Received",
+      "dispatched": "Dispatched",
+      "censusDocument": "Census Document",
+      "company": "Company",
+      "help": {
+        "id": "AutoNumber"
+      }
+    }
+  }
+}

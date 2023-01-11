@@ -1,0 +1,11 @@
+export enum ResourceType {
+  MATERIAL = 'MATERIAL',
+
+  PRODUCT = 'PRODUCT',
+
+  HALF_PRODUCT = 'HALF_PRODUCT',
+
+  ENERGY_SOURCE = 'ENERGY_SOURCE',
+
+  WRITE_OFF = 'WRITE_OFF',
+}

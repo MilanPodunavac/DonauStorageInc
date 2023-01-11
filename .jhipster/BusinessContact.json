@@ -1,0 +1,24 @@
+{
+  "applications": "*",
+  "changelogDate": "20230108200219",
+  "dto": "mapstruct",
+  "embedded": false,
+  "entityTableName": "business_contact",
+  "fields": [],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "BusinessContact",
+  "pagination": "no",
+  "readOnly": false,
+  "relationships": [
+    {
+      "javadoc": "Cascade delete",
+      "otherEntityName": "person",
+      "ownerSide": true,
+      "relationshipName": "personalInfo",
+      "relationshipType": "one-to-one",
+      "relationshipValidateRules": "required"
+    }
+  ],
+  "service": "serviceClass"
+}

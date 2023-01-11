@@ -1,0 +1,28 @@
+{
+  "donauStorageIncApp": {
+    "company": {
+      "home": {
+        "title": "Companies",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "创建新 Company",
+        "createOrEditLabel": "创建或编辑 Company",
+        "notFound": "No Companies found"
+      },
+      "created": "Company {{ param }} 创建成功",
+      "updated": "Company {{ param }} 更新成功",
+      "deleted": "Company {{ param }} 删除成功",
+      "delete": {
+        "question": "你确定要删除 Company {{ id }} 吗？"
+      },
+      "detail": {
+        "title": "Company"
+      },
+      "id": "ID",
+      "legalEntityInfo": "Legal Entity Info",
+      "resource": "Resource",
+      "businessPartner": "Business Partner",
+      "businessYear": "Business Year",
+      "employee": "Employee"
+    }
+  }
+}

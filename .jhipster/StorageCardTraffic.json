@@ -1,0 +1,75 @@
+{
+  "applications": "*",
+  "changelogDate": "20230108200228",
+  "dto": "mapstruct",
+  "embedded": false,
+  "entityTableName": "storage_card_traffic",
+  "fields": [
+    {
+      "fieldName": "type",
+      "fieldType": "StorageCardTrafficType",
+      "fieldTypeJavadoc": "sr: Vrsta prometa magacinske kartice",
+      "fieldValidateRules": ["required"],
+      "fieldValues": "STARTING_BALANCE,TRANSFER,LEVELING,CORRECTION,REVERSAL",
+      "fieldValuesJavadocs": {
+        "CORRECTION": "sr: KOREKCIJA",
+        "LEVELING": "sr: NIVELACIJA",
+        "REVERSAL": "sr: STORNIRANJE",
+        "STARTING_BALANCE": "sr: POCETNO_STANJE",
+        "TRANSFER": "sr: PROMET"
+      }
+    },
+    {
+      "fieldName": "direction",
+      "fieldType": "StorageCardTrafficDirection",
+      "fieldTypeJavadoc": "sr: Smer prometa magacinske kartice",
+      "fieldValidateRules": ["required"],
+      "fieldValues": "IN,OUT",
+      "fieldValuesJavadocs": {
+        "IN": "sr: ULAZ",
+        "OUT": "sr: IZLAZ"
+      }
+    },
+    {
+      "fieldName": "amount",
+      "fieldType": "Float",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "price",
+      "fieldType": "Float",
+      "fieldValidateRules": ["required", "min"],
+      "fieldValidateRulesMin": "0"
+    },
+    {
+      "fieldName": "value",
+      "fieldType": "Float",
+      "fieldValidateRules": ["required"],
+      "javadoc": "amount x price"
+    },
+    {
+      "fieldName": "document",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "date",
+      "fieldType": "LocalDate"
+    }
+  ],
+  "fluentMethods": true,
+  "javadoc": "sr: Promet magacinske kartice",
+  "jpaMetamodelFiltering": false,
+  "name": "StorageCardTraffic",
+  "pagination": "infinite-scroll",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityName": "storageCard",
+      "otherEntityRelationshipName": "storageCardTraffic",
+      "relationshipName": "storageCard",
+      "relationshipType": "many-to-one",
+      "relationshipValidateRules": "required"
+    }
+  ],
+  "service": "serviceClass"
+}

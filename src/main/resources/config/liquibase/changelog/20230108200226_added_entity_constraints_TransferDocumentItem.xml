@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+    <!--
+        Added the constraints for entity TransferDocumentItem.
+    -->
+    <changeSet id="20230108200226-2" author="jhipster">
+
+        <addForeignKeyConstraint baseColumnNames="transfer_document_id"
+                                 baseTableName="transfer_document_item"
+                                 constraintName="fk_transfer_document_item__transfer_document_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="transfer_document"/>
+
+        <addForeignKeyConstraint baseColumnNames="resource_id"
+                                 baseTableName="transfer_document_item"
+                                 constraintName="fk_transfer_document_item__resource_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="resource"/>
+    </changeSet>
+</databaseChangeLog>

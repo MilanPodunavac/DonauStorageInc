@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+    <!--
+        Added the constraints for entity TransferDocument.
+    -->
+    <changeSet id="20230108200225-2" author="jhipster">
+
+        <addForeignKeyConstraint baseColumnNames="business_year_id"
+                                 baseTableName="transfer_document"
+                                 constraintName="fk_transfer_document__business_year_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="business_year"/>
+
+        <addForeignKeyConstraint baseColumnNames="receiving_storage_id"
+                                 baseTableName="transfer_document"
+                                 constraintName="fk_transfer_document__receiving_storage_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="storage"/>
+
+        <addForeignKeyConstraint baseColumnNames="dispatching_storage_id"
+                                 baseTableName="transfer_document"
+                                 constraintName="fk_transfer_document__dispatching_storage_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="storage"/>
+
+        <addForeignKeyConstraint baseColumnNames="business_partner_id"
+                                 baseTableName="transfer_document"
+                                 constraintName="fk_transfer_document__business_partner_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="business_partner"/>
+    </changeSet>
+</databaseChangeLog>

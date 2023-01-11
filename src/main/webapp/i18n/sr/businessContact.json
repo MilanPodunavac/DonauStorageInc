@@ -1,0 +1,24 @@
+{
+  "donauStorageIncApp": {
+    "businessContact": {
+      "home": {
+        "title": "Business Contacts",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Kreiraj novi Business Contact",
+        "createOrEditLabel": "Kreirajte ili izmenite Business Contact",
+        "notFound": "No Business Contacts found"
+      },
+      "created": "Kreiran je novi Business Contact pod nazivom {{ param }}",
+      "updated": "Business Contact pod nazivom {{ param }} je ažuriran",
+      "deleted": "Business Contact pod nazivom {{ param }} je obrisan",
+      "delete": {
+        "question": "Da li ste sigurni da želite da obrišete Business Contact pod nazivom {{ id }}?"
+      },
+      "detail": {
+        "title": "Business Contact"
+      },
+      "id": "ID",
+      "personalInfo": "Personal Info"
+    }
+  }
+}

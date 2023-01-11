@@ -1,0 +1,25 @@
+{
+  "donauStorageIncApp": {
+    "measurementUnit": {
+      "home": {
+        "title": "Measurement Units",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "创建新 Measurement Unit",
+        "createOrEditLabel": "创建或编辑 Measurement Unit",
+        "notFound": "No Measurement Units found"
+      },
+      "created": "Measurement Unit {{ param }} 创建成功",
+      "updated": "Measurement Unit {{ param }} 更新成功",
+      "deleted": "Measurement Unit {{ param }} 删除成功",
+      "delete": {
+        "question": "你确定要删除 Measurement Unit {{ id }} 吗？"
+      },
+      "detail": {
+        "title": "Measurement Unit"
+      },
+      "id": "ID",
+      "name": "Name",
+      "abbreviation": "Abbreviation"
+    }
+  }
+}

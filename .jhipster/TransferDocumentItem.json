@@ -1,0 +1,51 @@
+{
+  "applications": "*",
+  "changelogDate": "20230108200226",
+  "dto": "mapstruct",
+  "embedded": false,
+  "entityTableName": "transfer_document_item",
+  "fields": [
+    {
+      "fieldName": "amount",
+      "fieldType": "Float",
+      "fieldValidateRules": ["required", "min"],
+      "fieldValidateRulesMin": "0"
+    },
+    {
+      "fieldName": "price",
+      "fieldType": "Float",
+      "fieldValidateRules": ["required", "min"],
+      "fieldValidateRulesMin": "0"
+    },
+    {
+      "fieldName": "value",
+      "fieldType": "Float",
+      "fieldValidateRules": ["min"],
+      "fieldValidateRulesMin": "0",
+      "javadoc": "amount x price"
+    }
+  ],
+  "fluentMethods": true,
+  "javadoc": "sr: Stavka prometnog dokumenta",
+  "jpaMetamodelFiltering": false,
+  "name": "TransferDocumentItem",
+  "pagination": "infinite-scroll",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityName": "transferDocument",
+      "otherEntityRelationshipName": "transferDocumentItem",
+      "relationshipName": "transferDocument",
+      "relationshipType": "many-to-one",
+      "relationshipValidateRules": "required"
+    },
+    {
+      "otherEntityName": "resource",
+      "otherEntityRelationshipName": "transferDocumentItem",
+      "relationshipName": "resource",
+      "relationshipType": "many-to-one",
+      "relationshipValidateRules": "required"
+    }
+  ],
+  "service": "serviceClass"
+}

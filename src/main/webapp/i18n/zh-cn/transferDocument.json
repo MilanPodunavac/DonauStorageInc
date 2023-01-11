@@ -1,0 +1,37 @@
+{
+  "donauStorageIncApp": {
+    "transferDocument": {
+      "home": {
+        "title": "Transfer Documents",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "创建新 Transfer Document",
+        "createOrEditLabel": "创建或编辑 Transfer Document",
+        "notFound": "No Transfer Documents found"
+      },
+      "created": "Transfer Document {{ param }} 创建成功",
+      "updated": "Transfer Document {{ param }} 更新成功",
+      "deleted": "Transfer Document {{ param }} 删除成功",
+      "delete": {
+        "question": "你确定要删除 Transfer Document {{ id }} 吗？"
+      },
+      "detail": {
+        "title": "Transfer Document"
+      },
+      "id": "ID",
+      "type": "Type",
+      "transferDate": "Transfer Date",
+      "status": "Status",
+      "accountingDate": "Accounting Date",
+      "reversalDate": "Reversal Date",
+      "transferDocumentItem": "Transfer Document Item",
+      "businessYear": "Business Year",
+      "receivingStorage": "Receiving Storage",
+      "dispatchingStorage": "Dispatching Storage",
+      "businessPartner": "Business Partner",
+      "help": {
+        "accountingDate": "sr: Knjizenje",
+        "reversalDate": "sr: Storniranje"
+      }
+    }
+  }
+}

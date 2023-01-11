@@ -1,0 +1,257 @@
+/** sr: Magacin */
+entity Storage {
+    /** AutoNumber */
+    @id id Long,
+	name String
+}
+
+/** sr: Prometni dokument */
+entity TransferDocument {
+	type TransferDocumentType required,
+    transferDate LocalDate required,
+    status TransferDocumentStatus required,
+    /** sr: Knjizenje */
+    accountingDate LocalDate,
+    /** sr: Storniranje */
+    reversalDate LocalDate
+}
+
+/** sr: Vrsta prometnog dokumenta */
+enum TransferDocumentType {
+	/** sr: PRIMKA */
+    RECEIVING, 
+    /** sr: OTPREMNICA */
+    DISPATCHING,
+    /** sr: MEDJUMAGACINSKO POSLOVANJE */
+    INTERSTORAGE
+}
+
+/** sr: Status prometnog dokumenta */
+enum TransferDocumentStatus {
+    /** sr: U IZRADI */
+	IN_PREPARATION, 
+    /** sr: PROKNJIZEN */
+    ACCOUNTED, 
+    /** sr: STORNIRAN */
+    REVERSED
+}
+
+/** sr: Stavka prometnog dokumenta */
+entity TransferDocumentItem {
+	amount Float required min(0),
+    price Float required min(0),
+    /** amount x price */
+    value Float min(0)
+}
+
+/** sr: Magacinska kartica */
+entity StorageCard {
+    /** Generated based on year, storage and resource */
+	@Id id String,
+    /** sr: Pocetno stanje kolicinski */
+    startingAmount Float required,
+    /** sr: Promet ulaza kolicinski */
+    receivedAmount Float required,
+    /** sr: Promet izlaza kolicinski */
+    dispatchedAmount Float required,
+    /** 
+    [startingAmount] + [receivedAmount] - [dispatchedAmount] 
+    sr: Ukupna kolicina 
+    */
+    totalAmount Float,
+    /** sr: Pocetno stanje vrednosno */
+    startingValue Float required,
+    /** sr: Promet ulaza vrednosno */
+    receivedValue Float required,
+    /** sr: Promet izlaza vrednosno */
+    dispatchedValue Float required,
+    /** 
+    [startingValue] + [receivedValue] - [dispatchedValue] 
+    sr: Ukupna vrednost 
+    */
+    totalValue Float,
+    price Float required
+}
+
+/** sr: Promet magacinske kartice */
+entity StorageCardTraffic {
+	type StorageCardTrafficType required,
+    direction StorageCardTrafficDirection required,
+    amount Float required,
+    price Float required min(0),
+    /** amount x price */
+    value Float required,
+    document String,
+    date LocalDate
+}
+
+/** sr: Vrsta prometa magacinske kartice */
+enum StorageCardTrafficType {
+	/** sr: POCETNO_STANJE */
+    STARTING_BALANCE, 
+    /** sr: PROMET */
+    TRANSFER, 
+    /** sr: NIVELACIJA */
+    LEVELING, 
+    /** sr: KOREKCIJA */
+    CORRECTION, 
+    /** sr: STORNIRANJE */
+    REVERSAL
+}
+
+/** sr: Smer prometa magacinske kartice */
+enum StorageCardTrafficDirection {
+    /** sr: ULAZ */
+	IN, 
+    /** sr: IZLAZ */
+    OUT
+}
+
+/** sr: Popisni dokument */
+entity CensusDocument {
+    /** sr: Popis */
+    censusDate LocalDate required,
+    status CensusDocumentStatus,
+    /** sr: Knjizenje */
+    accountingDate LocalDate,
+    leveling Boolean
+}
+
+/** sr: Status popisnog dokumenta */
+enum CensusDocumentStatus {
+	/** sr: NEDOVRSEN */
+    INCOMPLETE, 
+    /** sr: PROKNJIZEN */
+    ACCOUNTED
+}
+
+/** sr: Stavka popisa */
+entity CensusItem {
+	amount Float required min(0)
+}
+
+
+relationship OneToMany {
+    /** Prevent deletion */
+	Storage 
+    to 
+    StorageCard{storage required},
+
+    Storage{received} 
+    to
+    /** 
+    en: Storage that receives goods (if RECEIVING or INTERSTORAGE it is NOT NULL, if DISPATCHING it is NULL) 
+    sr: Magacin koji prima robu (u slucaju primke i medjumagacinskog poslovanja NOT NULL, u slucaju otpremnice NULL) 
+    */
+    TransferDocument{receivingStorage},
+
+    Storage{dispatched} 
+    to 
+    /** 
+    en: Storage that receives goods (if DISPATCHING or INTERSTORAGE it is NOT NULL, if RECEIVING it is NULL) 
+    sr: Magacin koji otprema robu (u slucaju otpremnice i medjumagacinskog poslovanja NOT NULL, u slucaju primke NULL) 
+    */
+    TransferDocument{dispatchingStorage},
+
+    BusinessPartner 
+    to
+    /** 
+    en: Storage that receives goods (if RECEIVING or DISPATCHING it is NOT NULL, if INTERSTORAGE it is NULL) 
+    sr: Poslovni partner koji prima ili otprema robu (u slucaju primke i otpremnice NOT NULL, u slucaju medjumagacinskog poslovanja NULL) 
+    */
+    TransferDocument{businessPartner},
+
+    Storage 
+    to 
+    CensusDocument{storage required}
+
+
+    /** Prevent deletion */
+    StorageCard 
+    to 
+    StorageCardTraffic{storageCard required}
+
+    /** Cascade delete */
+    TransferDocument 
+    to 
+    TransferDocumentItem{transferDocument required}
+
+    /** Cascade delete */
+    CensusDocument 
+    to 
+    CensusItem{censusDocument required}
+
+
+    /** Prevent deletion */
+    Resource 
+    to 
+    CensusItem{resource required}
+
+    /** Prevent deletion */
+    Resource 
+    to 
+    TransferDocumentItem{resource required}
+}
+
+
+relationship ManyToOne {
+	CensusDocument{businessYear required} 
+    to 
+    /** Prevent deletion */
+    BusinessYear,
+
+    CensusDocument{president required} 
+    to 
+    Employee,
+
+    CensusDocument{deputy required} 
+    to 
+    Employee,
+
+    CensusDocument{censusTaker required} 
+    to 
+    Employee
+
+
+    StorageCard{businessYear required} 
+    to 
+    /** Prevent deletion */
+    BusinessYear,
+
+    StorageCard{resource required} 
+    to 
+    /** Prevent deletion */
+    Resource
+
+
+    Storage{company required} 
+    to 
+    /** Prevent deletion */
+    Company
+
+
+    TransferDocument{businessYear required} 
+    to 
+    /** Prevent deletion */
+    BusinessYear
+}
+
+relationship OneToOne {
+    /** Cascade delete */
+	Storage{address required} 
+    to 
+    /** Prevent deletion */
+    Address
+}
+
+paginate StorageCardTraffic, CensusItem, TransferDocumentItem with infinite-scroll
+paginate Storage, StorageCard, TransferDocument, CensusDocument with pagination
+
+dto * with mapstruct
+
+service StorageCard, TransferDocument, CensusDocument with serviceImpl
+service Storage, StorageCardTraffic, CensusItem, TransferDocumentItem with serviceClass
+
+//search * with elasticsearch
+
+filter Storage, StorageCard, TransferDocument, CensusDocument

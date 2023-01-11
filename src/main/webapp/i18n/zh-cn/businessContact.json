@@ -1,0 +1,24 @@
+{
+  "donauStorageIncApp": {
+    "businessContact": {
+      "home": {
+        "title": "Business Contacts",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "创建新 Business Contact",
+        "createOrEditLabel": "创建或编辑 Business Contact",
+        "notFound": "No Business Contacts found"
+      },
+      "created": "Business Contact {{ param }} 创建成功",
+      "updated": "Business Contact {{ param }} 更新成功",
+      "deleted": "Business Contact {{ param }} 删除成功",
+      "delete": {
+        "question": "你确定要删除 Business Contact {{ id }} 吗？"
+      },
+      "detail": {
+        "title": "Business Contact"
+      },
+      "id": "ID",
+      "personalInfo": "Personal Info"
+    }
+  }
+}

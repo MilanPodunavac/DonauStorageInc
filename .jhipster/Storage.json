@@ -1,0 +1,69 @@
+{
+  "applications": "*",
+  "changelogDate": "20230108200224",
+  "dto": "mapstruct",
+  "embedded": false,
+  "entityTableName": "storage",
+  "fields": [
+    {
+      "fieldName": "id",
+      "fieldType": "Long",
+      "javadoc": "AutoNumber",
+      "options": {
+        "id": true
+      }
+    },
+    {
+      "fieldName": "name",
+      "fieldType": "String"
+    }
+  ],
+  "fluentMethods": true,
+  "javadoc": "sr: Magacin",
+  "jpaMetamodelFiltering": true,
+  "name": "Storage",
+  "pagination": "pagination",
+  "readOnly": false,
+  "relationships": [
+    {
+      "javadoc": "Cascade delete",
+      "otherEntityName": "address",
+      "ownerSide": true,
+      "relationshipName": "address",
+      "relationshipType": "one-to-one",
+      "relationshipValidateRules": "required"
+    },
+    {
+      "javadoc": "Prevent deletion",
+      "otherEntityName": "storageCard",
+      "otherEntityRelationshipName": "storage",
+      "relationshipName": "storageCard",
+      "relationshipType": "one-to-many"
+    },
+    {
+      "otherEntityName": "transferDocument",
+      "otherEntityRelationshipName": "receivingStorage",
+      "relationshipName": "received",
+      "relationshipType": "one-to-many"
+    },
+    {
+      "otherEntityName": "transferDocument",
+      "otherEntityRelationshipName": "dispatchingStorage",
+      "relationshipName": "dispatched",
+      "relationshipType": "one-to-many"
+    },
+    {
+      "otherEntityName": "censusDocument",
+      "otherEntityRelationshipName": "storage",
+      "relationshipName": "censusDocument",
+      "relationshipType": "one-to-many"
+    },
+    {
+      "otherEntityName": "company",
+      "relationshipName": "company",
+      "relationshipType": "many-to-one",
+      "relationshipValidateRules": "required"
+    }
+  ],
+  "service": "serviceClass"
+}

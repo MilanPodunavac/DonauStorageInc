@@ -1,0 +1,34 @@
+{
+  "donauStorageIncApp": {
+    "storageCardTraffic": {
+      "home": {
+        "title": "Storage Card Traffics",
+        "refreshListLabel": "Liste aktualisieren",
+        "createLabel": "Storage Card Traffic erstellen",
+        "createOrEditLabel": "Storage Card Traffic erstellen oder bearbeiten",
+        "notFound": "Keine Storage Card Traffics gefunden"
+      },
+      "created": "Storage Card Traffic erstellt mit ID {{ param }}",
+      "updated": "Storage Card Traffic aktualisiert mit ID {{ param }}",
+      "deleted": "Storage Card Traffic gelöscht mit ID {{ param }}",
+      "delete": {
+        "question": "Soll Storage Card Traffic {{ id }} wirklich dauerhaft gelöscht werden?"
+      },
+      "detail": {
+        "title": "Storage Card Traffic"
+      },
+      "id": "ID",
+      "type": "Type",
+      "direction": "Direction",
+      "amount": "Amount",
+      "price": "Price",
+      "value": "Value",
+      "document": "Document",
+      "date": "Date",
+      "storageCard": "Storage Card",
+      "help": {
+        "value": "amount x price"
+      }
+    }
+  }
+}

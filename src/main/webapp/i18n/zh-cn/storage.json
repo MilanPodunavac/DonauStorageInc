@@ -1,0 +1,33 @@
+{
+  "donauStorageIncApp": {
+    "storage": {
+      "home": {
+        "title": "Storages",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "创建新 Storage",
+        "createOrEditLabel": "创建或编辑 Storage",
+        "notFound": "No Storages found"
+      },
+      "created": "Storage {{ param }} 创建成功",
+      "updated": "Storage {{ param }} 更新成功",
+      "deleted": "Storage {{ param }} 删除成功",
+      "delete": {
+        "question": "你确定要删除 Storage {{ id }} 吗？"
+      },
+      "detail": {
+        "title": "Storage"
+      },
+      "id": "Id",
+      "name": "Name",
+      "address": "Address",
+      "storageCard": "Storage Card",
+      "received": "Received",
+      "dispatched": "Dispatched",
+      "censusDocument": "Census Document",
+      "company": "Company",
+      "help": {
+        "id": "AutoNumber"
+      }
+    }
+  }
+}

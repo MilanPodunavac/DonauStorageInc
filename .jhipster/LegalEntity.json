@@ -1,0 +1,44 @@
+{
+  "applications": "*",
+  "changelogDate": "20230108200215",
+  "dto": "mapstruct",
+  "embedded": false,
+  "entityTableName": "legal_entity",
+  "fields": [
+    {
+      "fieldName": "name",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "taxIdentificationNumber",
+      "fieldType": "String",
+      "fieldValidateRules": ["required", "pattern"],
+      "fieldValidateRulesPattern": "[0-9]{10}",
+      "javadoc": "sr: Poreski identifikacioni broj (PIB)"
+    },
+    {
+      "fieldName": "identificationNumber",
+      "fieldType": "String",
+      "fieldValidateRules": ["required", "pattern"],
+      "fieldValidateRulesPattern": "[0-9]{8}",
+      "javadoc": "sr: Maticni broj (MB)"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "LegalEntity",
+  "pagination": "no",
+  "readOnly": false,
+  "relationships": [
+    {
+      "javadoc": "Email and phone number\\nCascade delete",
+      "otherEntityName": "contactInfo",
+      "ownerSide": true,
+      "relationshipName": "contactInfo",
+      "relationshipType": "one-to-one",
+      "relationshipValidateRules": "required"
+    }
+  ],
+  "service": "serviceClass"
+}

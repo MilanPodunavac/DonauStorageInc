@@ -1,0 +1,29 @@
+{
+  "donauStorageIncApp": {
+    "resource": {
+      "home": {
+        "title": "Resources",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Kreirati Resource",
+        "createOrEditLabel": "Kreirati ili urediti Resource",
+        "notFound": "Nije nađeno Resources"
+      },
+      "created": "Kreiran je Resource sa identifikatorom {{ param }}",
+      "updated": "Ažuriran je Resource sa identifikatorom {{ param }}",
+      "deleted": "Obrisan je Resource sa identifikatorom {{ param }}",
+      "delete": {
+        "question": "Da li ste sigurni da želite obrisati Resource {{ id }}?"
+      },
+      "detail": {
+        "title": "Resource"
+      },
+      "id": "ID",
+      "name": "Name",
+      "type": "Type",
+      "censusItem": "Census Item",
+      "transferDocumentItem": "Transfer Document Item",
+      "unit": "Unit",
+      "company": "Company"
+    }
+  }
+}

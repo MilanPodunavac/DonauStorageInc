@@ -1,0 +1,31 @@
+{
+  "donauStorageIncApp": {
+    "legalEntity": {
+      "home": {
+        "title": "Legal Entities",
+        "refreshListLabel": "Liste aktualisieren",
+        "createLabel": "Legal Entity erstellen",
+        "createOrEditLabel": "Legal Entity erstellen oder bearbeiten",
+        "notFound": "Keine Legal Entities gefunden"
+      },
+      "created": "Legal Entity erstellt mit ID {{ param }}",
+      "updated": "Legal Entity aktualisiert mit ID {{ param }}",
+      "deleted": "Legal Entity gelöscht mit ID {{ param }}",
+      "delete": {
+        "question": "Soll Legal Entity {{ id }} wirklich dauerhaft gelöscht werden?"
+      },
+      "detail": {
+        "title": "Legal Entity"
+      },
+      "id": "ID",
+      "name": "Name",
+      "taxIdentificationNumber": "Tax Identification Number",
+      "identificationNumber": "Identification Number",
+      "contactInfo": "Contact Info",
+      "help": {
+        "taxIdentificationNumber": "sr: Poreski identifikacioni broj (PIB)",
+        "identificationNumber": "sr: Maticni broj (MB)"
+      }
+    }
+  }
+}

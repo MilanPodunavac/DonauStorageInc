@@ -1,0 +1,25 @@
+{
+  "donauStorageIncApp": {
+    "measurementUnit": {
+      "home": {
+        "title": "Measurement Units",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Kreiraj novi Measurement Unit",
+        "createOrEditLabel": "Kreirajte ili izmenite Measurement Unit",
+        "notFound": "No Measurement Units found"
+      },
+      "created": "Kreiran je novi Measurement Unit pod nazivom {{ param }}",
+      "updated": "Measurement Unit pod nazivom {{ param }} je ažuriran",
+      "deleted": "Measurement Unit pod nazivom {{ param }} je obrisan",
+      "delete": {
+        "question": "Da li ste sigurni da želite da obrišete Measurement Unit pod nazivom {{ id }}?"
+      },
+      "detail": {
+        "title": "Measurement Unit"
+      },
+      "id": "ID",
+      "name": "Name",
+      "abbreviation": "Abbreviation"
+    }
+  }
+}

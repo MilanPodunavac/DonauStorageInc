@@ -1,0 +1,31 @@
+{
+  "donauStorageIncApp": {
+    "transferDocumentItem": {
+      "home": {
+        "title": "Transfer Document Items",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Kreirati Transfer Document Item",
+        "createOrEditLabel": "Kreirati ili urediti Transfer Document Item",
+        "notFound": "Nije nađeno Transfer Document Items"
+      },
+      "created": "Kreiran je Transfer Document Item sa identifikatorom {{ param }}",
+      "updated": "Ažuriran je Transfer Document Item sa identifikatorom {{ param }}",
+      "deleted": "Obrisan je Transfer Document Item sa identifikatorom {{ param }}",
+      "delete": {
+        "question": "Da li ste sigurni da želite obrisati Transfer Document Item {{ id }}?"
+      },
+      "detail": {
+        "title": "Transfer Document Item"
+      },
+      "id": "ID",
+      "amount": "Amount",
+      "price": "Price",
+      "value": "Value",
+      "transferDocument": "Transfer Document",
+      "resource": "Resource",
+      "help": {
+        "value": "amount x price"
+      }
+    }
+  }
+}

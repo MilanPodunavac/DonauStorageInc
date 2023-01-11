@@ -1,0 +1,31 @@
+{
+  "donauStorageIncApp": {
+    "transferDocumentItem": {
+      "home": {
+        "title": "Transfer Document Items",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "创建新 Transfer Document Item",
+        "createOrEditLabel": "创建或编辑 Transfer Document Item",
+        "notFound": "No Transfer Document Items found"
+      },
+      "created": "Transfer Document Item {{ param }} 创建成功",
+      "updated": "Transfer Document Item {{ param }} 更新成功",
+      "deleted": "Transfer Document Item {{ param }} 删除成功",
+      "delete": {
+        "question": "你确定要删除 Transfer Document Item {{ id }} 吗？"
+      },
+      "detail": {
+        "title": "Transfer Document Item"
+      },
+      "id": "ID",
+      "amount": "Amount",
+      "price": "Price",
+      "value": "Value",
+      "transferDocument": "Transfer Document",
+      "resource": "Resource",
+      "help": {
+        "value": "amount x price"
+      }
+    }
+  }
+}

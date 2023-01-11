@@ -1,0 +1,38 @@
+{
+  "applications": "*",
+  "changelogDate": "20230108200230",
+  "dto": "mapstruct",
+  "embedded": false,
+  "entityTableName": "census_item",
+  "fields": [
+    {
+      "fieldName": "amount",
+      "fieldType": "Float",
+      "fieldValidateRules": ["required", "min"],
+      "fieldValidateRulesMin": "0"
+    }
+  ],
+  "fluentMethods": true,
+  "javadoc": "sr: Stavka popisa",
+  "jpaMetamodelFiltering": false,
+  "name": "CensusItem",
+  "pagination": "infinite-scroll",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityName": "censusDocument",
+      "otherEntityRelationshipName": "censusItem",
+      "relationshipName": "censusDocument",
+      "relationshipType": "many-to-one",
+      "relationshipValidateRules": "required"
+    },
+    {
+      "otherEntityName": "resource",
+      "otherEntityRelationshipName": "censusItem",
+      "relationshipName": "resource",
+      "relationshipType": "many-to-one",
+      "relationshipValidateRules": "required"
+    }
+  ],
+  "service": "serviceClass"
+}
