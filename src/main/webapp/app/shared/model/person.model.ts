@@ -8,8 +8,6 @@ export interface IPerson {
   lastName?: string;
   maidenName?: string | null;
   gender?: Gender;
-  profilePictureContentType?: string | null;
-  profilePicture?: string | null;
   contactInfo?: IContactInfo;
 }
 

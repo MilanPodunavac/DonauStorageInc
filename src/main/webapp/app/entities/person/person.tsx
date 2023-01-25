@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { Button, Table } from 'reactstrap';
-import { openFile, byteSize, Translate } from 'react-jhipster';
+import { Translate } from 'react-jhipster';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { APP_DATE_FORMAT, APP_LOCAL_DATE_FORMAT } from 'app/config/constants';
@@ -67,9 +67,6 @@ export const Person = () => {
                   <Translate contentKey="donauStorageIncApp.person.gender">Gender</Translate>
                 </th>
                 <th>
-                  <Translate contentKey="donauStorageIncApp.person.profilePicture">Profile Picture</Translate>
-                </th>
-                <th>
                   <Translate contentKey="donauStorageIncApp.person.contactInfo">Contact Info</Translate>
                 </th>
                 <th />
@@ -89,24 +86,6 @@ export const Person = () => {
                   <td>{person.maidenName}</td>
                   <td>
                     <Translate contentKey={`donauStorageIncApp.Gender.${person.gender}`} />
-                  </td>
-                  <td>
-                    {person.profilePicture ? (
-                      <div>
-                        {person.profilePictureContentType ? (
-                          <a onClick={openFile(person.profilePictureContentType, person.profilePicture)}>
-                            <img
-                              src={`data:${person.profilePictureContentType};base64,${person.profilePicture}`}
-                              style={{ maxHeight: '30px' }}
-                            />
-                            &nbsp;
-                          </a>
-                        ) : null}
-                        <span>
-                          {person.profilePictureContentType}, {byteSize(person.profilePicture)}
-                        </span>
-                      </div>
-                    ) : null}
                   </td>
                   <td>{person.contactInfo ? <Link to={`/contact-info/${person.contactInfo.id}`}>{person.contactInfo.id}</Link> : ''}</td>
                   <td className="text-end">

@@ -9,7 +9,7 @@
       "fieldName": "email",
       "fieldType": "String",
       "fieldValidateRules": ["required", "unique", "pattern"],
-      "fieldValidateRulesPattern": "^\\w+([\\.-]?\\w+)*@\\w+([\\.-]?\\w+)*(\\.\\w{2,3})+$"
+      "fieldValidateRulesPattern": "^[^@\\s]+@[^@\\s]+\\.[^@\\s]+$"
     },
     {
       "fieldName": "phoneNumber",

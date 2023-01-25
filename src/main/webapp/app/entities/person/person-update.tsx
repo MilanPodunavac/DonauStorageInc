@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { Button, Row, Col, FormText } from 'reactstrap';
-import { isNumber, Translate, translate, ValidatedField, ValidatedForm, ValidatedBlobField } from 'react-jhipster';
+import { isNumber, Translate, translate, ValidatedField, ValidatedForm } from 'react-jhipster';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { convertDateTimeFromServer, convertDateTimeToServer, displayDefaultDateTime } from 'app/shared/util/date-utils';
@@ -144,14 +144,6 @@ export const PersonUpdate = () => {
                   </option>
                 ))}
               </ValidatedField>
-              <ValidatedBlobField
-                label={translate('donauStorageIncApp.person.profilePicture')}
-                id="person-profilePicture"
-                name="profilePicture"
-                data-cy="profilePicture"
-                isImage
-                accept="image/*"
-              />
               <ValidatedField
                 id="person-contactInfo"
                 name="contactInfo"

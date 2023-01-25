@@ -31,11 +31,11 @@ import org.springframework.transaction.annotation.Transactional;
 @WithMockUser
 class ContactInfoResourceIT {
 
-    private static final String DEFAULT_EMAIL = "PyrM3I@QI.ZQ.Tn6.eDF.1Q.kk";
-    private static final String UPDATED_EMAIL = "smse@D7C.UvTb3zMNegZc.eVJ.4li.xM.T4E.FRK.7K";
+    private static final String DEFAULT_EMAIL = "`G<\\uV@7.U%j?p";
+    private static final String UPDATED_EMAIL = "Yf5yv@N.GrbL";
 
-    private static final String DEFAULT_PHONE_NUMBER = "01713133";
-    private static final String UPDATED_PHONE_NUMBER = "060482208";
+    private static final String DEFAULT_PHONE_NUMBER = "+523003494";
+    private static final String UPDATED_PHONE_NUMBER = "05273047092";
 
     private static final String ENTITY_API_URL = "/api/contact-infos";
     private static final String ENTITY_API_URL_ID = ENTITY_API_URL + "/{id}";

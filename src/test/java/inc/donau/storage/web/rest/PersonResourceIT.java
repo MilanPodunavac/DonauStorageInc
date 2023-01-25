@@ -24,7 +24,6 @@ import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.Base64Utils;
 
 /**
  * Integration tests for the {@link PersonResource} REST controller.
@@ -48,11 +47,6 @@ class PersonResourceIT {
 
     private static final Gender DEFAULT_GENDER = Gender.MALE;
     private static final Gender UPDATED_GENDER = Gender.FEMALE;
-
-    private static final byte[] DEFAULT_PROFILE_PICTURE = TestUtil.createByteArray(1, "0");
-    private static final byte[] UPDATED_PROFILE_PICTURE = TestUtil.createByteArray(1, "1");
-    private static final String DEFAULT_PROFILE_PICTURE_CONTENT_TYPE = "image/jpg";
-    private static final String UPDATED_PROFILE_PICTURE_CONTENT_TYPE = "image/png";
 
     private static final String ENTITY_API_URL = "/api/people";
     private static final String ENTITY_API_URL_ID = ENTITY_API_URL + "/{id}";
@@ -86,9 +80,7 @@ class PersonResourceIT {
             .middleName(DEFAULT_MIDDLE_NAME)
             .lastName(DEFAULT_LAST_NAME)
             .maidenName(DEFAULT_MAIDEN_NAME)
-            .gender(DEFAULT_GENDER)
-            .profilePicture(DEFAULT_PROFILE_PICTURE)
-            .profilePictureContentType(DEFAULT_PROFILE_PICTURE_CONTENT_TYPE);
+            .gender(DEFAULT_GENDER);
         // Add required entity
         ContactInfo contactInfo;
         if (TestUtil.findAll(em, ContactInfo.class).isEmpty()) {
@@ -114,9 +106,7 @@ class PersonResourceIT {
             .middleName(UPDATED_MIDDLE_NAME)
             .lastName(UPDATED_LAST_NAME)
             .maidenName(UPDATED_MAIDEN_NAME)
-            .gender(UPDATED_GENDER)
-            .profilePicture(UPDATED_PROFILE_PICTURE)
-            .profilePictureContentType(UPDATED_PROFILE_PICTURE_CONTENT_TYPE);
+            .gender(UPDATED_GENDER);
         // Add required entity
         ContactInfo contactInfo;
         if (TestUtil.findAll(em, ContactInfo.class).isEmpty()) {
@@ -154,8 +144,6 @@ class PersonResourceIT {
         assertThat(testPerson.getLastName()).isEqualTo(DEFAULT_LAST_NAME);
         assertThat(testPerson.getMaidenName()).isEqualTo(DEFAULT_MAIDEN_NAME);
         assertThat(testPerson.getGender()).isEqualTo(DEFAULT_GENDER);
-        assertThat(testPerson.getProfilePicture()).isEqualTo(DEFAULT_PROFILE_PICTURE);
-        assertThat(testPerson.getProfilePictureContentType()).isEqualTo(DEFAULT_PROFILE_PICTURE_CONTENT_TYPE);
     }
 
     @Test
@@ -247,9 +235,7 @@ class PersonResourceIT {
             .andExpect(jsonPath("$.[*].middleName").value(hasItem(DEFAULT_MIDDLE_NAME)))
             .andExpect(jsonPath("$.[*].lastName").value(hasItem(DEFAULT_LAST_NAME)))
             .andExpect(jsonPath("$.[*].maidenName").value(hasItem(DEFAULT_MAIDEN_NAME)))
-            .andExpect(jsonPath("$.[*].gender").value(hasItem(DEFAULT_GENDER.toString())))
-            .andExpect(jsonPath("$.[*].profilePictureContentType").value(hasItem(DEFAULT_PROFILE_PICTURE_CONTENT_TYPE)))
-            .andExpect(jsonPath("$.[*].profilePicture").value(hasItem(Base64Utils.encodeToString(DEFAULT_PROFILE_PICTURE))));
+            .andExpect(jsonPath("$.[*].gender").value(hasItem(DEFAULT_GENDER.toString())));
     }
 
     @Test
@@ -268,9 +254,7 @@ class PersonResourceIT {
             .andExpect(jsonPath("$.middleName").value(DEFAULT_MIDDLE_NAME))
             .andExpect(jsonPath("$.lastName").value(DEFAULT_LAST_NAME))
             .andExpect(jsonPath("$.maidenName").value(DEFAULT_MAIDEN_NAME))
-            .andExpect(jsonPath("$.gender").value(DEFAULT_GENDER.toString()))
-            .andExpect(jsonPath("$.profilePictureContentType").value(DEFAULT_PROFILE_PICTURE_CONTENT_TYPE))
-            .andExpect(jsonPath("$.profilePicture").value(Base64Utils.encodeToString(DEFAULT_PROFILE_PICTURE)));
+            .andExpect(jsonPath("$.gender").value(DEFAULT_GENDER.toString()));
     }
 
     @Test
@@ -297,9 +281,7 @@ class PersonResourceIT {
             .middleName(UPDATED_MIDDLE_NAME)
             .lastName(UPDATED_LAST_NAME)
             .maidenName(UPDATED_MAIDEN_NAME)
-            .gender(UPDATED_GENDER)
-            .profilePicture(UPDATED_PROFILE_PICTURE)
-            .profilePictureContentType(UPDATED_PROFILE_PICTURE_CONTENT_TYPE);
+            .gender(UPDATED_GENDER);
         PersonDTO personDTO = personMapper.toDto(updatedPerson);
 
         restPersonMockMvc
@@ -319,8 +301,6 @@ class PersonResourceIT {
         assertThat(testPerson.getLastName()).isEqualTo(UPDATED_LAST_NAME);
         assertThat(testPerson.getMaidenName()).isEqualTo(UPDATED_MAIDEN_NAME);
         assertThat(testPerson.getGender()).isEqualTo(UPDATED_GENDER);
-        assertThat(testPerson.getProfilePicture()).isEqualTo(UPDATED_PROFILE_PICTURE);
-        assertThat(testPerson.getProfilePictureContentType()).isEqualTo(UPDATED_PROFILE_PICTURE_CONTENT_TYPE);
     }
 
     @Test
@@ -419,8 +399,6 @@ class PersonResourceIT {
         assertThat(testPerson.getLastName()).isEqualTo(UPDATED_LAST_NAME);
         assertThat(testPerson.getMaidenName()).isEqualTo(DEFAULT_MAIDEN_NAME);
         assertThat(testPerson.getGender()).isEqualTo(DEFAULT_GENDER);
-        assertThat(testPerson.getProfilePicture()).isEqualTo(DEFAULT_PROFILE_PICTURE);
-        assertThat(testPerson.getProfilePictureContentType()).isEqualTo(DEFAULT_PROFILE_PICTURE_CONTENT_TYPE);
     }
 
     @Test
@@ -440,9 +418,7 @@ class PersonResourceIT {
             .middleName(UPDATED_MIDDLE_NAME)
             .lastName(UPDATED_LAST_NAME)
             .maidenName(UPDATED_MAIDEN_NAME)
-            .gender(UPDATED_GENDER)
-            .profilePicture(UPDATED_PROFILE_PICTURE)
-            .profilePictureContentType(UPDATED_PROFILE_PICTURE_CONTENT_TYPE);
+            .gender(UPDATED_GENDER);
 
         restPersonMockMvc
             .perform(
@@ -461,8 +437,6 @@ class PersonResourceIT {
         assertThat(testPerson.getLastName()).isEqualTo(UPDATED_LAST_NAME);
         assertThat(testPerson.getMaidenName()).isEqualTo(UPDATED_MAIDEN_NAME);
         assertThat(testPerson.getGender()).isEqualTo(UPDATED_GENDER);
-        assertThat(testPerson.getProfilePicture()).isEqualTo(UPDATED_PROFILE_PICTURE);
-        assertThat(testPerson.getProfilePictureContentType()).isEqualTo(UPDATED_PROFILE_PICTURE_CONTENT_TYPE);
     }
 
     @Test

@@ -28,11 +28,6 @@
       "fieldType": "Gender",
       "fieldValidateRules": ["required"],
       "fieldValues": "MALE,FEMALE,OTHER"
-    },
-    {
-      "fieldName": "profilePicture",
-      "fieldType": "byte[]",
-      "fieldTypeBlobContent": "image"
     }
   ],
   "fluentMethods": true,

@@ -35,8 +35,8 @@ class CityResourceIT {
     private static final String DEFAULT_NAME = "AAAAAAAAAA";
     private static final String UPDATED_NAME = "BBBBBBBBBB";
 
-    private static final String DEFAULT_POSTAL_CODE = "AAAAAAAAAA";
-    private static final String UPDATED_POSTAL_CODE = "BBBBBBBBBB";
+    private static final String DEFAULT_POSTAL_CODE = "5028";
+    private static final String UPDATED_POSTAL_CODE = "19356";
 
     private static final String ENTITY_API_URL = "/api/cities";
     private static final String ENTITY_API_URL_ID = ENTITY_API_URL + "/{id}";
@@ -325,8 +325,6 @@ class CityResourceIT {
         City partialUpdatedCity = new City();
         partialUpdatedCity.setId(city.getId());
 
-        partialUpdatedCity.postalCode(UPDATED_POSTAL_CODE);
-
         restCityMockMvc
             .perform(
                 patch(ENTITY_API_URL_ID, partialUpdatedCity.getId())
@@ -340,7 +338,7 @@ class CityResourceIT {
         assertThat(cityList).hasSize(databaseSizeBeforeUpdate);
         City testCity = cityList.get(cityList.size() - 1);
         assertThat(testCity.getName()).isEqualTo(DEFAULT_NAME);
-        assertThat(testCity.getPostalCode()).isEqualTo(UPDATED_POSTAL_CODE);
+        assertThat(testCity.getPostalCode()).isEqualTo(DEFAULT_POSTAL_CODE);
     }
 
     @Test

@@ -20,6 +20,7 @@ public class CityDTO implements Serializable {
      * Base postal code of city
      */
     @NotNull
+    @Pattern(regexp = "[0-9]{4,5}")
     @Schema(description = "Base postal code of city", required = true)
     private String postalCode;
 

@@ -38,8 +38,8 @@ class AddressResourceIT {
     private static final String DEFAULT_STREET_CODE = "959175";
     private static final String UPDATED_STREET_CODE = "BBBBBBBBBB";
 
-    private static final String DEFAULT_POSTAL_CODE = "AAAAAAAAAA";
-    private static final String UPDATED_POSTAL_CODE = "BBBBBBBBBB";
+    private static final String DEFAULT_POSTAL_CODE = "8014";
+    private static final String UPDATED_POSTAL_CODE = "3297";
 
     private static final String ENTITY_API_URL = "/api/addresses";
     private static final String ENTITY_API_URL_ID = ENTITY_API_URL + "/{id}";

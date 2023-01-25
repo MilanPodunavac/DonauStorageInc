@@ -19,7 +19,8 @@
     {
       "fieldName": "postalCode",
       "fieldType": "String",
-      "fieldValidateRules": ["required"],
+      "fieldValidateRules": ["required", "pattern"],
+      "fieldValidateRulesPattern": "[0-9]{4,5}",
       "javadoc": "Local postal code"
     }
   ],

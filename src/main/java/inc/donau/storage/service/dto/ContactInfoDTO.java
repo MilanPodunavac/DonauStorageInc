@@ -13,7 +13,7 @@ public class ContactInfoDTO implements Serializable {
     private Long id;
 
     @NotNull
-    @Pattern(regexp = "^\\w+([\\.-]?\\w+)*@\\w+([\\.-]?\\w+)*(\\.\\w{2,3})+$")
+    @Pattern(regexp = "^[^@\\s]+@[^@\\s]+\\.[^@\\s]+$")
     private String email;
 
     @NotNull

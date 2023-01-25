@@ -6,14 +6,14 @@ entity Country {
 entity City {
 	name String required,
 	/** Base postal code of city */
-    postalCode String required
+    postalCode String required pattern(/[0-9]{4,5}/)
 }
 
 entity Address {
 	streetName String required,
 	streetCode String required pattern(/[0-9]+[a-zA-Z]?|bb|BB/),
 	/** Local postal code */
-	postalCode String required
+	postalCode String required pattern(/[0-9]{4,5}/)
 }
 
 entity Person {
@@ -21,8 +21,7 @@ entity Person {
     middleName String,
 	lastName String required,
 	maidenName String,
-    gender Gender required,
-	profilePicture ImageBlob
+    gender Gender required
 }
 
 entity LegalEntity {
@@ -38,11 +37,12 @@ entity Employee {
     uniqueIdentificationNumber String required pattern(/[0-9]{13}/),
     birthDate ZonedDateTime required,
     disability Boolean required,
-    employment Boolean
+    employment Boolean,
+	// profilePicture ImageBlob
 }
 
 entity ContactInfo {
-	email String required unique pattern (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/),
+	email String required unique pattern (/^[^@\s]+@[^@\s]+\.[^@\s]+$/),
 	phoneNumber String required pattern(/((\+[0-9]{1,3})|0)[0-9]{7,10}/)
 }
 

@@ -15,11 +15,11 @@ public class EmployeeDTO implements Serializable {
     private Long id;
 
     /**
-     * sr: Jedinstveni maticni broj Cityjana (JMBG)
+     * sr: Jedinstveni maticni broj gradjana (JMBG)
      */
     @NotNull
     @Pattern(regexp = "[0-9]{13}")
-    @Schema(description = "sr: Jedinstveni maticni broj Cityjana (JMBG)", required = true)
+    @Schema(description = "sr: Jedinstveni maticni broj gradjana (JMBG)", required = true)
     private String uniqueIdentificationNumber;
 
     @NotNull

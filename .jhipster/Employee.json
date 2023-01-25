@@ -10,7 +10,7 @@
       "fieldType": "String",
       "fieldValidateRules": ["required", "pattern"],
       "fieldValidateRulesPattern": "[0-9]{13}",
-      "javadoc": "sr: Jedinstveni maticni broj Cityjana (JMBG)"
+      "javadoc": "sr: Jedinstveni maticni broj gradjana (JMBG)"
     },
     {
       "fieldName": "birthDate",

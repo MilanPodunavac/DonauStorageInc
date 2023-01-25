@@ -4,7 +4,6 @@ import inc.donau.storage.domain.enumeration.Gender;
 import io.swagger.v3.oas.annotations.media.Schema;
 import java.io.Serializable;
 import java.util.Objects;
-import javax.persistence.Lob;
 import javax.validation.constraints.*;
 
 /**
@@ -28,10 +27,6 @@ public class PersonDTO implements Serializable {
     @NotNull
     private Gender gender;
 
-    @Lob
-    private byte[] profilePicture;
-
-    private String profilePictureContentType;
     private ContactInfoDTO contactInfo;
 
     public Long getId() {
@@ -82,22 +77,6 @@ public class PersonDTO implements Serializable {
         this.gender = gender;
     }
 
-    public byte[] getProfilePicture() {
-        return profilePicture;
-    }
-
-    public void setProfilePicture(byte[] profilePicture) {
-        this.profilePicture = profilePicture;
-    }
-
-    public String getProfilePictureContentType() {
-        return profilePictureContentType;
-    }
-
-    public void setProfilePictureContentType(String profilePictureContentType) {
-        this.profilePictureContentType = profilePictureContentType;
-    }
-
     public ContactInfoDTO getContactInfo() {
         return contactInfo;
     }
@@ -137,7 +116,6 @@ public class PersonDTO implements Serializable {
             ", lastName='" + getLastName() + "'" +
             ", maidenName='" + getMaidenName() + "'" +
             ", gender='" + getGender() + "'" +
-            ", profilePicture='" + getProfilePicture() + "'" +
             ", contactInfo=" + getContactInfo() +
             "}";
     }

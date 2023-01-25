@@ -96,8 +96,8 @@ export const ContactInfoUpdate = () => {
                 validate={{
                   required: { value: true, message: translate('entity.validation.required') },
                   pattern: {
-                    value: /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/,
-                    message: translate('entity.validation.pattern', { pattern: '^\\w+([\\.-]?\\w+)*@\\w+([\\.-]?\\w+)*(\\.\\w{2,3})+$' }),
+                    value: /^[^@\s]+@[^@\s]+\.[^@\s]+$/,
+                    message: translate('entity.validation.pattern', { pattern: '^[^@\\s]+@[^@\\s]+\\.[^@\\s]+$' }),
                   },
                 }}
               />

@@ -24,6 +24,7 @@ public class AddressDTO implements Serializable {
      * Local postal code
      */
     @NotNull
+    @Pattern(regexp = "[0-9]{4,5}")
     @Schema(description = "Local postal code", required = true)
     private String postalCode;
 

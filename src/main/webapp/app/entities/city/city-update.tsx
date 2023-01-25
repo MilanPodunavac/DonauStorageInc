@@ -110,6 +110,7 @@ export const CityUpdate = () => {
                 type="text"
                 validate={{
                   required: { value: true, message: translate('entity.validation.required') },
+                  pattern: { value: /[0-9]{4,5}/, message: translate('entity.validation.pattern', { pattern: '[0-9]{4,5}' }) },
                 }}
               />
               <UncontrolledTooltip target="postalCodeLabel">

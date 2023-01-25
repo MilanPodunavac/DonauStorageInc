@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { Button, Row, Col } from 'reactstrap';
-import { Translate, openFile, byteSize } from 'react-jhipster';
+import { Translate } from 'react-jhipster';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { APP_DATE_FORMAT, APP_LOCAL_DATE_FORMAT } from 'app/config/constants';
@@ -62,28 +62,6 @@ export const PersonDetail = () => {
             </span>
           </dt>
           <dd>{personEntity.gender}</dd>
-          <dt>
-            <span id="profilePicture">
-              <Translate contentKey="donauStorageIncApp.person.profilePicture">Profile Picture</Translate>
-            </span>
-          </dt>
-          <dd>
-            {personEntity.profilePicture ? (
-              <div>
-                {personEntity.profilePictureContentType ? (
-                  <a onClick={openFile(personEntity.profilePictureContentType, personEntity.profilePicture)}>
-                    <img
-                      src={`data:${personEntity.profilePictureContentType};base64,${personEntity.profilePicture}`}
-                      style={{ maxHeight: '30px' }}
-                    />
-                  </a>
-                ) : null}
-                <span>
-                  {personEntity.profilePictureContentType}, {byteSize(personEntity.profilePicture)}
-                </span>
-              </div>
-            ) : null}
-          </dd>
           <dt>
             <Translate contentKey="donauStorageIncApp.person.contactInfo">Contact Info</Translate>
           </dt>

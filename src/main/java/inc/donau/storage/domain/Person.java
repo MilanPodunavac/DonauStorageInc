@@ -43,13 +43,6 @@ public class Person implements Serializable {
     @Column(name = "gender", nullable = false)
     private Gender gender;
 
-    @Lob
-    @Column(name = "profile_picture")
-    private byte[] profilePicture;
-
-    @Column(name = "profile_picture_content_type")
-    private String profilePictureContentType;
-
     /**
      * Email and phone number\nCascade delete
      */
@@ -138,32 +131,6 @@ public class Person implements Serializable {
         this.gender = gender;
     }
 
-    public byte[] getProfilePicture() {
-        return this.profilePicture;
-    }
-
-    public Person profilePicture(byte[] profilePicture) {
-        this.setProfilePicture(profilePicture);
-        return this;
-    }
-
-    public void setProfilePicture(byte[] profilePicture) {
-        this.profilePicture = profilePicture;
-    }
-
-    public String getProfilePictureContentType() {
-        return this.profilePictureContentType;
-    }
-
-    public Person profilePictureContentType(String profilePictureContentType) {
-        this.profilePictureContentType = profilePictureContentType;
-        return this;
-    }
-
-    public void setProfilePictureContentType(String profilePictureContentType) {
-        this.profilePictureContentType = profilePictureContentType;
-    }
-
     public ContactInfo getContactInfo() {
         return this.contactInfo;
     }
@@ -206,8 +173,6 @@ public class Person implements Serializable {
             ", lastName='" + getLastName() + "'" +
             ", maidenName='" + getMaidenName() + "'" +
             ", gender='" + getGender() + "'" +
-            ", profilePicture='" + getProfilePicture() + "'" +
-            ", profilePictureContentType='" + getProfilePictureContentType() + "'" +
             "}";
     }
 }

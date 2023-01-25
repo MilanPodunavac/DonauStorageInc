@@ -14,7 +14,7 @@
             <column name="id" type="bigint">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
-            <column name="unique_identification_number" type="varchar(255)" remarks="sr: Jedinstveni maticni broj Cityjana (JMBG)">
+            <column name="unique_identification_number" type="varchar(255)" remarks="sr: Jedinstveni maticni broj gradjana (JMBG)">
                 <constraints nullable="false" />
             </column>
             <column name="birth_date" type="${datetimeType}">

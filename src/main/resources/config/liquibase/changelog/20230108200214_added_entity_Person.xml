@@ -29,12 +29,6 @@
             <column name="gender" type="varchar(255)">
                 <constraints nullable="false" />
             </column>
-            <column name="profile_picture" type="${blobType}">
-                <constraints nullable="true" />
-            </column>
-            <column name="profile_picture_content_type" type="varchar(255)">
-                <constraints nullable="true" />
-            </column>
             <column name="contact_info_id" type="bigint">
                 <constraints nullable="false" unique="true" uniqueConstraintName="ux_person__contact_info_id" />
             </column>
@@ -64,8 +58,6 @@
             <column name="last_name" type="string"/>
             <column name="maiden_name" type="string"/>
             <column name="gender" type="string"/>
-            <column name="profile_picture" type="blob"/>
-            <column name="profile_picture_content_type" type="string"/>
             <column name="contact_info_id" type="numeric"/>
             <!-- jhipster-needle-liquibase-add-loadcolumn - JHipster (and/or extensions) can add load columns here -->
         </loadData>
