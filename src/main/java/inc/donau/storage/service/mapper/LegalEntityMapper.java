@@ -17,5 +17,7 @@ public interface LegalEntityMapper extends EntityMapper<LegalEntityDTO, LegalEnt
     @Named("contactInfoId")
     @BeanMapping(ignoreByDefault = true)
     @Mapping(target = "id", source = "id")
+    @Mapping(target = "email", source = "email")
+    @Mapping(target = "phoneNumber", source = "phoneNumber")
     ContactInfoDTO toDtoContactInfoId(ContactInfo contactInfo);
 }

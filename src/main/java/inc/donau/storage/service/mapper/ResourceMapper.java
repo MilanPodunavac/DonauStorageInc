@@ -20,10 +20,13 @@ public interface ResourceMapper extends EntityMapper<ResourceDTO, Resource> {
     @Named("measurementUnitId")
     @BeanMapping(ignoreByDefault = true)
     @Mapping(target = "id", source = "id")
+    @Mapping(target = "name", source = "name")
+    @Mapping(target = "abbreviation", source = "abbreviation")
     MeasurementUnitDTO toDtoMeasurementUnitId(MeasurementUnit measurementUnit);
 
     @Named("companyId")
     @BeanMapping(ignoreByDefault = true)
     @Mapping(target = "id", source = "id")
+    @Mapping(target = "legalEntityInfo", source = "legalEntityInfo")
     CompanyDTO toDtoCompanyId(Company company);
 }

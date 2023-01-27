@@ -17,5 +17,8 @@ public interface AddressMapper extends EntityMapper<AddressDTO, Address> {
     @Named("cityId")
     @BeanMapping(ignoreByDefault = true)
     @Mapping(target = "id", source = "id")
+    @Mapping(target = "name", source = "name")
+    @Mapping(target = "postalCode", source = "postalCode")
+    @Mapping(target = "country", source = "country")
     CityDTO toDtoCityId(City city);
 }

@@ -23,15 +23,26 @@ public interface EmployeeMapper extends EntityMapper<EmployeeDTO, Employee> {
     @Named("addressId")
     @BeanMapping(ignoreByDefault = true)
     @Mapping(target = "id", source = "id")
+    @Mapping(target = "streetName", source = "streetName")
+    @Mapping(target = "streetCode", source = "streetCode")
+    @Mapping(target = "postalCode", source = "postalCode")
+    @Mapping(target = "city", source = "city")
     AddressDTO toDtoAddressId(Address address);
 
     @Named("personId")
     @BeanMapping(ignoreByDefault = true)
     @Mapping(target = "id", source = "id")
+    @Mapping(target = "firstName", source = "firstName")
+    @Mapping(target = "middleName", source = "middleName")
+    @Mapping(target = "lastName", source = "lastName")
+    @Mapping(target = "maidenName", source = "maidenName")
+    @Mapping(target = "gender", source = "gender")
+    @Mapping(target = "contactInfo", source = "contactInfo")
     PersonDTO toDtoPersonId(Person person);
 
     @Named("companyId")
     @BeanMapping(ignoreByDefault = true)
     @Mapping(target = "id", source = "id")
+    @Mapping(target = "legalEntityInfo", source = "legalEntityInfo")
     CompanyDTO toDtoCompanyId(Company company);
 }

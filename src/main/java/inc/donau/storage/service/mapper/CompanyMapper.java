@@ -17,5 +17,9 @@ public interface CompanyMapper extends EntityMapper<CompanyDTO, Company> {
     @Named("legalEntityId")
     @BeanMapping(ignoreByDefault = true)
     @Mapping(target = "id", source = "id")
+    @Mapping(target = "name", source = "name")
+    @Mapping(target = "taxIdentificationNumber", source = "taxIdentificationNumber")
+    @Mapping(target = "identificationNumber", source = "identificationNumber")
+    @Mapping(target = "contactInfo", source = "contactInfo")
     LegalEntityDTO toDtoLegalEntityId(LegalEntity legalEntity);
 }

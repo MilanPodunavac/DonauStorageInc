@@ -23,15 +23,23 @@ public interface StorageCardMapper extends EntityMapper<StorageCardDTO, StorageC
     @Named("businessYearId")
     @BeanMapping(ignoreByDefault = true)
     @Mapping(target = "id", source = "id")
+    @Mapping(target = "yearCode", source = "yearCode")
+    @Mapping(target = "completed", source = "completed")
+    @Mapping(target = "company", source = "company")
     BusinessYearDTO toDtoBusinessYearId(BusinessYear businessYear);
 
     @Named("resourceId")
     @BeanMapping(ignoreByDefault = true)
     @Mapping(target = "id", source = "id")
+    @Mapping(target = "name", source = "name")
+    @Mapping(target = "type", source = "type")
+    @Mapping(target = "unit", source = "unit")
     ResourceDTO toDtoResourceId(Resource resource);
 
     @Named("storageId")
     @BeanMapping(ignoreByDefault = true)
     @Mapping(target = "id", source = "id")
+    @Mapping(target = "name", source = "name")
+    @Mapping(target = "address", source = "address")
     StorageDTO toDtoStorageId(Storage storage);
 }

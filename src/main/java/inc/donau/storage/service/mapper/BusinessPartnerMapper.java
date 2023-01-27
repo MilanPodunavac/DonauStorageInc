@@ -23,15 +23,21 @@ public interface BusinessPartnerMapper extends EntityMapper<BusinessPartnerDTO, 
     @Named("businessContactId")
     @BeanMapping(ignoreByDefault = true)
     @Mapping(target = "id", source = "id")
+    @Mapping(target = "personalInfo", source = "personalInfo")
     BusinessContactDTO toDtoBusinessContactId(BusinessContact businessContact);
 
     @Named("legalEntityId")
     @BeanMapping(ignoreByDefault = true)
     @Mapping(target = "id", source = "id")
+    @Mapping(target = "name", source = "name")
+    @Mapping(target = "taxIdentificationNumber", source = "taxIdentificationNumber")
+    @Mapping(target = "identificationNumber", source = "identificationNumber")
+    @Mapping(target = "contactInfo", source = "contactInfo")
     LegalEntityDTO toDtoLegalEntityId(LegalEntity legalEntity);
 
     @Named("companyId")
     @BeanMapping(ignoreByDefault = true)
     @Mapping(target = "id", source = "id")
+    @Mapping(target = "legalEntityInfo", source = "legalEntityInfo")
     CompanyDTO toDtoCompanyId(Company company);
 }

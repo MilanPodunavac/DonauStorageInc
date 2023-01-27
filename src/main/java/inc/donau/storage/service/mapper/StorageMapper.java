@@ -20,10 +20,15 @@ public interface StorageMapper extends EntityMapper<StorageDTO, Storage> {
     @Named("addressId")
     @BeanMapping(ignoreByDefault = true)
     @Mapping(target = "id", source = "id")
+    @Mapping(target = "streetName", source = "streetName")
+    @Mapping(target = "streetCode", source = "streetCode")
+    @Mapping(target = "postalCode", source = "postalCode")
+    @Mapping(target = "city", source = "city")
     AddressDTO toDtoAddressId(Address address);
 
     @Named("companyId")
     @BeanMapping(ignoreByDefault = true)
     @Mapping(target = "id", source = "id")
+    @Mapping(target = "legalEntityInfo", source = "legalEntityInfo")
     CompanyDTO toDtoCompanyId(Company company);
 }

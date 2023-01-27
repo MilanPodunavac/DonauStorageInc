@@ -1,5 +1,6 @@
 package inc.donau.storage.domain;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import inc.donau.storage.domain.enumeration.Gender;
 import java.io.Serializable;
 import javax.persistence.*;

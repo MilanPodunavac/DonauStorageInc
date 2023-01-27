@@ -25,15 +25,26 @@ public interface CensusDocumentMapper extends EntityMapper<CensusDocumentDTO, Ce
     @Named("businessYearId")
     @BeanMapping(ignoreByDefault = true)
     @Mapping(target = "id", source = "id")
+    @Mapping(target = "yearCode", source = "yearCode")
+    @Mapping(target = "completed", source = "completed")
+    @Mapping(target = "company", source = "company")
     BusinessYearDTO toDtoBusinessYearId(BusinessYear businessYear);
 
     @Named("employeeId")
     @BeanMapping(ignoreByDefault = true)
     @Mapping(target = "id", source = "id")
+    @Mapping(target = "uniqueIdentificationNumber", source = "uniqueIdentificationNumber")
+    @Mapping(target = "birthDate", source = "birthDate")
+    @Mapping(target = "disability", source = "disability")
+    @Mapping(target = "employment", source = "employment")
+    @Mapping(target = "address", source = "address")
+    @Mapping(target = "personalInfo", source = "personalInfo")
     EmployeeDTO toDtoEmployeeId(Employee employee);
 
     @Named("storageId")
     @BeanMapping(ignoreByDefault = true)
     @Mapping(target = "id", source = "id")
+    @Mapping(target = "name", source = "name")
+    @Mapping(target = "address", source = "address")
     StorageDTO toDtoStorageId(Storage storage);
 }

@@ -17,5 +17,6 @@ public interface BusinessYearMapper extends EntityMapper<BusinessYearDTO, Busine
     @Named("companyId")
     @BeanMapping(ignoreByDefault = true)
     @Mapping(target = "id", source = "id")
+    @Mapping(target = "legalEntityInfo", source = "legalEntityInfo")
     CompanyDTO toDtoCompanyId(Company company);
 }
