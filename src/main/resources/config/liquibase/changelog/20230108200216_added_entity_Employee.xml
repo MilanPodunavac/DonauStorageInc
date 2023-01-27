@@ -15,7 +15,7 @@
                 <constraints primaryKey="true" nullable="false"/>
             </column>
             <column name="unique_identification_number" type="varchar(255)" remarks="sr: Jedinstveni maticni broj gradjana (JMBG)">
-                <constraints nullable="false" />
+                <constraints nullable="false" unique="true" uniqueConstraintName="ux_employee__unique_identification_number" />
             </column>
             <column name="birth_date" type="${datetimeType}">
                 <constraints nullable="false" />

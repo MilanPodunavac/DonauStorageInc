@@ -26,7 +26,7 @@
             <column name="price" type="${floatType}">
                 <constraints nullable="false" />
             </column>
-            <column name="value" type="${floatType}" remarks="amount x price">
+            <column name="traffic_value" type="${floatType}" remarks="amount x price">
                 <constraints nullable="false" />
             </column>
             <column name="document" type="varchar(255)">
@@ -63,7 +63,7 @@
             <column name="direction" type="string"/>
             <column name="amount" type="numeric"/>
             <column name="price" type="numeric"/>
-            <column name="value" type="numeric"/>
+            <column name="traffic_value" type="numeric"/>
             <column name="document" type="string"/>
             <column name="date" type="date"/>
             <column name="storage_card_id" type="string"/>

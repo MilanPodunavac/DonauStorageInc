@@ -20,11 +20,11 @@
       "id": "ID",
       "amount": "Amount",
       "price": "Price",
-      "value": "Value",
+      "transferValue": "Transfer Value",
       "transferDocument": "Transfer Document",
       "resource": "Resource",
       "help": {
-        "value": "amount x price"
+        "transferValue": "amount x price"
       }
     }
   }

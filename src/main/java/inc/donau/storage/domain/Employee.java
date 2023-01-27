@@ -30,7 +30,7 @@ public class Employee implements Serializable {
      */
     @NotNull
     @Pattern(regexp = "[0-9]{13}")
-    @Column(name = "unique_identification_number", nullable = false)
+    @Column(name = "unique_identification_number", nullable = false, unique = true)
     private String uniqueIdentificationNumber;
 
     @NotNull

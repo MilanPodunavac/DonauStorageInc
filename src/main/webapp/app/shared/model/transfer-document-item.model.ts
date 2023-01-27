@@ -5,7 +5,7 @@ export interface ITransferDocumentItem {
   id?: number;
   amount?: number;
   price?: number;
-  value?: number | null;
+  transferValue?: number | null;
   transferDocument?: ITransferDocument;
   resource?: IResource;
 }

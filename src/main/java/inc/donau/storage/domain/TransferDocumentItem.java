@@ -38,8 +38,8 @@ public class TransferDocumentItem implements Serializable {
      * amount x price
      */
     @DecimalMin(value = "0")
-    @Column(name = "value")
-    private Float value;
+    @Column(name = "transfer_value")
+    private Float transferValue;
 
     @ManyToOne(optional = false)
     @NotNull
@@ -95,17 +95,17 @@ public class TransferDocumentItem implements Serializable {
         this.price = price;
     }
 
-    public Float getValue() {
-        return this.value;
+    public Float getTransferValue() {
+        return this.transferValue;
     }
 
-    public TransferDocumentItem value(Float value) {
-        this.setValue(value);
+    public TransferDocumentItem transferValue(Float transferValue) {
+        this.setTransferValue(transferValue);
         return this;
     }
 
-    public void setValue(Float value) {
-        this.value = value;
+    public void setTransferValue(Float transferValue) {
+        this.transferValue = transferValue;
     }
 
     public TransferDocument getTransferDocument() {
@@ -160,7 +160,7 @@ public class TransferDocumentItem implements Serializable {
             "id=" + getId() +
             ", amount=" + getAmount() +
             ", price=" + getPrice() +
-            ", value=" + getValue() +
+            ", transferValue=" + getTransferValue() +
             "}";
     }
 }

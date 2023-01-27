@@ -1,4 +1,4 @@
-id;amount;price;value;transfer_document_id;resource_id
+id;amount;price;transfer_value;transfer_document_id;resource_id
 1;78017;73761;76208;1;1
 2;5686;70728;69297;2;2
 3;70395;93569;40117;3;3

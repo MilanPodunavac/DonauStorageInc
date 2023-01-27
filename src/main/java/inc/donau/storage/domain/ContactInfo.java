@@ -24,7 +24,7 @@ public class ContactInfo implements Serializable {
     private Long id;
 
     @NotNull
-    @Pattern(regexp = "^\\w+([\\.-]?\\w+)*@\\w+([\\.-]?\\w+)*(\\.\\w{2,3})+$")
+    @Pattern(regexp = "^[^@\\s]+@[^@\\s]+\\.[^@\\s]+$")
     @Column(name = "email", nullable = false, unique = true)
     private String email;
 

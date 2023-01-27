@@ -18,10 +18,10 @@
                 <constraints nullable="false" />
             </column>
             <column name="tax_identification_number" type="varchar(255)" remarks="sr: Poreski identifikacioni broj (PIB)">
-                <constraints nullable="false" />
+                <constraints nullable="false" unique="true" uniqueConstraintName="ux_legal_entity__tax_identification_number" />
             </column>
             <column name="identification_number" type="varchar(255)" remarks="sr: Maticni broj (MB)">
-                <constraints nullable="false" />
+                <constraints nullable="false" unique="true" uniqueConstraintName="ux_legal_entity__identification_number" />
             </column>
             <column name="contact_info_id" type="bigint">
                 <constraints nullable="false" unique="true" uniqueConstraintName="ux_legal_entity__contact_info_id" />

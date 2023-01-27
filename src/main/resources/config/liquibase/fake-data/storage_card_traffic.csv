@@ -1,4 +1,4 @@
-id;type;direction;amount;price;value;document;date;storage_card_id
+id;type;direction;amount;price;traffic_value;document;date;storage_card_id
 1;LEVELING;IN;42311;19053;13850;Toys Estonia;2023-01-07;6d3bf225-be5b-4f06-be0b-31df8a0c26a9
 2;TRANSFER;OUT;86610;74201;47816;Human;2023-01-07;46a89e80-33af-4efa-923a-0e258e6bdd3f
 3;STARTING_BALANCE;IN;11684;36018;21531;Licensed efficient program;2023-01-08;f6cc8b73-9fe4-4e10-af46-ed442ba4641d

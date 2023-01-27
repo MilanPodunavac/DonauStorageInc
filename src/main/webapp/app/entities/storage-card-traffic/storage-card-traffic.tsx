@@ -143,8 +143,9 @@ export const StorageCardTraffic = () => {
                   <th className="hand" onClick={sort('price')}>
                     <Translate contentKey="donauStorageIncApp.storageCardTraffic.price">Price</Translate> <FontAwesomeIcon icon="sort" />
                   </th>
-                  <th className="hand" onClick={sort('value')}>
-                    <Translate contentKey="donauStorageIncApp.storageCardTraffic.value">Value</Translate> <FontAwesomeIcon icon="sort" />
+                  <th className="hand" onClick={sort('trafficValue')}>
+                    <Translate contentKey="donauStorageIncApp.storageCardTraffic.trafficValue">Traffic Value</Translate>{' '}
+                    <FontAwesomeIcon icon="sort" />
                   </th>
                   <th className="hand" onClick={sort('document')}>
                     <Translate contentKey="donauStorageIncApp.storageCardTraffic.document">Document</Translate>{' '}
@@ -176,7 +177,7 @@ export const StorageCardTraffic = () => {
                     </td>
                     <td>{storageCardTraffic.amount}</td>
                     <td>{storageCardTraffic.price}</td>
-                    <td>{storageCardTraffic.value}</td>
+                    <td>{storageCardTraffic.trafficValue}</td>
                     <td>{storageCardTraffic.document}</td>
                     <td>
                       {storageCardTraffic.date ? (

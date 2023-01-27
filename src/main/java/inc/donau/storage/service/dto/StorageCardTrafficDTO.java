@@ -35,7 +35,7 @@ public class StorageCardTrafficDTO implements Serializable {
      */
     @NotNull
     @Schema(description = "amount x price", required = true)
-    private Float value;
+    private Float trafficValue;
 
     private String document;
 
@@ -83,12 +83,12 @@ public class StorageCardTrafficDTO implements Serializable {
         this.price = price;
     }
 
-    public Float getValue() {
-        return value;
+    public Float getTrafficValue() {
+        return trafficValue;
     }
 
-    public void setValue(Float value) {
-        this.value = value;
+    public void setTrafficValue(Float trafficValue) {
+        this.trafficValue = trafficValue;
     }
 
     public String getDocument() {
@@ -145,7 +145,7 @@ public class StorageCardTrafficDTO implements Serializable {
             ", direction='" + getDirection() + "'" +
             ", amount=" + getAmount() +
             ", price=" + getPrice() +
-            ", value=" + getValue() +
+            ", trafficValue=" + getTrafficValue() +
             ", document='" + getDocument() + "'" +
             ", date='" + getDate() + "'" +
             ", storageCard=" + getStorageCard() +

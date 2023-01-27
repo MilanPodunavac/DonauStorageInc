@@ -9,7 +9,7 @@ export interface IStorageCardTraffic {
   direction?: StorageCardTrafficDirection;
   amount?: number;
   price?: number;
-  value?: number;
+  trafficValue?: number;
   document?: string | null;
   date?: string | null;
   storageCard?: IStorageCard;

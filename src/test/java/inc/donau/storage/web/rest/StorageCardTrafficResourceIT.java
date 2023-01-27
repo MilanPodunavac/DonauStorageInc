@@ -48,8 +48,8 @@ class StorageCardTrafficResourceIT {
     private static final Float DEFAULT_PRICE = 0F;
     private static final Float UPDATED_PRICE = 1F;
 
-    private static final Float DEFAULT_VALUE = 1F;
-    private static final Float UPDATED_VALUE = 2F;
+    private static final Float DEFAULT_TRAFFIC_VALUE = 1F;
+    private static final Float UPDATED_TRAFFIC_VALUE = 2F;
 
     private static final String DEFAULT_DOCUMENT = "AAAAAAAAAA";
     private static final String UPDATED_DOCUMENT = "BBBBBBBBBB";
@@ -89,7 +89,7 @@ class StorageCardTrafficResourceIT {
             .direction(DEFAULT_DIRECTION)
             .amount(DEFAULT_AMOUNT)
             .price(DEFAULT_PRICE)
-            .value(DEFAULT_VALUE)
+            .trafficValue(DEFAULT_TRAFFIC_VALUE)
             .document(DEFAULT_DOCUMENT)
             .date(DEFAULT_DATE);
         // Add required entity
@@ -117,7 +117,7 @@ class StorageCardTrafficResourceIT {
             .direction(UPDATED_DIRECTION)
             .amount(UPDATED_AMOUNT)
             .price(UPDATED_PRICE)
-            .value(UPDATED_VALUE)
+            .trafficValue(UPDATED_TRAFFIC_VALUE)
             .document(UPDATED_DOCUMENT)
             .date(UPDATED_DATE);
         // Add required entity
@@ -160,7 +160,7 @@ class StorageCardTrafficResourceIT {
         assertThat(testStorageCardTraffic.getDirection()).isEqualTo(DEFAULT_DIRECTION);
         assertThat(testStorageCardTraffic.getAmount()).isEqualTo(DEFAULT_AMOUNT);
         assertThat(testStorageCardTraffic.getPrice()).isEqualTo(DEFAULT_PRICE);
-        assertThat(testStorageCardTraffic.getValue()).isEqualTo(DEFAULT_VALUE);
+        assertThat(testStorageCardTraffic.getTrafficValue()).isEqualTo(DEFAULT_TRAFFIC_VALUE);
         assertThat(testStorageCardTraffic.getDocument()).isEqualTo(DEFAULT_DOCUMENT);
         assertThat(testStorageCardTraffic.getDate()).isEqualTo(DEFAULT_DATE);
     }
@@ -278,10 +278,10 @@ class StorageCardTrafficResourceIT {
 
     @Test
     @Transactional
-    void checkValueIsRequired() throws Exception {
+    void checkTrafficValueIsRequired() throws Exception {
         int databaseSizeBeforeTest = storageCardTrafficRepository.findAll().size();
         // set the field null
-        storageCardTraffic.setValue(null);
+        storageCardTraffic.setTrafficValue(null);
 
         // Create the StorageCardTraffic, which fails.
         StorageCardTrafficDTO storageCardTrafficDTO = storageCardTrafficMapper.toDto(storageCardTraffic);
@@ -314,7 +314,7 @@ class StorageCardTrafficResourceIT {
             .andExpect(jsonPath("$.[*].direction").value(hasItem(DEFAULT_DIRECTION.toString())))
             .andExpect(jsonPath("$.[*].amount").value(hasItem(DEFAULT_AMOUNT.doubleValue())))
             .andExpect(jsonPath("$.[*].price").value(hasItem(DEFAULT_PRICE.doubleValue())))
-            .andExpect(jsonPath("$.[*].value").value(hasItem(DEFAULT_VALUE.doubleValue())))
+            .andExpect(jsonPath("$.[*].trafficValue").value(hasItem(DEFAULT_TRAFFIC_VALUE.doubleValue())))
             .andExpect(jsonPath("$.[*].document").value(hasItem(DEFAULT_DOCUMENT)))
             .andExpect(jsonPath("$.[*].date").value(hasItem(DEFAULT_DATE.toString())));
     }
@@ -335,7 +335,7 @@ class StorageCardTrafficResourceIT {
             .andExpect(jsonPath("$.direction").value(DEFAULT_DIRECTION.toString()))
             .andExpect(jsonPath("$.amount").value(DEFAULT_AMOUNT.doubleValue()))
             .andExpect(jsonPath("$.price").value(DEFAULT_PRICE.doubleValue()))
-            .andExpect(jsonPath("$.value").value(DEFAULT_VALUE.doubleValue()))
+            .andExpect(jsonPath("$.trafficValue").value(DEFAULT_TRAFFIC_VALUE.doubleValue()))
             .andExpect(jsonPath("$.document").value(DEFAULT_DOCUMENT))
             .andExpect(jsonPath("$.date").value(DEFAULT_DATE.toString()));
     }
@@ -364,7 +364,7 @@ class StorageCardTrafficResourceIT {
             .direction(UPDATED_DIRECTION)
             .amount(UPDATED_AMOUNT)
             .price(UPDATED_PRICE)
-            .value(UPDATED_VALUE)
+            .trafficValue(UPDATED_TRAFFIC_VALUE)
             .document(UPDATED_DOCUMENT)
             .date(UPDATED_DATE);
         StorageCardTrafficDTO storageCardTrafficDTO = storageCardTrafficMapper.toDto(updatedStorageCardTraffic);
@@ -385,7 +385,7 @@ class StorageCardTrafficResourceIT {
         assertThat(testStorageCardTraffic.getDirection()).isEqualTo(UPDATED_DIRECTION);
         assertThat(testStorageCardTraffic.getAmount()).isEqualTo(UPDATED_AMOUNT);
         assertThat(testStorageCardTraffic.getPrice()).isEqualTo(UPDATED_PRICE);
-        assertThat(testStorageCardTraffic.getValue()).isEqualTo(UPDATED_VALUE);
+        assertThat(testStorageCardTraffic.getTrafficValue()).isEqualTo(UPDATED_TRAFFIC_VALUE);
         assertThat(testStorageCardTraffic.getDocument()).isEqualTo(UPDATED_DOCUMENT);
         assertThat(testStorageCardTraffic.getDate()).isEqualTo(UPDATED_DATE);
     }
@@ -475,7 +475,7 @@ class StorageCardTrafficResourceIT {
             .type(UPDATED_TYPE)
             .direction(UPDATED_DIRECTION)
             .price(UPDATED_PRICE)
-            .value(UPDATED_VALUE)
+            .trafficValue(UPDATED_TRAFFIC_VALUE)
             .document(UPDATED_DOCUMENT)
             .date(UPDATED_DATE);
 
@@ -495,7 +495,7 @@ class StorageCardTrafficResourceIT {
         assertThat(testStorageCardTraffic.getDirection()).isEqualTo(UPDATED_DIRECTION);
         assertThat(testStorageCardTraffic.getAmount()).isEqualTo(DEFAULT_AMOUNT);
         assertThat(testStorageCardTraffic.getPrice()).isEqualTo(UPDATED_PRICE);
-        assertThat(testStorageCardTraffic.getValue()).isEqualTo(UPDATED_VALUE);
+        assertThat(testStorageCardTraffic.getTrafficValue()).isEqualTo(UPDATED_TRAFFIC_VALUE);
         assertThat(testStorageCardTraffic.getDocument()).isEqualTo(UPDATED_DOCUMENT);
         assertThat(testStorageCardTraffic.getDate()).isEqualTo(UPDATED_DATE);
     }
@@ -517,7 +517,7 @@ class StorageCardTrafficResourceIT {
             .direction(UPDATED_DIRECTION)
             .amount(UPDATED_AMOUNT)
             .price(UPDATED_PRICE)
-            .value(UPDATED_VALUE)
+            .trafficValue(UPDATED_TRAFFIC_VALUE)
             .document(UPDATED_DOCUMENT)
             .date(UPDATED_DATE);
 
@@ -537,7 +537,7 @@ class StorageCardTrafficResourceIT {
         assertThat(testStorageCardTraffic.getDirection()).isEqualTo(UPDATED_DIRECTION);
         assertThat(testStorageCardTraffic.getAmount()).isEqualTo(UPDATED_AMOUNT);
         assertThat(testStorageCardTraffic.getPrice()).isEqualTo(UPDATED_PRICE);
-        assertThat(testStorageCardTraffic.getValue()).isEqualTo(UPDATED_VALUE);
+        assertThat(testStorageCardTraffic.getTrafficValue()).isEqualTo(UPDATED_TRAFFIC_VALUE);
         assertThat(testStorageCardTraffic.getDocument()).isEqualTo(UPDATED_DOCUMENT);
         assertThat(testStorageCardTraffic.getDate()).isEqualTo(UPDATED_DATE);
     }

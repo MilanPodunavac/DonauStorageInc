@@ -125,18 +125,18 @@ export const TransferDocumentItemUpdate = () => {
                 }}
               />
               <ValidatedField
-                label={translate('donauStorageIncApp.transferDocumentItem.value')}
-                id="transfer-document-item-value"
-                name="value"
-                data-cy="value"
+                label={translate('donauStorageIncApp.transferDocumentItem.transferValue')}
+                id="transfer-document-item-transferValue"
+                name="transferValue"
+                data-cy="transferValue"
                 type="text"
                 validate={{
                   min: { value: 0, message: translate('entity.validation.min', { min: 0 }) },
                   validate: v => isNumber(v) || translate('entity.validation.number'),
                 }}
               />
-              <UncontrolledTooltip target="valueLabel">
-                <Translate contentKey="donauStorageIncApp.transferDocumentItem.help.value" />
+              <UncontrolledTooltip target="transferValueLabel">
+                <Translate contentKey="donauStorageIncApp.transferDocumentItem.help.transferValue" />
               </UncontrolledTooltip>
               <ValidatedField
                 id="transfer-document-item-transferDocument"

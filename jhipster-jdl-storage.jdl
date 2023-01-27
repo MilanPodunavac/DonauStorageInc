@@ -41,7 +41,7 @@ entity TransferDocumentItem {
 	amount Float required min(0),
     price Float required min(0),
     /** amount x price */
-    value Float min(0)
+    transferValue Float min(0)
 }
 
 /** sr: Magacinska kartica */
@@ -80,7 +80,7 @@ entity StorageCardTraffic {
     amount Float required,
     price Float required min(0),
     /** amount x price */
-    value Float required,
+    trafficValue Float required,
     document String,
     date LocalDate
 }

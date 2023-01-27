@@ -27,14 +27,14 @@ entity Person {
 entity LegalEntity {
 	name String required,
 	/** sr: Poreski identifikacioni broj (PIB) */
-    taxIdentificationNumber String required pattern(/[0-9]{10}/),
+    taxIdentificationNumber String required unique pattern(/[0-9]{10}/),
 	/** sr: Maticni broj (MB) */
-    identificationNumber String required pattern(/[0-9]{8}/)
+    identificationNumber String required unique pattern(/[0-9]{8}/)
 }
 
 entity Employee {
 	/** sr: Jedinstveni maticni broj gradjana (JMBG) */
-    uniqueIdentificationNumber String required pattern(/[0-9]{13}/),
+    uniqueIdentificationNumber String required unique pattern(/[0-9]{13}/),
     birthDate ZonedDateTime required,
     disability Boolean required,
     employment Boolean,

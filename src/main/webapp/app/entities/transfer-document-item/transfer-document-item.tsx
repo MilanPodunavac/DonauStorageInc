@@ -137,8 +137,9 @@ export const TransferDocumentItem = () => {
                   <th className="hand" onClick={sort('price')}>
                     <Translate contentKey="donauStorageIncApp.transferDocumentItem.price">Price</Translate> <FontAwesomeIcon icon="sort" />
                   </th>
-                  <th className="hand" onClick={sort('value')}>
-                    <Translate contentKey="donauStorageIncApp.transferDocumentItem.value">Value</Translate> <FontAwesomeIcon icon="sort" />
+                  <th className="hand" onClick={sort('transferValue')}>
+                    <Translate contentKey="donauStorageIncApp.transferDocumentItem.transferValue">Transfer Value</Translate>{' '}
+                    <FontAwesomeIcon icon="sort" />
                   </th>
                   <th>
                     <Translate contentKey="donauStorageIncApp.transferDocumentItem.transferDocument">Transfer Document</Translate>{' '}
@@ -161,7 +162,7 @@ export const TransferDocumentItem = () => {
                     </td>
                     <td>{transferDocumentItem.amount}</td>
                     <td>{transferDocumentItem.price}</td>
-                    <td>{transferDocumentItem.value}</td>
+                    <td>{transferDocumentItem.transferValue}</td>
                     <td>
                       {transferDocumentItem.transferDocument ? (
                         <Link to={`/transfer-document/${transferDocumentItem.transferDocument.id}`}>

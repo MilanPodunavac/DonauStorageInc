@@ -8,7 +8,7 @@
     {
       "fieldName": "uniqueIdentificationNumber",
       "fieldType": "String",
-      "fieldValidateRules": ["required", "pattern"],
+      "fieldValidateRules": ["required", "unique", "pattern"],
       "fieldValidateRulesPattern": "[0-9]{13}",
       "javadoc": "sr: Jedinstveni maticni broj gradjana (JMBG)"
     },

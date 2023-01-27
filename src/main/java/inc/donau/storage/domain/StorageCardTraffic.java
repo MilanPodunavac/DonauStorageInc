@@ -50,8 +50,8 @@ public class StorageCardTraffic implements Serializable {
      * amount x price
      */
     @NotNull
-    @Column(name = "value", nullable = false)
-    private Float value;
+    @Column(name = "traffic_value", nullable = false)
+    private Float trafficValue;
 
     @Column(name = "document")
     private String document;
@@ -131,17 +131,17 @@ public class StorageCardTraffic implements Serializable {
         this.price = price;
     }
 
-    public Float getValue() {
-        return this.value;
+    public Float getTrafficValue() {
+        return this.trafficValue;
     }
 
-    public StorageCardTraffic value(Float value) {
-        this.setValue(value);
+    public StorageCardTraffic trafficValue(Float trafficValue) {
+        this.setTrafficValue(trafficValue);
         return this;
     }
 
-    public void setValue(Float value) {
-        this.value = value;
+    public void setTrafficValue(Float trafficValue) {
+        this.trafficValue = trafficValue;
     }
 
     public String getDocument() {
@@ -211,7 +211,7 @@ public class StorageCardTraffic implements Serializable {
             ", direction='" + getDirection() + "'" +
             ", amount=" + getAmount() +
             ", price=" + getPrice() +
-            ", value=" + getValue() +
+            ", trafficValue=" + getTrafficValue() +
             ", document='" + getDocument() + "'" +
             ", date='" + getDate() + "'" +
             "}";

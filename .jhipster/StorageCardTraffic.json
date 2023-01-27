@@ -42,7 +42,7 @@
       "fieldValidateRulesMin": "0"
     },
     {
-      "fieldName": "value",
+      "fieldName": "trafficValue",
       "fieldType": "Float",
       "fieldValidateRules": ["required"],
       "javadoc": "amount x price"

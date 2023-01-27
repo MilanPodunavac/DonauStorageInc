@@ -22,12 +22,12 @@
       "direction": "Direction",
       "amount": "Amount",
       "price": "Price",
-      "value": "Value",
+      "trafficValue": "Traffic Value",
       "document": "Document",
       "date": "Date",
       "storageCard": "Storage Card",
       "help": {
-        "value": "amount x price"
+        "trafficValue": "amount x price"
       }
     }
   }

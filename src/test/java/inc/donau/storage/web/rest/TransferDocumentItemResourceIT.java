@@ -39,8 +39,8 @@ class TransferDocumentItemResourceIT {
     private static final Float DEFAULT_PRICE = 0F;
     private static final Float UPDATED_PRICE = 1F;
 
-    private static final Float DEFAULT_VALUE = 0F;
-    private static final Float UPDATED_VALUE = 1F;
+    private static final Float DEFAULT_TRANSFER_VALUE = 0F;
+    private static final Float UPDATED_TRANSFER_VALUE = 1F;
 
     private static final String ENTITY_API_URL = "/api/transfer-document-items";
     private static final String ENTITY_API_URL_ID = ENTITY_API_URL + "/{id}";
@@ -72,7 +72,7 @@ class TransferDocumentItemResourceIT {
         TransferDocumentItem transferDocumentItem = new TransferDocumentItem()
             .amount(DEFAULT_AMOUNT)
             .price(DEFAULT_PRICE)
-            .value(DEFAULT_VALUE);
+            .transferValue(DEFAULT_TRANSFER_VALUE);
         // Add required entity
         TransferDocument transferDocument;
         if (TestUtil.findAll(em, TransferDocument.class).isEmpty()) {
@@ -106,7 +106,7 @@ class TransferDocumentItemResourceIT {
         TransferDocumentItem transferDocumentItem = new TransferDocumentItem()
             .amount(UPDATED_AMOUNT)
             .price(UPDATED_PRICE)
-            .value(UPDATED_VALUE);
+            .transferValue(UPDATED_TRANSFER_VALUE);
         // Add required entity
         TransferDocument transferDocument;
         if (TestUtil.findAll(em, TransferDocument.class).isEmpty()) {
@@ -155,7 +155,7 @@ class TransferDocumentItemResourceIT {
         TransferDocumentItem testTransferDocumentItem = transferDocumentItemList.get(transferDocumentItemList.size() - 1);
         assertThat(testTransferDocumentItem.getAmount()).isEqualTo(DEFAULT_AMOUNT);
         assertThat(testTransferDocumentItem.getPrice()).isEqualTo(DEFAULT_PRICE);
-        assertThat(testTransferDocumentItem.getValue()).isEqualTo(DEFAULT_VALUE);
+        assertThat(testTransferDocumentItem.getTransferValue()).isEqualTo(DEFAULT_TRANSFER_VALUE);
     }
 
     @Test
@@ -239,7 +239,7 @@ class TransferDocumentItemResourceIT {
             .andExpect(jsonPath("$.[*].id").value(hasItem(transferDocumentItem.getId().intValue())))
             .andExpect(jsonPath("$.[*].amount").value(hasItem(DEFAULT_AMOUNT.doubleValue())))
             .andExpect(jsonPath("$.[*].price").value(hasItem(DEFAULT_PRICE.doubleValue())))
-            .andExpect(jsonPath("$.[*].value").value(hasItem(DEFAULT_VALUE.doubleValue())));
+            .andExpect(jsonPath("$.[*].transferValue").value(hasItem(DEFAULT_TRANSFER_VALUE.doubleValue())));
     }
 
     @Test
@@ -256,7 +256,7 @@ class TransferDocumentItemResourceIT {
             .andExpect(jsonPath("$.id").value(transferDocumentItem.getId().intValue()))
             .andExpect(jsonPath("$.amount").value(DEFAULT_AMOUNT.doubleValue()))
             .andExpect(jsonPath("$.price").value(DEFAULT_PRICE.doubleValue()))
-            .andExpect(jsonPath("$.value").value(DEFAULT_VALUE.doubleValue()));
+            .andExpect(jsonPath("$.transferValue").value(DEFAULT_TRANSFER_VALUE.doubleValue()));
     }
 
     @Test
@@ -278,7 +278,7 @@ class TransferDocumentItemResourceIT {
         TransferDocumentItem updatedTransferDocumentItem = transferDocumentItemRepository.findById(transferDocumentItem.getId()).get();
         // Disconnect from session so that the updates on updatedTransferDocumentItem are not directly saved in db
         em.detach(updatedTransferDocumentItem);
-        updatedTransferDocumentItem.amount(UPDATED_AMOUNT).price(UPDATED_PRICE).value(UPDATED_VALUE);
+        updatedTransferDocumentItem.amount(UPDATED_AMOUNT).price(UPDATED_PRICE).transferValue(UPDATED_TRANSFER_VALUE);
         TransferDocumentItemDTO transferDocumentItemDTO = transferDocumentItemMapper.toDto(updatedTransferDocumentItem);
 
         restTransferDocumentItemMockMvc
@@ -295,7 +295,7 @@ class TransferDocumentItemResourceIT {
         TransferDocumentItem testTransferDocumentItem = transferDocumentItemList.get(transferDocumentItemList.size() - 1);
         assertThat(testTransferDocumentItem.getAmount()).isEqualTo(UPDATED_AMOUNT);
         assertThat(testTransferDocumentItem.getPrice()).isEqualTo(UPDATED_PRICE);
-        assertThat(testTransferDocumentItem.getValue()).isEqualTo(UPDATED_VALUE);
+        assertThat(testTransferDocumentItem.getTransferValue()).isEqualTo(UPDATED_TRANSFER_VALUE);
     }
 
     @Test
@@ -393,7 +393,7 @@ class TransferDocumentItemResourceIT {
         TransferDocumentItem testTransferDocumentItem = transferDocumentItemList.get(transferDocumentItemList.size() - 1);
         assertThat(testTransferDocumentItem.getAmount()).isEqualTo(DEFAULT_AMOUNT);
         assertThat(testTransferDocumentItem.getPrice()).isEqualTo(DEFAULT_PRICE);
-        assertThat(testTransferDocumentItem.getValue()).isEqualTo(DEFAULT_VALUE);
+        assertThat(testTransferDocumentItem.getTransferValue()).isEqualTo(DEFAULT_TRANSFER_VALUE);
     }
 
     @Test
@@ -408,7 +408,7 @@ class TransferDocumentItemResourceIT {
         TransferDocumentItem partialUpdatedTransferDocumentItem = new TransferDocumentItem();
         partialUpdatedTransferDocumentItem.setId(transferDocumentItem.getId());
 
-        partialUpdatedTransferDocumentItem.amount(UPDATED_AMOUNT).price(UPDATED_PRICE).value(UPDATED_VALUE);
+        partialUpdatedTransferDocumentItem.amount(UPDATED_AMOUNT).price(UPDATED_PRICE).transferValue(UPDATED_TRANSFER_VALUE);
 
         restTransferDocumentItemMockMvc
             .perform(
@@ -424,7 +424,7 @@ class TransferDocumentItemResourceIT {
         TransferDocumentItem testTransferDocumentItem = transferDocumentItemList.get(transferDocumentItemList.size() - 1);
         assertThat(testTransferDocumentItem.getAmount()).isEqualTo(UPDATED_AMOUNT);
         assertThat(testTransferDocumentItem.getPrice()).isEqualTo(UPDATED_PRICE);
-        assertThat(testTransferDocumentItem.getValue()).isEqualTo(UPDATED_VALUE);
+        assertThat(testTransferDocumentItem.getTransferValue()).isEqualTo(UPDATED_TRANSFER_VALUE);
     }
 
     @Test

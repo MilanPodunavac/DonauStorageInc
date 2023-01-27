@@ -57,14 +57,14 @@ export const StorageCardTrafficDetail = () => {
           </dt>
           <dd>{storageCardTrafficEntity.price}</dd>
           <dt>
-            <span id="value">
-              <Translate contentKey="donauStorageIncApp.storageCardTraffic.value">Value</Translate>
+            <span id="trafficValue">
+              <Translate contentKey="donauStorageIncApp.storageCardTraffic.trafficValue">Traffic Value</Translate>
             </span>
-            <UncontrolledTooltip target="value">
-              <Translate contentKey="donauStorageIncApp.storageCardTraffic.help.value" />
+            <UncontrolledTooltip target="trafficValue">
+              <Translate contentKey="donauStorageIncApp.storageCardTraffic.help.trafficValue" />
             </UncontrolledTooltip>
           </dt>
-          <dd>{storageCardTrafficEntity.value}</dd>
+          <dd>{storageCardTrafficEntity.trafficValue}</dd>
           <dt>
             <span id="document">
               <Translate contentKey="donauStorageIncApp.storageCardTraffic.document">Document</Translate>

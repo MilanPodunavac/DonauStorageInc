@@ -45,14 +45,14 @@ export const TransferDocumentItemDetail = () => {
           </dt>
           <dd>{transferDocumentItemEntity.price}</dd>
           <dt>
-            <span id="value">
-              <Translate contentKey="donauStorageIncApp.transferDocumentItem.value">Value</Translate>
+            <span id="transferValue">
+              <Translate contentKey="donauStorageIncApp.transferDocumentItem.transferValue">Transfer Value</Translate>
             </span>
-            <UncontrolledTooltip target="value">
-              <Translate contentKey="donauStorageIncApp.transferDocumentItem.help.value" />
+            <UncontrolledTooltip target="transferValue">
+              <Translate contentKey="donauStorageIncApp.transferDocumentItem.help.transferValue" />
             </UncontrolledTooltip>
           </dt>
-          <dd>{transferDocumentItemEntity.value}</dd>
+          <dd>{transferDocumentItemEntity.transferValue}</dd>
           <dt>
             <Translate contentKey="donauStorageIncApp.transferDocumentItem.transferDocument">Transfer Document</Translate>
           </dt>

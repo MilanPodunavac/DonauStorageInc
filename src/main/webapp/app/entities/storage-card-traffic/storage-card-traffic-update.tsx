@@ -150,18 +150,18 @@ export const StorageCardTrafficUpdate = () => {
                 }}
               />
               <ValidatedField
-                label={translate('donauStorageIncApp.storageCardTraffic.value')}
-                id="storage-card-traffic-value"
-                name="value"
-                data-cy="value"
+                label={translate('donauStorageIncApp.storageCardTraffic.trafficValue')}
+                id="storage-card-traffic-trafficValue"
+                name="trafficValue"
+                data-cy="trafficValue"
                 type="text"
                 validate={{
                   required: { value: true, message: translate('entity.validation.required') },
                   validate: v => isNumber(v) || translate('entity.validation.number'),
                 }}
               />
-              <UncontrolledTooltip target="valueLabel">
-                <Translate contentKey="donauStorageIncApp.storageCardTraffic.help.value" />
+              <UncontrolledTooltip target="trafficValueLabel">
+                <Translate contentKey="donauStorageIncApp.storageCardTraffic.help.trafficValue" />
               </UncontrolledTooltip>
               <ValidatedField
                 label={translate('donauStorageIncApp.storageCardTraffic.document')}

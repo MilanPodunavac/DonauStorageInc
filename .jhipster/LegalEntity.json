@@ -13,14 +13,14 @@
     {
       "fieldName": "taxIdentificationNumber",
       "fieldType": "String",
-      "fieldValidateRules": ["required", "pattern"],
+      "fieldValidateRules": ["required", "unique", "pattern"],
       "fieldValidateRulesPattern": "[0-9]{10}",
       "javadoc": "sr: Poreski identifikacioni broj (PIB)"
     },
     {
       "fieldName": "identificationNumber",
       "fieldType": "String",
-      "fieldValidateRules": ["required", "pattern"],
+      "fieldValidateRules": ["required", "unique", "pattern"],
       "fieldValidateRulesPattern": "[0-9]{8}",
       "javadoc": "sr: Maticni broj (MB)"
     }

@@ -27,7 +27,7 @@ public class TransferDocumentItemDTO implements Serializable {
      */
     @DecimalMin(value = "0")
     @Schema(description = "amount x price")
-    private Float value;
+    private Float transferValue;
 
     private TransferDocumentDTO transferDocument;
 
@@ -57,12 +57,12 @@ public class TransferDocumentItemDTO implements Serializable {
         this.price = price;
     }
 
-    public Float getValue() {
-        return value;
+    public Float getTransferValue() {
+        return transferValue;
     }
 
-    public void setValue(Float value) {
-        this.value = value;
+    public void setTransferValue(Float transferValue) {
+        this.transferValue = transferValue;
     }
 
     public TransferDocumentDTO getTransferDocument() {
@@ -109,7 +109,7 @@ public class TransferDocumentItemDTO implements Serializable {
             "id=" + getId() +
             ", amount=" + getAmount() +
             ", price=" + getPrice() +
-            ", value=" + getValue() +
+            ", transferValue=" + getTransferValue() +
             ", transferDocument=" + getTransferDocument() +
             ", resource=" + getResource() +
             "}";

@@ -17,17 +17,5 @@ public interface StorageCardTrafficMapper extends EntityMapper<StorageCardTraffi
     @Named("storageCardId")
     @BeanMapping(ignoreByDefault = true)
     @Mapping(target = "id", source = "id")
-    @Mapping(target = "startingAmount", source = "startingAmount")
-    @Mapping(target = "receivedAmount", source = "receivedAmount")
-    @Mapping(target = "dispatchedAmount", source = "dispatchedAmount")
-    @Mapping(target = "totalAmount", source = "totalAmount")
-    @Mapping(target = "startingValue", source = "startingValue")
-    @Mapping(target = "receivedValue", source = "receivedValue")
-    @Mapping(target = "dispatchedValue", source = "dispatchedValue")
-    @Mapping(target = "totalValue", source = "totalValue")
-    @Mapping(target = "price", source = "price")
-    @Mapping(target = "businessYear", source = "businessYear")
-    @Mapping(target = "resource", source = "resource")
-    @Mapping(target = "storage", source = "storage")
     StorageCardDTO toDtoStorageCardId(StorageCard storageCard);
 }
