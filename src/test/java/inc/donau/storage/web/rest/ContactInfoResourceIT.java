@@ -147,26 +147,6 @@ class ContactInfoResourceIT {
 
     @Test
     @Transactional
-    void checkPhoneNumberIsRequired() throws Exception {
-        int databaseSizeBeforeTest = contactInfoRepository.findAll().size();
-        // set the field null
-        contactInfo.setPhoneNumber(null);
-
-        // Create the ContactInfo, which fails.
-        ContactInfoDTO contactInfoDTO = contactInfoMapper.toDto(contactInfo);
-
-        restContactInfoMockMvc
-            .perform(
-                post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(contactInfoDTO))
-            )
-            .andExpect(status().isBadRequest());
-
-        List<ContactInfo> contactInfoList = contactInfoRepository.findAll();
-        assertThat(contactInfoList).hasSize(databaseSizeBeforeTest);
-    }
-
-    @Test
-    @Transactional
     void getAllContactInfos() throws Exception {
         // Initialize the database
         contactInfoRepository.saveAndFlush(contactInfo);

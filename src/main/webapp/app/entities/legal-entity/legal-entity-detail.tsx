@@ -60,6 +60,10 @@ export const LegalEntityDetail = () => {
             <Translate contentKey="donauStorageIncApp.legalEntity.contactInfo">Contact Info</Translate>
           </dt>
           <dd>{legalEntityEntity.contactInfo ? legalEntityEntity.contactInfo.id : ''}</dd>
+          <dt>
+            <Translate contentKey="donauStorageIncApp.legalEntity.address">Address</Translate>
+          </dt>
+          <dd>{legalEntityEntity.address ? legalEntityEntity.address.id : ''}</dd>
         </dl>
         <Button tag={Link} to="/legal-entity" replace color="info" data-cy="entityDetailsBackButton">
           <FontAwesomeIcon icon="arrow-left" />{' '}

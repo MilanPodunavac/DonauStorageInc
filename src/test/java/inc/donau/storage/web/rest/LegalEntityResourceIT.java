@@ -6,6 +6,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 import inc.donau.storage.IntegrationTest;
+import inc.donau.storage.domain.Address;
 import inc.donau.storage.domain.ContactInfo;
 import inc.donau.storage.domain.LegalEntity;
 import inc.donau.storage.repository.LegalEntityRepository;
@@ -82,6 +83,16 @@ class LegalEntityResourceIT {
             contactInfo = TestUtil.findAll(em, ContactInfo.class).get(0);
         }
         legalEntity.setContactInfo(contactInfo);
+        // Add required entity
+        Address address;
+        if (TestUtil.findAll(em, Address.class).isEmpty()) {
+            address = AddressResourceIT.createEntity(em);
+            em.persist(address);
+            em.flush();
+        } else {
+            address = TestUtil.findAll(em, Address.class).get(0);
+        }
+        legalEntity.setAddress(address);
         return legalEntity;
     }
 
@@ -106,6 +117,16 @@ class LegalEntityResourceIT {
             contactInfo = TestUtil.findAll(em, ContactInfo.class).get(0);
         }
         legalEntity.setContactInfo(contactInfo);
+        // Add required entity
+        Address address;
+        if (TestUtil.findAll(em, Address.class).isEmpty()) {
+            address = AddressResourceIT.createUpdatedEntity(em);
+            em.persist(address);
+            em.flush();
+        } else {
+            address = TestUtil.findAll(em, Address.class).get(0);
+        }
+        legalEntity.setAddress(address);
         return legalEntity;
     }
 

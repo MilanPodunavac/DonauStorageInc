@@ -38,6 +38,14 @@
       "relationshipName": "contactInfo",
       "relationshipType": "one-to-one",
       "relationshipValidateRules": "required"
+    },
+    {
+      "javadoc": "Cascade delete",
+      "otherEntityName": "address",
+      "ownerSide": true,
+      "relationshipName": "address",
+      "relationshipType": "one-to-one",
+      "relationshipValidateRules": "required"
     }
   ],
   "service": "serviceClass"

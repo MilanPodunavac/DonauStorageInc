@@ -13,5 +13,11 @@
                                  constraintName="fk_legal_entity__contact_info_id"
                                  referencedColumnNames="id"
                                  referencedTableName="contact_info"/>
+
+        <addForeignKeyConstraint baseColumnNames="address_id"
+                                 baseTableName="legal_entity"
+                                 constraintName="fk_legal_entity__address_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="address"/>
     </changeSet>
 </databaseChangeLog>

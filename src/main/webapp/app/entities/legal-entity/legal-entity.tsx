@@ -63,6 +63,9 @@ export const LegalEntity = () => {
                 <th>
                   <Translate contentKey="donauStorageIncApp.legalEntity.contactInfo">Contact Info</Translate>
                 </th>
+                <th>
+                  <Translate contentKey="donauStorageIncApp.legalEntity.address">Address</Translate>
+                </th>
                 <th />
               </tr>
             </thead>
@@ -84,6 +87,7 @@ export const LegalEntity = () => {
                       ''
                     )}
                   </td>
+                  <td>{legalEntity.address ? <Link to={`/address/${legalEntity.address.id}`}>{legalEntity.address.id}</Link> : ''}</td>
                   <td className="text-end">
                     <div className="btn-group flex-btn-group-container">
                       <Button tag={Link} to={`/legal-entity/${legalEntity.id}`} color="info" size="sm" data-cy="entityDetailsButton">

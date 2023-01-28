@@ -10,6 +10,8 @@ import { useAppDispatch, useAppSelector } from 'app/config/store';
 
 import { IContactInfo } from 'app/shared/model/contact-info.model';
 import { getEntities as getContactInfos } from 'app/entities/contact-info/contact-info.reducer';
+import { IAddress } from 'app/shared/model/address.model';
+import { getEntities as getAddresses } from 'app/entities/address/address.reducer';
 import { ILegalEntity } from 'app/shared/model/legal-entity.model';
 import { getEntity, updateEntity, createEntity, reset } from './legal-entity.reducer';
 
@@ -22,6 +24,7 @@ export const LegalEntityUpdate = () => {
   const isNew = id === undefined;
 
   const contactInfos = useAppSelector(state => state.contactInfo.entities);
+  const addresses = useAppSelector(state => state.address.entities);
   const legalEntityEntity = useAppSelector(state => state.legalEntity.entity);
   const loading = useAppSelector(state => state.legalEntity.loading);
   const updating = useAppSelector(state => state.legalEntity.updating);
@@ -39,6 +42,7 @@ export const LegalEntityUpdate = () => {
     }
 
     dispatch(getContactInfos({}));
+    dispatch(getAddresses({}));
   }, []);
 
   useEffect(() => {
@@ -52,6 +56,7 @@ export const LegalEntityUpdate = () => {
       ...legalEntityEntity,
       ...values,
       contactInfo: contactInfos.find(it => it.id.toString() === values.contactInfo.toString()),
+      address: addresses.find(it => it.id.toString() === values.address.toString()),
     };
 
     if (isNew) {
@@ -67,6 +72,7 @@ export const LegalEntityUpdate = () => {
       : {
           ...legalEntityEntity,
           contactInfo: legalEntityEntity?.contactInfo?.id,
+          address: legalEntityEntity?.address?.id,
         };
 
   return (
@@ -143,6 +149,26 @@ export const LegalEntityUpdate = () => {
                 <option value="" key="0" />
                 {contactInfos
                   ? contactInfos.map(otherEntity => (
+                      <option value={otherEntity.id} key={otherEntity.id}>
+                        {otherEntity.id}
+                      </option>
+                    ))
+                  : null}
+              </ValidatedField>
+              <FormText>
+                <Translate contentKey="entity.validation.required">This field is required.</Translate>
+              </FormText>
+              <ValidatedField
+                id="legal-entity-address"
+                name="address"
+                data-cy="address"
+                label={translate('donauStorageIncApp.legalEntity.address')}
+                type="select"
+                required
+              >
+                <option value="" key="0" />
+                {addresses
+                  ? addresses.map(otherEntity => (
                       <option value={otherEntity.id} key={otherEntity.id}>
                         {otherEntity.id}
                       </option>

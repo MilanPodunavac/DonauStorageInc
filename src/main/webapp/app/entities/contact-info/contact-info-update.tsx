@@ -108,7 +108,6 @@ export const ContactInfoUpdate = () => {
                 data-cy="phoneNumber"
                 type="text"
                 validate={{
-                  required: { value: true, message: translate('entity.validation.required') },
                   pattern: {
                     value: /((\+[0-9]{1,3})|0)[0-9]{7,10}/,
                     message: translate('entity.validation.pattern', { pattern: '((\\+[0-9]{1,3})|0)[0-9]{7,10}' }),

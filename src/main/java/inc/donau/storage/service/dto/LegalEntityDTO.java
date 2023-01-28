@@ -34,6 +34,8 @@ public class LegalEntityDTO implements Serializable {
 
     private ContactInfoDTO contactInfo;
 
+    private AddressDTO address;
+
     public Long getId() {
         return id;
     }
@@ -74,6 +76,14 @@ public class LegalEntityDTO implements Serializable {
         this.contactInfo = contactInfo;
     }
 
+    public AddressDTO getAddress() {
+        return address;
+    }
+
+    public void setAddress(AddressDTO address) {
+        this.address = address;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -104,6 +114,7 @@ public class LegalEntityDTO implements Serializable {
             ", taxIdentificationNumber='" + getTaxIdentificationNumber() + "'" +
             ", identificationNumber='" + getIdentificationNumber() + "'" +
             ", contactInfo=" + getContactInfo() +
+            ", address=" + getAddress() +
             "}";
     }
 }

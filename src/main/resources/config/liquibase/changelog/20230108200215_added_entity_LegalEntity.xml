@@ -26,6 +26,9 @@
             <column name="contact_info_id" type="bigint">
                 <constraints nullable="false" unique="true" uniqueConstraintName="ux_legal_entity__contact_info_id" />
             </column>
+            <column name="address_id" type="bigint">
+                <constraints nullable="false" unique="true" uniqueConstraintName="ux_legal_entity__address_id" />
+            </column>
             <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here -->
         </createTable>
     </changeSet>
@@ -51,6 +54,7 @@
             <column name="tax_identification_number" type="string"/>
             <column name="identification_number" type="string"/>
             <column name="contact_info_id" type="numeric"/>
+            <column name="address_id" type="numeric"/>
             <!-- jhipster-needle-liquibase-add-loadcolumn - JHipster (and/or extensions) can add load columns here -->
         </loadData>
     </changeSet>

@@ -16,7 +16,6 @@ public class ContactInfoDTO implements Serializable {
     @Pattern(regexp = "^[^@\\s]+@[^@\\s]+\\.[^@\\s]+$")
     private String email;
 
-    @NotNull
     @Pattern(regexp = "((\\+[0-9]{1,3})|0)[0-9]{7,10}")
     private String phoneNumber;
 

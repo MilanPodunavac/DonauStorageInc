@@ -1,5 +1,6 @@
 package inc.donau.storage.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.Serializable;
 import javax.persistence.*;
 import javax.validation.constraints.*;
@@ -50,6 +51,15 @@ public class LegalEntity implements Serializable {
     @NotNull
     @JoinColumn(unique = true)
     private ContactInfo contactInfo;
+
+    /**
+     * Cascade delete
+     */
+    @JsonIgnoreProperties(value = { "city" }, allowSetters = true)
+    @OneToOne(optional = false)
+    @NotNull
+    @JoinColumn(unique = true)
+    private Address address;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
@@ -115,6 +125,19 @@ public class LegalEntity implements Serializable {
 
     public LegalEntity contactInfo(ContactInfo contactInfo) {
         this.setContactInfo(contactInfo);
+        return this;
+    }
+
+    public Address getAddress() {
+        return this.address;
+    }
+
+    public void setAddress(Address address) {
+        this.address = address;
+    }
+
+    public LegalEntity address(Address address) {
+        this.setAddress(address);
         return this;
     }
 
