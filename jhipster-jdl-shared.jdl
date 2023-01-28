@@ -43,7 +43,7 @@ entity Employee {
 
 entity ContactInfo {
 	email String required unique pattern (/^[^@\s]+@[^@\s]+\.[^@\s]+$/),
-	phoneNumber String required pattern(/((\+[0-9]{1,3})|0)[0-9]{7,10}/)
+	phoneNumber String pattern(/((\+[0-9]{1,3})|0)[0-9]{7,10}/)
 }
 
 enum Gender {
@@ -112,6 +112,12 @@ relationship OneToOne {
 
 	/** Cascade delete */
 	Employee{address required} 
+	to 
+	/** Prevent delete */
+	Address
+
+	/** Cascade delete */
+	LegalEntity{address required} 
 	to 
 	/** Prevent delete */
 	Address
