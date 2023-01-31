@@ -63,6 +63,9 @@ export const Address = () => {
                 <th>
                   <Translate contentKey="donauStorageIncApp.address.city">City</Translate>
                 </th>
+                <th>
+                  <Translate contentKey="donauStorageIncApp.city.country">Country</Translate>
+                </th>
                 <th />
               </tr>
             </thead>
@@ -77,7 +80,8 @@ export const Address = () => {
                   <td>{address.streetName}</td>
                   <td>{address.streetCode}</td>
                   <td>{address.postalCode}</td>
-                  <td>{address.city ? <Link to={`/city/${address.city.id}`}>{address.city.id}</Link> : ''}</td>
+                  <td>{address.city ? <Link to={`/city/${address.city.id}`}>{address.city.name}</Link> : ''}</td>
+                  <td>{address.city ? <Link to={`/country/${address.city.country.id}`}>{address.city.country.name}</Link> : ''}</td>
                   <td className="text-end">
                     <div className="btn-group flex-btn-group-container">
                       <Button tag={Link} to={`/address/${address.id}`} color="info" size="sm" data-cy="entityDetailsButton">

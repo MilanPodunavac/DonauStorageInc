@@ -126,8 +126,18 @@ export const Storage = () => {
                     </Button>
                   </td>
                   <td>{storage.name}</td>
-                  <td>{storage.address ? <Link to={`/address/${storage.address.id}`}>{storage.address.id}</Link> : ''}</td>
-                  <td>{storage.company ? <Link to={`/company/${storage.company.id}`}>{storage.company.id}</Link> : ''}</td>
+                  <td>
+                    {storage.address ? (
+                      <Link to={`/address/${storage.address.id}`}>
+                        {storage.address.streetName + ' ' + storage.address.streetCode + ', ' + storage.address.city.name}
+                      </Link>
+                    ) : (
+                      ''
+                    )}
+                  </td>
+                  <td>
+                    {storage.company ? <Link to={`/company/${storage.company.id}`}>{storage.company.legalEntityInfo.name}</Link> : ''}
+                  </td>
                   <td className="text-end">
                     <div className="btn-group flex-btn-group-container">
                       <Button tag={Link} to={`/storage/${storage.id}`} color="info" size="sm" data-cy="entityDetailsButton">

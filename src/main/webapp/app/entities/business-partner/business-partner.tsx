@@ -106,17 +106,19 @@ export const BusinessPartner = () => {
                   <Translate contentKey="donauStorageIncApp.businessPartner.id">ID</Translate> <FontAwesomeIcon icon="sort" />
                 </th>
                 <th>
+                  <Translate contentKey="donauStorageIncApp.legalEntity.name">Name</Translate>
+                  <FontAwesomeIcon icon="sort" />
+                </th>
+                <th>
                   <Translate contentKey="donauStorageIncApp.businessPartner.businessContact">Business Contact</Translate>{' '}
                   <FontAwesomeIcon icon="sort" />
                 </th>
                 <th>
-                  <Translate contentKey="donauStorageIncApp.businessPartner.legalEntityInfo">Legal Entity Info</Translate>{' '}
-                  <FontAwesomeIcon icon="sort" />
+                  <Translate contentKey="donauStorageIncApp.legalEntity.taxIdentificationNumber">Tax Identification Number</Translate>{' '}
                 </th>
                 <th>
-                  <Translate contentKey="donauStorageIncApp.businessPartner.company">Company</Translate> <FontAwesomeIcon icon="sort" />
+                  <Translate contentKey="donauStorageIncApp.legalEntity.identificationNumber">Identification Number</Translate>{' '}
                 </th>
-                <th />
               </tr>
             </thead>
             <tbody>
@@ -128,21 +130,31 @@ export const BusinessPartner = () => {
                     </Button>
                   </td>
                   <td>
-                    {businessPartner.businessContact ? (
-                      <Link to={`/business-contact/${businessPartner.businessContact.id}`}>{businessPartner.businessContact.id}</Link>
-                    ) : (
-                      ''
-                    )}
-                  </td>
-                  <td>
                     {businessPartner.legalEntityInfo ? (
-                      <Link to={`/legal-entity/${businessPartner.legalEntityInfo.id}`}>{businessPartner.legalEntityInfo.id}</Link>
+                      <Link to={`/legal-entity/${businessPartner.legalEntityInfo.id}`}>{businessPartner.legalEntityInfo.name}</Link>
                     ) : (
                       ''
                     )}
                   </td>
                   <td>
-                    {businessPartner.company ? <Link to={`/company/${businessPartner.company.id}`}>{businessPartner.company.id}</Link> : ''}
+                    {businessPartner.businessContact ? (
+                      <Link to={`/business-contact/${businessPartner.businessContact.id}`}>
+                        {businessPartner.businessContact.personalInfo.firstName +
+                          ' ' +
+                          businessPartner.businessContact.personalInfo.lastName}
+                      </Link>
+                    ) : (
+                      ''
+                    )}
+                  </td>
+                  <td>{businessPartner.legalEntityInfo.taxIdentificationNumber}</td>
+                  <td>{businessPartner.legalEntityInfo.identificationNumber}</td>
+                  <td>
+                    {businessPartner.company ? (
+                      <Link to={`/company/${businessPartner.company.id}`}>{businessPartner.company.name}</Link>
+                    ) : (
+                      ''
+                    )}
                   </td>
                   <td className="text-end">
                     <div className="btn-group flex-btn-group-container">

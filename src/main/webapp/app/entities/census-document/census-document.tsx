@@ -163,30 +163,40 @@ export const CensusDocument = () => {
                   <td>{censusDocument.leveling ? 'true' : 'false'}</td>
                   <td>
                     {censusDocument.businessYear ? (
-                      <Link to={`/business-year/${censusDocument.businessYear.id}`}>{censusDocument.businessYear.id}</Link>
+                      <Link to={`/business-year/${censusDocument.businessYear.id}`}>{censusDocument.businessYear.yearCode}</Link>
                     ) : (
                       ''
                     )}
+                  </td>
+                  <td>
+                    {censusDocument.storage ? <Link to={`/storage/${censusDocument.storage.id}`}>{censusDocument.storage.name}</Link> : ''}
                   </td>
                   <td>
                     {censusDocument.president ? (
-                      <Link to={`/employee/${censusDocument.president.id}`}>{censusDocument.president.id}</Link>
+                      <Link to={`/employee/${censusDocument.president.id}`}>
+                        {censusDocument.president.personalInfo.firstName + ' ' + censusDocument.president.personalInfo.lastName}
+                      </Link>
                     ) : (
                       ''
                     )}
                   </td>
                   <td>
-                    {censusDocument.deputy ? <Link to={`/employee/${censusDocument.deputy.id}`}>{censusDocument.deputy.id}</Link> : ''}
+                    {censusDocument.deputy ? (
+                      <Link to={`/employee/${censusDocument.deputy.id}`}>
+                        {censusDocument.deputy.personalInfo.firstName + ' ' + censusDocument.deputy.personalInfo.lastName}
+                      </Link>
+                    ) : (
+                      ''
+                    )}
                   </td>
                   <td>
                     {censusDocument.censusTaker ? (
-                      <Link to={`/employee/${censusDocument.censusTaker.id}`}>{censusDocument.censusTaker.id}</Link>
+                      <Link to={`/employee/${censusDocument.censusTaker.id}`}>
+                        {censusDocument.censusTaker.personalInfo.firstName + ' ' + censusDocument.censusTaker.personalInfo.lastName}
+                      </Link>
                     ) : (
                       ''
                     )}
-                  </td>
-                  <td>
-                    {censusDocument.storage ? <Link to={`/storage/${censusDocument.storage.id}`}>{censusDocument.storage.id}</Link> : ''}
                   </td>
                   <td className="text-end">
                     <div className="btn-group flex-btn-group-container">

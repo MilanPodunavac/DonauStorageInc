@@ -105,32 +105,8 @@ export const StorageCard = () => {
                 <th className="hand" onClick={sort('id')}>
                   <Translate contentKey="donauStorageIncApp.storageCard.id">Id</Translate> <FontAwesomeIcon icon="sort" />
                 </th>
-                <th className="hand" onClick={sort('startingAmount')}>
-                  <Translate contentKey="donauStorageIncApp.storageCard.startingAmount">Starting Amount</Translate>{' '}
-                  <FontAwesomeIcon icon="sort" />
-                </th>
-                <th className="hand" onClick={sort('receivedAmount')}>
-                  <Translate contentKey="donauStorageIncApp.storageCard.receivedAmount">Received Amount</Translate>{' '}
-                  <FontAwesomeIcon icon="sort" />
-                </th>
-                <th className="hand" onClick={sort('dispatchedAmount')}>
-                  <Translate contentKey="donauStorageIncApp.storageCard.dispatchedAmount">Dispatched Amount</Translate>{' '}
-                  <FontAwesomeIcon icon="sort" />
-                </th>
                 <th className="hand" onClick={sort('totalAmount')}>
                   <Translate contentKey="donauStorageIncApp.storageCard.totalAmount">Total Amount</Translate>{' '}
-                  <FontAwesomeIcon icon="sort" />
-                </th>
-                <th className="hand" onClick={sort('startingValue')}>
-                  <Translate contentKey="donauStorageIncApp.storageCard.startingValue">Starting Value</Translate>{' '}
-                  <FontAwesomeIcon icon="sort" />
-                </th>
-                <th className="hand" onClick={sort('receivedValue')}>
-                  <Translate contentKey="donauStorageIncApp.storageCard.receivedValue">Received Value</Translate>{' '}
-                  <FontAwesomeIcon icon="sort" />
-                </th>
-                <th className="hand" onClick={sort('dispatchedValue')}>
-                  <Translate contentKey="donauStorageIncApp.storageCard.dispatchedValue">Dispatched Value</Translate>{' '}
                   <FontAwesomeIcon icon="sort" />
                 </th>
                 <th className="hand" onClick={sort('totalValue')}>
@@ -160,24 +136,20 @@ export const StorageCard = () => {
                       {storageCard.id}
                     </Button>
                   </td>
-                  <td>{storageCard.startingAmount}</td>
-                  <td>{storageCard.receivedAmount}</td>
-                  <td>{storageCard.dispatchedAmount}</td>
                   <td>{storageCard.totalAmount}</td>
-                  <td>{storageCard.startingValue}</td>
-                  <td>{storageCard.receivedValue}</td>
-                  <td>{storageCard.dispatchedValue}</td>
                   <td>{storageCard.totalValue}</td>
                   <td>{storageCard.price}</td>
                   <td>
                     {storageCard.businessYear ? (
-                      <Link to={`/business-year/${storageCard.businessYear.id}`}>{storageCard.businessYear.id}</Link>
+                      <Link to={`/business-year/${storageCard.businessYear.id}`}>{storageCard.businessYear.yearCode}</Link>
                     ) : (
                       ''
                     )}
                   </td>
-                  <td>{storageCard.resource ? <Link to={`/resource/${storageCard.resource.id}`}>{storageCard.resource.id}</Link> : ''}</td>
-                  <td>{storageCard.storage ? <Link to={`/storage/${storageCard.storage.id}`}>{storageCard.storage.id}</Link> : ''}</td>
+                  <td>
+                    {storageCard.resource ? <Link to={`/resource/${storageCard.resource.id}`}>{storageCard.resource.name}</Link> : ''}
+                  </td>
+                  <td>{storageCard.storage ? <Link to={`/storage/${storageCard.storage.id}`}>{storageCard.storage.name}</Link> : ''}</td>
                   <td className="text-end">
                     <div className="btn-group flex-btn-group-container">
                       <Button tag={Link} to={`/storage-card/${storageCard.id}`} color="info" size="sm" data-cy="entityDetailsButton">

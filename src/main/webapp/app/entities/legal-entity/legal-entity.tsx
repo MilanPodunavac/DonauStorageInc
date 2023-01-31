@@ -80,6 +80,20 @@ export const LegalEntity = () => {
                   <td>{legalEntity.name}</td>
                   <td>{legalEntity.taxIdentificationNumber}</td>
                   <td>{legalEntity.identificationNumber}</td>
+                  <dt>
+                    <Translate contentKey="donauStorageIncApp.employee.address">Address</Translate>
+                  </dt>
+                  <dd>
+                    {legalEntity.address
+                      ? legalEntity.address.streetName +
+                        ' ' +
+                        legalEntity.address.streetCode +
+                        ', ' +
+                        legalEntity.address.city.name +
+                        ', ' +
+                        legalEntity.address.postalCode
+                      : ''}
+                  </dd>
                   <td>
                     {legalEntity.contactInfo ? (
                       <Link to={`/contact-info/${legalEntity.contactInfo.id}`}>{legalEntity.contactInfo.id}</Link>

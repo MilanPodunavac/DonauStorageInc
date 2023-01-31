@@ -73,23 +73,35 @@ export const CensusDocumentDetail = () => {
           <dt>
             <Translate contentKey="donauStorageIncApp.censusDocument.businessYear">Business Year</Translate>
           </dt>
-          <dd>{censusDocumentEntity.businessYear ? censusDocumentEntity.businessYear.id : ''}</dd>
+          <dd>{censusDocumentEntity.businessYear ? censusDocumentEntity.businessYear.yearCode : ''}</dd>
           <dt>
             <Translate contentKey="donauStorageIncApp.censusDocument.president">President</Translate>
           </dt>
-          <dd>{censusDocumentEntity.president ? censusDocumentEntity.president.id : ''}</dd>
+          <dd>
+            {censusDocumentEntity.president
+              ? censusDocumentEntity.president.personalInfo.firstName + ' ' + censusDocumentEntity.president.personalInfo.lastName
+              : ''}
+          </dd>
           <dt>
             <Translate contentKey="donauStorageIncApp.censusDocument.deputy">Deputy</Translate>
           </dt>
-          <dd>{censusDocumentEntity.deputy ? censusDocumentEntity.deputy.id : ''}</dd>
+          <dd>
+            {censusDocumentEntity.deputy
+              ? censusDocumentEntity.deputy.personalInfo.firstName + ' ' + censusDocumentEntity.deputy.personalInfo.lastName
+              : ''}
+          </dd>
           <dt>
             <Translate contentKey="donauStorageIncApp.censusDocument.censusTaker">Census Taker</Translate>
           </dt>
-          <dd>{censusDocumentEntity.censusTaker ? censusDocumentEntity.censusTaker.id : ''}</dd>
+          <dd>
+            {censusDocumentEntity.censusTaker
+              ? censusDocumentEntity.censusTaker.personalInfo.firstName + ' ' + censusDocumentEntity.censusTaker.personalInfo.lastName
+              : ''}
+          </dd>
           <dt>
             <Translate contentKey="donauStorageIncApp.censusDocument.storage">Storage</Translate>
           </dt>
-          <dd>{censusDocumentEntity.storage ? censusDocumentEntity.storage.id : ''}</dd>
+          <dd>{censusDocumentEntity.storage ? censusDocumentEntity.storage.name : ''}</dd>
         </dl>
         <Button tag={Link} to="/census-document" replace color="info" data-cy="entityDetailsBackButton">
           <FontAwesomeIcon icon="arrow-left" />{' '}

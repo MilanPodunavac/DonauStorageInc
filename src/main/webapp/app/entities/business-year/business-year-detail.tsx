@@ -47,7 +47,7 @@ export const BusinessYearDetail = () => {
           <dt>
             <Translate contentKey="donauStorageIncApp.businessYear.company">Company</Translate>
           </dt>
-          <dd>{businessYearEntity.company ? businessYearEntity.company.id : ''}</dd>
+          <dd>{businessYearEntity.company ? businessYearEntity.company.name : ''}</dd>
         </dl>
         <Button tag={Link} to="/business-year" replace color="info" data-cy="entityDetailsBackButton">
           <FontAwesomeIcon icon="arrow-left" />{' '}

@@ -47,11 +47,11 @@ export const ResourceDetail = () => {
           <dt>
             <Translate contentKey="donauStorageIncApp.resource.unit">Unit</Translate>
           </dt>
-          <dd>{resourceEntity.unit ? resourceEntity.unit.id : ''}</dd>
+          <dd>{resourceEntity.unit ? resourceEntity.unit.name : ''}</dd>
           <dt>
             <Translate contentKey="donauStorageIncApp.resource.company">Company</Translate>
           </dt>
-          <dd>{resourceEntity.company ? resourceEntity.company.id : ''}</dd>
+          <dd>{resourceEntity.company ? resourceEntity.company.legalEntityInfo.name : ''}</dd>
         </dl>
         <Button tag={Link} to="/resource" replace color="info" data-cy="entityDetailsBackButton">
           <FontAwesomeIcon icon="arrow-left" />{' '}

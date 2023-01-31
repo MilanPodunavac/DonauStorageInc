@@ -52,7 +52,10 @@ export const BusinessContact = () => {
                   <Translate contentKey="donauStorageIncApp.businessContact.id">ID</Translate>
                 </th>
                 <th>
-                  <Translate contentKey="donauStorageIncApp.businessContact.personalInfo">Personal Info</Translate>
+                  <Translate contentKey="donauStorageIncApp.person.fullName">Name</Translate>
+                </th>
+                <th>
+                  <Translate contentKey="donauStorageIncApp.person.gender">Gender</Translate>
                 </th>
                 <th />
               </tr>
@@ -67,11 +70,14 @@ export const BusinessContact = () => {
                   </td>
                   <td>
                     {businessContact.personalInfo ? (
-                      <Link to={`/person/${businessContact.personalInfo.id}`}>{businessContact.personalInfo.id}</Link>
+                      <Link to={`/person/${businessContact.personalInfo.id}`}>
+                        {businessContact.personalInfo.firstName + ' ' + businessContact.personalInfo.lastName}
+                      </Link>
                     ) : (
                       ''
                     )}
                   </td>
+                  <td>{businessContact.personalInfo.gender}</td>
                   <td className="text-end">
                     <div className="btn-group flex-btn-group-container">
                       <Button

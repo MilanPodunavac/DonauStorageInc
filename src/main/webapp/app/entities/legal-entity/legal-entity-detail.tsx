@@ -61,9 +61,19 @@ export const LegalEntityDetail = () => {
           </dt>
           <dd>{legalEntityEntity.contactInfo ? legalEntityEntity.contactInfo.id : ''}</dd>
           <dt>
-            <Translate contentKey="donauStorageIncApp.legalEntity.address">Address</Translate>
+            <Translate contentKey="donauStorageIncApp.employee.address">Address</Translate>
           </dt>
-          <dd>{legalEntityEntity.address ? legalEntityEntity.address.id : ''}</dd>
+          <dd>
+            {legalEntityEntity.address
+              ? legalEntityEntity.address.streetName +
+                ' ' +
+                legalEntityEntity.address.streetCode +
+                ', ' +
+                legalEntityEntity.address.city.name +
+                ', ' +
+                legalEntityEntity.address.postalCode
+              : ''}
+          </dd>
         </dl>
         <Button tag={Link} to="/legal-entity" replace color="info" data-cy="entityDetailsBackButton">
           <FontAwesomeIcon icon="arrow-left" />{' '}

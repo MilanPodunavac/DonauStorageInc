@@ -126,8 +126,13 @@ export const Company = () => {
                     <Translate contentKey="donauStorageIncApp.company.id">ID</Translate> <FontAwesomeIcon icon="sort" />
                   </th>
                   <th>
-                    <Translate contentKey="donauStorageIncApp.company.legalEntityInfo">Legal Entity Info</Translate>{' '}
-                    <FontAwesomeIcon icon="sort" />
+                    <Translate contentKey="donauStorageIncApp.legalEntity.name">Name</Translate> <FontAwesomeIcon icon="sort" />
+                  </th>
+                  <th>
+                    <Translate contentKey="donauStorageIncApp.legalEntity.taxIdentificationNumber">Tax Identification Number</Translate>{' '}
+                  </th>
+                  <th>
+                    <Translate contentKey="donauStorageIncApp.legalEntity.identificationNumber">Identification Number</Translate>{' '}
                   </th>
                   <th />
                 </tr>
@@ -142,11 +147,13 @@ export const Company = () => {
                     </td>
                     <td>
                       {company.legalEntityInfo ? (
-                        <Link to={`/legal-entity/${company.legalEntityInfo.id}`}>{company.legalEntityInfo.id}</Link>
+                        <Link to={`/legal-entity/${company.legalEntityInfo.id}`}>{company.legalEntityInfo.name}</Link>
                       ) : (
                         ''
                       )}
                     </td>
+                    <td>{company.legalEntityInfo.taxIdentificationNumber}</td>
+                    <td>{company.legalEntityInfo.identificationNumber}</td>
                     <td className="text-end">
                       <div className="btn-group flex-btn-group-container">
                         <Button tag={Link} to={`/company/${company.id}`} color="info" size="sm" data-cy="entityDetailsButton">

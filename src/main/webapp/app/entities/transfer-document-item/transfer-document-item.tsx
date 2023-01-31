@@ -174,7 +174,7 @@ export const TransferDocumentItem = () => {
                     </td>
                     <td>
                       {transferDocumentItem.resource ? (
-                        <Link to={`/resource/${transferDocumentItem.resource.id}`}>{transferDocumentItem.resource.id}</Link>
+                        <Link to={`/resource/${transferDocumentItem.resource.id}`}>{transferDocumentItem.resource.name}</Link>
                       ) : (
                         ''
                       )}

@@ -127,7 +127,13 @@ export const BusinessYear = () => {
                   </td>
                   <td>{businessYear.yearCode}</td>
                   <td>{businessYear.completed ? 'true' : 'false'}</td>
-                  <td>{businessYear.company ? <Link to={`/company/${businessYear.company.id}`}>{businessYear.company.id}</Link> : ''}</td>
+                  <td>
+                    {businessYear.company ? (
+                      <Link to={`/company/${businessYear.company.id}`}>{businessYear.company.legalEntityInfo.name}</Link>
+                    ) : (
+                      ''
+                    )}
+                  </td>
                   <td className="text-end">
                     <div className="btn-group flex-btn-group-container">
                       <Button tag={Link} to={`/business-year/${businessYear.id}`} color="info" size="sm" data-cy="entityDetailsButton">

@@ -102,12 +102,15 @@ export const Employee = () => {
           <Table responsive>
             <thead>
               <tr>
-                <th className="hand" onClick={sort('id')}>
-                  <Translate contentKey="donauStorageIncApp.employee.id">ID</Translate> <FontAwesomeIcon icon="sort" />
-                </th>
                 <th className="hand" onClick={sort('uniqueIdentificationNumber')}>
-                  <Translate contentKey="donauStorageIncApp.employee.uniqueIdentificationNumber">Unique Identification Number</Translate>{' '}
+                  <Translate contentKey="donauStorageIncApp.employee.uniqueIdentificationNumber">UID</Translate>{' '}
                   <FontAwesomeIcon icon="sort" />
+                </th>
+                <th className="hand" onClick={sort('personalInfo.lastName')}>
+                  <Translate contentKey="donauStorageIncApp.person.fullName">Name</Translate> <FontAwesomeIcon icon="sort" />
+                </th>
+                <th className="hand" onClick={sort('personalInfo.gender')}>
+                  <Translate contentKey="donauStorageIncApp.person.gender">Gender</Translate> <FontAwesomeIcon icon="sort" />
                 </th>
                 <th className="hand" onClick={sort('birthDate')}>
                   <Translate contentKey="donauStorageIncApp.employee.birthDate">Birth Date</Translate> <FontAwesomeIcon icon="sort" />
@@ -122,9 +125,6 @@ export const Employee = () => {
                   <Translate contentKey="donauStorageIncApp.employee.address">Address</Translate> <FontAwesomeIcon icon="sort" />
                 </th>
                 <th>
-                  <Translate contentKey="donauStorageIncApp.employee.personalInfo">Personal Info</Translate> <FontAwesomeIcon icon="sort" />
-                </th>
-                <th>
                   <Translate contentKey="donauStorageIncApp.employee.company">Company</Translate> <FontAwesomeIcon icon="sort" />
                 </th>
                 <th />
@@ -135,16 +135,26 @@ export const Employee = () => {
                 <tr key={`entity-${i}`} data-cy="entityTable">
                   <td>
                     <Button tag={Link} to={`/employee/${employee.id}`} color="link" size="sm">
-                      {employee.id}
+                      {employee.uniqueIdentificationNumber}
                     </Button>
                   </td>
-                  <td>{employee.uniqueIdentificationNumber}</td>
+                  <td>{employee.personalInfo.firstName + ' ' + employee.personalInfo.lastName}</td>
+                  <td>{employee.personalInfo.gender}</td>
                   <td>{employee.birthDate ? <TextFormat type="date" value={employee.birthDate} format={APP_DATE_FORMAT} /> : null}</td>
                   <td>{employee.disability ? 'true' : 'false'}</td>
                   <td>{employee.employment ? 'true' : 'false'}</td>
-                  <td>{employee.address ? <Link to={`/address/${employee.address.id}`}>{employee.address.id}</Link> : ''}</td>
-                  <td>{employee.personalInfo ? <Link to={`/person/${employee.personalInfo.id}`}>{employee.personalInfo.id}</Link> : ''}</td>
-                  <td>{employee.company ? <Link to={`/company/${employee.company.id}`}>{employee.company.id}</Link> : ''}</td>
+                  <td>
+                    {employee.address ? (
+                      <Link to={`/address/${employee.address.id}`}>
+                        {employee.address.streetName + ' ' + employee.address.streetCode + ', ' + employee.address.city.name}
+                      </Link>
+                    ) : (
+                      ''
+                    )}
+                  </td>
+                  <td>
+                    {employee.company ? <Link to={`/company/${employee.company.id}`}>{employee.company.legalEntityInfo.name}</Link> : ''}
+                  </td>
                   <td className="text-end">
                     <div className="btn-group flex-btn-group-container">
                       <Button tag={Link} to={`/employee/${employee.id}`} color="info" size="sm" data-cy="entityDetailsButton">

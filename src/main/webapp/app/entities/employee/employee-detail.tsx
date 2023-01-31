@@ -33,6 +33,22 @@ export const EmployeeDetail = () => {
           </dt>
           <dd>{employeeEntity.id}</dd>
           <dt>
+            <Translate contentKey="donauStorageIncApp.person.fullName">Name</Translate>
+          </dt>
+          <dd>
+            {employeeEntity.personalInfo
+              ? employeeEntity.personalInfo.firstName +
+                (employeeEntity.personalInfo.middleName ? ' ' + employeeEntity.personalInfo.middleName : '') +
+                ' ' +
+                employeeEntity.personalInfo.lastName +
+                (employeeEntity.personalInfo.maidenName ? ' (' + employeeEntity.personalInfo.maidenName + ')' : '')
+              : ''}
+          </dd>
+          <dt>
+            <Translate contentKey="donauStorageIncApp.person.gender">Gender</Translate>
+          </dt>
+          <dd>{employeeEntity.personalInfo ? employeeEntity.personalInfo.gender : ''}</dd>
+          <dt>
             <span id="uniqueIdentificationNumber">
               <Translate contentKey="donauStorageIncApp.employee.uniqueIdentificationNumber">Unique Identification Number</Translate>
             </span>
@@ -48,6 +64,28 @@ export const EmployeeDetail = () => {
           </dt>
           <dd>{employeeEntity.birthDate ? <TextFormat value={employeeEntity.birthDate} type="date" format={APP_DATE_FORMAT} /> : null}</dd>
           <dt>
+            <Translate contentKey="donauStorageIncApp.contactInfo.email">Email</Translate>
+          </dt>
+          <dd>{employeeEntity.personalInfo ? employeeEntity.personalInfo.contactInfo.email : ''}</dd>
+          <dt>
+            <Translate contentKey="donauStorageIncApp.contactInfo.phoneNumber">Phone Number</Translate>
+          </dt>
+          <dd>{employeeEntity.personalInfo ? employeeEntity.personalInfo.contactInfo.phoneNumber : ''}</dd>
+          <dt>
+            <Translate contentKey="donauStorageIncApp.employee.address">Address</Translate>
+          </dt>
+          <dd>
+            {employeeEntity.address
+              ? employeeEntity.address.streetName +
+                ' ' +
+                employeeEntity.address.streetCode +
+                ', ' +
+                employeeEntity.address.city.name +
+                ', ' +
+                employeeEntity.address.postalCode
+              : ''}
+          </dd>
+          <dt>
             <span id="disability">
               <Translate contentKey="donauStorageIncApp.employee.disability">Disability</Translate>
             </span>
@@ -60,17 +98,9 @@ export const EmployeeDetail = () => {
           </dt>
           <dd>{employeeEntity.employment ? 'true' : 'false'}</dd>
           <dt>
-            <Translate contentKey="donauStorageIncApp.employee.address">Address</Translate>
-          </dt>
-          <dd>{employeeEntity.address ? employeeEntity.address.id : ''}</dd>
-          <dt>
-            <Translate contentKey="donauStorageIncApp.employee.personalInfo">Personal Info</Translate>
-          </dt>
-          <dd>{employeeEntity.personalInfo ? employeeEntity.personalInfo.id : ''}</dd>
-          <dt>
             <Translate contentKey="donauStorageIncApp.employee.company">Company</Translate>
           </dt>
-          <dd>{employeeEntity.company ? employeeEntity.company.id : ''}</dd>
+          <dd>{employeeEntity.company ? employeeEntity.company.legalEntityInfo.name : ''}</dd>
         </dl>
         <Button tag={Link} to="/employee" replace color="info" data-cy="entityDetailsBackButton">
           <FontAwesomeIcon icon="arrow-left" />{' '}

@@ -50,7 +50,7 @@ export const CityDetail = () => {
           <dt>
             <Translate contentKey="donauStorageIncApp.city.country">Country</Translate>
           </dt>
-          <dd>{cityEntity.country ? cityEntity.country.id : ''}</dd>
+          <dd>{cityEntity.country ? cityEntity.country.name : ''}</dd>
         </dl>
         <Button tag={Link} to="/city" replace color="info" data-cy="entityDetailsBackButton">
           <FontAwesomeIcon icon="arrow-left" />{' '}

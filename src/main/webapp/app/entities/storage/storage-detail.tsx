@@ -44,11 +44,22 @@ export const StorageDetail = () => {
           <dt>
             <Translate contentKey="donauStorageIncApp.storage.address">Address</Translate>
           </dt>
-          <dd>{storageEntity.address ? storageEntity.address.id : ''}</dd>
+          <dd>
+            {storageEntity.address
+              ? storageEntity.address.streetName +
+                ' ' +
+                storageEntity.address.streetCode +
+                ', ' +
+                storageEntity.address.city.name +
+                ', ' +
+                storageEntity.address.postalCode
+              : ''}
+          </dd>
+
           <dt>
             <Translate contentKey="donauStorageIncApp.storage.company">Company</Translate>
           </dt>
-          <dd>{storageEntity.company ? storageEntity.company.id : ''}</dd>
+          <dd>{storageEntity.company ? storageEntity.company.legalEntityInfo.name : ''}</dd>
         </dl>
         <Button tag={Link} to="/storage" replace color="info" data-cy="entityDetailsBackButton">
           <FontAwesomeIcon icon="arrow-left" />{' '}

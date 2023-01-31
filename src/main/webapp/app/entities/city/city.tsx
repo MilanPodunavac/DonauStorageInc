@@ -147,7 +147,7 @@ export const City = () => {
                     </td>
                     <td>{city.name}</td>
                     <td>{city.postalCode}</td>
-                    <td>{city.country ? <Link to={`/country/${city.country.id}`}>{city.country.id}</Link> : ''}</td>
+                    <td>{city.country ? <Link to={`/country/${city.country.id}`}>{city.country.name}</Link> : ''}</td>
                     <td className="text-end">
                       <div className="btn-group flex-btn-group-container">
                         <Button tag={Link} to={`/city/${city.id}`} color="info" size="sm" data-cy="entityDetailsButton">

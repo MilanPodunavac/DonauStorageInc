@@ -67,7 +67,10 @@ export const Person = () => {
                   <Translate contentKey="donauStorageIncApp.person.gender">Gender</Translate>
                 </th>
                 <th>
-                  <Translate contentKey="donauStorageIncApp.person.contactInfo">Contact Info</Translate>
+                  <Translate contentKey="donauStorageIncApp.contactInfo.email">Email</Translate>
+                </th>
+                <th>
+                  <Translate contentKey="donauStorageIncApp.contactInfo.phoneNumber">Phone Number</Translate>
                 </th>
                 <th />
               </tr>
@@ -87,7 +90,10 @@ export const Person = () => {
                   <td>
                     <Translate contentKey={`donauStorageIncApp.Gender.${person.gender}`} />
                   </td>
-                  <td>{person.contactInfo ? <Link to={`/contact-info/${person.contactInfo.id}`}>{person.contactInfo.id}</Link> : ''}</td>
+                  <td>{person.contactInfo ? <Link to={`/contact-info/${person.contactInfo.id}`}>{person.contactInfo.email}</Link> : ''}</td>
+                  <td>
+                    {person.contactInfo ? <Link to={`/contact-info/${person.contactInfo.id}`}>{person.contactInfo.phoneNumber}</Link> : ''}
+                  </td>
                   <td className="text-end">
                     <div className="btn-group flex-btn-group-container">
                       <Button tag={Link} to={`/person/${person.id}`} color="info" size="sm" data-cy="entityDetailsButton">

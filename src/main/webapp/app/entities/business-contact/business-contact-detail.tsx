@@ -33,9 +33,21 @@ export const BusinessContactDetail = () => {
           </dt>
           <dd>{businessContactEntity.id}</dd>
           <dt>
-            <Translate contentKey="donauStorageIncApp.businessContact.personalInfo">Personal Info</Translate>
+            <Translate contentKey="donauStorageIncApp.person.fullName">Name</Translate>
           </dt>
-          <dd>{businessContactEntity.personalInfo ? businessContactEntity.personalInfo.id : ''}</dd>
+          <dd>
+            {businessContactEntity.personalInfo
+              ? businessContactEntity.personalInfo.firstName +
+                (businessContactEntity.personalInfo.middleName ? ' ' + businessContactEntity.personalInfo.middleName : '') +
+                ' ' +
+                businessContactEntity.personalInfo.lastName +
+                (businessContactEntity.personalInfo.maidenName ? ' (' + businessContactEntity.personalInfo.maidenName + ')' : '')
+              : ''}
+          </dd>
+          <dt>
+            <Translate contentKey="donauStorageIncApp.person.gender">Gender</Translate>
+          </dt>
+          <dd>{businessContactEntity.personalInfo ? businessContactEntity.personalInfo.gender : ''}</dd>
         </dl>
         <Button tag={Link} to="/business-contact" replace color="info" data-cy="entityDetailsBackButton">
           <FontAwesomeIcon icon="arrow-left" />{' '}

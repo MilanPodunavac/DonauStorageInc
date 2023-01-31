@@ -83,19 +83,19 @@ export const TransferDocumentDetail = () => {
           <dt>
             <Translate contentKey="donauStorageIncApp.transferDocument.businessYear">Business Year</Translate>
           </dt>
-          <dd>{transferDocumentEntity.businessYear ? transferDocumentEntity.businessYear.id : ''}</dd>
+          <dd>{transferDocumentEntity.businessYear ? transferDocumentEntity.businessYear.yearCode : ''}</dd>
           <dt>
             <Translate contentKey="donauStorageIncApp.transferDocument.receivingStorage">Receiving Storage</Translate>
           </dt>
-          <dd>{transferDocumentEntity.receivingStorage ? transferDocumentEntity.receivingStorage.id : ''}</dd>
+          <dd>{transferDocumentEntity.receivingStorage ? transferDocumentEntity.receivingStorage.name : ''}</dd>
           <dt>
             <Translate contentKey="donauStorageIncApp.transferDocument.dispatchingStorage">Dispatching Storage</Translate>
           </dt>
-          <dd>{transferDocumentEntity.dispatchingStorage ? transferDocumentEntity.dispatchingStorage.id : ''}</dd>
+          <dd>{transferDocumentEntity.dispatchingStorage ? transferDocumentEntity.dispatchingStorage.name : ''}</dd>
           <dt>
             <Translate contentKey="donauStorageIncApp.transferDocument.businessPartner">Business Partner</Translate>
           </dt>
-          <dd>{transferDocumentEntity.businessPartner ? transferDocumentEntity.businessPartner.id : ''}</dd>
+          <dd>{transferDocumentEntity.businessPartner ? transferDocumentEntity.businessPartner.name : ''}</dd>
         </dl>
         <Button tag={Link} to="/transfer-document" replace color="info" data-cy="entityDetailsBackButton">
           <FontAwesomeIcon icon="arrow-left" />{' '}

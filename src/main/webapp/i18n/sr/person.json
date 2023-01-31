@@ -23,7 +23,8 @@
       "lastName": "Last Name",
       "maidenName": "Maiden Name",
       "gender": "Gender",
-      "contactInfo": "Contact Info"
+      "contactInfo": "Contact Info",
+      "fullName": "Name"
     }
   }
 }

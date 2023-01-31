@@ -37,7 +37,7 @@ export const CensusItemDetail = () => {
               <Translate contentKey="donauStorageIncApp.censusItem.amount">Amount</Translate>
             </span>
           </dt>
-          <dd>{censusItemEntity.amount}</dd>
+          <dd>{censusItemEntity.amount + ' ' + censusItemEntity.resource.measurementUnit.abbreviation}</dd>
           <dt>
             <Translate contentKey="donauStorageIncApp.censusItem.censusDocument">Census Document</Translate>
           </dt>
@@ -45,7 +45,7 @@ export const CensusItemDetail = () => {
           <dt>
             <Translate contentKey="donauStorageIncApp.censusItem.resource">Resource</Translate>
           </dt>
-          <dd>{censusItemEntity.resource ? censusItemEntity.resource.id : ''}</dd>
+          <dd>{censusItemEntity.resource ? censusItemEntity.resource.name : ''}</dd>
         </dl>
         <Button tag={Link} to="/census-item" replace color="info" data-cy="entityDetailsBackButton">
           <FontAwesomeIcon icon="arrow-left" />{' '}

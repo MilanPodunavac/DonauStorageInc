@@ -33,9 +33,17 @@ export const CompanyDetail = () => {
           </dt>
           <dd>{companyEntity.id}</dd>
           <dt>
-            <Translate contentKey="donauStorageIncApp.company.legalEntityInfo">Legal Entity Info</Translate>
+            <Translate contentKey="donauStorageIncApp.legalEntity.name">Name</Translate>
           </dt>
-          <dd>{companyEntity.legalEntityInfo ? companyEntity.legalEntityInfo.id : ''}</dd>
+          <dd>{companyEntity.legalEntityInfo ? companyEntity.legalEntityInfo.name : ''}</dd>
+          <dt>
+            <Translate contentKey="donauStorageIncApp.legalEntity.taxIdentificationNumber">Tax identification number</Translate>
+          </dt>
+          <dd>{companyEntity.legalEntityInfo ? companyEntity.legalEntityInfo.taxIdentificationNumber : ''}</dd>
+          <dt>
+            <Translate contentKey="donauStorageIncApp.legalEntity.identificationNumber">Identification number</Translate>
+          </dt>
+          <dd>{companyEntity.legalEntityInfo ? companyEntity.legalEntityInfo.identificationNumber : ''}</dd>
         </dl>
         <Button tag={Link} to="/company" replace color="info" data-cy="entityDetailsBackButton">
           <FontAwesomeIcon icon="arrow-left" />{' '}

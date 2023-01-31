@@ -43,7 +43,9 @@ export const StorageCardDetail = () => {
               <Translate contentKey="donauStorageIncApp.storageCard.help.startingAmount" />
             </UncontrolledTooltip>
           </dt>
-          <dd>{storageCardEntity.startingAmount}</dd>
+          <dd>
+            {storageCardEntity.startingAmount + (storageCardEntity.resource ? ' ' + storageCardEntity.resource.unit.abbreviation : '')}
+          </dd>
           <dt>
             <span id="receivedAmount">
               <Translate contentKey="donauStorageIncApp.storageCard.receivedAmount">Received Amount</Translate>
@@ -52,7 +54,9 @@ export const StorageCardDetail = () => {
               <Translate contentKey="donauStorageIncApp.storageCard.help.receivedAmount" />
             </UncontrolledTooltip>
           </dt>
-          <dd>{storageCardEntity.receivedAmount}</dd>
+          <dd>
+            {storageCardEntity.receivedAmount + (storageCardEntity.resource ? ' ' + storageCardEntity.resource.unit.abbreviation : '')}
+          </dd>
           <dt>
             <span id="dispatchedAmount">
               <Translate contentKey="donauStorageIncApp.storageCard.dispatchedAmount">Dispatched Amount</Translate>
@@ -61,7 +65,9 @@ export const StorageCardDetail = () => {
               <Translate contentKey="donauStorageIncApp.storageCard.help.dispatchedAmount" />
             </UncontrolledTooltip>
           </dt>
-          <dd>{storageCardEntity.dispatchedAmount}</dd>
+          <dd>
+            {storageCardEntity.dispatchedAmount + (storageCardEntity.resource ? ' ' + storageCardEntity.resource.unit.abbreviation : '')}
+          </dd>
           <dt>
             <span id="totalAmount">
               <Translate contentKey="donauStorageIncApp.storageCard.totalAmount">Total Amount</Translate>
@@ -70,7 +76,7 @@ export const StorageCardDetail = () => {
               <Translate contentKey="donauStorageIncApp.storageCard.help.totalAmount" />
             </UncontrolledTooltip>
           </dt>
-          <dd>{storageCardEntity.totalAmount}</dd>
+          <dd>{storageCardEntity.totalAmount + (storageCardEntity.resource ? ' ' + storageCardEntity.resource.unit.abbreviation : '')}</dd>
           <dt>
             <span id="startingValue">
               <Translate contentKey="donauStorageIncApp.storageCard.startingValue">Starting Value</Translate>
@@ -116,15 +122,15 @@ export const StorageCardDetail = () => {
           <dt>
             <Translate contentKey="donauStorageIncApp.storageCard.businessYear">Business Year</Translate>
           </dt>
-          <dd>{storageCardEntity.businessYear ? storageCardEntity.businessYear.id : ''}</dd>
+          <dd>{storageCardEntity.businessYear ? storageCardEntity.businessYear.yearCode : ''}</dd>
           <dt>
             <Translate contentKey="donauStorageIncApp.storageCard.resource">Resource</Translate>
           </dt>
-          <dd>{storageCardEntity.resource ? storageCardEntity.resource.id : ''}</dd>
+          <dd>{storageCardEntity.resource ? storageCardEntity.resource.name : ''}</dd>
           <dt>
             <Translate contentKey="donauStorageIncApp.storageCard.storage">Storage</Translate>
           </dt>
-          <dd>{storageCardEntity.storage ? storageCardEntity.storage.id : ''}</dd>
+          <dd>{storageCardEntity.storage ? storageCardEntity.storage.name : ''}</dd>
         </dl>
         <Button tag={Link} to="/storage-card" replace color="info" data-cy="entityDetailsBackButton">
           <FontAwesomeIcon icon="arrow-left" />{' '}

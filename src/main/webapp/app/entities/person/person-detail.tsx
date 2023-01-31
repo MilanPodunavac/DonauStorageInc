@@ -63,9 +63,13 @@ export const PersonDetail = () => {
           </dt>
           <dd>{personEntity.gender}</dd>
           <dt>
-            <Translate contentKey="donauStorageIncApp.person.contactInfo">Contact Info</Translate>
+            <Translate contentKey="donauStorageIncApp.contactInfo.email">Email</Translate>
           </dt>
-          <dd>{personEntity.contactInfo ? personEntity.contactInfo.id : ''}</dd>
+          <dd>{personEntity.contactInfo ? personEntity.contactInfo.email : ''}</dd>
+          <dt>
+            <Translate contentKey="donauStorageIncApp.contactInfo.phoneNumber">Phone Number</Translate>
+          </dt>
+          <dd>{personEntity.contactInfo ? personEntity.contactInfo.phoneNumber : ''}</dd>
         </dl>
         <Button tag={Link} to="/person" replace color="info" data-cy="entityDetailsBackButton">
           <FontAwesomeIcon icon="arrow-left" />{' '}

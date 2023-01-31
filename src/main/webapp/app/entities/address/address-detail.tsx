@@ -56,7 +56,7 @@ export const AddressDetail = () => {
           <dt>
             <Translate contentKey="donauStorageIncApp.address.city">City</Translate>
           </dt>
-          <dd>{addressEntity.city ? addressEntity.city.id : ''}</dd>
+          <dd>{addressEntity.city ? addressEntity.city.name + ', ' + addressEntity.city.country.name : ''}</dd>
         </dl>
         <Button tag={Link} to="/address" replace color="info" data-cy="entityDetailsBackButton">
           <FontAwesomeIcon icon="arrow-left" />{' '}

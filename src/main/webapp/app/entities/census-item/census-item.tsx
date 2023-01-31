@@ -146,7 +146,7 @@ export const CensusItem = () => {
                         {censusItem.id}
                       </Button>
                     </td>
-                    <td>{censusItem.amount}</td>
+                    <td>{censusItem.amount + ' ' + censusItem.resource.unit.abbreviation}</td>
                     <td>
                       {censusItem.censusDocument ? (
                         <Link to={`/census-document/${censusItem.censusDocument.id}`}>{censusItem.censusDocument.id}</Link>
@@ -154,7 +154,7 @@ export const CensusItem = () => {
                         ''
                       )}
                     </td>
-                    <td>{censusItem.resource ? <Link to={`/resource/${censusItem.resource.id}`}>{censusItem.resource.id}</Link> : ''}</td>
+                    <td>{censusItem.resource ? <Link to={`/resource/${censusItem.resource.id}`}>{censusItem.resource.name}</Link> : ''}</td>
                     <td className="text-end">
                       <div className="btn-group flex-btn-group-container">
                         <Button tag={Link} to={`/census-item/${censusItem.id}`} color="info" size="sm" data-cy="entityDetailsButton">

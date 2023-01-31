@@ -132,8 +132,10 @@ export const Resource = () => {
                   <td>
                     <Translate contentKey={`donauStorageIncApp.ResourceType.${resource.type}`} />
                   </td>
-                  <td>{resource.unit ? <Link to={`/measurement-unit/${resource.unit.id}`}>{resource.unit.id}</Link> : ''}</td>
-                  <td>{resource.company ? <Link to={`/company/${resource.company.id}`}>{resource.company.id}</Link> : ''}</td>
+                  <td>{resource.unit ? <Link to={`/measurement-unit/${resource.unit.id}`}>{resource.unit.abbreviation}</Link> : ''}</td>
+                  <td>
+                    {resource.company ? <Link to={`/company/${resource.company.id}`}>{resource.company.legalEntityInfo.name}</Link> : ''}
+                  </td>
                   <td className="text-end">
                     <div className="btn-group flex-btn-group-container">
                       <Button tag={Link} to={`/resource/${resource.id}`} color="info" size="sm" data-cy="entityDetailsButton">

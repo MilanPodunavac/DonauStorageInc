@@ -37,13 +37,37 @@ export const BusinessPartnerDetail = () => {
           </dt>
           <dd>{businessPartnerEntity.businessContact ? businessPartnerEntity.businessContact.id : ''}</dd>
           <dt>
-            <Translate contentKey="donauStorageIncApp.businessPartner.legalEntityInfo">Legal Entity Info</Translate>
+            <Translate contentKey="donauStorageIncApp.legalEntity.name">Name</Translate>
           </dt>
-          <dd>{businessPartnerEntity.legalEntityInfo ? businessPartnerEntity.legalEntityInfo.id : ''}</dd>
+          <dd>{businessPartnerEntity.legalEntityInfo ? businessPartnerEntity.legalEntityInfo.name : ''}</dd>
+          <dt>
+            <Translate contentKey="donauStorageIncApp.legalEntity.taxIdentificationNumber">Tax identification number</Translate>
+          </dt>
+          <dd>{businessPartnerEntity.legalEntityInfo ? businessPartnerEntity.legalEntityInfo.taxIdentificationNumber : ''}</dd>
+          <dt>
+            <Translate contentKey="donauStorageIncApp.legalEntity.identificationNumber">Identification number</Translate>
+          </dt>
+          <dd>{businessPartnerEntity.legalEntityInfo ? businessPartnerEntity.legalEntityInfo.identificationNumber : ''}</dd>
           <dt>
             <Translate contentKey="donauStorageIncApp.businessPartner.company">Company</Translate>
           </dt>
-          <dd>{businessPartnerEntity.company ? businessPartnerEntity.company.id : ''}</dd>
+          <dd>{businessPartnerEntity.company ? businessPartnerEntity.company.name : ''}</dd>
+          <dt>
+            <Translate contentKey="donauStorageIncApp.person.fullName">Name</Translate>
+          </dt>
+          <dd>
+            {businessPartnerEntity.businessContact
+              ? businessPartnerEntity.businessContact.personalInfo.firstName +
+                (businessPartnerEntity.businessContact.personalInfo.middleName
+                  ? ' ' + businessPartnerEntity.businessContact.personalInfo.middleName
+                  : '') +
+                ' ' +
+                businessPartnerEntity.businessContact.personalInfo.lastName +
+                (businessPartnerEntity.businessContact.personalInfo.maidenName
+                  ? ' (' + businessPartnerEntity.businessContact.personalInfo.maidenName + ')'
+                  : '')
+              : ''}
+          </dd>
         </dl>
         <Button tag={Link} to="/business-partner" replace color="info" data-cy="entityDetailsBackButton">
           <FontAwesomeIcon icon="arrow-left" />{' '}

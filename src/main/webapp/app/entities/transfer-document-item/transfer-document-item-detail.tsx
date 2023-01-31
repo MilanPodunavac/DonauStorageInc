@@ -37,7 +37,10 @@ export const TransferDocumentItemDetail = () => {
               <Translate contentKey="donauStorageIncApp.transferDocumentItem.amount">Amount</Translate>
             </span>
           </dt>
-          <dd>{transferDocumentItemEntity.amount}</dd>
+          <dd>
+            {transferDocumentItemEntity.amount +
+              (transferDocumentItemEntity.resource ? ' ' + transferDocumentItemEntity.resource.unit.abbreviation : '')}
+          </dd>
           <dt>
             <span id="price">
               <Translate contentKey="donauStorageIncApp.transferDocumentItem.price">Price</Translate>
@@ -60,7 +63,7 @@ export const TransferDocumentItemDetail = () => {
           <dt>
             <Translate contentKey="donauStorageIncApp.transferDocumentItem.resource">Resource</Translate>
           </dt>
-          <dd>{transferDocumentItemEntity.resource ? transferDocumentItemEntity.resource.id : ''}</dd>
+          <dd>{transferDocumentItemEntity.resource ? transferDocumentItemEntity.resource.name : ''}</dd>
         </dl>
         <Button tag={Link} to="/transfer-document-item" replace color="info" data-cy="entityDetailsBackButton">
           <FontAwesomeIcon icon="arrow-left" />{' '}

@@ -173,28 +173,28 @@ export const TransferDocument = () => {
                   </td>
                   <td>
                     {transferDocument.businessYear ? (
-                      <Link to={`/business-year/${transferDocument.businessYear.id}`}>{transferDocument.businessYear.id}</Link>
+                      <Link to={`/business-year/${transferDocument.businessYear.id}`}>{transferDocument.businessYear.yearCode}</Link>
                     ) : (
                       ''
                     )}
                   </td>
                   <td>
                     {transferDocument.receivingStorage ? (
-                      <Link to={`/storage/${transferDocument.receivingStorage.id}`}>{transferDocument.receivingStorage.id}</Link>
+                      <Link to={`/storage/${transferDocument.receivingStorage.id}`}>{transferDocument.receivingStorage.name}</Link>
                     ) : (
                       ''
                     )}
                   </td>
                   <td>
                     {transferDocument.dispatchingStorage ? (
-                      <Link to={`/storage/${transferDocument.dispatchingStorage.id}`}>{transferDocument.dispatchingStorage.id}</Link>
+                      <Link to={`/storage/${transferDocument.dispatchingStorage.id}`}>{transferDocument.dispatchingStorage.name}</Link>
                     ) : (
                       ''
                     )}
                   </td>
                   <td>
                     {transferDocument.businessPartner ? (
-                      <Link to={`/business-partner/${transferDocument.businessPartner.id}`}>{transferDocument.businessPartner.id}</Link>
+                      <Link to={`/business-partner/${transferDocument.businessPartner.id}`}>{transferDocument.businessPartner.name}</Link>
                     ) : (
                       ''
                     )}
