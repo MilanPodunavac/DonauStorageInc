@@ -144,11 +144,18 @@ export const AddressUpdate = () => {
                 {cities
                   ? cities.map(otherEntity => (
                       <option value={otherEntity.id} key={otherEntity.id}>
-                        {otherEntity.id}
+                        {otherEntity.name + ', ' + otherEntity.country.name}
                       </option>
                     ))
                   : null}
               </ValidatedField>
+              <div className="d-flex justify-content-end">
+                <Link to="/city/new" className="btn btn-primary jh-create-entity" id="jh-create-entity" data-cy="entityCreateButton">
+                  <FontAwesomeIcon icon="plus" />
+                  &nbsp;
+                  <Translate contentKey="donauStorageIncApp.city.home.createLabel">Create new City</Translate>
+                </Link>
+              </div>
               <FormText>
                 <Translate contentKey="entity.validation.required">This field is required.</Translate>
               </FormText>

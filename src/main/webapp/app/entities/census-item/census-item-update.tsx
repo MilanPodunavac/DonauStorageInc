@@ -122,7 +122,7 @@ export const CensusItemUpdate = () => {
                 {censusDocuments
                   ? censusDocuments.map(otherEntity => (
                       <option value={otherEntity.id} key={otherEntity.id}>
-                        {otherEntity.id}
+                        {otherEntity.storage.name + ' (' + otherEntity.businessYear.yearCode + ')'}
                       </option>
                     ))
                   : null}
@@ -142,7 +142,7 @@ export const CensusItemUpdate = () => {
                 {resources
                   ? resources.map(otherEntity => (
                       <option value={otherEntity.id} key={otherEntity.id}>
-                        {otherEntity.id}
+                        {otherEntity.name}
                       </option>
                     ))
                   : null}

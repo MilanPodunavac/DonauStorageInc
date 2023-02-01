@@ -233,7 +233,7 @@ export const StorageCardUpdate = () => {
                 {businessYears
                   ? businessYears.map(otherEntity => (
                       <option value={otherEntity.id} key={otherEntity.id}>
-                        {otherEntity.id}
+                        {otherEntity.yearCode}
                       </option>
                     ))
                   : null}
@@ -253,7 +253,7 @@ export const StorageCardUpdate = () => {
                 {resources
                   ? resources.map(otherEntity => (
                       <option value={otherEntity.id} key={otherEntity.id}>
-                        {otherEntity.id}
+                        {otherEntity.name}
                       </option>
                     ))
                   : null}
@@ -273,7 +273,7 @@ export const StorageCardUpdate = () => {
                 {storages
                   ? storages.map(otherEntity => (
                       <option value={otherEntity.id} key={otherEntity.id}>
-                        {otherEntity.id}
+                        {otherEntity.name}
                       </option>
                     ))
                   : null}

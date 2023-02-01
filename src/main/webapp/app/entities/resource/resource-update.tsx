@@ -138,11 +138,23 @@ export const ResourceUpdate = () => {
                 {measurementUnits
                   ? measurementUnits.map(otherEntity => (
                       <option value={otherEntity.id} key={otherEntity.id}>
-                        {otherEntity.id}
+                        {otherEntity.name + ' (' + otherEntity.abbreviation + ')'}
                       </option>
                     ))
                   : null}
               </ValidatedField>
+              <div className="d-flex justify-content-end">
+                <Link
+                  to="/measurement-unit/new"
+                  className="btn btn-primary jh-create-entity"
+                  id="jh-create-entity"
+                  data-cy="entityCreateButton"
+                >
+                  <FontAwesomeIcon icon="plus" />
+                  &nbsp;
+                  <Translate contentKey="donauStorageIncApp.legalEntity.home.createLabel">Create new Measurement Unit</Translate>
+                </Link>
+              </div>
               <FormText>
                 <Translate contentKey="entity.validation.required">This field is required.</Translate>
               </FormText>
@@ -158,7 +170,7 @@ export const ResourceUpdate = () => {
                 {companies
                   ? companies.map(otherEntity => (
                       <option value={otherEntity.id} key={otherEntity.id}>
-                        {otherEntity.id}
+                        {otherEntity.legalEntityInfo.name}
                       </option>
                     ))
                   : null}

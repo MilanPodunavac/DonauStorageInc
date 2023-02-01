@@ -169,7 +169,7 @@ export const CensusDocumentUpdate = () => {
                 {businessYears
                   ? businessYears.map(otherEntity => (
                       <option value={otherEntity.id} key={otherEntity.id}>
-                        {otherEntity.id}
+                        {otherEntity.yearCode}
                       </option>
                     ))
                   : null}
@@ -189,7 +189,7 @@ export const CensusDocumentUpdate = () => {
                 {employees
                   ? employees.map(otherEntity => (
                       <option value={otherEntity.id} key={otherEntity.id}>
-                        {otherEntity.id}
+                        {otherEntity.personalInfo.firstName + ' ' + otherEntity.personalInfo.lastName}
                       </option>
                     ))
                   : null}
@@ -209,7 +209,7 @@ export const CensusDocumentUpdate = () => {
                 {employees
                   ? employees.map(otherEntity => (
                       <option value={otherEntity.id} key={otherEntity.id}>
-                        {otherEntity.id}
+                        {otherEntity.personalInfo.firstName + ' ' + otherEntity.personalInfo.lastName}
                       </option>
                     ))
                   : null}
@@ -229,7 +229,7 @@ export const CensusDocumentUpdate = () => {
                 {employees
                   ? employees.map(otherEntity => (
                       <option value={otherEntity.id} key={otherEntity.id}>
-                        {otherEntity.id}
+                        {otherEntity.personalInfo.firstName + ' ' + otherEntity.personalInfo.lastName}
                       </option>
                     ))
                   : null}
@@ -249,7 +249,7 @@ export const CensusDocumentUpdate = () => {
                 {storages
                   ? storages.map(otherEntity => (
                       <option value={otherEntity.id} key={otherEntity.id}>
-                        {otherEntity.id}
+                        {otherEntity.name}
                       </option>
                     ))
                   : null}

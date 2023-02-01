@@ -37,11 +37,15 @@ export const CensusItemDetail = () => {
               <Translate contentKey="donauStorageIncApp.censusItem.amount">Amount</Translate>
             </span>
           </dt>
-          <dd>{censusItemEntity.amount + ' ' + censusItemEntity.resource.measurementUnit.abbreviation}</dd>
+          <dd>{censusItemEntity.amount + ' ' + (censusItemEntity.resource ? censusItemEntity.resource.unit.abbreviation : '')}</dd>
           <dt>
             <Translate contentKey="donauStorageIncApp.censusItem.censusDocument">Census Document</Translate>
           </dt>
-          <dd>{censusItemEntity.censusDocument ? censusItemEntity.censusDocument.id : ''}</dd>
+          <dd>
+            {censusItemEntity.censusDocument
+              ? censusItemEntity.censusDocument.storage.name + ' (' + censusItemEntity.censusDocument.businessYear.yearCode + ')'
+              : ''}
+          </dd>
           <dt>
             <Translate contentKey="donauStorageIncApp.censusItem.resource">Resource</Translate>
           </dt>

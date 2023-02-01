@@ -124,7 +124,7 @@ export const BusinessYearUpdate = () => {
                 {companies
                   ? companies.map(otherEntity => (
                       <option value={otherEntity.id} key={otherEntity.id}>
-                        {otherEntity.id}
+                        {otherEntity.legalEntityInfo.name}
                       </option>
                     ))
                   : null}

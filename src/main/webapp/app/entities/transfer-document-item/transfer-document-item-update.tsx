@@ -150,7 +150,7 @@ export const TransferDocumentItemUpdate = () => {
                 {transferDocuments
                   ? transferDocuments.map(otherEntity => (
                       <option value={otherEntity.id} key={otherEntity.id}>
-                        {otherEntity.id}
+                        {otherEntity.type + ' ' + otherEntity.id}
                       </option>
                     ))
                   : null}

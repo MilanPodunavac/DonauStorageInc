@@ -149,7 +149,9 @@ export const CensusItem = () => {
                     <td>{censusItem.amount + ' ' + censusItem.resource.unit.abbreviation}</td>
                     <td>
                       {censusItem.censusDocument ? (
-                        <Link to={`/census-document/${censusItem.censusDocument.id}`}>{censusItem.censusDocument.id}</Link>
+                        <Link to={`/census-document/${censusItem.censusDocument.id}`}>
+                          {censusItem.censusDocument.storage.name + ' (' + censusItem.censusDocument.businessYear.yearCode + ')'}
+                        </Link>
                       ) : (
                         ''
                       )}

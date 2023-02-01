@@ -123,6 +123,20 @@ export const BusinessPartnerUpdate = () => {
                     ))
                   : null}
               </ValidatedField>
+              <div className="d-flex justify-content-end">
+                {isNew ? (
+                  <Link
+                    to="/business-contact/new"
+                    className="btn btn-primary jh-create-entity"
+                    id="jh-create-entity"
+                    data-cy="entityCreateButton"
+                  >
+                    <FontAwesomeIcon icon="plus" />
+                    &nbsp;
+                    <Translate contentKey="donauStorageIncApp.businessContact.home.createLabel">Create new Business Contact</Translate>
+                  </Link>
+                ) : null}
+              </div>
               <FormText>
                 <Translate contentKey="entity.validation.required">This field is required.</Translate>
               </FormText>
@@ -146,6 +160,31 @@ export const BusinessPartnerUpdate = () => {
               <FormText>
                 <Translate contentKey="entity.validation.required">This field is required.</Translate>
               </FormText>
+              <div className="d-flex justify-content-end">
+                {isNew ? (
+                  <Link
+                    to="/legal-entity/new"
+                    className="btn btn-primary jh-create-entity"
+                    id="jh-create-entity"
+                    data-cy="entityCreateButton"
+                  >
+                    <FontAwesomeIcon icon="plus" />
+                    &nbsp;
+                    <Translate contentKey="donauStorageIncApp.legalEntity.home.createLabel">Create new Legal Entity</Translate>
+                  </Link>
+                ) : (
+                  <Link
+                    to={`/legal-entity/${businessPartnerEntity.legalEntity ? businessPartnerEntity.legalEntity.id : ''}/edit`}
+                    className="btn btn-primary jh-create-entity"
+                    id="jh-create-entity"
+                    data-cy="entityCreateButton"
+                  >
+                    <FontAwesomeIcon icon="plus" />
+                    &nbsp;
+                    <Translate contentKey="donauStorageIncApp.legalEntity.home.editLabel">Edit Legal Entity</Translate>
+                  </Link>
+                )}
+              </div>
               <ValidatedField
                 id="business-partner-company"
                 name="company"
@@ -158,7 +197,7 @@ export const BusinessPartnerUpdate = () => {
                 {companies
                   ? companies.map(otherEntity => (
                       <option value={otherEntity.id} key={otherEntity.id}>
-                        {otherEntity.id}
+                        {otherEntity.legalEntityInfo.name}
                       </option>
                     ))
                   : null}

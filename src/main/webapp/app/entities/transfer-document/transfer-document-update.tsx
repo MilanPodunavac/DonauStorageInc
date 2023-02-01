@@ -182,7 +182,7 @@ export const TransferDocumentUpdate = () => {
                 {businessYears
                   ? businessYears.map(otherEntity => (
                       <option value={otherEntity.id} key={otherEntity.id}>
-                        {otherEntity.id}
+                        {otherEntity.yearCode}
                       </option>
                     ))
                   : null}
@@ -201,7 +201,7 @@ export const TransferDocumentUpdate = () => {
                 {storages
                   ? storages.map(otherEntity => (
                       <option value={otherEntity.id} key={otherEntity.id}>
-                        {otherEntity.id}
+                        {otherEntity.name}
                       </option>
                     ))
                   : null}
@@ -217,7 +217,7 @@ export const TransferDocumentUpdate = () => {
                 {storages
                   ? storages.map(otherEntity => (
                       <option value={otherEntity.id} key={otherEntity.id}>
-                        {otherEntity.id}
+                        {otherEntity.name}
                       </option>
                     ))
                   : null}
@@ -233,7 +233,7 @@ export const TransferDocumentUpdate = () => {
                 {businessPartners
                   ? businessPartners.map(otherEntity => (
                       <option value={otherEntity.id} key={otherEntity.id}>
-                        {otherEntity.id}
+                        {otherEntity.legalEntityInfo.name}
                       </option>
                     ))
                   : null}

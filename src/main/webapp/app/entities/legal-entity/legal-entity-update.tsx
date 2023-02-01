@@ -150,7 +150,7 @@ export const LegalEntityUpdate = () => {
                 {contactInfos
                   ? contactInfos.map(otherEntity => (
                       <option value={otherEntity.id} key={otherEntity.id}>
-                        {otherEntity.id}
+                        {otherEntity.email + ', ' + otherEntity.phoneNumber}
                       </option>
                     ))
                   : null}
@@ -158,6 +158,31 @@ export const LegalEntityUpdate = () => {
               <FormText>
                 <Translate contentKey="entity.validation.required">This field is required.</Translate>
               </FormText>
+              <div className="d-flex justify-content-end">
+                {isNew ? (
+                  <Link
+                    to="/contact-info/new"
+                    className="btn btn-primary jh-create-entity"
+                    id="jh-create-entity"
+                    data-cy="entityCreateButton"
+                  >
+                    <FontAwesomeIcon icon="plus" />
+                    &nbsp;
+                    <Translate contentKey="donauStorageIncApp.contactInfo.home.createLabel">Create new Contact Info</Translate>
+                  </Link>
+                ) : (
+                  <Link
+                    to={`/contact-info/${legalEntityEntity.contactInfo ? legalEntityEntity.contactInfo.id : ''}/edit`}
+                    className="btn btn-primary jh-create-entity"
+                    id="jh-create-entity"
+                    data-cy="entityCreateButton"
+                  >
+                    <FontAwesomeIcon icon="plus" />
+                    &nbsp;
+                    <Translate contentKey="donauStorageIncApp.contactInfo.home.editLabel">Edit Contact Info</Translate>
+                  </Link>
+                )}
+              </div>
               <ValidatedField
                 id="legal-entity-address"
                 name="address"
@@ -170,7 +195,7 @@ export const LegalEntityUpdate = () => {
                 {addresses
                   ? addresses.map(otherEntity => (
                       <option value={otherEntity.id} key={otherEntity.id}>
-                        {otherEntity.id}
+                        {otherEntity.streetName + ' ' + otherEntity.streetCode + ', ' + otherEntity.city.name}
                       </option>
                     ))
                   : null}
@@ -178,6 +203,26 @@ export const LegalEntityUpdate = () => {
               <FormText>
                 <Translate contentKey="entity.validation.required">This field is required.</Translate>
               </FormText>
+              <div className="d-flex justify-content-end">
+                {isNew ? (
+                  <Link to="/address/new" className="btn btn-primary jh-create-entity" id="jh-create-entity" data-cy="entityCreateButton">
+                    <FontAwesomeIcon icon="plus" />
+                    &nbsp;
+                    <Translate contentKey="donauStorageIncApp.address.home.createLabel">Create new Address</Translate>
+                  </Link>
+                ) : (
+                  <Link
+                    to={`/address/${legalEntityEntity.address ? legalEntityEntity.address.id : ''}/edit`}
+                    className="btn btn-primary jh-create-entity"
+                    id="jh-create-entity"
+                    data-cy="entityCreateButton"
+                  >
+                    <FontAwesomeIcon icon="plus" />
+                    &nbsp;
+                    <Translate contentKey="donauStorageIncApp.address.home.editLabel">Edit Address</Translate>
+                  </Link>
+                )}
+              </div>
               <Button tag={Link} id="cancel-save" data-cy="entityCreateCancelButton" to="/legal-entity" replace color="info">
                 <FontAwesomeIcon icon="arrow-left" />
                 &nbsp;

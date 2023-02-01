@@ -106,11 +106,31 @@ export const BusinessContactUpdate = () => {
                 {people
                   ? people.map(otherEntity => (
                       <option value={otherEntity.id} key={otherEntity.id}>
-                        {otherEntity.id}
+                        {otherEntity.firstName + ' ' + otherEntity.lastName + ', ' + otherEntity.gender}
                       </option>
                     ))
                   : null}
               </ValidatedField>
+              <div className="d-flex justify-content-end">
+                {isNew ? (
+                  <Link to="/person/new" className="btn btn-primary jh-create-entity" id="jh-create-entity" data-cy="entityCreateButton">
+                    <FontAwesomeIcon icon="plus" />
+                    &nbsp;
+                    <Translate contentKey="donauStorageIncApp.person.home.createLabel">Create new Personal Info</Translate>
+                  </Link>
+                ) : (
+                  <Link
+                    to={`/address/${businessContactEntity.personalInfo ? businessContactEntity.personalInfo.id : ''}/edit`}
+                    className="btn btn-primary jh-create-entity"
+                    id="jh-create-entity"
+                    data-cy="entityCreateButton"
+                  >
+                    <FontAwesomeIcon icon="plus" />
+                    &nbsp;
+                    <Translate contentKey="donauStorageIncApp.person.home.editLabel">Edit Personal Info</Translate>
+                  </Link>
+                )}
+              </div>
               <FormText>
                 <Translate contentKey="entity.validation.required">This field is required.</Translate>
               </FormText>

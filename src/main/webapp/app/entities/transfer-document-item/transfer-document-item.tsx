@@ -166,7 +166,7 @@ export const TransferDocumentItem = () => {
                     <td>
                       {transferDocumentItem.transferDocument ? (
                         <Link to={`/transfer-document/${transferDocumentItem.transferDocument.id}`}>
-                          {transferDocumentItem.transferDocument.id}
+                          {transferDocumentItem.transferDocument.type + ' ' + transferDocumentItem.transferDocument.id}
                         </Link>
                       ) : (
                         ''

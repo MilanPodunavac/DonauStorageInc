@@ -61,7 +61,10 @@ export const LegalEntity = () => {
                   <Translate contentKey="donauStorageIncApp.legalEntity.identificationNumber">Identification Number</Translate>
                 </th>
                 <th>
-                  <Translate contentKey="donauStorageIncApp.legalEntity.contactInfo">Contact Info</Translate>
+                  <Translate contentKey="donauStorageIncApp.contactInfo.email">Email</Translate>
+                </th>
+                <th>
+                  <Translate contentKey="donauStorageIncApp.contactInfo.phoneNumber">Phone Number</Translate>
                 </th>
                 <th>
                   <Translate contentKey="donauStorageIncApp.legalEntity.address">Address</Translate>
@@ -80,28 +83,37 @@ export const LegalEntity = () => {
                   <td>{legalEntity.name}</td>
                   <td>{legalEntity.taxIdentificationNumber}</td>
                   <td>{legalEntity.identificationNumber}</td>
-                  <dt>
-                    <Translate contentKey="donauStorageIncApp.employee.address">Address</Translate>
-                  </dt>
-                  <dd>
-                    {legalEntity.address
-                      ? legalEntity.address.streetName +
-                        ' ' +
-                        legalEntity.address.streetCode +
-                        ', ' +
-                        legalEntity.address.city.name +
-                        ', ' +
-                        legalEntity.address.postalCode
-                      : ''}
-                  </dd>
                   <td>
                     {legalEntity.contactInfo ? (
-                      <Link to={`/contact-info/${legalEntity.contactInfo.id}`}>{legalEntity.contactInfo.id}</Link>
+                      <Link to={`/contact-info/${legalEntity.contactInfo.id}`}>{legalEntity.contactInfo.email}</Link>
                     ) : (
                       ''
                     )}
                   </td>
-                  <td>{legalEntity.address ? <Link to={`/address/${legalEntity.address.id}`}>{legalEntity.address.id}</Link> : ''}</td>
+                  <td>
+                    {legalEntity.contactInfo ? (
+                      <Link to={`/contact-info/${legalEntity.contactInfo.id}`}>{legalEntity.contactInfo.phoneNumber}</Link>
+                    ) : (
+                      ''
+                    )}
+                  </td>
+                  <td>
+                    {legalEntity.address ? (
+                      <Link to={`/address/${legalEntity.address.id}`}>
+                        {legalEntity.address
+                          ? legalEntity.address.streetName +
+                            ' ' +
+                            legalEntity.address.streetCode +
+                            ', ' +
+                            legalEntity.address.city.name +
+                            ', ' +
+                            legalEntity.address.postalCode
+                          : ''}
+                      </Link>
+                    ) : (
+                      ''
+                    )}
+                  </td>
                   <td className="text-end">
                     <div className="btn-group flex-btn-group-container">
                       <Button tag={Link} to={`/legal-entity/${legalEntity.id}`} color="info" size="sm" data-cy="entityDetailsButton">

@@ -189,7 +189,7 @@ export const StorageCardTrafficUpdate = () => {
                 {storageCards
                   ? storageCards.map(otherEntity => (
                       <option value={otherEntity.id} key={otherEntity.id}>
-                        {otherEntity.id}
+                        {otherEntity.storage.name + ', ' + otherEntity.resource.name + ', ' + otherEntity.businessYear.yearCode}
                       </option>
                     ))
                   : null}
