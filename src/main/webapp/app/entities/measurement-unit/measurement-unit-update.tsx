@@ -25,7 +25,7 @@ export const MeasurementUnitUpdate = () => {
   const updateSuccess = useAppSelector(state => state.measurementUnit.updateSuccess);
 
   const handleClose = () => {
-    navigate('/measurement-unit');
+    navigate(-1);
   };
 
   useEffect(() => {
@@ -101,7 +101,7 @@ export const MeasurementUnitUpdate = () => {
                 data-cy="abbreviation"
                 type="text"
               />
-              <Button tag={Link} id="cancel-save" data-cy="entityCreateCancelButton" to="/measurement-unit" replace color="info">
+              <Button id="cancel-save" data-cy="entityCreateCancelButton" onClick={handleClose} replace color="info">
                 <FontAwesomeIcon icon="arrow-left" />
                 &nbsp;
                 <span className="d-none d-md-inline">

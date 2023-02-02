@@ -28,7 +28,7 @@ export const CityUpdate = () => {
   const updateSuccess = useAppSelector(state => state.city.updateSuccess);
 
   const handleClose = () => {
-    navigate('/city');
+    navigate(-1);
   };
 
   useEffect(() => {
@@ -136,7 +136,7 @@ export const CityUpdate = () => {
               <FormText>
                 <Translate contentKey="entity.validation.required">This field is required.</Translate>
               </FormText>
-              <Button tag={Link} id="cancel-save" data-cy="entityCreateCancelButton" to="/city" replace color="info">
+              <Button id="cancel-save" data-cy="entityCreateCancelButton" onClick={handleClose} replace color="info">
                 <FontAwesomeIcon icon="arrow-left" />
                 &nbsp;
                 <span className="d-none d-md-inline">

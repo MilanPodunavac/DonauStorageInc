@@ -28,7 +28,7 @@ export const BusinessContactUpdate = () => {
   const updateSuccess = useAppSelector(state => state.businessContact.updateSuccess);
 
   const handleClose = () => {
-    navigate('/business-contact');
+    navigate(-1);
   };
 
   useEffect(() => {
@@ -101,6 +101,7 @@ export const BusinessContactUpdate = () => {
                 label={translate('donauStorageIncApp.businessContact.personalInfo')}
                 type="select"
                 required
+                disabled={!isNew}
               >
                 <option value="" key="0" />
                 {people
@@ -134,7 +135,7 @@ export const BusinessContactUpdate = () => {
               <FormText>
                 <Translate contentKey="entity.validation.required">This field is required.</Translate>
               </FormText>
-              <Button tag={Link} id="cancel-save" data-cy="entityCreateCancelButton" to="/business-contact" replace color="info">
+              <Button id="cancel-save" data-cy="entityCreateCancelButton" onClick={handleClose} replace color="info">
                 <FontAwesomeIcon icon="arrow-left" />
                 &nbsp;
                 <span className="d-none d-md-inline">

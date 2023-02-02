@@ -99,6 +99,7 @@ export const CompanyUpdate = () => {
                 label={translate('donauStorageIncApp.company.legalEntityInfo')}
                 type="select"
                 required
+                disabled={!isNew}
               >
                 <option value="" key="0" />
                 {legalEntities

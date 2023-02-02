@@ -31,7 +31,7 @@ export const LegalEntityUpdate = () => {
   const updateSuccess = useAppSelector(state => state.legalEntity.updateSuccess);
 
   const handleClose = () => {
-    navigate('/legal-entity');
+    navigate(-1);
   };
 
   useEffect(() => {
@@ -145,6 +145,7 @@ export const LegalEntityUpdate = () => {
                 label={translate('donauStorageIncApp.legalEntity.contactInfo')}
                 type="select"
                 required
+                disabled={!isNew}
               >
                 <option value="" key="0" />
                 {contactInfos
@@ -190,6 +191,7 @@ export const LegalEntityUpdate = () => {
                 label={translate('donauStorageIncApp.legalEntity.address')}
                 type="select"
                 required
+                disabled={!isNew}
               >
                 <option value="" key="0" />
                 {addresses
@@ -223,7 +225,7 @@ export const LegalEntityUpdate = () => {
                   </Link>
                 )}
               </div>
-              <Button tag={Link} id="cancel-save" data-cy="entityCreateCancelButton" to="/legal-entity" replace color="info">
+              <Button id="cancel-save" data-cy="entityCreateCancelButton" onClick={handleClose} replace color="info">
                 <FontAwesomeIcon icon="arrow-left" />
                 &nbsp;
                 <span className="d-none d-md-inline">

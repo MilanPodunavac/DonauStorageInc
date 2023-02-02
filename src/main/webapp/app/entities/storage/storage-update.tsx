@@ -114,6 +114,7 @@ export const StorageUpdate = () => {
                 label={translate('donauStorageIncApp.storage.address')}
                 type="select"
                 required
+                disabled={!isNew}
               >
                 <option value="" key="0" />
                 {addresses

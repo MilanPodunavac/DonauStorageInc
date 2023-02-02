@@ -32,7 +32,7 @@ export const StorageCardTrafficUpdate = () => {
   const storageCardTrafficDirectionValues = Object.keys(StorageCardTrafficDirection);
 
   const handleClose = () => {
-    navigate('/storage-card-traffic');
+    navigate(-1);
   };
 
   useEffect(() => {
@@ -197,7 +197,7 @@ export const StorageCardTrafficUpdate = () => {
               <FormText>
                 <Translate contentKey="entity.validation.required">This field is required.</Translate>
               </FormText>
-              <Button tag={Link} id="cancel-save" data-cy="entityCreateCancelButton" to="/storage-card-traffic" replace color="info">
+              <Button id="cancel-save" data-cy="entityCreateCancelButton" onClick={handleClose} replace color="info">
                 <FontAwesomeIcon icon="arrow-left" />
                 &nbsp;
                 <span className="d-none d-md-inline">

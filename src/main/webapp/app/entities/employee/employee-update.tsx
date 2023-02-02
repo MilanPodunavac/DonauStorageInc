@@ -118,6 +118,7 @@ export const EmployeeUpdate = () => {
                 label={translate('donauStorageIncApp.employee.personalInfo')}
                 type="select"
                 required
+                disabled={!isNew}
               >
                 <option value="" key="0" />
                 {people
@@ -140,7 +141,7 @@ export const EmployeeUpdate = () => {
                   </Link>
                 ) : (
                   <Link
-                    to={`/address/${employeeEntity.address ? employeeEntity.address.id : ''}/edit`}
+                    to={`/person/${employeeEntity.personalInfo ? employeeEntity.personalInfo.id : ''}/edit`}
                     className="btn btn-primary jh-create-entity"
                     id="jh-create-entity"
                     data-cy="entityCreateButton"
@@ -199,6 +200,7 @@ export const EmployeeUpdate = () => {
                 label={translate('donauStorageIncApp.employee.address')}
                 type="select"
                 required
+                disabled={!isNew}
               >
                 <option value="" key="0" />
                 {addresses

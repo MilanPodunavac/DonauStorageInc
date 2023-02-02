@@ -107,52 +107,19 @@ export const BusinessPartnerUpdate = () => {
                 />
               ) : null}
               <ValidatedField
-                id="business-partner-businessContact"
-                name="businessContact"
-                data-cy="businessContact"
-                label={translate('donauStorageIncApp.businessPartner.businessContact')}
-                type="select"
-                required
-              >
-                <option value="" key="0" />
-                {businessContacts
-                  ? businessContacts.map(otherEntity => (
-                      <option value={otherEntity.id} key={otherEntity.id}>
-                        {otherEntity.id}
-                      </option>
-                    ))
-                  : null}
-              </ValidatedField>
-              <div className="d-flex justify-content-end">
-                {isNew ? (
-                  <Link
-                    to="/business-contact/new"
-                    className="btn btn-primary jh-create-entity"
-                    id="jh-create-entity"
-                    data-cy="entityCreateButton"
-                  >
-                    <FontAwesomeIcon icon="plus" />
-                    &nbsp;
-                    <Translate contentKey="donauStorageIncApp.businessContact.home.createLabel">Create new Business Contact</Translate>
-                  </Link>
-                ) : null}
-              </div>
-              <FormText>
-                <Translate contentKey="entity.validation.required">This field is required.</Translate>
-              </FormText>
-              <ValidatedField
                 id="business-partner-legalEntityInfo"
                 name="legalEntityInfo"
                 data-cy="legalEntityInfo"
                 label={translate('donauStorageIncApp.businessPartner.legalEntityInfo')}
                 type="select"
                 required
+                disabled={!isNew}
               >
                 <option value="" key="0" />
                 {legalEntities
                   ? legalEntities.map(otherEntity => (
                       <option value={otherEntity.id} key={otherEntity.id}>
-                        {otherEntity.id}
+                        {otherEntity.name}
                       </option>
                     ))
                   : null}
@@ -202,6 +169,56 @@ export const BusinessPartnerUpdate = () => {
                     ))
                   : null}
               </ValidatedField>
+              <FormText>
+                <Translate contentKey="entity.validation.required">This field is required.</Translate>
+              </FormText>
+              <ValidatedField
+                id="business-partner-businessContact"
+                name="businessContact"
+                data-cy="businessContact"
+                label={translate('donauStorageIncApp.businessPartner.businessContact')}
+                type="select"
+                required
+                disabled={!isNew}
+              >
+                <option value="" key="0" />
+                {businessContacts
+                  ? businessContacts.map(otherEntity => (
+                      <option value={otherEntity.id} key={otherEntity.id}>
+                        {otherEntity.personalInfo.firstName +
+                          ' ' +
+                          otherEntity.personalInfo.lastName +
+                          ', ' +
+                          otherEntity.personalInfo.gender}
+                      </option>
+                    ))
+                  : null}
+              </ValidatedField>
+              <div className="d-flex justify-content-end">
+                {isNew ? (
+                  <Link
+                    to="/business-contact/new"
+                    className="btn btn-primary jh-create-entity"
+                    id="jh-create-entity"
+                    data-cy="entityCreateButton"
+                  >
+                    <FontAwesomeIcon icon="plus" />
+                    &nbsp;
+                    <Translate contentKey="donauStorageIncApp.businessContact.home.createLabel">Create new Business Contact</Translate>
+                  </Link>
+                ) : (
+                  <Link
+                    to={`/business-contact/${businessPartnerEntity.businessContact ? businessPartnerEntity.businessContact.id : ''}/edit`}
+                    className="btn btn-primary jh-create-entity"
+                    id="jh-create-entity"
+                    data-cy="entityCreateButton"
+                  >
+                    <FontAwesomeIcon icon="plus" />
+                    &nbsp;
+                    <Translate contentKey="donauStorageIncApp.businessContact.home.editLabel">Edit Business Contact</Translate>
+                  </Link>
+                )}
+              </div>
               <FormText>
                 <Translate contentKey="entity.validation.required">This field is required.</Translate>
               </FormText>
