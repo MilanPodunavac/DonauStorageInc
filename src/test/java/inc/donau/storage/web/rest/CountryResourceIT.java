@@ -8,6 +8,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import inc.donau.storage.IntegrationTest;
 import inc.donau.storage.domain.Country;
 import inc.donau.storage.repository.CountryRepository;
+import inc.donau.storage.service.criteria.CountryCriteria;
 import inc.donau.storage.service.dto.CountryDTO;
 import inc.donau.storage.service.mapper.CountryMapper;
 import java.util.List;
@@ -163,6 +164,127 @@ class CountryResourceIT {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.id").value(country.getId().intValue()))
             .andExpect(jsonPath("$.name").value(DEFAULT_NAME));
+    }
+
+    @Test
+    @Transactional
+    void getCountriesByIdFiltering() throws Exception {
+        // Initialize the database
+        countryRepository.saveAndFlush(country);
+
+        Long id = country.getId();
+
+        defaultCountryShouldBeFound("id.equals=" + id);
+        defaultCountryShouldNotBeFound("id.notEquals=" + id);
+
+        defaultCountryShouldBeFound("id.greaterThanOrEqual=" + id);
+        defaultCountryShouldNotBeFound("id.greaterThan=" + id);
+
+        defaultCountryShouldBeFound("id.lessThanOrEqual=" + id);
+        defaultCountryShouldNotBeFound("id.lessThan=" + id);
+    }
+
+    @Test
+    @Transactional
+    void getAllCountriesByNameIsEqualToSomething() throws Exception {
+        // Initialize the database
+        countryRepository.saveAndFlush(country);
+
+        // Get all the countryList where name equals to DEFAULT_NAME
+        defaultCountryShouldBeFound("name.equals=" + DEFAULT_NAME);
+
+        // Get all the countryList where name equals to UPDATED_NAME
+        defaultCountryShouldNotBeFound("name.equals=" + UPDATED_NAME);
+    }
+
+    @Test
+    @Transactional
+    void getAllCountriesByNameIsInShouldWork() throws Exception {
+        // Initialize the database
+        countryRepository.saveAndFlush(country);
+
+        // Get all the countryList where name in DEFAULT_NAME or UPDATED_NAME
+        defaultCountryShouldBeFound("name.in=" + DEFAULT_NAME + "," + UPDATED_NAME);
+
+        // Get all the countryList where name equals to UPDATED_NAME
+        defaultCountryShouldNotBeFound("name.in=" + UPDATED_NAME);
+    }
+
+    @Test
+    @Transactional
+    void getAllCountriesByNameIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        countryRepository.saveAndFlush(country);
+
+        // Get all the countryList where name is not null
+        defaultCountryShouldBeFound("name.specified=true");
+
+        // Get all the countryList where name is null
+        defaultCountryShouldNotBeFound("name.specified=false");
+    }
+
+    @Test
+    @Transactional
+    void getAllCountriesByNameContainsSomething() throws Exception {
+        // Initialize the database
+        countryRepository.saveAndFlush(country);
+
+        // Get all the countryList where name contains DEFAULT_NAME
+        defaultCountryShouldBeFound("name.contains=" + DEFAULT_NAME);
+
+        // Get all the countryList where name contains UPDATED_NAME
+        defaultCountryShouldNotBeFound("name.contains=" + UPDATED_NAME);
+    }
+
+    @Test
+    @Transactional
+    void getAllCountriesByNameNotContainsSomething() throws Exception {
+        // Initialize the database
+        countryRepository.saveAndFlush(country);
+
+        // Get all the countryList where name does not contain DEFAULT_NAME
+        defaultCountryShouldNotBeFound("name.doesNotContain=" + DEFAULT_NAME);
+
+        // Get all the countryList where name does not contain UPDATED_NAME
+        defaultCountryShouldBeFound("name.doesNotContain=" + UPDATED_NAME);
+    }
+
+    /**
+     * Executes the search, and checks that the default entity is returned.
+     */
+    private void defaultCountryShouldBeFound(String filter) throws Exception {
+        restCountryMockMvc
+            .perform(get(ENTITY_API_URL + "?sort=id,desc&" + filter))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
+            .andExpect(jsonPath("$.[*].id").value(hasItem(country.getId().intValue())))
+            .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME)));
+
+        // Check, that the count call also returns 1
+        restCountryMockMvc
+            .perform(get(ENTITY_API_URL + "/count?sort=id,desc&" + filter))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
+            .andExpect(content().string("1"));
+    }
+
+    /**
+     * Executes the search, and checks that the default entity is not returned.
+     */
+    private void defaultCountryShouldNotBeFound(String filter) throws Exception {
+        restCountryMockMvc
+            .perform(get(ENTITY_API_URL + "?sort=id,desc&" + filter))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
+            .andExpect(jsonPath("$").isArray())
+            .andExpect(jsonPath("$").isEmpty());
+
+        // Check, that the count call also returns 0
+        restCountryMockMvc
+            .perform(get(ENTITY_API_URL + "/count?sort=id,desc&" + filter))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
+            .andExpect(content().string("0"));
     }
 
     @Test

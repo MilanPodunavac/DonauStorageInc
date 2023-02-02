@@ -1,7 +1,9 @@
 package inc.donau.storage.web.rest;
 
 import inc.donau.storage.repository.CityRepository;
+import inc.donau.storage.service.CityQueryService;
 import inc.donau.storage.service.CityService;
+import inc.donau.storage.service.criteria.CityCriteria;
 import inc.donau.storage.service.dto.CityDTO;
 import inc.donau.storage.web.rest.errors.BadRequestAlertException;
 import java.net.URI;
@@ -17,7 +19,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -43,9 +44,12 @@ public class CityResource {
 
     private final CityRepository cityRepository;
 
-    public CityResource(CityService cityService, CityRepository cityRepository) {
+    private final CityQueryService cityQueryService;
+
+    public CityResource(CityService cityService, CityRepository cityRepository, CityQueryService cityQueryService) {
         this.cityService = cityService;
         this.cityRepository = cityRepository;
+        this.cityQueryService = cityQueryService;
     }
 
     /**
@@ -142,14 +146,30 @@ public class CityResource {
      * {@code GET  /cities} : get all the cities.
      *
      * @param pageable the pagination information.
+     * @param criteria the criteria which the requested entities should match.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of cities in body.
      */
     @GetMapping("/cities")
-    public ResponseEntity<List<CityDTO>> getAllCities(@org.springdoc.api.annotations.ParameterObject Pageable pageable) {
-        log.debug("REST request to get a page of Cities");
-        Page<CityDTO> page = cityService.findAll(pageable);
+    public ResponseEntity<List<CityDTO>> getAllCities(
+        CityCriteria criteria,
+        @org.springdoc.api.annotations.ParameterObject Pageable pageable
+    ) {
+        log.debug("REST request to get Cities by criteria: {}", criteria);
+        Page<CityDTO> page = cityQueryService.findByCriteria(criteria, pageable);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
         return ResponseEntity.ok().headers(headers).body(page.getContent());
+    }
+
+    /**
+     * {@code GET  /cities/count} : count all the cities.
+     *
+     * @param criteria the criteria which the requested entities should match.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the count in body.
+     */
+    @GetMapping("/cities/count")
+    public ResponseEntity<Long> countCities(CityCriteria criteria) {
+        log.debug("REST request to count Cities by criteria: {}", criteria);
+        return ResponseEntity.ok().body(cityQueryService.countByCriteria(criteria));
     }
 
     /**

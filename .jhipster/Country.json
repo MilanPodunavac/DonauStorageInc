@@ -12,7 +12,7 @@
     }
   ],
   "fluentMethods": true,
-  "jpaMetamodelFiltering": false,
+  "jpaMetamodelFiltering": true,
   "name": "Country",
   "pagination": "infinite-scroll",
   "readOnly": false,

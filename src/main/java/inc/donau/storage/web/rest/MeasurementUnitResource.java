@@ -1,7 +1,9 @@
 package inc.donau.storage.web.rest;
 
 import inc.donau.storage.repository.MeasurementUnitRepository;
+import inc.donau.storage.service.MeasurementUnitQueryService;
 import inc.donau.storage.service.MeasurementUnitService;
+import inc.donau.storage.service.criteria.MeasurementUnitCriteria;
 import inc.donau.storage.service.dto.MeasurementUnitDTO;
 import inc.donau.storage.web.rest.errors.BadRequestAlertException;
 import java.net.URI;
@@ -35,9 +37,16 @@ public class MeasurementUnitResource {
 
     private final MeasurementUnitRepository measurementUnitRepository;
 
-    public MeasurementUnitResource(MeasurementUnitService measurementUnitService, MeasurementUnitRepository measurementUnitRepository) {
+    private final MeasurementUnitQueryService measurementUnitQueryService;
+
+    public MeasurementUnitResource(
+        MeasurementUnitService measurementUnitService,
+        MeasurementUnitRepository measurementUnitRepository,
+        MeasurementUnitQueryService measurementUnitQueryService
+    ) {
         this.measurementUnitService = measurementUnitService;
         this.measurementUnitRepository = measurementUnitRepository;
+        this.measurementUnitQueryService = measurementUnitQueryService;
     }
 
     /**
@@ -134,12 +143,26 @@ public class MeasurementUnitResource {
     /**
      * {@code GET  /measurement-units} : get all the measurementUnits.
      *
+     * @param criteria the criteria which the requested entities should match.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of measurementUnits in body.
      */
     @GetMapping("/measurement-units")
-    public List<MeasurementUnitDTO> getAllMeasurementUnits() {
-        log.debug("REST request to get all MeasurementUnits");
-        return measurementUnitService.findAll();
+    public ResponseEntity<List<MeasurementUnitDTO>> getAllMeasurementUnits(MeasurementUnitCriteria criteria) {
+        log.debug("REST request to get MeasurementUnits by criteria: {}", criteria);
+        List<MeasurementUnitDTO> entityList = measurementUnitQueryService.findByCriteria(criteria);
+        return ResponseEntity.ok().body(entityList);
+    }
+
+    /**
+     * {@code GET  /measurement-units/count} : count all the measurementUnits.
+     *
+     * @param criteria the criteria which the requested entities should match.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the count in body.
+     */
+    @GetMapping("/measurement-units/count")
+    public ResponseEntity<Long> countMeasurementUnits(MeasurementUnitCriteria criteria) {
+        log.debug("REST request to count MeasurementUnits by criteria: {}", criteria);
+        return ResponseEntity.ok().body(measurementUnitQueryService.countByCriteria(criteria));
     }
 
     /**

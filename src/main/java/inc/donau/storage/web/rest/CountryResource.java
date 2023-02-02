@@ -1,7 +1,9 @@
 package inc.donau.storage.web.rest;
 
 import inc.donau.storage.repository.CountryRepository;
+import inc.donau.storage.service.CountryQueryService;
 import inc.donau.storage.service.CountryService;
+import inc.donau.storage.service.criteria.CountryCriteria;
 import inc.donau.storage.service.dto.CountryDTO;
 import inc.donau.storage.web.rest.errors.BadRequestAlertException;
 import java.net.URI;
@@ -17,7 +19,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -43,9 +44,12 @@ public class CountryResource {
 
     private final CountryRepository countryRepository;
 
-    public CountryResource(CountryService countryService, CountryRepository countryRepository) {
+    private final CountryQueryService countryQueryService;
+
+    public CountryResource(CountryService countryService, CountryRepository countryRepository, CountryQueryService countryQueryService) {
         this.countryService = countryService;
         this.countryRepository = countryRepository;
+        this.countryQueryService = countryQueryService;
     }
 
     /**
@@ -142,14 +146,30 @@ public class CountryResource {
      * {@code GET  /countries} : get all the countries.
      *
      * @param pageable the pagination information.
+     * @param criteria the criteria which the requested entities should match.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of countries in body.
      */
     @GetMapping("/countries")
-    public ResponseEntity<List<CountryDTO>> getAllCountries(@org.springdoc.api.annotations.ParameterObject Pageable pageable) {
-        log.debug("REST request to get a page of Countries");
-        Page<CountryDTO> page = countryService.findAll(pageable);
+    public ResponseEntity<List<CountryDTO>> getAllCountries(
+        CountryCriteria criteria,
+        @org.springdoc.api.annotations.ParameterObject Pageable pageable
+    ) {
+        log.debug("REST request to get Countries by criteria: {}", criteria);
+        Page<CountryDTO> page = countryQueryService.findByCriteria(criteria, pageable);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
         return ResponseEntity.ok().headers(headers).body(page.getContent());
+    }
+
+    /**
+     * {@code GET  /countries/count} : count all the countries.
+     *
+     * @param criteria the criteria which the requested entities should match.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the count in body.
+     */
+    @GetMapping("/countries/count")
+    public ResponseEntity<Long> countCountries(CountryCriteria criteria) {
+        log.debug("REST request to count Countries by criteria: {}", criteria);
+        return ResponseEntity.ok().body(countryQueryService.countByCriteria(criteria));
     }
 
     /**

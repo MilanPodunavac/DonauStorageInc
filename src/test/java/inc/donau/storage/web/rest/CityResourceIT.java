@@ -9,6 +9,7 @@ import inc.donau.storage.IntegrationTest;
 import inc.donau.storage.domain.City;
 import inc.donau.storage.domain.Country;
 import inc.donau.storage.repository.CityRepository;
+import inc.donau.storage.service.criteria.CityCriteria;
 import inc.donau.storage.service.dto.CityDTO;
 import inc.donau.storage.service.mapper.CityMapper;
 import java.util.List;
@@ -208,6 +209,216 @@ class CityResourceIT {
             .andExpect(jsonPath("$.id").value(city.getId().intValue()))
             .andExpect(jsonPath("$.name").value(DEFAULT_NAME))
             .andExpect(jsonPath("$.postalCode").value(DEFAULT_POSTAL_CODE));
+    }
+
+    @Test
+    @Transactional
+    void getCitiesByIdFiltering() throws Exception {
+        // Initialize the database
+        cityRepository.saveAndFlush(city);
+
+        Long id = city.getId();
+
+        defaultCityShouldBeFound("id.equals=" + id);
+        defaultCityShouldNotBeFound("id.notEquals=" + id);
+
+        defaultCityShouldBeFound("id.greaterThanOrEqual=" + id);
+        defaultCityShouldNotBeFound("id.greaterThan=" + id);
+
+        defaultCityShouldBeFound("id.lessThanOrEqual=" + id);
+        defaultCityShouldNotBeFound("id.lessThan=" + id);
+    }
+
+    @Test
+    @Transactional
+    void getAllCitiesByNameIsEqualToSomething() throws Exception {
+        // Initialize the database
+        cityRepository.saveAndFlush(city);
+
+        // Get all the cityList where name equals to DEFAULT_NAME
+        defaultCityShouldBeFound("name.equals=" + DEFAULT_NAME);
+
+        // Get all the cityList where name equals to UPDATED_NAME
+        defaultCityShouldNotBeFound("name.equals=" + UPDATED_NAME);
+    }
+
+    @Test
+    @Transactional
+    void getAllCitiesByNameIsInShouldWork() throws Exception {
+        // Initialize the database
+        cityRepository.saveAndFlush(city);
+
+        // Get all the cityList where name in DEFAULT_NAME or UPDATED_NAME
+        defaultCityShouldBeFound("name.in=" + DEFAULT_NAME + "," + UPDATED_NAME);
+
+        // Get all the cityList where name equals to UPDATED_NAME
+        defaultCityShouldNotBeFound("name.in=" + UPDATED_NAME);
+    }
+
+    @Test
+    @Transactional
+    void getAllCitiesByNameIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        cityRepository.saveAndFlush(city);
+
+        // Get all the cityList where name is not null
+        defaultCityShouldBeFound("name.specified=true");
+
+        // Get all the cityList where name is null
+        defaultCityShouldNotBeFound("name.specified=false");
+    }
+
+    @Test
+    @Transactional
+    void getAllCitiesByNameContainsSomething() throws Exception {
+        // Initialize the database
+        cityRepository.saveAndFlush(city);
+
+        // Get all the cityList where name contains DEFAULT_NAME
+        defaultCityShouldBeFound("name.contains=" + DEFAULT_NAME);
+
+        // Get all the cityList where name contains UPDATED_NAME
+        defaultCityShouldNotBeFound("name.contains=" + UPDATED_NAME);
+    }
+
+    @Test
+    @Transactional
+    void getAllCitiesByNameNotContainsSomething() throws Exception {
+        // Initialize the database
+        cityRepository.saveAndFlush(city);
+
+        // Get all the cityList where name does not contain DEFAULT_NAME
+        defaultCityShouldNotBeFound("name.doesNotContain=" + DEFAULT_NAME);
+
+        // Get all the cityList where name does not contain UPDATED_NAME
+        defaultCityShouldBeFound("name.doesNotContain=" + UPDATED_NAME);
+    }
+
+    @Test
+    @Transactional
+    void getAllCitiesByPostalCodeIsEqualToSomething() throws Exception {
+        // Initialize the database
+        cityRepository.saveAndFlush(city);
+
+        // Get all the cityList where postalCode equals to DEFAULT_POSTAL_CODE
+        defaultCityShouldBeFound("postalCode.equals=" + DEFAULT_POSTAL_CODE);
+
+        // Get all the cityList where postalCode equals to UPDATED_POSTAL_CODE
+        defaultCityShouldNotBeFound("postalCode.equals=" + UPDATED_POSTAL_CODE);
+    }
+
+    @Test
+    @Transactional
+    void getAllCitiesByPostalCodeIsInShouldWork() throws Exception {
+        // Initialize the database
+        cityRepository.saveAndFlush(city);
+
+        // Get all the cityList where postalCode in DEFAULT_POSTAL_CODE or UPDATED_POSTAL_CODE
+        defaultCityShouldBeFound("postalCode.in=" + DEFAULT_POSTAL_CODE + "," + UPDATED_POSTAL_CODE);
+
+        // Get all the cityList where postalCode equals to UPDATED_POSTAL_CODE
+        defaultCityShouldNotBeFound("postalCode.in=" + UPDATED_POSTAL_CODE);
+    }
+
+    @Test
+    @Transactional
+    void getAllCitiesByPostalCodeIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        cityRepository.saveAndFlush(city);
+
+        // Get all the cityList where postalCode is not null
+        defaultCityShouldBeFound("postalCode.specified=true");
+
+        // Get all the cityList where postalCode is null
+        defaultCityShouldNotBeFound("postalCode.specified=false");
+    }
+
+    @Test
+    @Transactional
+    void getAllCitiesByPostalCodeContainsSomething() throws Exception {
+        // Initialize the database
+        cityRepository.saveAndFlush(city);
+
+        // Get all the cityList where postalCode contains DEFAULT_POSTAL_CODE
+        defaultCityShouldBeFound("postalCode.contains=" + DEFAULT_POSTAL_CODE);
+
+        // Get all the cityList where postalCode contains UPDATED_POSTAL_CODE
+        defaultCityShouldNotBeFound("postalCode.contains=" + UPDATED_POSTAL_CODE);
+    }
+
+    @Test
+    @Transactional
+    void getAllCitiesByPostalCodeNotContainsSomething() throws Exception {
+        // Initialize the database
+        cityRepository.saveAndFlush(city);
+
+        // Get all the cityList where postalCode does not contain DEFAULT_POSTAL_CODE
+        defaultCityShouldNotBeFound("postalCode.doesNotContain=" + DEFAULT_POSTAL_CODE);
+
+        // Get all the cityList where postalCode does not contain UPDATED_POSTAL_CODE
+        defaultCityShouldBeFound("postalCode.doesNotContain=" + UPDATED_POSTAL_CODE);
+    }
+
+    @Test
+    @Transactional
+    void getAllCitiesByCountryIsEqualToSomething() throws Exception {
+        Country country;
+        if (TestUtil.findAll(em, Country.class).isEmpty()) {
+            cityRepository.saveAndFlush(city);
+            country = CountryResourceIT.createEntity(em);
+        } else {
+            country = TestUtil.findAll(em, Country.class).get(0);
+        }
+        em.persist(country);
+        em.flush();
+        city.setCountry(country);
+        cityRepository.saveAndFlush(city);
+        Long countryId = country.getId();
+
+        // Get all the cityList where country equals to countryId
+        defaultCityShouldBeFound("countryId.equals=" + countryId);
+
+        // Get all the cityList where country equals to (countryId + 1)
+        defaultCityShouldNotBeFound("countryId.equals=" + (countryId + 1));
+    }
+
+    /**
+     * Executes the search, and checks that the default entity is returned.
+     */
+    private void defaultCityShouldBeFound(String filter) throws Exception {
+        restCityMockMvc
+            .perform(get(ENTITY_API_URL + "?sort=id,desc&" + filter))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
+            .andExpect(jsonPath("$.[*].id").value(hasItem(city.getId().intValue())))
+            .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME)))
+            .andExpect(jsonPath("$.[*].postalCode").value(hasItem(DEFAULT_POSTAL_CODE)));
+
+        // Check, that the count call also returns 1
+        restCityMockMvc
+            .perform(get(ENTITY_API_URL + "/count?sort=id,desc&" + filter))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
+            .andExpect(content().string("1"));
+    }
+
+    /**
+     * Executes the search, and checks that the default entity is not returned.
+     */
+    private void defaultCityShouldNotBeFound(String filter) throws Exception {
+        restCityMockMvc
+            .perform(get(ENTITY_API_URL + "?sort=id,desc&" + filter))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
+            .andExpect(jsonPath("$").isArray())
+            .andExpect(jsonPath("$").isEmpty());
+
+        // Check, that the count call also returns 0
+        restCityMockMvc
+            .perform(get(ENTITY_API_URL + "/count?sort=id,desc&" + filter))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
+            .andExpect(content().string("0"));
     }
 
     @Test

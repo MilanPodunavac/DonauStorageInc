@@ -6,7 +6,7 @@
   "entityTableName": "business_partner",
   "fields": [],
   "fluentMethods": true,
-  "jpaMetamodelFiltering": false,
+  "jpaMetamodelFiltering": true,
   "name": "BusinessPartner",
   "pagination": "pagination",
   "readOnly": false,

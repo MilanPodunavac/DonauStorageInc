@@ -186,4 +186,4 @@ service Employee, BusinessYear with serviceClass
 
 //search * with elasticsearch
 
-filter BusinessYear, Employee, Resource
+filter *

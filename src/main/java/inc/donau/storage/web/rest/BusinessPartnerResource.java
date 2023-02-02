@@ -1,7 +1,9 @@
 package inc.donau.storage.web.rest;
 
 import inc.donau.storage.repository.BusinessPartnerRepository;
+import inc.donau.storage.service.BusinessPartnerQueryService;
 import inc.donau.storage.service.BusinessPartnerService;
+import inc.donau.storage.service.criteria.BusinessPartnerCriteria;
 import inc.donau.storage.service.dto.BusinessPartnerDTO;
 import inc.donau.storage.web.rest.errors.BadRequestAlertException;
 import java.net.URI;
@@ -17,7 +19,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -43,9 +44,16 @@ public class BusinessPartnerResource {
 
     private final BusinessPartnerRepository businessPartnerRepository;
 
-    public BusinessPartnerResource(BusinessPartnerService businessPartnerService, BusinessPartnerRepository businessPartnerRepository) {
+    private final BusinessPartnerQueryService businessPartnerQueryService;
+
+    public BusinessPartnerResource(
+        BusinessPartnerService businessPartnerService,
+        BusinessPartnerRepository businessPartnerRepository,
+        BusinessPartnerQueryService businessPartnerQueryService
+    ) {
         this.businessPartnerService = businessPartnerService;
         this.businessPartnerRepository = businessPartnerRepository;
+        this.businessPartnerQueryService = businessPartnerQueryService;
     }
 
     /**
@@ -143,16 +151,30 @@ public class BusinessPartnerResource {
      * {@code GET  /business-partners} : get all the businessPartners.
      *
      * @param pageable the pagination information.
+     * @param criteria the criteria which the requested entities should match.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of businessPartners in body.
      */
     @GetMapping("/business-partners")
     public ResponseEntity<List<BusinessPartnerDTO>> getAllBusinessPartners(
+        BusinessPartnerCriteria criteria,
         @org.springdoc.api.annotations.ParameterObject Pageable pageable
     ) {
-        log.debug("REST request to get a page of BusinessPartners");
-        Page<BusinessPartnerDTO> page = businessPartnerService.findAll(pageable);
+        log.debug("REST request to get BusinessPartners by criteria: {}", criteria);
+        Page<BusinessPartnerDTO> page = businessPartnerQueryService.findByCriteria(criteria, pageable);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
         return ResponseEntity.ok().headers(headers).body(page.getContent());
+    }
+
+    /**
+     * {@code GET  /business-partners/count} : count all the businessPartners.
+     *
+     * @param criteria the criteria which the requested entities should match.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the count in body.
+     */
+    @GetMapping("/business-partners/count")
+    public ResponseEntity<Long> countBusinessPartners(BusinessPartnerCriteria criteria) {
+        log.debug("REST request to count BusinessPartners by criteria: {}", criteria);
+        return ResponseEntity.ok().body(businessPartnerQueryService.countByCriteria(criteria));
     }
 
     /**

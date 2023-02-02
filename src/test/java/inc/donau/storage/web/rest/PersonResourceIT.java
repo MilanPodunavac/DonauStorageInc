@@ -10,6 +10,7 @@ import inc.donau.storage.domain.ContactInfo;
 import inc.donau.storage.domain.Person;
 import inc.donau.storage.domain.enumeration.Gender;
 import inc.donau.storage.repository.PersonRepository;
+import inc.donau.storage.service.criteria.PersonCriteria;
 import inc.donau.storage.service.dto.PersonDTO;
 import inc.donau.storage.service.mapper.PersonMapper;
 import java.util.List;
@@ -255,6 +256,380 @@ class PersonResourceIT {
             .andExpect(jsonPath("$.lastName").value(DEFAULT_LAST_NAME))
             .andExpect(jsonPath("$.maidenName").value(DEFAULT_MAIDEN_NAME))
             .andExpect(jsonPath("$.gender").value(DEFAULT_GENDER.toString()));
+    }
+
+    @Test
+    @Transactional
+    void getPeopleByIdFiltering() throws Exception {
+        // Initialize the database
+        personRepository.saveAndFlush(person);
+
+        Long id = person.getId();
+
+        defaultPersonShouldBeFound("id.equals=" + id);
+        defaultPersonShouldNotBeFound("id.notEquals=" + id);
+
+        defaultPersonShouldBeFound("id.greaterThanOrEqual=" + id);
+        defaultPersonShouldNotBeFound("id.greaterThan=" + id);
+
+        defaultPersonShouldBeFound("id.lessThanOrEqual=" + id);
+        defaultPersonShouldNotBeFound("id.lessThan=" + id);
+    }
+
+    @Test
+    @Transactional
+    void getAllPeopleByFirstNameIsEqualToSomething() throws Exception {
+        // Initialize the database
+        personRepository.saveAndFlush(person);
+
+        // Get all the personList where firstName equals to DEFAULT_FIRST_NAME
+        defaultPersonShouldBeFound("firstName.equals=" + DEFAULT_FIRST_NAME);
+
+        // Get all the personList where firstName equals to UPDATED_FIRST_NAME
+        defaultPersonShouldNotBeFound("firstName.equals=" + UPDATED_FIRST_NAME);
+    }
+
+    @Test
+    @Transactional
+    void getAllPeopleByFirstNameIsInShouldWork() throws Exception {
+        // Initialize the database
+        personRepository.saveAndFlush(person);
+
+        // Get all the personList where firstName in DEFAULT_FIRST_NAME or UPDATED_FIRST_NAME
+        defaultPersonShouldBeFound("firstName.in=" + DEFAULT_FIRST_NAME + "," + UPDATED_FIRST_NAME);
+
+        // Get all the personList where firstName equals to UPDATED_FIRST_NAME
+        defaultPersonShouldNotBeFound("firstName.in=" + UPDATED_FIRST_NAME);
+    }
+
+    @Test
+    @Transactional
+    void getAllPeopleByFirstNameIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        personRepository.saveAndFlush(person);
+
+        // Get all the personList where firstName is not null
+        defaultPersonShouldBeFound("firstName.specified=true");
+
+        // Get all the personList where firstName is null
+        defaultPersonShouldNotBeFound("firstName.specified=false");
+    }
+
+    @Test
+    @Transactional
+    void getAllPeopleByFirstNameContainsSomething() throws Exception {
+        // Initialize the database
+        personRepository.saveAndFlush(person);
+
+        // Get all the personList where firstName contains DEFAULT_FIRST_NAME
+        defaultPersonShouldBeFound("firstName.contains=" + DEFAULT_FIRST_NAME);
+
+        // Get all the personList where firstName contains UPDATED_FIRST_NAME
+        defaultPersonShouldNotBeFound("firstName.contains=" + UPDATED_FIRST_NAME);
+    }
+
+    @Test
+    @Transactional
+    void getAllPeopleByFirstNameNotContainsSomething() throws Exception {
+        // Initialize the database
+        personRepository.saveAndFlush(person);
+
+        // Get all the personList where firstName does not contain DEFAULT_FIRST_NAME
+        defaultPersonShouldNotBeFound("firstName.doesNotContain=" + DEFAULT_FIRST_NAME);
+
+        // Get all the personList where firstName does not contain UPDATED_FIRST_NAME
+        defaultPersonShouldBeFound("firstName.doesNotContain=" + UPDATED_FIRST_NAME);
+    }
+
+    @Test
+    @Transactional
+    void getAllPeopleByMiddleNameIsEqualToSomething() throws Exception {
+        // Initialize the database
+        personRepository.saveAndFlush(person);
+
+        // Get all the personList where middleName equals to DEFAULT_MIDDLE_NAME
+        defaultPersonShouldBeFound("middleName.equals=" + DEFAULT_MIDDLE_NAME);
+
+        // Get all the personList where middleName equals to UPDATED_MIDDLE_NAME
+        defaultPersonShouldNotBeFound("middleName.equals=" + UPDATED_MIDDLE_NAME);
+    }
+
+    @Test
+    @Transactional
+    void getAllPeopleByMiddleNameIsInShouldWork() throws Exception {
+        // Initialize the database
+        personRepository.saveAndFlush(person);
+
+        // Get all the personList where middleName in DEFAULT_MIDDLE_NAME or UPDATED_MIDDLE_NAME
+        defaultPersonShouldBeFound("middleName.in=" + DEFAULT_MIDDLE_NAME + "," + UPDATED_MIDDLE_NAME);
+
+        // Get all the personList where middleName equals to UPDATED_MIDDLE_NAME
+        defaultPersonShouldNotBeFound("middleName.in=" + UPDATED_MIDDLE_NAME);
+    }
+
+    @Test
+    @Transactional
+    void getAllPeopleByMiddleNameIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        personRepository.saveAndFlush(person);
+
+        // Get all the personList where middleName is not null
+        defaultPersonShouldBeFound("middleName.specified=true");
+
+        // Get all the personList where middleName is null
+        defaultPersonShouldNotBeFound("middleName.specified=false");
+    }
+
+    @Test
+    @Transactional
+    void getAllPeopleByMiddleNameContainsSomething() throws Exception {
+        // Initialize the database
+        personRepository.saveAndFlush(person);
+
+        // Get all the personList where middleName contains DEFAULT_MIDDLE_NAME
+        defaultPersonShouldBeFound("middleName.contains=" + DEFAULT_MIDDLE_NAME);
+
+        // Get all the personList where middleName contains UPDATED_MIDDLE_NAME
+        defaultPersonShouldNotBeFound("middleName.contains=" + UPDATED_MIDDLE_NAME);
+    }
+
+    @Test
+    @Transactional
+    void getAllPeopleByMiddleNameNotContainsSomething() throws Exception {
+        // Initialize the database
+        personRepository.saveAndFlush(person);
+
+        // Get all the personList where middleName does not contain DEFAULT_MIDDLE_NAME
+        defaultPersonShouldNotBeFound("middleName.doesNotContain=" + DEFAULT_MIDDLE_NAME);
+
+        // Get all the personList where middleName does not contain UPDATED_MIDDLE_NAME
+        defaultPersonShouldBeFound("middleName.doesNotContain=" + UPDATED_MIDDLE_NAME);
+    }
+
+    @Test
+    @Transactional
+    void getAllPeopleByLastNameIsEqualToSomething() throws Exception {
+        // Initialize the database
+        personRepository.saveAndFlush(person);
+
+        // Get all the personList where lastName equals to DEFAULT_LAST_NAME
+        defaultPersonShouldBeFound("lastName.equals=" + DEFAULT_LAST_NAME);
+
+        // Get all the personList where lastName equals to UPDATED_LAST_NAME
+        defaultPersonShouldNotBeFound("lastName.equals=" + UPDATED_LAST_NAME);
+    }
+
+    @Test
+    @Transactional
+    void getAllPeopleByLastNameIsInShouldWork() throws Exception {
+        // Initialize the database
+        personRepository.saveAndFlush(person);
+
+        // Get all the personList where lastName in DEFAULT_LAST_NAME or UPDATED_LAST_NAME
+        defaultPersonShouldBeFound("lastName.in=" + DEFAULT_LAST_NAME + "," + UPDATED_LAST_NAME);
+
+        // Get all the personList where lastName equals to UPDATED_LAST_NAME
+        defaultPersonShouldNotBeFound("lastName.in=" + UPDATED_LAST_NAME);
+    }
+
+    @Test
+    @Transactional
+    void getAllPeopleByLastNameIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        personRepository.saveAndFlush(person);
+
+        // Get all the personList where lastName is not null
+        defaultPersonShouldBeFound("lastName.specified=true");
+
+        // Get all the personList where lastName is null
+        defaultPersonShouldNotBeFound("lastName.specified=false");
+    }
+
+    @Test
+    @Transactional
+    void getAllPeopleByLastNameContainsSomething() throws Exception {
+        // Initialize the database
+        personRepository.saveAndFlush(person);
+
+        // Get all the personList where lastName contains DEFAULT_LAST_NAME
+        defaultPersonShouldBeFound("lastName.contains=" + DEFAULT_LAST_NAME);
+
+        // Get all the personList where lastName contains UPDATED_LAST_NAME
+        defaultPersonShouldNotBeFound("lastName.contains=" + UPDATED_LAST_NAME);
+    }
+
+    @Test
+    @Transactional
+    void getAllPeopleByLastNameNotContainsSomething() throws Exception {
+        // Initialize the database
+        personRepository.saveAndFlush(person);
+
+        // Get all the personList where lastName does not contain DEFAULT_LAST_NAME
+        defaultPersonShouldNotBeFound("lastName.doesNotContain=" + DEFAULT_LAST_NAME);
+
+        // Get all the personList where lastName does not contain UPDATED_LAST_NAME
+        defaultPersonShouldBeFound("lastName.doesNotContain=" + UPDATED_LAST_NAME);
+    }
+
+    @Test
+    @Transactional
+    void getAllPeopleByMaidenNameIsEqualToSomething() throws Exception {
+        // Initialize the database
+        personRepository.saveAndFlush(person);
+
+        // Get all the personList where maidenName equals to DEFAULT_MAIDEN_NAME
+        defaultPersonShouldBeFound("maidenName.equals=" + DEFAULT_MAIDEN_NAME);
+
+        // Get all the personList where maidenName equals to UPDATED_MAIDEN_NAME
+        defaultPersonShouldNotBeFound("maidenName.equals=" + UPDATED_MAIDEN_NAME);
+    }
+
+    @Test
+    @Transactional
+    void getAllPeopleByMaidenNameIsInShouldWork() throws Exception {
+        // Initialize the database
+        personRepository.saveAndFlush(person);
+
+        // Get all the personList where maidenName in DEFAULT_MAIDEN_NAME or UPDATED_MAIDEN_NAME
+        defaultPersonShouldBeFound("maidenName.in=" + DEFAULT_MAIDEN_NAME + "," + UPDATED_MAIDEN_NAME);
+
+        // Get all the personList where maidenName equals to UPDATED_MAIDEN_NAME
+        defaultPersonShouldNotBeFound("maidenName.in=" + UPDATED_MAIDEN_NAME);
+    }
+
+    @Test
+    @Transactional
+    void getAllPeopleByMaidenNameIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        personRepository.saveAndFlush(person);
+
+        // Get all the personList where maidenName is not null
+        defaultPersonShouldBeFound("maidenName.specified=true");
+
+        // Get all the personList where maidenName is null
+        defaultPersonShouldNotBeFound("maidenName.specified=false");
+    }
+
+    @Test
+    @Transactional
+    void getAllPeopleByMaidenNameContainsSomething() throws Exception {
+        // Initialize the database
+        personRepository.saveAndFlush(person);
+
+        // Get all the personList where maidenName contains DEFAULT_MAIDEN_NAME
+        defaultPersonShouldBeFound("maidenName.contains=" + DEFAULT_MAIDEN_NAME);
+
+        // Get all the personList where maidenName contains UPDATED_MAIDEN_NAME
+        defaultPersonShouldNotBeFound("maidenName.contains=" + UPDATED_MAIDEN_NAME);
+    }
+
+    @Test
+    @Transactional
+    void getAllPeopleByMaidenNameNotContainsSomething() throws Exception {
+        // Initialize the database
+        personRepository.saveAndFlush(person);
+
+        // Get all the personList where maidenName does not contain DEFAULT_MAIDEN_NAME
+        defaultPersonShouldNotBeFound("maidenName.doesNotContain=" + DEFAULT_MAIDEN_NAME);
+
+        // Get all the personList where maidenName does not contain UPDATED_MAIDEN_NAME
+        defaultPersonShouldBeFound("maidenName.doesNotContain=" + UPDATED_MAIDEN_NAME);
+    }
+
+    @Test
+    @Transactional
+    void getAllPeopleByGenderIsEqualToSomething() throws Exception {
+        // Initialize the database
+        personRepository.saveAndFlush(person);
+
+        // Get all the personList where gender equals to DEFAULT_GENDER
+        defaultPersonShouldBeFound("gender.equals=" + DEFAULT_GENDER);
+
+        // Get all the personList where gender equals to UPDATED_GENDER
+        defaultPersonShouldNotBeFound("gender.equals=" + UPDATED_GENDER);
+    }
+
+    @Test
+    @Transactional
+    void getAllPeopleByGenderIsInShouldWork() throws Exception {
+        // Initialize the database
+        personRepository.saveAndFlush(person);
+
+        // Get all the personList where gender in DEFAULT_GENDER or UPDATED_GENDER
+        defaultPersonShouldBeFound("gender.in=" + DEFAULT_GENDER + "," + UPDATED_GENDER);
+
+        // Get all the personList where gender equals to UPDATED_GENDER
+        defaultPersonShouldNotBeFound("gender.in=" + UPDATED_GENDER);
+    }
+
+    @Test
+    @Transactional
+    void getAllPeopleByGenderIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        personRepository.saveAndFlush(person);
+
+        // Get all the personList where gender is not null
+        defaultPersonShouldBeFound("gender.specified=true");
+
+        // Get all the personList where gender is null
+        defaultPersonShouldNotBeFound("gender.specified=false");
+    }
+
+    @Test
+    @Transactional
+    void getAllPeopleByContactInfoIsEqualToSomething() throws Exception {
+        // Get already existing entity
+        ContactInfo contactInfo = person.getContactInfo();
+        personRepository.saveAndFlush(person);
+        Long contactInfoId = contactInfo.getId();
+
+        // Get all the personList where contactInfo equals to contactInfoId
+        defaultPersonShouldBeFound("contactInfoId.equals=" + contactInfoId);
+
+        // Get all the personList where contactInfo equals to (contactInfoId + 1)
+        defaultPersonShouldNotBeFound("contactInfoId.equals=" + (contactInfoId + 1));
+    }
+
+    /**
+     * Executes the search, and checks that the default entity is returned.
+     */
+    private void defaultPersonShouldBeFound(String filter) throws Exception {
+        restPersonMockMvc
+            .perform(get(ENTITY_API_URL + "?sort=id,desc&" + filter))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
+            .andExpect(jsonPath("$.[*].id").value(hasItem(person.getId().intValue())))
+            .andExpect(jsonPath("$.[*].firstName").value(hasItem(DEFAULT_FIRST_NAME)))
+            .andExpect(jsonPath("$.[*].middleName").value(hasItem(DEFAULT_MIDDLE_NAME)))
+            .andExpect(jsonPath("$.[*].lastName").value(hasItem(DEFAULT_LAST_NAME)))
+            .andExpect(jsonPath("$.[*].maidenName").value(hasItem(DEFAULT_MAIDEN_NAME)))
+            .andExpect(jsonPath("$.[*].gender").value(hasItem(DEFAULT_GENDER.toString())));
+
+        // Check, that the count call also returns 1
+        restPersonMockMvc
+            .perform(get(ENTITY_API_URL + "/count?sort=id,desc&" + filter))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
+            .andExpect(content().string("1"));
+    }
+
+    /**
+     * Executes the search, and checks that the default entity is not returned.
+     */
+    private void defaultPersonShouldNotBeFound(String filter) throws Exception {
+        restPersonMockMvc
+            .perform(get(ENTITY_API_URL + "?sort=id,desc&" + filter))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
+            .andExpect(jsonPath("$").isArray())
+            .andExpect(jsonPath("$").isEmpty());
+
+        // Check, that the count call also returns 0
+        restPersonMockMvc
+            .perform(get(ENTITY_API_URL + "/count?sort=id,desc&" + filter))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
+            .andExpect(content().string("0"));
     }
 
     @Test

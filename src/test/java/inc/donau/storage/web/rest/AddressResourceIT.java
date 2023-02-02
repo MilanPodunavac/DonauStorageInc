@@ -9,6 +9,7 @@ import inc.donau.storage.IntegrationTest;
 import inc.donau.storage.domain.Address;
 import inc.donau.storage.domain.City;
 import inc.donau.storage.repository.AddressRepository;
+import inc.donau.storage.service.criteria.AddressCriteria;
 import inc.donau.storage.service.dto.AddressDTO;
 import inc.donau.storage.service.mapper.AddressMapper;
 import java.util.List;
@@ -232,6 +233,282 @@ class AddressResourceIT {
             .andExpect(jsonPath("$.streetName").value(DEFAULT_STREET_NAME))
             .andExpect(jsonPath("$.streetCode").value(DEFAULT_STREET_CODE))
             .andExpect(jsonPath("$.postalCode").value(DEFAULT_POSTAL_CODE));
+    }
+
+    @Test
+    @Transactional
+    void getAddressesByIdFiltering() throws Exception {
+        // Initialize the database
+        addressRepository.saveAndFlush(address);
+
+        Long id = address.getId();
+
+        defaultAddressShouldBeFound("id.equals=" + id);
+        defaultAddressShouldNotBeFound("id.notEquals=" + id);
+
+        defaultAddressShouldBeFound("id.greaterThanOrEqual=" + id);
+        defaultAddressShouldNotBeFound("id.greaterThan=" + id);
+
+        defaultAddressShouldBeFound("id.lessThanOrEqual=" + id);
+        defaultAddressShouldNotBeFound("id.lessThan=" + id);
+    }
+
+    @Test
+    @Transactional
+    void getAllAddressesByStreetNameIsEqualToSomething() throws Exception {
+        // Initialize the database
+        addressRepository.saveAndFlush(address);
+
+        // Get all the addressList where streetName equals to DEFAULT_STREET_NAME
+        defaultAddressShouldBeFound("streetName.equals=" + DEFAULT_STREET_NAME);
+
+        // Get all the addressList where streetName equals to UPDATED_STREET_NAME
+        defaultAddressShouldNotBeFound("streetName.equals=" + UPDATED_STREET_NAME);
+    }
+
+    @Test
+    @Transactional
+    void getAllAddressesByStreetNameIsInShouldWork() throws Exception {
+        // Initialize the database
+        addressRepository.saveAndFlush(address);
+
+        // Get all the addressList where streetName in DEFAULT_STREET_NAME or UPDATED_STREET_NAME
+        defaultAddressShouldBeFound("streetName.in=" + DEFAULT_STREET_NAME + "," + UPDATED_STREET_NAME);
+
+        // Get all the addressList where streetName equals to UPDATED_STREET_NAME
+        defaultAddressShouldNotBeFound("streetName.in=" + UPDATED_STREET_NAME);
+    }
+
+    @Test
+    @Transactional
+    void getAllAddressesByStreetNameIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        addressRepository.saveAndFlush(address);
+
+        // Get all the addressList where streetName is not null
+        defaultAddressShouldBeFound("streetName.specified=true");
+
+        // Get all the addressList where streetName is null
+        defaultAddressShouldNotBeFound("streetName.specified=false");
+    }
+
+    @Test
+    @Transactional
+    void getAllAddressesByStreetNameContainsSomething() throws Exception {
+        // Initialize the database
+        addressRepository.saveAndFlush(address);
+
+        // Get all the addressList where streetName contains DEFAULT_STREET_NAME
+        defaultAddressShouldBeFound("streetName.contains=" + DEFAULT_STREET_NAME);
+
+        // Get all the addressList where streetName contains UPDATED_STREET_NAME
+        defaultAddressShouldNotBeFound("streetName.contains=" + UPDATED_STREET_NAME);
+    }
+
+    @Test
+    @Transactional
+    void getAllAddressesByStreetNameNotContainsSomething() throws Exception {
+        // Initialize the database
+        addressRepository.saveAndFlush(address);
+
+        // Get all the addressList where streetName does not contain DEFAULT_STREET_NAME
+        defaultAddressShouldNotBeFound("streetName.doesNotContain=" + DEFAULT_STREET_NAME);
+
+        // Get all the addressList where streetName does not contain UPDATED_STREET_NAME
+        defaultAddressShouldBeFound("streetName.doesNotContain=" + UPDATED_STREET_NAME);
+    }
+
+    @Test
+    @Transactional
+    void getAllAddressesByStreetCodeIsEqualToSomething() throws Exception {
+        // Initialize the database
+        addressRepository.saveAndFlush(address);
+
+        // Get all the addressList where streetCode equals to DEFAULT_STREET_CODE
+        defaultAddressShouldBeFound("streetCode.equals=" + DEFAULT_STREET_CODE);
+
+        // Get all the addressList where streetCode equals to UPDATED_STREET_CODE
+        defaultAddressShouldNotBeFound("streetCode.equals=" + UPDATED_STREET_CODE);
+    }
+
+    @Test
+    @Transactional
+    void getAllAddressesByStreetCodeIsInShouldWork() throws Exception {
+        // Initialize the database
+        addressRepository.saveAndFlush(address);
+
+        // Get all the addressList where streetCode in DEFAULT_STREET_CODE or UPDATED_STREET_CODE
+        defaultAddressShouldBeFound("streetCode.in=" + DEFAULT_STREET_CODE + "," + UPDATED_STREET_CODE);
+
+        // Get all the addressList where streetCode equals to UPDATED_STREET_CODE
+        defaultAddressShouldNotBeFound("streetCode.in=" + UPDATED_STREET_CODE);
+    }
+
+    @Test
+    @Transactional
+    void getAllAddressesByStreetCodeIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        addressRepository.saveAndFlush(address);
+
+        // Get all the addressList where streetCode is not null
+        defaultAddressShouldBeFound("streetCode.specified=true");
+
+        // Get all the addressList where streetCode is null
+        defaultAddressShouldNotBeFound("streetCode.specified=false");
+    }
+
+    @Test
+    @Transactional
+    void getAllAddressesByStreetCodeContainsSomething() throws Exception {
+        // Initialize the database
+        addressRepository.saveAndFlush(address);
+
+        // Get all the addressList where streetCode contains DEFAULT_STREET_CODE
+        defaultAddressShouldBeFound("streetCode.contains=" + DEFAULT_STREET_CODE);
+
+        // Get all the addressList where streetCode contains UPDATED_STREET_CODE
+        defaultAddressShouldNotBeFound("streetCode.contains=" + UPDATED_STREET_CODE);
+    }
+
+    @Test
+    @Transactional
+    void getAllAddressesByStreetCodeNotContainsSomething() throws Exception {
+        // Initialize the database
+        addressRepository.saveAndFlush(address);
+
+        // Get all the addressList where streetCode does not contain DEFAULT_STREET_CODE
+        defaultAddressShouldNotBeFound("streetCode.doesNotContain=" + DEFAULT_STREET_CODE);
+
+        // Get all the addressList where streetCode does not contain UPDATED_STREET_CODE
+        defaultAddressShouldBeFound("streetCode.doesNotContain=" + UPDATED_STREET_CODE);
+    }
+
+    @Test
+    @Transactional
+    void getAllAddressesByPostalCodeIsEqualToSomething() throws Exception {
+        // Initialize the database
+        addressRepository.saveAndFlush(address);
+
+        // Get all the addressList where postalCode equals to DEFAULT_POSTAL_CODE
+        defaultAddressShouldBeFound("postalCode.equals=" + DEFAULT_POSTAL_CODE);
+
+        // Get all the addressList where postalCode equals to UPDATED_POSTAL_CODE
+        defaultAddressShouldNotBeFound("postalCode.equals=" + UPDATED_POSTAL_CODE);
+    }
+
+    @Test
+    @Transactional
+    void getAllAddressesByPostalCodeIsInShouldWork() throws Exception {
+        // Initialize the database
+        addressRepository.saveAndFlush(address);
+
+        // Get all the addressList where postalCode in DEFAULT_POSTAL_CODE or UPDATED_POSTAL_CODE
+        defaultAddressShouldBeFound("postalCode.in=" + DEFAULT_POSTAL_CODE + "," + UPDATED_POSTAL_CODE);
+
+        // Get all the addressList where postalCode equals to UPDATED_POSTAL_CODE
+        defaultAddressShouldNotBeFound("postalCode.in=" + UPDATED_POSTAL_CODE);
+    }
+
+    @Test
+    @Transactional
+    void getAllAddressesByPostalCodeIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        addressRepository.saveAndFlush(address);
+
+        // Get all the addressList where postalCode is not null
+        defaultAddressShouldBeFound("postalCode.specified=true");
+
+        // Get all the addressList where postalCode is null
+        defaultAddressShouldNotBeFound("postalCode.specified=false");
+    }
+
+    @Test
+    @Transactional
+    void getAllAddressesByPostalCodeContainsSomething() throws Exception {
+        // Initialize the database
+        addressRepository.saveAndFlush(address);
+
+        // Get all the addressList where postalCode contains DEFAULT_POSTAL_CODE
+        defaultAddressShouldBeFound("postalCode.contains=" + DEFAULT_POSTAL_CODE);
+
+        // Get all the addressList where postalCode contains UPDATED_POSTAL_CODE
+        defaultAddressShouldNotBeFound("postalCode.contains=" + UPDATED_POSTAL_CODE);
+    }
+
+    @Test
+    @Transactional
+    void getAllAddressesByPostalCodeNotContainsSomething() throws Exception {
+        // Initialize the database
+        addressRepository.saveAndFlush(address);
+
+        // Get all the addressList where postalCode does not contain DEFAULT_POSTAL_CODE
+        defaultAddressShouldNotBeFound("postalCode.doesNotContain=" + DEFAULT_POSTAL_CODE);
+
+        // Get all the addressList where postalCode does not contain UPDATED_POSTAL_CODE
+        defaultAddressShouldBeFound("postalCode.doesNotContain=" + UPDATED_POSTAL_CODE);
+    }
+
+    @Test
+    @Transactional
+    void getAllAddressesByCityIsEqualToSomething() throws Exception {
+        City city;
+        if (TestUtil.findAll(em, City.class).isEmpty()) {
+            addressRepository.saveAndFlush(address);
+            city = CityResourceIT.createEntity(em);
+        } else {
+            city = TestUtil.findAll(em, City.class).get(0);
+        }
+        em.persist(city);
+        em.flush();
+        address.setCity(city);
+        addressRepository.saveAndFlush(address);
+        Long cityId = city.getId();
+
+        // Get all the addressList where city equals to cityId
+        defaultAddressShouldBeFound("cityId.equals=" + cityId);
+
+        // Get all the addressList where city equals to (cityId + 1)
+        defaultAddressShouldNotBeFound("cityId.equals=" + (cityId + 1));
+    }
+
+    /**
+     * Executes the search, and checks that the default entity is returned.
+     */
+    private void defaultAddressShouldBeFound(String filter) throws Exception {
+        restAddressMockMvc
+            .perform(get(ENTITY_API_URL + "?sort=id,desc&" + filter))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
+            .andExpect(jsonPath("$.[*].id").value(hasItem(address.getId().intValue())))
+            .andExpect(jsonPath("$.[*].streetName").value(hasItem(DEFAULT_STREET_NAME)))
+            .andExpect(jsonPath("$.[*].streetCode").value(hasItem(DEFAULT_STREET_CODE)))
+            .andExpect(jsonPath("$.[*].postalCode").value(hasItem(DEFAULT_POSTAL_CODE)));
+
+        // Check, that the count call also returns 1
+        restAddressMockMvc
+            .perform(get(ENTITY_API_URL + "/count?sort=id,desc&" + filter))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
+            .andExpect(content().string("1"));
+    }
+
+    /**
+     * Executes the search, and checks that the default entity is not returned.
+     */
+    private void defaultAddressShouldNotBeFound(String filter) throws Exception {
+        restAddressMockMvc
+            .perform(get(ENTITY_API_URL + "?sort=id,desc&" + filter))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
+            .andExpect(jsonPath("$").isArray())
+            .andExpect(jsonPath("$").isEmpty());
+
+        // Check, that the count call also returns 0
+        restAddressMockMvc
+            .perform(get(ENTITY_API_URL + "/count?sort=id,desc&" + filter))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
+            .andExpect(content().string("0"));
     }
 
     @Test

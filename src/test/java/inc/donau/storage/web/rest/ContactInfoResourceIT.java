@@ -8,6 +8,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import inc.donau.storage.IntegrationTest;
 import inc.donau.storage.domain.ContactInfo;
 import inc.donau.storage.repository.ContactInfoRepository;
+import inc.donau.storage.service.criteria.ContactInfoCriteria;
 import inc.donau.storage.service.dto.ContactInfoDTO;
 import inc.donau.storage.service.mapper.ContactInfoMapper;
 import java.util.List;
@@ -175,6 +176,193 @@ class ContactInfoResourceIT {
             .andExpect(jsonPath("$.id").value(contactInfo.getId().intValue()))
             .andExpect(jsonPath("$.email").value(DEFAULT_EMAIL))
             .andExpect(jsonPath("$.phoneNumber").value(DEFAULT_PHONE_NUMBER));
+    }
+
+    @Test
+    @Transactional
+    void getContactInfosByIdFiltering() throws Exception {
+        // Initialize the database
+        contactInfoRepository.saveAndFlush(contactInfo);
+
+        Long id = contactInfo.getId();
+
+        defaultContactInfoShouldBeFound("id.equals=" + id);
+        defaultContactInfoShouldNotBeFound("id.notEquals=" + id);
+
+        defaultContactInfoShouldBeFound("id.greaterThanOrEqual=" + id);
+        defaultContactInfoShouldNotBeFound("id.greaterThan=" + id);
+
+        defaultContactInfoShouldBeFound("id.lessThanOrEqual=" + id);
+        defaultContactInfoShouldNotBeFound("id.lessThan=" + id);
+    }
+
+    @Test
+    @Transactional
+    void getAllContactInfosByEmailIsEqualToSomething() throws Exception {
+        // Initialize the database
+        contactInfoRepository.saveAndFlush(contactInfo);
+
+        // Get all the contactInfoList where email equals to DEFAULT_EMAIL
+        defaultContactInfoShouldBeFound("email.equals=" + DEFAULT_EMAIL);
+
+        // Get all the contactInfoList where email equals to UPDATED_EMAIL
+        defaultContactInfoShouldNotBeFound("email.equals=" + UPDATED_EMAIL);
+    }
+
+    @Test
+    @Transactional
+    void getAllContactInfosByEmailIsInShouldWork() throws Exception {
+        // Initialize the database
+        contactInfoRepository.saveAndFlush(contactInfo);
+
+        // Get all the contactInfoList where email in DEFAULT_EMAIL or UPDATED_EMAIL
+        defaultContactInfoShouldBeFound("email.in=" + DEFAULT_EMAIL + "," + UPDATED_EMAIL);
+
+        // Get all the contactInfoList where email equals to UPDATED_EMAIL
+        defaultContactInfoShouldNotBeFound("email.in=" + UPDATED_EMAIL);
+    }
+
+    @Test
+    @Transactional
+    void getAllContactInfosByEmailIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        contactInfoRepository.saveAndFlush(contactInfo);
+
+        // Get all the contactInfoList where email is not null
+        defaultContactInfoShouldBeFound("email.specified=true");
+
+        // Get all the contactInfoList where email is null
+        defaultContactInfoShouldNotBeFound("email.specified=false");
+    }
+
+    @Test
+    @Transactional
+    void getAllContactInfosByEmailContainsSomething() throws Exception {
+        // Initialize the database
+        contactInfoRepository.saveAndFlush(contactInfo);
+
+        // Get all the contactInfoList where email contains DEFAULT_EMAIL
+        defaultContactInfoShouldBeFound("email.contains=" + DEFAULT_EMAIL);
+
+        // Get all the contactInfoList where email contains UPDATED_EMAIL
+        defaultContactInfoShouldNotBeFound("email.contains=" + UPDATED_EMAIL);
+    }
+
+    @Test
+    @Transactional
+    void getAllContactInfosByEmailNotContainsSomething() throws Exception {
+        // Initialize the database
+        contactInfoRepository.saveAndFlush(contactInfo);
+
+        // Get all the contactInfoList where email does not contain DEFAULT_EMAIL
+        defaultContactInfoShouldNotBeFound("email.doesNotContain=" + DEFAULT_EMAIL);
+
+        // Get all the contactInfoList where email does not contain UPDATED_EMAIL
+        defaultContactInfoShouldBeFound("email.doesNotContain=" + UPDATED_EMAIL);
+    }
+
+    @Test
+    @Transactional
+    void getAllContactInfosByPhoneNumberIsEqualToSomething() throws Exception {
+        // Initialize the database
+        contactInfoRepository.saveAndFlush(contactInfo);
+
+        // Get all the contactInfoList where phoneNumber equals to DEFAULT_PHONE_NUMBER
+        defaultContactInfoShouldBeFound("phoneNumber.equals=" + DEFAULT_PHONE_NUMBER);
+
+        // Get all the contactInfoList where phoneNumber equals to UPDATED_PHONE_NUMBER
+        defaultContactInfoShouldNotBeFound("phoneNumber.equals=" + UPDATED_PHONE_NUMBER);
+    }
+
+    @Test
+    @Transactional
+    void getAllContactInfosByPhoneNumberIsInShouldWork() throws Exception {
+        // Initialize the database
+        contactInfoRepository.saveAndFlush(contactInfo);
+
+        // Get all the contactInfoList where phoneNumber in DEFAULT_PHONE_NUMBER or UPDATED_PHONE_NUMBER
+        defaultContactInfoShouldBeFound("phoneNumber.in=" + DEFAULT_PHONE_NUMBER + "," + UPDATED_PHONE_NUMBER);
+
+        // Get all the contactInfoList where phoneNumber equals to UPDATED_PHONE_NUMBER
+        defaultContactInfoShouldNotBeFound("phoneNumber.in=" + UPDATED_PHONE_NUMBER);
+    }
+
+    @Test
+    @Transactional
+    void getAllContactInfosByPhoneNumberIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        contactInfoRepository.saveAndFlush(contactInfo);
+
+        // Get all the contactInfoList where phoneNumber is not null
+        defaultContactInfoShouldBeFound("phoneNumber.specified=true");
+
+        // Get all the contactInfoList where phoneNumber is null
+        defaultContactInfoShouldNotBeFound("phoneNumber.specified=false");
+    }
+
+    @Test
+    @Transactional
+    void getAllContactInfosByPhoneNumberContainsSomething() throws Exception {
+        // Initialize the database
+        contactInfoRepository.saveAndFlush(contactInfo);
+
+        // Get all the contactInfoList where phoneNumber contains DEFAULT_PHONE_NUMBER
+        defaultContactInfoShouldBeFound("phoneNumber.contains=" + DEFAULT_PHONE_NUMBER);
+
+        // Get all the contactInfoList where phoneNumber contains UPDATED_PHONE_NUMBER
+        defaultContactInfoShouldNotBeFound("phoneNumber.contains=" + UPDATED_PHONE_NUMBER);
+    }
+
+    @Test
+    @Transactional
+    void getAllContactInfosByPhoneNumberNotContainsSomething() throws Exception {
+        // Initialize the database
+        contactInfoRepository.saveAndFlush(contactInfo);
+
+        // Get all the contactInfoList where phoneNumber does not contain DEFAULT_PHONE_NUMBER
+        defaultContactInfoShouldNotBeFound("phoneNumber.doesNotContain=" + DEFAULT_PHONE_NUMBER);
+
+        // Get all the contactInfoList where phoneNumber does not contain UPDATED_PHONE_NUMBER
+        defaultContactInfoShouldBeFound("phoneNumber.doesNotContain=" + UPDATED_PHONE_NUMBER);
+    }
+
+    /**
+     * Executes the search, and checks that the default entity is returned.
+     */
+    private void defaultContactInfoShouldBeFound(String filter) throws Exception {
+        restContactInfoMockMvc
+            .perform(get(ENTITY_API_URL + "?sort=id,desc&" + filter))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
+            .andExpect(jsonPath("$.[*].id").value(hasItem(contactInfo.getId().intValue())))
+            .andExpect(jsonPath("$.[*].email").value(hasItem(DEFAULT_EMAIL)))
+            .andExpect(jsonPath("$.[*].phoneNumber").value(hasItem(DEFAULT_PHONE_NUMBER)));
+
+        // Check, that the count call also returns 1
+        restContactInfoMockMvc
+            .perform(get(ENTITY_API_URL + "/count?sort=id,desc&" + filter))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
+            .andExpect(content().string("1"));
+    }
+
+    /**
+     * Executes the search, and checks that the default entity is not returned.
+     */
+    private void defaultContactInfoShouldNotBeFound(String filter) throws Exception {
+        restContactInfoMockMvc
+            .perform(get(ENTITY_API_URL + "?sort=id,desc&" + filter))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
+            .andExpect(jsonPath("$").isArray())
+            .andExpect(jsonPath("$").isEmpty());
+
+        // Check, that the count call also returns 0
+        restContactInfoMockMvc
+            .perform(get(ENTITY_API_URL + "/count?sort=id,desc&" + filter))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
+            .andExpect(content().string("0"));
     }
 
     @Test

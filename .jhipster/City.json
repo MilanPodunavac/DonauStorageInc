@@ -19,7 +19,7 @@
     }
   ],
   "fluentMethods": true,
-  "jpaMetamodelFiltering": false,
+  "jpaMetamodelFiltering": true,
   "name": "City",
   "pagination": "infinite-scroll",
   "readOnly": false,

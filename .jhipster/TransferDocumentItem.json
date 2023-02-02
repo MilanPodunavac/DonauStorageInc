@@ -27,7 +27,7 @@
   ],
   "fluentMethods": true,
   "javadoc": "sr: Stavka prometnog dokumenta",
-  "jpaMetamodelFiltering": false,
+  "jpaMetamodelFiltering": true,
   "name": "TransferDocumentItem",
   "pagination": "infinite-scroll",
   "readOnly": false,

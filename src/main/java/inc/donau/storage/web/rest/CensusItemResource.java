@@ -1,7 +1,9 @@
 package inc.donau.storage.web.rest;
 
 import inc.donau.storage.repository.CensusItemRepository;
+import inc.donau.storage.service.CensusItemQueryService;
 import inc.donau.storage.service.CensusItemService;
+import inc.donau.storage.service.criteria.CensusItemCriteria;
 import inc.donau.storage.service.dto.CensusItemDTO;
 import inc.donau.storage.web.rest.errors.BadRequestAlertException;
 import java.net.URI;
@@ -17,7 +19,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -43,9 +44,16 @@ public class CensusItemResource {
 
     private final CensusItemRepository censusItemRepository;
 
-    public CensusItemResource(CensusItemService censusItemService, CensusItemRepository censusItemRepository) {
+    private final CensusItemQueryService censusItemQueryService;
+
+    public CensusItemResource(
+        CensusItemService censusItemService,
+        CensusItemRepository censusItemRepository,
+        CensusItemQueryService censusItemQueryService
+    ) {
         this.censusItemService = censusItemService;
         this.censusItemRepository = censusItemRepository;
+        this.censusItemQueryService = censusItemQueryService;
     }
 
     /**
@@ -142,14 +150,30 @@ public class CensusItemResource {
      * {@code GET  /census-items} : get all the censusItems.
      *
      * @param pageable the pagination information.
+     * @param criteria the criteria which the requested entities should match.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of censusItems in body.
      */
     @GetMapping("/census-items")
-    public ResponseEntity<List<CensusItemDTO>> getAllCensusItems(@org.springdoc.api.annotations.ParameterObject Pageable pageable) {
-        log.debug("REST request to get a page of CensusItems");
-        Page<CensusItemDTO> page = censusItemService.findAll(pageable);
+    public ResponseEntity<List<CensusItemDTO>> getAllCensusItems(
+        CensusItemCriteria criteria,
+        @org.springdoc.api.annotations.ParameterObject Pageable pageable
+    ) {
+        log.debug("REST request to get CensusItems by criteria: {}", criteria);
+        Page<CensusItemDTO> page = censusItemQueryService.findByCriteria(criteria, pageable);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
         return ResponseEntity.ok().headers(headers).body(page.getContent());
+    }
+
+    /**
+     * {@code GET  /census-items/count} : count all the censusItems.
+     *
+     * @param criteria the criteria which the requested entities should match.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the count in body.
+     */
+    @GetMapping("/census-items/count")
+    public ResponseEntity<Long> countCensusItems(CensusItemCriteria criteria) {
+        log.debug("REST request to count CensusItems by criteria: {}", criteria);
+        return ResponseEntity.ok().body(censusItemQueryService.countByCriteria(criteria));
     }
 
     /**

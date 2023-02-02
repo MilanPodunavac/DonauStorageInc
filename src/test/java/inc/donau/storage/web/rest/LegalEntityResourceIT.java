@@ -10,6 +10,7 @@ import inc.donau.storage.domain.Address;
 import inc.donau.storage.domain.ContactInfo;
 import inc.donau.storage.domain.LegalEntity;
 import inc.donau.storage.repository.LegalEntityRepository;
+import inc.donau.storage.service.criteria.LegalEntityCriteria;
 import inc.donau.storage.service.dto.LegalEntityDTO;
 import inc.donau.storage.service.mapper.LegalEntityMapper;
 import java.util.List;
@@ -269,6 +270,291 @@ class LegalEntityResourceIT {
             .andExpect(jsonPath("$.name").value(DEFAULT_NAME))
             .andExpect(jsonPath("$.taxIdentificationNumber").value(DEFAULT_TAX_IDENTIFICATION_NUMBER))
             .andExpect(jsonPath("$.identificationNumber").value(DEFAULT_IDENTIFICATION_NUMBER));
+    }
+
+    @Test
+    @Transactional
+    void getLegalEntitiesByIdFiltering() throws Exception {
+        // Initialize the database
+        legalEntityRepository.saveAndFlush(legalEntity);
+
+        Long id = legalEntity.getId();
+
+        defaultLegalEntityShouldBeFound("id.equals=" + id);
+        defaultLegalEntityShouldNotBeFound("id.notEquals=" + id);
+
+        defaultLegalEntityShouldBeFound("id.greaterThanOrEqual=" + id);
+        defaultLegalEntityShouldNotBeFound("id.greaterThan=" + id);
+
+        defaultLegalEntityShouldBeFound("id.lessThanOrEqual=" + id);
+        defaultLegalEntityShouldNotBeFound("id.lessThan=" + id);
+    }
+
+    @Test
+    @Transactional
+    void getAllLegalEntitiesByNameIsEqualToSomething() throws Exception {
+        // Initialize the database
+        legalEntityRepository.saveAndFlush(legalEntity);
+
+        // Get all the legalEntityList where name equals to DEFAULT_NAME
+        defaultLegalEntityShouldBeFound("name.equals=" + DEFAULT_NAME);
+
+        // Get all the legalEntityList where name equals to UPDATED_NAME
+        defaultLegalEntityShouldNotBeFound("name.equals=" + UPDATED_NAME);
+    }
+
+    @Test
+    @Transactional
+    void getAllLegalEntitiesByNameIsInShouldWork() throws Exception {
+        // Initialize the database
+        legalEntityRepository.saveAndFlush(legalEntity);
+
+        // Get all the legalEntityList where name in DEFAULT_NAME or UPDATED_NAME
+        defaultLegalEntityShouldBeFound("name.in=" + DEFAULT_NAME + "," + UPDATED_NAME);
+
+        // Get all the legalEntityList where name equals to UPDATED_NAME
+        defaultLegalEntityShouldNotBeFound("name.in=" + UPDATED_NAME);
+    }
+
+    @Test
+    @Transactional
+    void getAllLegalEntitiesByNameIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        legalEntityRepository.saveAndFlush(legalEntity);
+
+        // Get all the legalEntityList where name is not null
+        defaultLegalEntityShouldBeFound("name.specified=true");
+
+        // Get all the legalEntityList where name is null
+        defaultLegalEntityShouldNotBeFound("name.specified=false");
+    }
+
+    @Test
+    @Transactional
+    void getAllLegalEntitiesByNameContainsSomething() throws Exception {
+        // Initialize the database
+        legalEntityRepository.saveAndFlush(legalEntity);
+
+        // Get all the legalEntityList where name contains DEFAULT_NAME
+        defaultLegalEntityShouldBeFound("name.contains=" + DEFAULT_NAME);
+
+        // Get all the legalEntityList where name contains UPDATED_NAME
+        defaultLegalEntityShouldNotBeFound("name.contains=" + UPDATED_NAME);
+    }
+
+    @Test
+    @Transactional
+    void getAllLegalEntitiesByNameNotContainsSomething() throws Exception {
+        // Initialize the database
+        legalEntityRepository.saveAndFlush(legalEntity);
+
+        // Get all the legalEntityList where name does not contain DEFAULT_NAME
+        defaultLegalEntityShouldNotBeFound("name.doesNotContain=" + DEFAULT_NAME);
+
+        // Get all the legalEntityList where name does not contain UPDATED_NAME
+        defaultLegalEntityShouldBeFound("name.doesNotContain=" + UPDATED_NAME);
+    }
+
+    @Test
+    @Transactional
+    void getAllLegalEntitiesByTaxIdentificationNumberIsEqualToSomething() throws Exception {
+        // Initialize the database
+        legalEntityRepository.saveAndFlush(legalEntity);
+
+        // Get all the legalEntityList where taxIdentificationNumber equals to DEFAULT_TAX_IDENTIFICATION_NUMBER
+        defaultLegalEntityShouldBeFound("taxIdentificationNumber.equals=" + DEFAULT_TAX_IDENTIFICATION_NUMBER);
+
+        // Get all the legalEntityList where taxIdentificationNumber equals to UPDATED_TAX_IDENTIFICATION_NUMBER
+        defaultLegalEntityShouldNotBeFound("taxIdentificationNumber.equals=" + UPDATED_TAX_IDENTIFICATION_NUMBER);
+    }
+
+    @Test
+    @Transactional
+    void getAllLegalEntitiesByTaxIdentificationNumberIsInShouldWork() throws Exception {
+        // Initialize the database
+        legalEntityRepository.saveAndFlush(legalEntity);
+
+        // Get all the legalEntityList where taxIdentificationNumber in DEFAULT_TAX_IDENTIFICATION_NUMBER or UPDATED_TAX_IDENTIFICATION_NUMBER
+        defaultLegalEntityShouldBeFound(
+            "taxIdentificationNumber.in=" + DEFAULT_TAX_IDENTIFICATION_NUMBER + "," + UPDATED_TAX_IDENTIFICATION_NUMBER
+        );
+
+        // Get all the legalEntityList where taxIdentificationNumber equals to UPDATED_TAX_IDENTIFICATION_NUMBER
+        defaultLegalEntityShouldNotBeFound("taxIdentificationNumber.in=" + UPDATED_TAX_IDENTIFICATION_NUMBER);
+    }
+
+    @Test
+    @Transactional
+    void getAllLegalEntitiesByTaxIdentificationNumberIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        legalEntityRepository.saveAndFlush(legalEntity);
+
+        // Get all the legalEntityList where taxIdentificationNumber is not null
+        defaultLegalEntityShouldBeFound("taxIdentificationNumber.specified=true");
+
+        // Get all the legalEntityList where taxIdentificationNumber is null
+        defaultLegalEntityShouldNotBeFound("taxIdentificationNumber.specified=false");
+    }
+
+    @Test
+    @Transactional
+    void getAllLegalEntitiesByTaxIdentificationNumberContainsSomething() throws Exception {
+        // Initialize the database
+        legalEntityRepository.saveAndFlush(legalEntity);
+
+        // Get all the legalEntityList where taxIdentificationNumber contains DEFAULT_TAX_IDENTIFICATION_NUMBER
+        defaultLegalEntityShouldBeFound("taxIdentificationNumber.contains=" + DEFAULT_TAX_IDENTIFICATION_NUMBER);
+
+        // Get all the legalEntityList where taxIdentificationNumber contains UPDATED_TAX_IDENTIFICATION_NUMBER
+        defaultLegalEntityShouldNotBeFound("taxIdentificationNumber.contains=" + UPDATED_TAX_IDENTIFICATION_NUMBER);
+    }
+
+    @Test
+    @Transactional
+    void getAllLegalEntitiesByTaxIdentificationNumberNotContainsSomething() throws Exception {
+        // Initialize the database
+        legalEntityRepository.saveAndFlush(legalEntity);
+
+        // Get all the legalEntityList where taxIdentificationNumber does not contain DEFAULT_TAX_IDENTIFICATION_NUMBER
+        defaultLegalEntityShouldNotBeFound("taxIdentificationNumber.doesNotContain=" + DEFAULT_TAX_IDENTIFICATION_NUMBER);
+
+        // Get all the legalEntityList where taxIdentificationNumber does not contain UPDATED_TAX_IDENTIFICATION_NUMBER
+        defaultLegalEntityShouldBeFound("taxIdentificationNumber.doesNotContain=" + UPDATED_TAX_IDENTIFICATION_NUMBER);
+    }
+
+    @Test
+    @Transactional
+    void getAllLegalEntitiesByIdentificationNumberIsEqualToSomething() throws Exception {
+        // Initialize the database
+        legalEntityRepository.saveAndFlush(legalEntity);
+
+        // Get all the legalEntityList where identificationNumber equals to DEFAULT_IDENTIFICATION_NUMBER
+        defaultLegalEntityShouldBeFound("identificationNumber.equals=" + DEFAULT_IDENTIFICATION_NUMBER);
+
+        // Get all the legalEntityList where identificationNumber equals to UPDATED_IDENTIFICATION_NUMBER
+        defaultLegalEntityShouldNotBeFound("identificationNumber.equals=" + UPDATED_IDENTIFICATION_NUMBER);
+    }
+
+    @Test
+    @Transactional
+    void getAllLegalEntitiesByIdentificationNumberIsInShouldWork() throws Exception {
+        // Initialize the database
+        legalEntityRepository.saveAndFlush(legalEntity);
+
+        // Get all the legalEntityList where identificationNumber in DEFAULT_IDENTIFICATION_NUMBER or UPDATED_IDENTIFICATION_NUMBER
+        defaultLegalEntityShouldBeFound("identificationNumber.in=" + DEFAULT_IDENTIFICATION_NUMBER + "," + UPDATED_IDENTIFICATION_NUMBER);
+
+        // Get all the legalEntityList where identificationNumber equals to UPDATED_IDENTIFICATION_NUMBER
+        defaultLegalEntityShouldNotBeFound("identificationNumber.in=" + UPDATED_IDENTIFICATION_NUMBER);
+    }
+
+    @Test
+    @Transactional
+    void getAllLegalEntitiesByIdentificationNumberIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        legalEntityRepository.saveAndFlush(legalEntity);
+
+        // Get all the legalEntityList where identificationNumber is not null
+        defaultLegalEntityShouldBeFound("identificationNumber.specified=true");
+
+        // Get all the legalEntityList where identificationNumber is null
+        defaultLegalEntityShouldNotBeFound("identificationNumber.specified=false");
+    }
+
+    @Test
+    @Transactional
+    void getAllLegalEntitiesByIdentificationNumberContainsSomething() throws Exception {
+        // Initialize the database
+        legalEntityRepository.saveAndFlush(legalEntity);
+
+        // Get all the legalEntityList where identificationNumber contains DEFAULT_IDENTIFICATION_NUMBER
+        defaultLegalEntityShouldBeFound("identificationNumber.contains=" + DEFAULT_IDENTIFICATION_NUMBER);
+
+        // Get all the legalEntityList where identificationNumber contains UPDATED_IDENTIFICATION_NUMBER
+        defaultLegalEntityShouldNotBeFound("identificationNumber.contains=" + UPDATED_IDENTIFICATION_NUMBER);
+    }
+
+    @Test
+    @Transactional
+    void getAllLegalEntitiesByIdentificationNumberNotContainsSomething() throws Exception {
+        // Initialize the database
+        legalEntityRepository.saveAndFlush(legalEntity);
+
+        // Get all the legalEntityList where identificationNumber does not contain DEFAULT_IDENTIFICATION_NUMBER
+        defaultLegalEntityShouldNotBeFound("identificationNumber.doesNotContain=" + DEFAULT_IDENTIFICATION_NUMBER);
+
+        // Get all the legalEntityList where identificationNumber does not contain UPDATED_IDENTIFICATION_NUMBER
+        defaultLegalEntityShouldBeFound("identificationNumber.doesNotContain=" + UPDATED_IDENTIFICATION_NUMBER);
+    }
+
+    @Test
+    @Transactional
+    void getAllLegalEntitiesByContactInfoIsEqualToSomething() throws Exception {
+        // Get already existing entity
+        ContactInfo contactInfo = legalEntity.getContactInfo();
+        legalEntityRepository.saveAndFlush(legalEntity);
+        Long contactInfoId = contactInfo.getId();
+
+        // Get all the legalEntityList where contactInfo equals to contactInfoId
+        defaultLegalEntityShouldBeFound("contactInfoId.equals=" + contactInfoId);
+
+        // Get all the legalEntityList where contactInfo equals to (contactInfoId + 1)
+        defaultLegalEntityShouldNotBeFound("contactInfoId.equals=" + (contactInfoId + 1));
+    }
+
+    @Test
+    @Transactional
+    void getAllLegalEntitiesByAddressIsEqualToSomething() throws Exception {
+        // Get already existing entity
+        Address address = legalEntity.getAddress();
+        legalEntityRepository.saveAndFlush(legalEntity);
+        Long addressId = address.getId();
+
+        // Get all the legalEntityList where address equals to addressId
+        defaultLegalEntityShouldBeFound("addressId.equals=" + addressId);
+
+        // Get all the legalEntityList where address equals to (addressId + 1)
+        defaultLegalEntityShouldNotBeFound("addressId.equals=" + (addressId + 1));
+    }
+
+    /**
+     * Executes the search, and checks that the default entity is returned.
+     */
+    private void defaultLegalEntityShouldBeFound(String filter) throws Exception {
+        restLegalEntityMockMvc
+            .perform(get(ENTITY_API_URL + "?sort=id,desc&" + filter))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
+            .andExpect(jsonPath("$.[*].id").value(hasItem(legalEntity.getId().intValue())))
+            .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME)))
+            .andExpect(jsonPath("$.[*].taxIdentificationNumber").value(hasItem(DEFAULT_TAX_IDENTIFICATION_NUMBER)))
+            .andExpect(jsonPath("$.[*].identificationNumber").value(hasItem(DEFAULT_IDENTIFICATION_NUMBER)));
+
+        // Check, that the count call also returns 1
+        restLegalEntityMockMvc
+            .perform(get(ENTITY_API_URL + "/count?sort=id,desc&" + filter))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
+            .andExpect(content().string("1"));
+    }
+
+    /**
+     * Executes the search, and checks that the default entity is not returned.
+     */
+    private void defaultLegalEntityShouldNotBeFound(String filter) throws Exception {
+        restLegalEntityMockMvc
+            .perform(get(ENTITY_API_URL + "?sort=id,desc&" + filter))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
+            .andExpect(jsonPath("$").isArray())
+            .andExpect(jsonPath("$").isEmpty());
+
+        // Check, that the count call also returns 0
+        restLegalEntityMockMvc
+            .perform(get(ENTITY_API_URL + "/count?sort=id,desc&" + filter))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
+            .andExpect(content().string("0"));
     }
 
     @Test

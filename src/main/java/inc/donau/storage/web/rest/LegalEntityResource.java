@@ -1,7 +1,9 @@
 package inc.donau.storage.web.rest;
 
 import inc.donau.storage.repository.LegalEntityRepository;
+import inc.donau.storage.service.LegalEntityQueryService;
 import inc.donau.storage.service.LegalEntityService;
+import inc.donau.storage.service.criteria.LegalEntityCriteria;
 import inc.donau.storage.service.dto.LegalEntityDTO;
 import inc.donau.storage.web.rest.errors.BadRequestAlertException;
 import java.net.URI;
@@ -37,9 +39,16 @@ public class LegalEntityResource {
 
     private final LegalEntityRepository legalEntityRepository;
 
-    public LegalEntityResource(LegalEntityService legalEntityService, LegalEntityRepository legalEntityRepository) {
+    private final LegalEntityQueryService legalEntityQueryService;
+
+    public LegalEntityResource(
+        LegalEntityService legalEntityService,
+        LegalEntityRepository legalEntityRepository,
+        LegalEntityQueryService legalEntityQueryService
+    ) {
         this.legalEntityService = legalEntityService;
         this.legalEntityRepository = legalEntityRepository;
+        this.legalEntityQueryService = legalEntityQueryService;
     }
 
     /**
@@ -135,12 +144,26 @@ public class LegalEntityResource {
     /**
      * {@code GET  /legal-entities} : get all the legalEntities.
      *
+     * @param criteria the criteria which the requested entities should match.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of legalEntities in body.
      */
     @GetMapping("/legal-entities")
-    public List<LegalEntityDTO> getAllLegalEntities() {
-        log.debug("REST request to get all LegalEntities");
-        return legalEntityService.findAll();
+    public ResponseEntity<List<LegalEntityDTO>> getAllLegalEntities(LegalEntityCriteria criteria) {
+        log.debug("REST request to get LegalEntities by criteria: {}", criteria);
+        List<LegalEntityDTO> entityList = legalEntityQueryService.findByCriteria(criteria);
+        return ResponseEntity.ok().body(entityList);
+    }
+
+    /**
+     * {@code GET  /legal-entities/count} : count all the legalEntities.
+     *
+     * @param criteria the criteria which the requested entities should match.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the count in body.
+     */
+    @GetMapping("/legal-entities/count")
+    public ResponseEntity<Long> countLegalEntities(LegalEntityCriteria criteria) {
+        log.debug("REST request to count LegalEntities by criteria: {}", criteria);
+        return ResponseEntity.ok().body(legalEntityQueryService.countByCriteria(criteria));
     }
 
     /**

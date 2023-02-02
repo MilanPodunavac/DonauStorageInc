@@ -1,7 +1,9 @@
 package inc.donau.storage.web.rest;
 
 import inc.donau.storage.repository.BusinessContactRepository;
+import inc.donau.storage.service.BusinessContactQueryService;
 import inc.donau.storage.service.BusinessContactService;
+import inc.donau.storage.service.criteria.BusinessContactCriteria;
 import inc.donau.storage.service.dto.BusinessContactDTO;
 import inc.donau.storage.web.rest.errors.BadRequestAlertException;
 import java.net.URI;
@@ -37,9 +39,16 @@ public class BusinessContactResource {
 
     private final BusinessContactRepository businessContactRepository;
 
-    public BusinessContactResource(BusinessContactService businessContactService, BusinessContactRepository businessContactRepository) {
+    private final BusinessContactQueryService businessContactQueryService;
+
+    public BusinessContactResource(
+        BusinessContactService businessContactService,
+        BusinessContactRepository businessContactRepository,
+        BusinessContactQueryService businessContactQueryService
+    ) {
         this.businessContactService = businessContactService;
         this.businessContactRepository = businessContactRepository;
+        this.businessContactQueryService = businessContactQueryService;
     }
 
     /**
@@ -136,12 +145,26 @@ public class BusinessContactResource {
     /**
      * {@code GET  /business-contacts} : get all the businessContacts.
      *
+     * @param criteria the criteria which the requested entities should match.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of businessContacts in body.
      */
     @GetMapping("/business-contacts")
-    public List<BusinessContactDTO> getAllBusinessContacts() {
-        log.debug("REST request to get all BusinessContacts");
-        return businessContactService.findAll();
+    public ResponseEntity<List<BusinessContactDTO>> getAllBusinessContacts(BusinessContactCriteria criteria) {
+        log.debug("REST request to get BusinessContacts by criteria: {}", criteria);
+        List<BusinessContactDTO> entityList = businessContactQueryService.findByCriteria(criteria);
+        return ResponseEntity.ok().body(entityList);
+    }
+
+    /**
+     * {@code GET  /business-contacts/count} : count all the businessContacts.
+     *
+     * @param criteria the criteria which the requested entities should match.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the count in body.
+     */
+    @GetMapping("/business-contacts/count")
+    public ResponseEntity<Long> countBusinessContacts(BusinessContactCriteria criteria) {
+        log.debug("REST request to count BusinessContacts by criteria: {}", criteria);
+        return ResponseEntity.ok().body(businessContactQueryService.countByCriteria(criteria));
     }
 
     /**

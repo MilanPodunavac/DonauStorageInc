@@ -10,6 +10,7 @@ import inc.donau.storage.domain.CensusDocument;
 import inc.donau.storage.domain.CensusItem;
 import inc.donau.storage.domain.Resource;
 import inc.donau.storage.repository.CensusItemRepository;
+import inc.donau.storage.service.criteria.CensusItemCriteria;
 import inc.donau.storage.service.dto.CensusItemDTO;
 import inc.donau.storage.service.mapper.CensusItemMapper;
 import java.util.List;
@@ -35,6 +36,7 @@ class CensusItemResourceIT {
 
     private static final Float DEFAULT_AMOUNT = 0F;
     private static final Float UPDATED_AMOUNT = 1F;
+    private static final Float SMALLER_AMOUNT = 0F - 1F;
 
     private static final String ENTITY_API_URL = "/api/census-items";
     private static final String ENTITY_API_URL_ID = ENTITY_API_URL + "/{id}";
@@ -205,6 +207,199 @@ class CensusItemResourceIT {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.id").value(censusItem.getId().intValue()))
             .andExpect(jsonPath("$.amount").value(DEFAULT_AMOUNT.doubleValue()));
+    }
+
+    @Test
+    @Transactional
+    void getCensusItemsByIdFiltering() throws Exception {
+        // Initialize the database
+        censusItemRepository.saveAndFlush(censusItem);
+
+        Long id = censusItem.getId();
+
+        defaultCensusItemShouldBeFound("id.equals=" + id);
+        defaultCensusItemShouldNotBeFound("id.notEquals=" + id);
+
+        defaultCensusItemShouldBeFound("id.greaterThanOrEqual=" + id);
+        defaultCensusItemShouldNotBeFound("id.greaterThan=" + id);
+
+        defaultCensusItemShouldBeFound("id.lessThanOrEqual=" + id);
+        defaultCensusItemShouldNotBeFound("id.lessThan=" + id);
+    }
+
+    @Test
+    @Transactional
+    void getAllCensusItemsByAmountIsEqualToSomething() throws Exception {
+        // Initialize the database
+        censusItemRepository.saveAndFlush(censusItem);
+
+        // Get all the censusItemList where amount equals to DEFAULT_AMOUNT
+        defaultCensusItemShouldBeFound("amount.equals=" + DEFAULT_AMOUNT);
+
+        // Get all the censusItemList where amount equals to UPDATED_AMOUNT
+        defaultCensusItemShouldNotBeFound("amount.equals=" + UPDATED_AMOUNT);
+    }
+
+    @Test
+    @Transactional
+    void getAllCensusItemsByAmountIsInShouldWork() throws Exception {
+        // Initialize the database
+        censusItemRepository.saveAndFlush(censusItem);
+
+        // Get all the censusItemList where amount in DEFAULT_AMOUNT or UPDATED_AMOUNT
+        defaultCensusItemShouldBeFound("amount.in=" + DEFAULT_AMOUNT + "," + UPDATED_AMOUNT);
+
+        // Get all the censusItemList where amount equals to UPDATED_AMOUNT
+        defaultCensusItemShouldNotBeFound("amount.in=" + UPDATED_AMOUNT);
+    }
+
+    @Test
+    @Transactional
+    void getAllCensusItemsByAmountIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        censusItemRepository.saveAndFlush(censusItem);
+
+        // Get all the censusItemList where amount is not null
+        defaultCensusItemShouldBeFound("amount.specified=true");
+
+        // Get all the censusItemList where amount is null
+        defaultCensusItemShouldNotBeFound("amount.specified=false");
+    }
+
+    @Test
+    @Transactional
+    void getAllCensusItemsByAmountIsGreaterThanOrEqualToSomething() throws Exception {
+        // Initialize the database
+        censusItemRepository.saveAndFlush(censusItem);
+
+        // Get all the censusItemList where amount is greater than or equal to DEFAULT_AMOUNT
+        defaultCensusItemShouldBeFound("amount.greaterThanOrEqual=" + DEFAULT_AMOUNT);
+
+        // Get all the censusItemList where amount is greater than or equal to UPDATED_AMOUNT
+        defaultCensusItemShouldNotBeFound("amount.greaterThanOrEqual=" + UPDATED_AMOUNT);
+    }
+
+    @Test
+    @Transactional
+    void getAllCensusItemsByAmountIsLessThanOrEqualToSomething() throws Exception {
+        // Initialize the database
+        censusItemRepository.saveAndFlush(censusItem);
+
+        // Get all the censusItemList where amount is less than or equal to DEFAULT_AMOUNT
+        defaultCensusItemShouldBeFound("amount.lessThanOrEqual=" + DEFAULT_AMOUNT);
+
+        // Get all the censusItemList where amount is less than or equal to SMALLER_AMOUNT
+        defaultCensusItemShouldNotBeFound("amount.lessThanOrEqual=" + SMALLER_AMOUNT);
+    }
+
+    @Test
+    @Transactional
+    void getAllCensusItemsByAmountIsLessThanSomething() throws Exception {
+        // Initialize the database
+        censusItemRepository.saveAndFlush(censusItem);
+
+        // Get all the censusItemList where amount is less than DEFAULT_AMOUNT
+        defaultCensusItemShouldNotBeFound("amount.lessThan=" + DEFAULT_AMOUNT);
+
+        // Get all the censusItemList where amount is less than UPDATED_AMOUNT
+        defaultCensusItemShouldBeFound("amount.lessThan=" + UPDATED_AMOUNT);
+    }
+
+    @Test
+    @Transactional
+    void getAllCensusItemsByAmountIsGreaterThanSomething() throws Exception {
+        // Initialize the database
+        censusItemRepository.saveAndFlush(censusItem);
+
+        // Get all the censusItemList where amount is greater than DEFAULT_AMOUNT
+        defaultCensusItemShouldNotBeFound("amount.greaterThan=" + DEFAULT_AMOUNT);
+
+        // Get all the censusItemList where amount is greater than SMALLER_AMOUNT
+        defaultCensusItemShouldBeFound("amount.greaterThan=" + SMALLER_AMOUNT);
+    }
+
+    @Test
+    @Transactional
+    void getAllCensusItemsByCensusDocumentIsEqualToSomething() throws Exception {
+        CensusDocument censusDocument;
+        if (TestUtil.findAll(em, CensusDocument.class).isEmpty()) {
+            censusItemRepository.saveAndFlush(censusItem);
+            censusDocument = CensusDocumentResourceIT.createEntity(em);
+        } else {
+            censusDocument = TestUtil.findAll(em, CensusDocument.class).get(0);
+        }
+        em.persist(censusDocument);
+        em.flush();
+        censusItem.setCensusDocument(censusDocument);
+        censusItemRepository.saveAndFlush(censusItem);
+        Long censusDocumentId = censusDocument.getId();
+
+        // Get all the censusItemList where censusDocument equals to censusDocumentId
+        defaultCensusItemShouldBeFound("censusDocumentId.equals=" + censusDocumentId);
+
+        // Get all the censusItemList where censusDocument equals to (censusDocumentId + 1)
+        defaultCensusItemShouldNotBeFound("censusDocumentId.equals=" + (censusDocumentId + 1));
+    }
+
+    @Test
+    @Transactional
+    void getAllCensusItemsByResourceIsEqualToSomething() throws Exception {
+        Resource resource;
+        if (TestUtil.findAll(em, Resource.class).isEmpty()) {
+            censusItemRepository.saveAndFlush(censusItem);
+            resource = ResourceResourceIT.createEntity(em);
+        } else {
+            resource = TestUtil.findAll(em, Resource.class).get(0);
+        }
+        em.persist(resource);
+        em.flush();
+        censusItem.setResource(resource);
+        censusItemRepository.saveAndFlush(censusItem);
+        Long resourceId = resource.getId();
+
+        // Get all the censusItemList where resource equals to resourceId
+        defaultCensusItemShouldBeFound("resourceId.equals=" + resourceId);
+
+        // Get all the censusItemList where resource equals to (resourceId + 1)
+        defaultCensusItemShouldNotBeFound("resourceId.equals=" + (resourceId + 1));
+    }
+
+    /**
+     * Executes the search, and checks that the default entity is returned.
+     */
+    private void defaultCensusItemShouldBeFound(String filter) throws Exception {
+        restCensusItemMockMvc
+            .perform(get(ENTITY_API_URL + "?sort=id,desc&" + filter))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
+            .andExpect(jsonPath("$.[*].id").value(hasItem(censusItem.getId().intValue())))
+            .andExpect(jsonPath("$.[*].amount").value(hasItem(DEFAULT_AMOUNT.doubleValue())));
+
+        // Check, that the count call also returns 1
+        restCensusItemMockMvc
+            .perform(get(ENTITY_API_URL + "/count?sort=id,desc&" + filter))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
+            .andExpect(content().string("1"));
+    }
+
+    /**
+     * Executes the search, and checks that the default entity is not returned.
+     */
+    private void defaultCensusItemShouldNotBeFound(String filter) throws Exception {
+        restCensusItemMockMvc
+            .perform(get(ENTITY_API_URL + "?sort=id,desc&" + filter))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
+            .andExpect(jsonPath("$").isArray())
+            .andExpect(jsonPath("$").isEmpty());
+
+        // Check, that the count call also returns 0
+        restCensusItemMockMvc
+            .perform(get(ENTITY_API_URL + "/count?sort=id,desc&" + filter))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
+            .andExpect(content().string("0"));
     }
 
     @Test

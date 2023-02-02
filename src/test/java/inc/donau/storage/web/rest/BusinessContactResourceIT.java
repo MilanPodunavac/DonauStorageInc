@@ -9,6 +9,7 @@ import inc.donau.storage.IntegrationTest;
 import inc.donau.storage.domain.BusinessContact;
 import inc.donau.storage.domain.Person;
 import inc.donau.storage.repository.BusinessContactRepository;
+import inc.donau.storage.service.criteria.BusinessContactCriteria;
 import inc.donau.storage.service.dto.BusinessContactDTO;
 import inc.donau.storage.service.mapper.BusinessContactMapper;
 import java.util.List;
@@ -164,6 +165,76 @@ class BusinessContactResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.id").value(businessContact.getId().intValue()));
+    }
+
+    @Test
+    @Transactional
+    void getBusinessContactsByIdFiltering() throws Exception {
+        // Initialize the database
+        businessContactRepository.saveAndFlush(businessContact);
+
+        Long id = businessContact.getId();
+
+        defaultBusinessContactShouldBeFound("id.equals=" + id);
+        defaultBusinessContactShouldNotBeFound("id.notEquals=" + id);
+
+        defaultBusinessContactShouldBeFound("id.greaterThanOrEqual=" + id);
+        defaultBusinessContactShouldNotBeFound("id.greaterThan=" + id);
+
+        defaultBusinessContactShouldBeFound("id.lessThanOrEqual=" + id);
+        defaultBusinessContactShouldNotBeFound("id.lessThan=" + id);
+    }
+
+    @Test
+    @Transactional
+    void getAllBusinessContactsByPersonalInfoIsEqualToSomething() throws Exception {
+        // Get already existing entity
+        Person personalInfo = businessContact.getPersonalInfo();
+        businessContactRepository.saveAndFlush(businessContact);
+        Long personalInfoId = personalInfo.getId();
+
+        // Get all the businessContactList where personalInfo equals to personalInfoId
+        defaultBusinessContactShouldBeFound("personalInfoId.equals=" + personalInfoId);
+
+        // Get all the businessContactList where personalInfo equals to (personalInfoId + 1)
+        defaultBusinessContactShouldNotBeFound("personalInfoId.equals=" + (personalInfoId + 1));
+    }
+
+    /**
+     * Executes the search, and checks that the default entity is returned.
+     */
+    private void defaultBusinessContactShouldBeFound(String filter) throws Exception {
+        restBusinessContactMockMvc
+            .perform(get(ENTITY_API_URL + "?sort=id,desc&" + filter))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
+            .andExpect(jsonPath("$.[*].id").value(hasItem(businessContact.getId().intValue())));
+
+        // Check, that the count call also returns 1
+        restBusinessContactMockMvc
+            .perform(get(ENTITY_API_URL + "/count?sort=id,desc&" + filter))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
+            .andExpect(content().string("1"));
+    }
+
+    /**
+     * Executes the search, and checks that the default entity is not returned.
+     */
+    private void defaultBusinessContactShouldNotBeFound(String filter) throws Exception {
+        restBusinessContactMockMvc
+            .perform(get(ENTITY_API_URL + "?sort=id,desc&" + filter))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
+            .andExpect(jsonPath("$").isArray())
+            .andExpect(jsonPath("$").isEmpty());
+
+        // Check, that the count call also returns 0
+        restBusinessContactMockMvc
+            .perform(get(ENTITY_API_URL + "/count?sort=id,desc&" + filter))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
+            .andExpect(content().string("0"));
     }
 
     @Test

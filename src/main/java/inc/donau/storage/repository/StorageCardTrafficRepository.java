@@ -9,4 +9,5 @@ import org.springframework.stereotype.Repository;
  */
 @SuppressWarnings("unused")
 @Repository
-public interface StorageCardTrafficRepository extends JpaRepository<StorageCardTraffic, Long> {}
+public interface StorageCardTrafficRepository
+    extends JpaRepository<StorageCardTraffic, Long>, JpaSpecificationExecutor<StorageCardTraffic> {}

@@ -9,4 +9,5 @@ import org.springframework.stereotype.Repository;
  */
 @SuppressWarnings("unused")
 @Repository
-public interface TransferDocumentItemRepository extends JpaRepository<TransferDocumentItem, Long> {}
+public interface TransferDocumentItemRepository
+    extends JpaRepository<TransferDocumentItem, Long>, JpaSpecificationExecutor<TransferDocumentItem> {}

@@ -1,7 +1,9 @@
 package inc.donau.storage.web.rest;
 
 import inc.donau.storage.repository.TransferDocumentItemRepository;
+import inc.donau.storage.service.TransferDocumentItemQueryService;
 import inc.donau.storage.service.TransferDocumentItemService;
+import inc.donau.storage.service.criteria.TransferDocumentItemCriteria;
 import inc.donau.storage.service.dto.TransferDocumentItemDTO;
 import inc.donau.storage.web.rest.errors.BadRequestAlertException;
 import java.net.URI;
@@ -17,7 +19,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -43,12 +44,16 @@ public class TransferDocumentItemResource {
 
     private final TransferDocumentItemRepository transferDocumentItemRepository;
 
+    private final TransferDocumentItemQueryService transferDocumentItemQueryService;
+
     public TransferDocumentItemResource(
         TransferDocumentItemService transferDocumentItemService,
-        TransferDocumentItemRepository transferDocumentItemRepository
+        TransferDocumentItemRepository transferDocumentItemRepository,
+        TransferDocumentItemQueryService transferDocumentItemQueryService
     ) {
         this.transferDocumentItemService = transferDocumentItemService;
         this.transferDocumentItemRepository = transferDocumentItemRepository;
+        this.transferDocumentItemQueryService = transferDocumentItemQueryService;
     }
 
     /**
@@ -147,16 +152,30 @@ public class TransferDocumentItemResource {
      * {@code GET  /transfer-document-items} : get all the transferDocumentItems.
      *
      * @param pageable the pagination information.
+     * @param criteria the criteria which the requested entities should match.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of transferDocumentItems in body.
      */
     @GetMapping("/transfer-document-items")
     public ResponseEntity<List<TransferDocumentItemDTO>> getAllTransferDocumentItems(
+        TransferDocumentItemCriteria criteria,
         @org.springdoc.api.annotations.ParameterObject Pageable pageable
     ) {
-        log.debug("REST request to get a page of TransferDocumentItems");
-        Page<TransferDocumentItemDTO> page = transferDocumentItemService.findAll(pageable);
+        log.debug("REST request to get TransferDocumentItems by criteria: {}", criteria);
+        Page<TransferDocumentItemDTO> page = transferDocumentItemQueryService.findByCriteria(criteria, pageable);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
         return ResponseEntity.ok().headers(headers).body(page.getContent());
+    }
+
+    /**
+     * {@code GET  /transfer-document-items/count} : count all the transferDocumentItems.
+     *
+     * @param criteria the criteria which the requested entities should match.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the count in body.
+     */
+    @GetMapping("/transfer-document-items/count")
+    public ResponseEntity<Long> countTransferDocumentItems(TransferDocumentItemCriteria criteria) {
+        log.debug("REST request to count TransferDocumentItems by criteria: {}", criteria);
+        return ResponseEntity.ok().body(transferDocumentItemQueryService.countByCriteria(criteria));
     }
 
     /**

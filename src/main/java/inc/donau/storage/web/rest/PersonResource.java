@@ -1,7 +1,9 @@
 package inc.donau.storage.web.rest;
 
 import inc.donau.storage.repository.PersonRepository;
+import inc.donau.storage.service.PersonQueryService;
 import inc.donau.storage.service.PersonService;
+import inc.donau.storage.service.criteria.PersonCriteria;
 import inc.donau.storage.service.dto.PersonDTO;
 import inc.donau.storage.web.rest.errors.BadRequestAlertException;
 import java.net.URI;
@@ -37,9 +39,12 @@ public class PersonResource {
 
     private final PersonRepository personRepository;
 
-    public PersonResource(PersonService personService, PersonRepository personRepository) {
+    private final PersonQueryService personQueryService;
+
+    public PersonResource(PersonService personService, PersonRepository personRepository, PersonQueryService personQueryService) {
         this.personService = personService;
         this.personRepository = personRepository;
+        this.personQueryService = personQueryService;
     }
 
     /**
@@ -135,12 +140,26 @@ public class PersonResource {
     /**
      * {@code GET  /people} : get all the people.
      *
+     * @param criteria the criteria which the requested entities should match.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of people in body.
      */
     @GetMapping("/people")
-    public List<PersonDTO> getAllPeople() {
-        log.debug("REST request to get all People");
-        return personService.findAll();
+    public ResponseEntity<List<PersonDTO>> getAllPeople(PersonCriteria criteria) {
+        log.debug("REST request to get People by criteria: {}", criteria);
+        List<PersonDTO> entityList = personQueryService.findByCriteria(criteria);
+        return ResponseEntity.ok().body(entityList);
+    }
+
+    /**
+     * {@code GET  /people/count} : count all the people.
+     *
+     * @param criteria the criteria which the requested entities should match.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the count in body.
+     */
+    @GetMapping("/people/count")
+    public ResponseEntity<Long> countPeople(PersonCriteria criteria) {
+        log.debug("REST request to count People by criteria: {}", criteria);
+        return ResponseEntity.ok().body(personQueryService.countByCriteria(criteria));
     }
 
     /**

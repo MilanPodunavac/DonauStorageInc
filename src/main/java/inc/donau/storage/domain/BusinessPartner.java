@@ -38,7 +38,7 @@ public class BusinessPartner implements Serializable {
     /**
      * Cascade delete
      */
-    @JsonIgnoreProperties(value = { "contactInfo" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "contactInfo", "address" }, allowSetters = true)
     @OneToOne(optional = false, cascade = CascadeType.REMOVE)
     @NotNull
     @JoinColumn(unique = true)

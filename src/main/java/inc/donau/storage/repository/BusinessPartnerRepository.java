@@ -9,4 +9,4 @@ import org.springframework.stereotype.Repository;
  */
 @SuppressWarnings("unused")
 @Repository
-public interface BusinessPartnerRepository extends JpaRepository<BusinessPartner, Long> {}
+public interface BusinessPartnerRepository extends JpaRepository<BusinessPartner, Long>, JpaSpecificationExecutor<BusinessPartner> {}

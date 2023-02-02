@@ -28,9 +28,8 @@ public class ContactInfo implements Serializable {
     @Column(name = "email", nullable = false, unique = true)
     private String email;
 
-    @NotNull
     @Pattern(regexp = "((\\+[0-9]{1,3})|0)[0-9]{7,10}")
-    @Column(name = "phone_number", nullable = false)
+    @Column(name = "phone_number")
     private String phoneNumber;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here

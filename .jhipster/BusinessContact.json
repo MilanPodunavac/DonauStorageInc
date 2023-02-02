@@ -6,7 +6,7 @@
   "entityTableName": "business_contact",
   "fields": [],
   "fluentMethods": true,
-  "jpaMetamodelFiltering": false,
+  "jpaMetamodelFiltering": true,
   "name": "BusinessContact",
   "pagination": "no",
   "readOnly": false,

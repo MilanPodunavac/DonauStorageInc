@@ -254,4 +254,4 @@ service Storage, StorageCardTraffic, CensusItem, TransferDocumentItem with servi
 
 //search * with elasticsearch
 
-filter Storage, StorageCard, TransferDocument, CensusDocument
+filter *

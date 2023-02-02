@@ -6,9 +6,14 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 import inc.donau.storage.IntegrationTest;
+import inc.donau.storage.domain.BusinessPartner;
+import inc.donau.storage.domain.BusinessYear;
 import inc.donau.storage.domain.Company;
+import inc.donau.storage.domain.Employee;
 import inc.donau.storage.domain.LegalEntity;
+import inc.donau.storage.domain.Resource;
 import inc.donau.storage.repository.CompanyRepository;
+import inc.donau.storage.service.criteria.CompanyCriteria;
 import inc.donau.storage.service.dto.CompanyDTO;
 import inc.donau.storage.service.mapper.CompanyMapper;
 import java.util.List;
@@ -160,6 +165,168 @@ class CompanyResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.id").value(company.getId().intValue()));
+    }
+
+    @Test
+    @Transactional
+    void getCompaniesByIdFiltering() throws Exception {
+        // Initialize the database
+        companyRepository.saveAndFlush(company);
+
+        Long id = company.getId();
+
+        defaultCompanyShouldBeFound("id.equals=" + id);
+        defaultCompanyShouldNotBeFound("id.notEquals=" + id);
+
+        defaultCompanyShouldBeFound("id.greaterThanOrEqual=" + id);
+        defaultCompanyShouldNotBeFound("id.greaterThan=" + id);
+
+        defaultCompanyShouldBeFound("id.lessThanOrEqual=" + id);
+        defaultCompanyShouldNotBeFound("id.lessThan=" + id);
+    }
+
+    @Test
+    @Transactional
+    void getAllCompaniesByLegalEntityInfoIsEqualToSomething() throws Exception {
+        // Get already existing entity
+        LegalEntity legalEntityInfo = company.getLegalEntityInfo();
+        companyRepository.saveAndFlush(company);
+        Long legalEntityInfoId = legalEntityInfo.getId();
+
+        // Get all the companyList where legalEntityInfo equals to legalEntityInfoId
+        defaultCompanyShouldBeFound("legalEntityInfoId.equals=" + legalEntityInfoId);
+
+        // Get all the companyList where legalEntityInfo equals to (legalEntityInfoId + 1)
+        defaultCompanyShouldNotBeFound("legalEntityInfoId.equals=" + (legalEntityInfoId + 1));
+    }
+
+    @Test
+    @Transactional
+    void getAllCompaniesByResourceIsEqualToSomething() throws Exception {
+        Resource resource;
+        if (TestUtil.findAll(em, Resource.class).isEmpty()) {
+            companyRepository.saveAndFlush(company);
+            resource = ResourceResourceIT.createEntity(em);
+        } else {
+            resource = TestUtil.findAll(em, Resource.class).get(0);
+        }
+        em.persist(resource);
+        em.flush();
+        company.addResource(resource);
+        companyRepository.saveAndFlush(company);
+        Long resourceId = resource.getId();
+
+        // Get all the companyList where resource equals to resourceId
+        defaultCompanyShouldBeFound("resourceId.equals=" + resourceId);
+
+        // Get all the companyList where resource equals to (resourceId + 1)
+        defaultCompanyShouldNotBeFound("resourceId.equals=" + (resourceId + 1));
+    }
+
+    @Test
+    @Transactional
+    void getAllCompaniesByBusinessPartnerIsEqualToSomething() throws Exception {
+        BusinessPartner businessPartner;
+        if (TestUtil.findAll(em, BusinessPartner.class).isEmpty()) {
+            companyRepository.saveAndFlush(company);
+            businessPartner = BusinessPartnerResourceIT.createEntity(em);
+        } else {
+            businessPartner = TestUtil.findAll(em, BusinessPartner.class).get(0);
+        }
+        em.persist(businessPartner);
+        em.flush();
+        company.addBusinessPartner(businessPartner);
+        companyRepository.saveAndFlush(company);
+        Long businessPartnerId = businessPartner.getId();
+
+        // Get all the companyList where businessPartner equals to businessPartnerId
+        defaultCompanyShouldBeFound("businessPartnerId.equals=" + businessPartnerId);
+
+        // Get all the companyList where businessPartner equals to (businessPartnerId + 1)
+        defaultCompanyShouldNotBeFound("businessPartnerId.equals=" + (businessPartnerId + 1));
+    }
+
+    @Test
+    @Transactional
+    void getAllCompaniesByBusinessYearIsEqualToSomething() throws Exception {
+        BusinessYear businessYear;
+        if (TestUtil.findAll(em, BusinessYear.class).isEmpty()) {
+            companyRepository.saveAndFlush(company);
+            businessYear = BusinessYearResourceIT.createEntity(em);
+        } else {
+            businessYear = TestUtil.findAll(em, BusinessYear.class).get(0);
+        }
+        em.persist(businessYear);
+        em.flush();
+        company.addBusinessYear(businessYear);
+        companyRepository.saveAndFlush(company);
+        Long businessYearId = businessYear.getId();
+
+        // Get all the companyList where businessYear equals to businessYearId
+        defaultCompanyShouldBeFound("businessYearId.equals=" + businessYearId);
+
+        // Get all the companyList where businessYear equals to (businessYearId + 1)
+        defaultCompanyShouldNotBeFound("businessYearId.equals=" + (businessYearId + 1));
+    }
+
+    @Test
+    @Transactional
+    void getAllCompaniesByEmployeeIsEqualToSomething() throws Exception {
+        Employee employee;
+        if (TestUtil.findAll(em, Employee.class).isEmpty()) {
+            companyRepository.saveAndFlush(company);
+            employee = EmployeeResourceIT.createEntity(em);
+        } else {
+            employee = TestUtil.findAll(em, Employee.class).get(0);
+        }
+        em.persist(employee);
+        em.flush();
+        company.addEmployee(employee);
+        companyRepository.saveAndFlush(company);
+        Long employeeId = employee.getId();
+
+        // Get all the companyList where employee equals to employeeId
+        defaultCompanyShouldBeFound("employeeId.equals=" + employeeId);
+
+        // Get all the companyList where employee equals to (employeeId + 1)
+        defaultCompanyShouldNotBeFound("employeeId.equals=" + (employeeId + 1));
+    }
+
+    /**
+     * Executes the search, and checks that the default entity is returned.
+     */
+    private void defaultCompanyShouldBeFound(String filter) throws Exception {
+        restCompanyMockMvc
+            .perform(get(ENTITY_API_URL + "?sort=id,desc&" + filter))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
+            .andExpect(jsonPath("$.[*].id").value(hasItem(company.getId().intValue())));
+
+        // Check, that the count call also returns 1
+        restCompanyMockMvc
+            .perform(get(ENTITY_API_URL + "/count?sort=id,desc&" + filter))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
+            .andExpect(content().string("1"));
+    }
+
+    /**
+     * Executes the search, and checks that the default entity is not returned.
+     */
+    private void defaultCompanyShouldNotBeFound(String filter) throws Exception {
+        restCompanyMockMvc
+            .perform(get(ENTITY_API_URL + "?sort=id,desc&" + filter))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
+            .andExpect(jsonPath("$").isArray())
+            .andExpect(jsonPath("$").isEmpty());
+
+        // Check, that the count call also returns 0
+        restCompanyMockMvc
+            .perform(get(ENTITY_API_URL + "/count?sort=id,desc&" + filter))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
+            .andExpect(content().string("0"));
     }
 
     @Test

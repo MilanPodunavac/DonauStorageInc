@@ -1,7 +1,9 @@
 package inc.donau.storage.web.rest;
 
 import inc.donau.storage.repository.AddressRepository;
+import inc.donau.storage.service.AddressQueryService;
 import inc.donau.storage.service.AddressService;
+import inc.donau.storage.service.criteria.AddressCriteria;
 import inc.donau.storage.service.dto.AddressDTO;
 import inc.donau.storage.web.rest.errors.BadRequestAlertException;
 import java.net.URI;
@@ -37,9 +39,12 @@ public class AddressResource {
 
     private final AddressRepository addressRepository;
 
-    public AddressResource(AddressService addressService, AddressRepository addressRepository) {
+    private final AddressQueryService addressQueryService;
+
+    public AddressResource(AddressService addressService, AddressRepository addressRepository, AddressQueryService addressQueryService) {
         this.addressService = addressService;
         this.addressRepository = addressRepository;
+        this.addressQueryService = addressQueryService;
     }
 
     /**
@@ -135,12 +140,26 @@ public class AddressResource {
     /**
      * {@code GET  /addresses} : get all the addresses.
      *
+     * @param criteria the criteria which the requested entities should match.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of addresses in body.
      */
     @GetMapping("/addresses")
-    public List<AddressDTO> getAllAddresses() {
-        log.debug("REST request to get all Addresses");
-        return addressService.findAll();
+    public ResponseEntity<List<AddressDTO>> getAllAddresses(AddressCriteria criteria) {
+        log.debug("REST request to get Addresses by criteria: {}", criteria);
+        List<AddressDTO> entityList = addressQueryService.findByCriteria(criteria);
+        return ResponseEntity.ok().body(entityList);
+    }
+
+    /**
+     * {@code GET  /addresses/count} : count all the addresses.
+     *
+     * @param criteria the criteria which the requested entities should match.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the count in body.
+     */
+    @GetMapping("/addresses/count")
+    public ResponseEntity<Long> countAddresses(AddressCriteria criteria) {
+        log.debug("REST request to count Addresses by criteria: {}", criteria);
+        return ResponseEntity.ok().body(addressQueryService.countByCriteria(criteria));
     }
 
     /**

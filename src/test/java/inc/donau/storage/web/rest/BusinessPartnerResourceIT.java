@@ -10,7 +10,9 @@ import inc.donau.storage.domain.BusinessContact;
 import inc.donau.storage.domain.BusinessPartner;
 import inc.donau.storage.domain.Company;
 import inc.donau.storage.domain.LegalEntity;
+import inc.donau.storage.domain.TransferDocument;
 import inc.donau.storage.repository.BusinessPartnerRepository;
+import inc.donau.storage.service.criteria.BusinessPartnerCriteria;
 import inc.donau.storage.service.dto.BusinessPartnerDTO;
 import inc.donau.storage.service.mapper.BusinessPartnerMapper;
 import java.util.List;
@@ -206,6 +208,137 @@ class BusinessPartnerResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.id").value(businessPartner.getId().intValue()));
+    }
+
+    @Test
+    @Transactional
+    void getBusinessPartnersByIdFiltering() throws Exception {
+        // Initialize the database
+        businessPartnerRepository.saveAndFlush(businessPartner);
+
+        Long id = businessPartner.getId();
+
+        defaultBusinessPartnerShouldBeFound("id.equals=" + id);
+        defaultBusinessPartnerShouldNotBeFound("id.notEquals=" + id);
+
+        defaultBusinessPartnerShouldBeFound("id.greaterThanOrEqual=" + id);
+        defaultBusinessPartnerShouldNotBeFound("id.greaterThan=" + id);
+
+        defaultBusinessPartnerShouldBeFound("id.lessThanOrEqual=" + id);
+        defaultBusinessPartnerShouldNotBeFound("id.lessThan=" + id);
+    }
+
+    @Test
+    @Transactional
+    void getAllBusinessPartnersByBusinessContactIsEqualToSomething() throws Exception {
+        // Get already existing entity
+        BusinessContact businessContact = businessPartner.getBusinessContact();
+        businessPartnerRepository.saveAndFlush(businessPartner);
+        Long businessContactId = businessContact.getId();
+
+        // Get all the businessPartnerList where businessContact equals to businessContactId
+        defaultBusinessPartnerShouldBeFound("businessContactId.equals=" + businessContactId);
+
+        // Get all the businessPartnerList where businessContact equals to (businessContactId + 1)
+        defaultBusinessPartnerShouldNotBeFound("businessContactId.equals=" + (businessContactId + 1));
+    }
+
+    @Test
+    @Transactional
+    void getAllBusinessPartnersByLegalEntityInfoIsEqualToSomething() throws Exception {
+        // Get already existing entity
+        LegalEntity legalEntityInfo = businessPartner.getLegalEntityInfo();
+        businessPartnerRepository.saveAndFlush(businessPartner);
+        Long legalEntityInfoId = legalEntityInfo.getId();
+
+        // Get all the businessPartnerList where legalEntityInfo equals to legalEntityInfoId
+        defaultBusinessPartnerShouldBeFound("legalEntityInfoId.equals=" + legalEntityInfoId);
+
+        // Get all the businessPartnerList where legalEntityInfo equals to (legalEntityInfoId + 1)
+        defaultBusinessPartnerShouldNotBeFound("legalEntityInfoId.equals=" + (legalEntityInfoId + 1));
+    }
+
+    @Test
+    @Transactional
+    void getAllBusinessPartnersByTransferDocumentIsEqualToSomething() throws Exception {
+        TransferDocument transferDocument;
+        if (TestUtil.findAll(em, TransferDocument.class).isEmpty()) {
+            businessPartnerRepository.saveAndFlush(businessPartner);
+            transferDocument = TransferDocumentResourceIT.createEntity(em);
+        } else {
+            transferDocument = TestUtil.findAll(em, TransferDocument.class).get(0);
+        }
+        em.persist(transferDocument);
+        em.flush();
+        businessPartner.addTransferDocument(transferDocument);
+        businessPartnerRepository.saveAndFlush(businessPartner);
+        Long transferDocumentId = transferDocument.getId();
+
+        // Get all the businessPartnerList where transferDocument equals to transferDocumentId
+        defaultBusinessPartnerShouldBeFound("transferDocumentId.equals=" + transferDocumentId);
+
+        // Get all the businessPartnerList where transferDocument equals to (transferDocumentId + 1)
+        defaultBusinessPartnerShouldNotBeFound("transferDocumentId.equals=" + (transferDocumentId + 1));
+    }
+
+    @Test
+    @Transactional
+    void getAllBusinessPartnersByCompanyIsEqualToSomething() throws Exception {
+        Company company;
+        if (TestUtil.findAll(em, Company.class).isEmpty()) {
+            businessPartnerRepository.saveAndFlush(businessPartner);
+            company = CompanyResourceIT.createEntity(em);
+        } else {
+            company = TestUtil.findAll(em, Company.class).get(0);
+        }
+        em.persist(company);
+        em.flush();
+        businessPartner.setCompany(company);
+        businessPartnerRepository.saveAndFlush(businessPartner);
+        Long companyId = company.getId();
+
+        // Get all the businessPartnerList where company equals to companyId
+        defaultBusinessPartnerShouldBeFound("companyId.equals=" + companyId);
+
+        // Get all the businessPartnerList where company equals to (companyId + 1)
+        defaultBusinessPartnerShouldNotBeFound("companyId.equals=" + (companyId + 1));
+    }
+
+    /**
+     * Executes the search, and checks that the default entity is returned.
+     */
+    private void defaultBusinessPartnerShouldBeFound(String filter) throws Exception {
+        restBusinessPartnerMockMvc
+            .perform(get(ENTITY_API_URL + "?sort=id,desc&" + filter))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
+            .andExpect(jsonPath("$.[*].id").value(hasItem(businessPartner.getId().intValue())));
+
+        // Check, that the count call also returns 1
+        restBusinessPartnerMockMvc
+            .perform(get(ENTITY_API_URL + "/count?sort=id,desc&" + filter))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
+            .andExpect(content().string("1"));
+    }
+
+    /**
+     * Executes the search, and checks that the default entity is not returned.
+     */
+    private void defaultBusinessPartnerShouldNotBeFound(String filter) throws Exception {
+        restBusinessPartnerMockMvc
+            .perform(get(ENTITY_API_URL + "?sort=id,desc&" + filter))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
+            .andExpect(jsonPath("$").isArray())
+            .andExpect(jsonPath("$").isEmpty());
+
+        // Check, that the count call also returns 0
+        restBusinessPartnerMockMvc
+            .perform(get(ENTITY_API_URL + "/count?sort=id,desc&" + filter))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
+            .andExpect(content().string("0"));
     }
 
     @Test

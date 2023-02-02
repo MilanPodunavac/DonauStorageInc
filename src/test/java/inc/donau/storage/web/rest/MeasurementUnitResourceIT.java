@@ -8,6 +8,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import inc.donau.storage.IntegrationTest;
 import inc.donau.storage.domain.MeasurementUnit;
 import inc.donau.storage.repository.MeasurementUnitRepository;
+import inc.donau.storage.service.criteria.MeasurementUnitCriteria;
 import inc.donau.storage.service.dto.MeasurementUnitDTO;
 import inc.donau.storage.service.mapper.MeasurementUnitMapper;
 import java.util.List;
@@ -155,6 +156,193 @@ class MeasurementUnitResourceIT {
             .andExpect(jsonPath("$.id").value(measurementUnit.getId().intValue()))
             .andExpect(jsonPath("$.name").value(DEFAULT_NAME))
             .andExpect(jsonPath("$.abbreviation").value(DEFAULT_ABBREVIATION));
+    }
+
+    @Test
+    @Transactional
+    void getMeasurementUnitsByIdFiltering() throws Exception {
+        // Initialize the database
+        measurementUnitRepository.saveAndFlush(measurementUnit);
+
+        Long id = measurementUnit.getId();
+
+        defaultMeasurementUnitShouldBeFound("id.equals=" + id);
+        defaultMeasurementUnitShouldNotBeFound("id.notEquals=" + id);
+
+        defaultMeasurementUnitShouldBeFound("id.greaterThanOrEqual=" + id);
+        defaultMeasurementUnitShouldNotBeFound("id.greaterThan=" + id);
+
+        defaultMeasurementUnitShouldBeFound("id.lessThanOrEqual=" + id);
+        defaultMeasurementUnitShouldNotBeFound("id.lessThan=" + id);
+    }
+
+    @Test
+    @Transactional
+    void getAllMeasurementUnitsByNameIsEqualToSomething() throws Exception {
+        // Initialize the database
+        measurementUnitRepository.saveAndFlush(measurementUnit);
+
+        // Get all the measurementUnitList where name equals to DEFAULT_NAME
+        defaultMeasurementUnitShouldBeFound("name.equals=" + DEFAULT_NAME);
+
+        // Get all the measurementUnitList where name equals to UPDATED_NAME
+        defaultMeasurementUnitShouldNotBeFound("name.equals=" + UPDATED_NAME);
+    }
+
+    @Test
+    @Transactional
+    void getAllMeasurementUnitsByNameIsInShouldWork() throws Exception {
+        // Initialize the database
+        measurementUnitRepository.saveAndFlush(measurementUnit);
+
+        // Get all the measurementUnitList where name in DEFAULT_NAME or UPDATED_NAME
+        defaultMeasurementUnitShouldBeFound("name.in=" + DEFAULT_NAME + "," + UPDATED_NAME);
+
+        // Get all the measurementUnitList where name equals to UPDATED_NAME
+        defaultMeasurementUnitShouldNotBeFound("name.in=" + UPDATED_NAME);
+    }
+
+    @Test
+    @Transactional
+    void getAllMeasurementUnitsByNameIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        measurementUnitRepository.saveAndFlush(measurementUnit);
+
+        // Get all the measurementUnitList where name is not null
+        defaultMeasurementUnitShouldBeFound("name.specified=true");
+
+        // Get all the measurementUnitList where name is null
+        defaultMeasurementUnitShouldNotBeFound("name.specified=false");
+    }
+
+    @Test
+    @Transactional
+    void getAllMeasurementUnitsByNameContainsSomething() throws Exception {
+        // Initialize the database
+        measurementUnitRepository.saveAndFlush(measurementUnit);
+
+        // Get all the measurementUnitList where name contains DEFAULT_NAME
+        defaultMeasurementUnitShouldBeFound("name.contains=" + DEFAULT_NAME);
+
+        // Get all the measurementUnitList where name contains UPDATED_NAME
+        defaultMeasurementUnitShouldNotBeFound("name.contains=" + UPDATED_NAME);
+    }
+
+    @Test
+    @Transactional
+    void getAllMeasurementUnitsByNameNotContainsSomething() throws Exception {
+        // Initialize the database
+        measurementUnitRepository.saveAndFlush(measurementUnit);
+
+        // Get all the measurementUnitList where name does not contain DEFAULT_NAME
+        defaultMeasurementUnitShouldNotBeFound("name.doesNotContain=" + DEFAULT_NAME);
+
+        // Get all the measurementUnitList where name does not contain UPDATED_NAME
+        defaultMeasurementUnitShouldBeFound("name.doesNotContain=" + UPDATED_NAME);
+    }
+
+    @Test
+    @Transactional
+    void getAllMeasurementUnitsByAbbreviationIsEqualToSomething() throws Exception {
+        // Initialize the database
+        measurementUnitRepository.saveAndFlush(measurementUnit);
+
+        // Get all the measurementUnitList where abbreviation equals to DEFAULT_ABBREVIATION
+        defaultMeasurementUnitShouldBeFound("abbreviation.equals=" + DEFAULT_ABBREVIATION);
+
+        // Get all the measurementUnitList where abbreviation equals to UPDATED_ABBREVIATION
+        defaultMeasurementUnitShouldNotBeFound("abbreviation.equals=" + UPDATED_ABBREVIATION);
+    }
+
+    @Test
+    @Transactional
+    void getAllMeasurementUnitsByAbbreviationIsInShouldWork() throws Exception {
+        // Initialize the database
+        measurementUnitRepository.saveAndFlush(measurementUnit);
+
+        // Get all the measurementUnitList where abbreviation in DEFAULT_ABBREVIATION or UPDATED_ABBREVIATION
+        defaultMeasurementUnitShouldBeFound("abbreviation.in=" + DEFAULT_ABBREVIATION + "," + UPDATED_ABBREVIATION);
+
+        // Get all the measurementUnitList where abbreviation equals to UPDATED_ABBREVIATION
+        defaultMeasurementUnitShouldNotBeFound("abbreviation.in=" + UPDATED_ABBREVIATION);
+    }
+
+    @Test
+    @Transactional
+    void getAllMeasurementUnitsByAbbreviationIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        measurementUnitRepository.saveAndFlush(measurementUnit);
+
+        // Get all the measurementUnitList where abbreviation is not null
+        defaultMeasurementUnitShouldBeFound("abbreviation.specified=true");
+
+        // Get all the measurementUnitList where abbreviation is null
+        defaultMeasurementUnitShouldNotBeFound("abbreviation.specified=false");
+    }
+
+    @Test
+    @Transactional
+    void getAllMeasurementUnitsByAbbreviationContainsSomething() throws Exception {
+        // Initialize the database
+        measurementUnitRepository.saveAndFlush(measurementUnit);
+
+        // Get all the measurementUnitList where abbreviation contains DEFAULT_ABBREVIATION
+        defaultMeasurementUnitShouldBeFound("abbreviation.contains=" + DEFAULT_ABBREVIATION);
+
+        // Get all the measurementUnitList where abbreviation contains UPDATED_ABBREVIATION
+        defaultMeasurementUnitShouldNotBeFound("abbreviation.contains=" + UPDATED_ABBREVIATION);
+    }
+
+    @Test
+    @Transactional
+    void getAllMeasurementUnitsByAbbreviationNotContainsSomething() throws Exception {
+        // Initialize the database
+        measurementUnitRepository.saveAndFlush(measurementUnit);
+
+        // Get all the measurementUnitList where abbreviation does not contain DEFAULT_ABBREVIATION
+        defaultMeasurementUnitShouldNotBeFound("abbreviation.doesNotContain=" + DEFAULT_ABBREVIATION);
+
+        // Get all the measurementUnitList where abbreviation does not contain UPDATED_ABBREVIATION
+        defaultMeasurementUnitShouldBeFound("abbreviation.doesNotContain=" + UPDATED_ABBREVIATION);
+    }
+
+    /**
+     * Executes the search, and checks that the default entity is returned.
+     */
+    private void defaultMeasurementUnitShouldBeFound(String filter) throws Exception {
+        restMeasurementUnitMockMvc
+            .perform(get(ENTITY_API_URL + "?sort=id,desc&" + filter))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
+            .andExpect(jsonPath("$.[*].id").value(hasItem(measurementUnit.getId().intValue())))
+            .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME)))
+            .andExpect(jsonPath("$.[*].abbreviation").value(hasItem(DEFAULT_ABBREVIATION)));
+
+        // Check, that the count call also returns 1
+        restMeasurementUnitMockMvc
+            .perform(get(ENTITY_API_URL + "/count?sort=id,desc&" + filter))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
+            .andExpect(content().string("1"));
+    }
+
+    /**
+     * Executes the search, and checks that the default entity is not returned.
+     */
+    private void defaultMeasurementUnitShouldNotBeFound(String filter) throws Exception {
+        restMeasurementUnitMockMvc
+            .perform(get(ENTITY_API_URL + "?sort=id,desc&" + filter))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
+            .andExpect(jsonPath("$").isArray())
+            .andExpect(jsonPath("$").isEmpty());
+
+        // Check, that the count call also returns 0
+        restMeasurementUnitMockMvc
+            .perform(get(ENTITY_API_URL + "/count?sort=id,desc&" + filter))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
+            .andExpect(content().string("0"));
     }
 
     @Test

@@ -58,7 +58,7 @@
   ],
   "fluentMethods": true,
   "javadoc": "sr: Promet magacinske kartice",
-  "jpaMetamodelFiltering": false,
+  "jpaMetamodelFiltering": true,
   "name": "StorageCardTraffic",
   "pagination": "infinite-scroll",
   "readOnly": false,

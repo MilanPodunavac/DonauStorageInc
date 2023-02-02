@@ -6,7 +6,7 @@
   "entityTableName": "company",
   "fields": [],
   "fluentMethods": true,
-  "jpaMetamodelFiltering": false,
+  "jpaMetamodelFiltering": true,
   "name": "Company",
   "pagination": "infinite-scroll",
   "readOnly": false,

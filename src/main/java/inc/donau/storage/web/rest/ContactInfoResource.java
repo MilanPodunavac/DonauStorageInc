@@ -1,7 +1,9 @@
 package inc.donau.storage.web.rest;
 
 import inc.donau.storage.repository.ContactInfoRepository;
+import inc.donau.storage.service.ContactInfoQueryService;
 import inc.donau.storage.service.ContactInfoService;
+import inc.donau.storage.service.criteria.ContactInfoCriteria;
 import inc.donau.storage.service.dto.ContactInfoDTO;
 import inc.donau.storage.web.rest.errors.BadRequestAlertException;
 import java.net.URI;
@@ -37,9 +39,16 @@ public class ContactInfoResource {
 
     private final ContactInfoRepository contactInfoRepository;
 
-    public ContactInfoResource(ContactInfoService contactInfoService, ContactInfoRepository contactInfoRepository) {
+    private final ContactInfoQueryService contactInfoQueryService;
+
+    public ContactInfoResource(
+        ContactInfoService contactInfoService,
+        ContactInfoRepository contactInfoRepository,
+        ContactInfoQueryService contactInfoQueryService
+    ) {
         this.contactInfoService = contactInfoService;
         this.contactInfoRepository = contactInfoRepository;
+        this.contactInfoQueryService = contactInfoQueryService;
     }
 
     /**
@@ -135,12 +144,26 @@ public class ContactInfoResource {
     /**
      * {@code GET  /contact-infos} : get all the contactInfos.
      *
+     * @param criteria the criteria which the requested entities should match.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of contactInfos in body.
      */
     @GetMapping("/contact-infos")
-    public List<ContactInfoDTO> getAllContactInfos() {
-        log.debug("REST request to get all ContactInfos");
-        return contactInfoService.findAll();
+    public ResponseEntity<List<ContactInfoDTO>> getAllContactInfos(ContactInfoCriteria criteria) {
+        log.debug("REST request to get ContactInfos by criteria: {}", criteria);
+        List<ContactInfoDTO> entityList = contactInfoQueryService.findByCriteria(criteria);
+        return ResponseEntity.ok().body(entityList);
+    }
+
+    /**
+     * {@code GET  /contact-infos/count} : count all the contactInfos.
+     *
+     * @param criteria the criteria which the requested entities should match.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the count in body.
+     */
+    @GetMapping("/contact-infos/count")
+    public ResponseEntity<Long> countContactInfos(ContactInfoCriteria criteria) {
+        log.debug("REST request to count ContactInfos by criteria: {}", criteria);
+        return ResponseEntity.ok().body(contactInfoQueryService.countByCriteria(criteria));
     }
 
     /**

@@ -14,7 +14,7 @@
   ],
   "fluentMethods": true,
   "javadoc": "sr: Stavka popisa",
-  "jpaMetamodelFiltering": false,
+  "jpaMetamodelFiltering": true,
   "name": "CensusItem",
   "pagination": "infinite-scroll",
   "readOnly": false,
