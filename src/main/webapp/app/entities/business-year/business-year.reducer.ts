@@ -15,7 +15,7 @@ const initialState: EntityState<IBusinessYear> = {
   updateSuccess: false,
 };
 
-const apiUrl = 'api/business-years';
+const apiUrl = 'api/xt/business-years';
 
 // Actions
 

@@ -14,7 +14,7 @@ const initialState: EntityState<IContactInfo> = {
   updateSuccess: false,
 };
 
-const apiUrl = 'api/contact-infos';
+const apiUrl = 'api/xt/contact-infos';
 
 // Actions
 

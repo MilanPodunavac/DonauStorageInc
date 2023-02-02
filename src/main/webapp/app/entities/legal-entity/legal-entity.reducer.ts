@@ -14,7 +14,7 @@ const initialState: EntityState<ILegalEntity> = {
   updateSuccess: false,
 };
 
-const apiUrl = 'api/legal-entities';
+const apiUrl = 'api/xt/legal-entities';
 
 // Actions
 

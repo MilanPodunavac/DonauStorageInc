@@ -17,7 +17,7 @@ const initialState: EntityState<ICompany> = {
   updateSuccess: false,
 };
 
-const apiUrl = 'api/companies';
+const apiUrl = 'api/xt/companies';
 
 // Actions
 

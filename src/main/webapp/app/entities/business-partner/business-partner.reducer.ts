@@ -15,7 +15,7 @@ const initialState: EntityState<IBusinessPartner> = {
   updateSuccess: false,
 };
 
-const apiUrl = 'api/business-partners';
+const apiUrl = 'api/xt/business-partners';
 
 // Actions
 

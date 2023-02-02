@@ -15,7 +15,7 @@ const initialState: EntityState<IEmployee> = {
   updateSuccess: false,
 };
 
-const apiUrl = 'api/employees';
+const apiUrl = 'api/xt/employees';
 
 // Actions
 

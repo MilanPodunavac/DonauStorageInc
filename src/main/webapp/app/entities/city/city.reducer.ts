@@ -17,7 +17,7 @@ const initialState: EntityState<ICity> = {
   updateSuccess: false,
 };
 
-const apiUrl = 'api/cities';
+const apiUrl = 'api/xt/cities';
 
 // Actions
 

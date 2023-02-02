@@ -17,7 +17,7 @@ const initialState: EntityState<ITransferDocumentItem> = {
   updateSuccess: false,
 };
 
-const apiUrl = 'api/transfer-document-items';
+const apiUrl = 'api/xt/transfer-document-items';
 
 // Actions
 

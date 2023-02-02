@@ -14,7 +14,7 @@ const initialState: EntityState<IMeasurementUnit> = {
   updateSuccess: false,
 };
 
-const apiUrl = 'api/measurement-units';
+const apiUrl = 'api/xt/measurement-units';
 
 // Actions
 

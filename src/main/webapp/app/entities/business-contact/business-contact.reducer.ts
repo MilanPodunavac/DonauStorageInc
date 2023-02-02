@@ -14,7 +14,7 @@ const initialState: EntityState<IBusinessContact> = {
   updateSuccess: false,
 };
 
-const apiUrl = 'api/business-contacts';
+const apiUrl = 'api/xt/business-contacts';
 
 // Actions
 

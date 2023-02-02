@@ -14,7 +14,7 @@ const initialState: EntityState<IPerson> = {
   updateSuccess: false,
 };
 
-const apiUrl = 'api/people';
+const apiUrl = 'api/xt/people';
 
 // Actions
 

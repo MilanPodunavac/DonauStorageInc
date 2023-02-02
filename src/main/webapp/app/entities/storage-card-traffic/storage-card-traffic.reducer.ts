@@ -17,7 +17,7 @@ const initialState: EntityState<IStorageCardTraffic> = {
   updateSuccess: false,
 };
 
-const apiUrl = 'api/storage-card-traffics';
+const apiUrl = 'api/xt/storage-card-traffics';
 
 // Actions
 

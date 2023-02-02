@@ -15,7 +15,7 @@ const initialState: EntityState<IStorage> = {
   updateSuccess: false,
 };
 
-const apiUrl = 'api/storages';
+const apiUrl = 'api/xt/storages';
 
 // Actions
 

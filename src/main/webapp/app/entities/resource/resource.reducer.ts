@@ -15,7 +15,7 @@ const initialState: EntityState<IResource> = {
   updateSuccess: false,
 };
 
-const apiUrl = 'api/resources';
+const apiUrl = 'api/xt/resources';
 
 // Actions
 

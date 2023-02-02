@@ -15,7 +15,7 @@ const initialState: EntityState<ICensusDocument> = {
   updateSuccess: false,
 };
 
-const apiUrl = 'api/census-documents';
+const apiUrl = 'api/xt/census-documents';
 
 // Actions
 
