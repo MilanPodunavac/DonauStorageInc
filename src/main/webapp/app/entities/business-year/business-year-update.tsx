@@ -11,7 +11,7 @@ import { useAppDispatch, useAppSelector } from 'app/config/store';
 import { ICompany } from 'app/shared/model/company.model';
 import { getEntities as getCompanies } from 'app/entities/company/company.reducer';
 import { IBusinessYear } from 'app/shared/model/business-year.model';
-import { getEntity, updateEntity, createEntity, reset } from './business-year.reducer';
+import { getEntity, updateEntity, createEntity, reset, complete } from './business-year.reducer';
 
 export const BusinessYearUpdate = () => {
   const dispatch = useAppDispatch();
@@ -69,6 +69,11 @@ export const BusinessYearUpdate = () => {
           company: businessYearEntity?.company?.id,
         };
 
+  const completeYear = () => {
+    dispatch(complete(id));
+    handleClose();
+  };
+
   return (
     <div>
       <Row className="justify-content-center">
@@ -111,6 +116,7 @@ export const BusinessYearUpdate = () => {
                 data-cy="completed"
                 check
                 type="checkbox"
+                disabled
               />
               <ValidatedField
                 id="business-year-company"
@@ -144,6 +150,13 @@ export const BusinessYearUpdate = () => {
                 <FontAwesomeIcon icon="save" />
                 &nbsp;
                 <Translate contentKey="entity.action.save">Save</Translate>
+              </Button>
+              <Button id="complete-year" data-cy="businessYearCompleteButton" onClick={completeYear} color="primary">
+                <FontAwesomeIcon icon="arrow-left" />
+                &nbsp;
+                <span className="d-none d-md-inline">
+                  <Translate contentKey="entity.businessYear.complete">Complete</Translate>
+                </span>
               </Button>
             </ValidatedForm>
           )}

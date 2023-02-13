@@ -74,6 +74,16 @@ export const deleteEntity = createAsyncThunk(
   { serializeError: serializeAxiosError }
 );
 
+export const complete = createAsyncThunk(
+  'businessYear/complete',
+  async (id: string | number, thunkAPI) => {
+    const result = await axios.put<IBusinessYear>(`${apiUrl}/complete/${id}`);
+    thunkAPI.dispatch(getEntities({}));
+    return result;
+  },
+  { serializeError: serializeAxiosError }
+);
+
 // slice
 
 export const BusinessYearSlice = createEntitySlice({

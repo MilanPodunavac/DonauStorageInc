@@ -151,4 +151,16 @@ public class StorageCardTrafficDTO implements Serializable {
             ", storageCard=" + getStorageCard() +
             "}";
     }
+
+    public StorageCardTrafficDTO() {}
+
+    public StorageCardTrafficDTO(StorageCardDTO storageCardDTO) {
+        this.storageCard = storageCardDTO;
+        this.direction = StorageCardTrafficDirection.IN;
+        this.type = StorageCardTrafficType.STARTING_BALANCE;
+        this.date = LocalDate.now();
+        this.amount = 0.0f;
+        this.price = 0.0f;
+        this.trafficValue = 0.0f;
+    }
 }
