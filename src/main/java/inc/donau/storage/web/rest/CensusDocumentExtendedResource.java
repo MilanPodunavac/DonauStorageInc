@@ -1,15 +1,16 @@
 package inc.donau.storage.web.rest;
 
+import inc.donau.storage.domain.enumeration.CensusDocumentStatus;
 import inc.donau.storage.repository.CensusDocumentExtendedRepository;
 import inc.donau.storage.repository.CensusDocumentRepository;
-import inc.donau.storage.service.CensusDocumentExtendedService;
-import inc.donau.storage.service.CensusDocumentQueryExtendedService;
-import inc.donau.storage.service.CensusDocumentQueryService;
-import inc.donau.storage.service.CensusDocumentService;
+import inc.donau.storage.service.*;
+import inc.donau.storage.service.criteria.BusinessYearCriteria;
+import inc.donau.storage.service.dto.BusinessYearDTO;
 import inc.donau.storage.service.dto.CensusDocumentDTO;
 import inc.donau.storage.web.rest.errors.BadRequestAlertException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.List;
 import java.util.Objects;
 import javax.validation.Valid;
 import org.slf4j.Logger;
@@ -17,6 +18,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import tech.jhipster.service.filter.LongFilter;
 import tech.jhipster.web.util.HeaderUtil;
 
 @RestController
@@ -34,15 +36,19 @@ public class CensusDocumentExtendedResource extends CensusDocumentResource {
     private final CensusDocumentExtendedRepository censusDocumentExtendedRepository;
     private final CensusDocumentQueryExtendedService censusDocumentQueryExtendedService;
 
+    private final BusinessYearQueryExtendedService businessYearQueryExtendedService;
+
     public CensusDocumentExtendedResource(
         CensusDocumentExtendedService censusDocumentService,
         CensusDocumentExtendedRepository censusDocumentRepository,
-        CensusDocumentQueryExtendedService censusDocumentQueryService
+        CensusDocumentQueryExtendedService censusDocumentQueryService,
+        BusinessYearQueryExtendedService businessYearQueryExtendedService
     ) {
         super(censusDocumentService, censusDocumentRepository, censusDocumentQueryService);
         this.censusDocumentExtendedService = censusDocumentService;
         this.censusDocumentExtendedRepository = censusDocumentRepository;
         this.censusDocumentQueryExtendedService = censusDocumentQueryService;
+        this.businessYearQueryExtendedService = businessYearQueryExtendedService;
     }
 
     @Override
@@ -104,5 +110,42 @@ public class CensusDocumentExtendedResource extends CensusDocumentResource {
         if (censusDocumentDTO.getDeputy().getId() == censusDocumentDTO.getCensusTaker().getId()) {
             throw new BadRequestAlertException("Deputy and census taker cannot be the same", ENTITY_NAME, "deputyCensusTakerSameError");
         }
+    }
+
+    @PutMapping("/census-documents/account/{id}")
+    public ResponseEntity<CensusDocumentDTO> accountCensusDocument(@PathVariable(value = "id", required = false) final Long id)
+        throws URISyntaxException {
+        log.debug("REST request to update CensusDocument : {}", id);
+        if (id == null) {
+            throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
+        }
+
+        if (!censusDocumentExtendedRepository.existsById(id)) {
+            throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
+        }
+
+        CensusDocumentDTO censusDocumentDTO = censusDocumentExtendedService.findOne(id).get();
+
+        if (censusDocumentDTO.getStatus() != CensusDocumentStatus.INCOMPLETE) {
+            throw new BadRequestAlertException("Census is already completed, it cannot be accounted", ENTITY_NAME, "censusComplete");
+        }
+
+        BusinessYearCriteria businessYearCriteria = new BusinessYearCriteria();
+        LongFilter companyFilter = new LongFilter();
+        companyFilter.setEquals(censusDocumentDTO.getBusinessYear().getCompany().getId());
+        businessYearCriteria.setCompanyId(companyFilter);
+        LongFilter idFilter = new LongFilter();
+        idFilter.setGreaterThan(censusDocumentDTO.getBusinessYear().getId());
+        businessYearCriteria.setId(idFilter);
+        List<BusinessYearDTO> businessYearDTOList = businessYearQueryExtendedService.findByCriteria(businessYearCriteria);
+        if (businessYearDTOList.isEmpty()) {
+            throw new BadRequestAlertException("There is no business year after this one", ENTITY_NAME, "noNextBusinessYear");
+        }
+
+        CensusDocumentDTO result = censusDocumentExtendedService.account(censusDocumentDTO, businessYearDTOList.get(0));
+        return ResponseEntity
+            .ok()
+            .headers(HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, censusDocumentDTO.getId().toString()))
+            .body(result);
     }
 }

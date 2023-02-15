@@ -95,7 +95,7 @@ export const TransferDocumentDetail = () => {
           <dt>
             <Translate contentKey="donauStorageIncApp.transferDocument.businessPartner">Business Partner</Translate>
           </dt>
-          <dd>{transferDocumentEntity.businessPartner ? transferDocumentEntity.businessPartner.name : ''}</dd>
+          <dd>{transferDocumentEntity.businessPartner ? transferDocumentEntity.businessPartner.legalEntityInfo.name : ''}</dd>
         </dl>
         <Button tag={Link} to="/transfer-document" replace color="info" data-cy="entityDetailsBackButton">
           <FontAwesomeIcon icon="arrow-left" />{' '}

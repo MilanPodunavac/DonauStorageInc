@@ -62,7 +62,7 @@ public class ResourceExtendedService extends ResourceService {
 
         for (StorageDTO storage : storageList) {
             for (BusinessYearDTO businessYear : businessYearList) {
-                storageCardExtendedService.save(new StorageCardDTO(businessYear, newResourceDTO, storage));
+                storageCardExtendedService.save(new StorageCardDTO(businessYear, newResourceDTO, storage, 0.0f, 0.0f, 0.0f));
             }
         }
         return newResourceDTO;

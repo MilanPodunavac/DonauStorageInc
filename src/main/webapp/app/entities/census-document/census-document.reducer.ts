@@ -74,6 +74,16 @@ export const deleteEntity = createAsyncThunk(
   { serializeError: serializeAxiosError }
 );
 
+export const account = createAsyncThunk(
+  'censusDocument/account',
+  async (id: string | number, thunkAPI) => {
+    const result = await axios.put<ICensusDocument>(`${apiUrl}/account/${id}`);
+    thunkAPI.dispatch(getEntities({}));
+    return result;
+  },
+  { serializeError: serializeAxiosError }
+);
+
 // slice
 
 export const CensusDocumentSlice = createEntitySlice({

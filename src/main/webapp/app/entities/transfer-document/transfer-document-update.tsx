@@ -17,7 +17,7 @@ import { getEntities as getBusinessPartners } from 'app/entities/business-partne
 import { ITransferDocument } from 'app/shared/model/transfer-document.model';
 import { TransferDocumentType } from 'app/shared/model/enumerations/transfer-document-type.model';
 import { TransferDocumentStatus } from 'app/shared/model/enumerations/transfer-document-status.model';
-import { getEntity, updateEntity, createEntity, reset } from './transfer-document.reducer';
+import { getEntity, updateEntity, createEntity, reset, account, reverse } from './transfer-document.reducer';
 
 export const TransferDocumentUpdate = () => {
   const dispatch = useAppDispatch();
@@ -88,6 +88,16 @@ export const TransferDocumentUpdate = () => {
           dispatchingStorage: transferDocumentEntity?.dispatchingStorage?.id,
           businessPartner: transferDocumentEntity?.businessPartner?.id,
         };
+
+  const accountTransfer = () => {
+    dispatch(account(id));
+    handleClose();
+  };
+
+  const reverseTransfer = () => {
+    dispatch(reverse(id));
+    handleClose();
+  };
 
   return (
     <div>
@@ -250,6 +260,32 @@ export const TransferDocumentUpdate = () => {
                 <FontAwesomeIcon icon="save" />
                 &nbsp;
                 <Translate contentKey="entity.action.save">Save</Translate>
+              </Button>
+              <Button
+                id="account-transfer"
+                data-cy="transferDocumentAccountButton"
+                onClick={accountTransfer}
+                color="primary"
+                disabled={updating}
+              >
+                <FontAwesomeIcon icon="arrow-left" />
+                &nbsp;
+                <span className="d-none d-md-inline">
+                  <Translate contentKey="entity.transferDocument.account">Account</Translate>
+                </span>
+              </Button>
+              <Button
+                id="reverse-transfer"
+                data-cy="transferDocumentReverseButton"
+                onClick={reverseTransfer}
+                color="primary"
+                disabled={updating}
+              >
+                <FontAwesomeIcon icon="arrow-left" />
+                &nbsp;
+                <span className="d-none d-md-inline">
+                  <Translate contentKey="entity.transferDocument.reverse">Reverse</Translate>
+                </span>
               </Button>
             </ValidatedForm>
           )}

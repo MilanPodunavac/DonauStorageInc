@@ -74,6 +74,26 @@ export const deleteEntity = createAsyncThunk(
   { serializeError: serializeAxiosError }
 );
 
+export const account = createAsyncThunk(
+  'transferDocument/account',
+  async (id: string | number, thunkAPI) => {
+    const result = await axios.put<ITransferDocument>(`${apiUrl}/account/${id}`);
+    thunkAPI.dispatch(getEntities({}));
+    return result;
+  },
+  { serializeError: serializeAxiosError }
+);
+
+export const reverse = createAsyncThunk(
+  'transferDocument/reverse',
+  async (id: string | number, thunkAPI) => {
+    const result = await axios.put<ITransferDocument>(`${apiUrl}/reverse/${id}`);
+    thunkAPI.dispatch(getEntities({}));
+    return result;
+  },
+  { serializeError: serializeAxiosError }
+);
+
 // slice
 
 export const TransferDocumentSlice = createEntitySlice({

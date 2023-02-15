@@ -87,7 +87,7 @@ public class BusinessYearExtendedService extends BusinessYearService {
                 storageCardCriteria.setResourceId(resourceFilter);
 
                 if (storageCardQueryExtendedService.countByCriteria(storageCardCriteria) == 0) {
-                    storageCardExtendedService.save(new StorageCardDTO(newBusinessYearDTO, resource, storage));
+                    storageCardExtendedService.save(new StorageCardDTO(newBusinessYearDTO, resource, storage, 0.0f, 0.0f, 0.0f));
                 }
             }
         }

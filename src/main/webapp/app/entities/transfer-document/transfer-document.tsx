@@ -194,7 +194,9 @@ export const TransferDocument = () => {
                   </td>
                   <td>
                     {transferDocument.businessPartner ? (
-                      <Link to={`/business-partner/${transferDocument.businessPartner.id}`}>{transferDocument.businessPartner.name}</Link>
+                      <Link to={`/business-partner/${transferDocument.businessPartner.id}`}>
+                        {transferDocument.businessPartner.legalEntityInfo.name}
+                      </Link>
                     ) : (
                       ''
                     )}

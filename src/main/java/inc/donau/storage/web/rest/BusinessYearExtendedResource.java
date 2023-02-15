@@ -113,7 +113,7 @@ public class BusinessYearExtendedResource extends BusinessYearResource {
     @PutMapping("/business-years/complete/{id}")
     public ResponseEntity<BusinessYearDTO> completeBusinessYear(@PathVariable(value = "id", required = false) final Long id)
         throws URISyntaxException {
-        log.debug("REST request to complete BusinessYear : {}, {}", id);
+        log.debug("REST request to complete BusinessYear : {}", id);
 
         if (id == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");

@@ -16,7 +16,7 @@ import { IStorage } from 'app/shared/model/storage.model';
 import { getEntities as getStorages } from 'app/entities/storage/storage.reducer';
 import { ICensusDocument } from 'app/shared/model/census-document.model';
 import { CensusDocumentStatus } from 'app/shared/model/enumerations/census-document-status.model';
-import { getEntity, updateEntity, createEntity, reset } from './census-document.reducer';
+import { getEntity, updateEntity, createEntity, reset, account } from './census-document.reducer';
 
 export const CensusDocumentUpdate = () => {
   const dispatch = useAppDispatch();
@@ -87,6 +87,11 @@ export const CensusDocumentUpdate = () => {
           censusTaker: censusDocumentEntity?.censusTaker?.id,
           storage: censusDocumentEntity?.storage?.id,
         };
+
+  const accountCensus = () => {
+    dispatch(account(id));
+    handleClose();
+  };
 
   return (
     <div>
@@ -269,6 +274,13 @@ export const CensusDocumentUpdate = () => {
                 <FontAwesomeIcon icon="save" />
                 &nbsp;
                 <Translate contentKey="entity.action.save">Save</Translate>
+              </Button>
+              <Button id="account-census" data-cy="censusDocumentAccountButton" onClick={accountCensus} color="primary" disabled={updating}>
+                <FontAwesomeIcon icon="arrow-left" />
+                &nbsp;
+                <span className="d-none d-md-inline">
+                  <Translate contentKey="entity.censusDocument.account">Account</Translate>
+                </span>
               </Button>
             </ValidatedForm>
           )}

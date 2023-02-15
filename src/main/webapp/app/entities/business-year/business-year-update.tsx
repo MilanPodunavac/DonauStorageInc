@@ -116,7 +116,6 @@ export const BusinessYearUpdate = () => {
                 data-cy="completed"
                 check
                 type="checkbox"
-                disabled
               />
               <ValidatedField
                 id="business-year-company"
@@ -151,7 +150,7 @@ export const BusinessYearUpdate = () => {
                 &nbsp;
                 <Translate contentKey="entity.action.save">Save</Translate>
               </Button>
-              <Button id="complete-year" data-cy="businessYearCompleteButton" onClick={completeYear} color="primary">
+              <Button id="complete-year" data-cy="businessYearCompleteButton" onClick={completeYear} color="primary" disabled={updating}>
                 <FontAwesomeIcon icon="arrow-left" />
                 &nbsp;
                 <span className="d-none d-md-inline">

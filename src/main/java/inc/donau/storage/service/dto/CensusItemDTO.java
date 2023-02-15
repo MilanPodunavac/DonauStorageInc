@@ -85,4 +85,12 @@ public class CensusItemDTO implements Serializable {
             ", resource=" + getResource() +
             "}";
     }
+
+    public CensusItemDTO() {}
+
+    public CensusItemDTO(ResourceDTO resourceDTO, CensusDocumentDTO censusDocumentDTO) {
+        this.amount = 0.0f;
+        this.censusDocument = censusDocumentDTO;
+        this.resource = resourceDTO;
+    }
 }

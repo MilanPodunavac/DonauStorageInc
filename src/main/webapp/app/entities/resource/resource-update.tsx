@@ -152,7 +152,7 @@ export const ResourceUpdate = () => {
                 >
                   <FontAwesomeIcon icon="plus" />
                   &nbsp;
-                  <Translate contentKey="donauStorageIncApp.legalEntity.home.createLabel">Create new Measurement Unit</Translate>
+                  <Translate contentKey="donauStorageIncApp.measurementUnit.home.createLabel">Create new Measurement Unit</Translate>
                 </Link>
               </div>
               <FormText>
