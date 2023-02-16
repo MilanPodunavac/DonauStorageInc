@@ -17,6 +17,10 @@ import { getEntities as getCompanies } from 'app/entities/company/company.reduce
 import { IEmployee } from 'app/shared/model/employee.model';
 import { getEntity, updateEntity, createEntity, reset } from './employee.reducer';
 
+import { ICity } from 'app/shared/model/city.model';
+import { getEntities as getCities } from 'app/entities/city/city.reducer';
+import { Gender } from 'app/shared/model/enumerations/gender.model';
+
 export const EmployeeUpdate = () => {
   const dispatch = useAppDispatch();
 
@@ -33,6 +37,9 @@ export const EmployeeUpdate = () => {
   const updating = useAppSelector(state => state.employee.updating);
   const updateSuccess = useAppSelector(state => state.employee.updateSuccess);
 
+  const cities = useAppSelector(state => state.city.entities);
+  const genderValues = Object.keys(Gender);
+
   const handleClose = () => {
     navigate('/employee' + location.search);
   };
@@ -47,6 +54,8 @@ export const EmployeeUpdate = () => {
     dispatch(getAddresses({}));
     dispatch(getPeople({}));
     dispatch(getCompanies({}));
+
+    dispatch(getCities({}));
   }, []);
 
   useEffect(() => {
@@ -61,8 +70,21 @@ export const EmployeeUpdate = () => {
     const entity = {
       ...employeeEntity,
       ...values,
-      address: addresses.find(it => it.id.toString() === values.address.toString()),
-      personalInfo: people.find(it => it.id.toString() === values.personalInfo.toString()),
+      address: isNew
+        ? {
+            ...values.address,
+            city: cities.find(it => it.id.toString() === values.address.city.toString()),
+          }
+        : addresses.find(it => it.id.toString() === values.address.toString()),
+
+      personalInfo: isNew
+        ? {
+            ...values.personalInfo,
+            contactInfo: {
+              ...values.contactInfo,
+            },
+          }
+        : people.find(it => it.id.toString() === values.personalInfo.toString()),
       company: companies.find(it => it.id.toString() === values.company.toString()),
     };
 
@@ -111,35 +133,28 @@ export const EmployeeUpdate = () => {
                   validate={{ required: true }}
                 />
               ) : null}
-              <ValidatedField
-                id="employee-personalInfo"
-                name="personalInfo"
-                data-cy="personalInfo"
-                label={translate('donauStorageIncApp.employee.personalInfo')}
-                type="select"
-                required
-                disabled={!isNew}
-              >
-                <option value="" key="0" />
-                {people
-                  ? people.map(otherEntity => (
-                      <option value={otherEntity.id} key={otherEntity.id}>
-                        {otherEntity.firstName + ' ' + otherEntity.lastName + ', ' + otherEntity.gender}
-                      </option>
-                    ))
-                  : null}
-              </ValidatedField>
-              <FormText>
-                <Translate contentKey="entity.validation.required">This field is required.</Translate>
-              </FormText>
-              <div className="d-flex justify-content-end">
-                {isNew ? (
-                  <Link to="/person/new" className="btn btn-primary jh-create-entity" id="jh-create-entity" data-cy="entityCreateButton">
-                    <FontAwesomeIcon icon="plus" />
-                    &nbsp;
-                    <Translate contentKey="donauStorageIncApp.person.home.createLabel">Create new Personal Info</Translate>
-                  </Link>
-                ) : (
+              {!isNew && (
+                <ValidatedField
+                  id="employee-personalInfo"
+                  name="personalInfo"
+                  data-cy="personalInfo"
+                  label={translate('donauStorageIncApp.employee.personalInfo')}
+                  type="select"
+                  required
+                  disabled
+                >
+                  <option value="" key="0" />
+                  {people
+                    ? people.map(otherEntity => (
+                        <option value={otherEntity.id} key={otherEntity.id}>
+                          {otherEntity.firstName + ' ' + otherEntity.lastName + ', ' + otherEntity.gender}
+                        </option>
+                      ))
+                    : null}
+                </ValidatedField>
+              )}
+              {!isNew && (
+                <div className="d-flex justify-content-end">
                   <Link
                     to={`/person/${employeeEntity.personalInfo ? employeeEntity.personalInfo.id : ''}/edit`}
                     className="btn btn-primary jh-create-entity"
@@ -150,8 +165,77 @@ export const EmployeeUpdate = () => {
                     &nbsp;
                     <Translate contentKey="donauStorageIncApp.person.home.editLabel">Edit Personal Info</Translate>
                   </Link>
-                )}
-              </div>
+                </div>
+              )}
+              {isNew && (
+                <ValidatedField
+                  label={translate('donauStorageIncApp.person.firstName')}
+                  id="employee-personalInfo-firstName"
+                  name="personalInfo.firstName"
+                  data-cy="personalInfo.firstName"
+                  type="text"
+                />
+              )}
+              {isNew && (
+                <ValidatedField
+                  label={translate('donauStorageIncApp.person.middleName')}
+                  id="employee-personalInfo-middleName"
+                  name="personalInfo.middleName"
+                  data-cy="personalInfo.middleName"
+                  type="text"
+                />
+              )}
+              {isNew && (
+                <ValidatedField
+                  label={translate('donauStorageIncApp.person.lastName')}
+                  id="employee-personalInfo-lastName"
+                  name="personalInfo.lastName"
+                  data-cy="personalInfo.lastName"
+                  type="text"
+                />
+              )}
+              {isNew && (
+                <ValidatedField
+                  label={translate('donauStorageIncApp.person.maidenName')}
+                  id="employee-personalInfo-maidenName"
+                  name="personalInfo.maidenName"
+                  data-cy="personalInfo.maidenName"
+                  type="text"
+                />
+              )}
+              {isNew && (
+                <ValidatedField
+                  label={translate('donauStorageIncApp.person.gender')}
+                  id="employee-personalInfo-gender"
+                  name="personalInfo.gender"
+                  data-cy="personalInfo.gender"
+                  type="select"
+                >
+                  {genderValues.map(gender => (
+                    <option value={gender} key={gender}>
+                      {translate('donauStorageIncApp.Gender.' + gender)}
+                    </option>
+                  ))}
+                </ValidatedField>
+              )}
+              {isNew && (
+                <ValidatedField
+                  label={translate('donauStorageIncApp.contactInfo.email')}
+                  id="employee-personalInfo-contactInfo-email"
+                  name="contactInfo.email"
+                  data-cy="contactInfo.email"
+                  type="text"
+                />
+              )}
+              {isNew && (
+                <ValidatedField
+                  label={translate('donauStorageIncApp.contactInfo.phoneNumber')}
+                  id="employee-personalInfo-contactInfo-phoneNumber"
+                  name="contactInfo.phoneNumber"
+                  data-cy="contactInfo.phoneNumber"
+                  type="text"
+                />
+              )}
               <ValidatedField
                 label={translate('donauStorageIncApp.employee.uniqueIdentificationNumber')}
                 id="employee-uniqueIdentificationNumber"
@@ -193,32 +277,74 @@ export const EmployeeUpdate = () => {
                 check
                 type="checkbox"
               />
-              <ValidatedField
-                id="employee-address"
-                name="address"
-                data-cy="address"
-                label={translate('donauStorageIncApp.employee.address')}
-                type="select"
-                required
-                disabled={!isNew}
-              >
-                <option value="" key="0" />
-                {addresses
-                  ? addresses.map(otherEntity => (
-                      <option value={otherEntity.id} key={otherEntity.id}>
-                        {otherEntity.streetName + ' ' + otherEntity.streetCode + ', ' + otherEntity.city.name}
-                      </option>
-                    ))
-                  : null}
-              </ValidatedField>
-              <div className="d-flex justify-content-end">
-                {isNew ? (
-                  <Link to="/address/new" className="btn btn-primary jh-create-entity" id="jh-create-entity" data-cy="entityCreateButton">
-                    <FontAwesomeIcon icon="plus" />
-                    &nbsp;
-                    <Translate contentKey="donauStorageIncApp.address.home.createLabel">Create new Address</Translate>
-                  </Link>
-                ) : (
+              {!isNew && (
+                <ValidatedField
+                  id="employee-address"
+                  name="address"
+                  data-cy="address"
+                  label={translate('donauStorageIncApp.employee.address')}
+                  type="select"
+                  required
+                  disabled
+                >
+                  <option value="" key="0" />
+                  {addresses
+                    ? addresses.map(otherEntity => (
+                        <option value={otherEntity.id} key={otherEntity.id}>
+                          {otherEntity.streetName + ' ' + otherEntity.streetCode + ', ' + otherEntity.city.name}
+                        </option>
+                      ))
+                    : null}
+                </ValidatedField>
+              )}
+              {isNew && (
+                <ValidatedField
+                  label={translate('donauStorageIncApp.address.streetName')}
+                  id="employee-address-streetName"
+                  name="address.streetName"
+                  data-cy="address.streetName"
+                  type="text"
+                />
+              )}
+              {isNew && (
+                <ValidatedField
+                  label={translate('donauStorageIncApp.address.streetCode')}
+                  id="employee-address-streetCode"
+                  name="address.streetCode"
+                  data-cy="address.streetCode"
+                  type="text"
+                />
+              )}
+              {isNew && (
+                <ValidatedField
+                  label={translate('donauStorageIncApp.address.postalCode')}
+                  id="employee-address-postalCode"
+                  name="address.postalCode"
+                  data-cy="address.postalCode"
+                  type="text"
+                />
+              )}
+              {isNew && (
+                <ValidatedField
+                  id="employee-address-city"
+                  name="address.city"
+                  data-cy="address.city"
+                  label={translate('donauStorageIncApp.address.city')}
+                  type="select"
+                  required
+                >
+                  <option value="" key="0" />
+                  {cities
+                    ? cities.map(otherEntity => (
+                        <option value={otherEntity.id} key={otherEntity.id}>
+                          {otherEntity.name + ', ' + otherEntity.country.name}
+                        </option>
+                      ))
+                    : null}
+                </ValidatedField>
+              )}
+              {!isNew && (
+                <div className="d-flex justify-content-end">
                   <Link
                     to={`/address/${employeeEntity.address ? employeeEntity.address.id : ''}/edit`}
                     className="btn btn-primary jh-create-entity"
@@ -229,8 +355,8 @@ export const EmployeeUpdate = () => {
                     &nbsp;
                     <Translate contentKey="donauStorageIncApp.address.home.editLabel">Edit Address</Translate>
                   </Link>
-                )}
-              </div>
+                </div>
+              )}
               <FormText>
                 <Translate contentKey="entity.validation.required">This field is required.</Translate>
               </FormText>

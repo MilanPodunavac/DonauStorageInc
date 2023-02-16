@@ -13,6 +13,9 @@ import { getEntities as getLegalEntities } from 'app/entities/legal-entity/legal
 import { ICompany } from 'app/shared/model/company.model';
 import { getEntity, updateEntity, createEntity, reset } from './company.reducer';
 
+import { ICity } from 'app/shared/model/city.model';
+import { getEntities as getCities } from 'app/entities/city/city.reducer';
+
 export const CompanyUpdate = () => {
   const dispatch = useAppDispatch();
 
@@ -27,6 +30,8 @@ export const CompanyUpdate = () => {
   const updating = useAppSelector(state => state.company.updating);
   const updateSuccess = useAppSelector(state => state.company.updateSuccess);
 
+  const cities = useAppSelector(state => state.city.entities);
+
   const handleClose = () => {
     navigate('/company');
   };
@@ -37,6 +42,8 @@ export const CompanyUpdate = () => {
     }
 
     dispatch(getLegalEntities({}));
+
+    dispatch(getCities({}));
   }, []);
 
   useEffect(() => {
@@ -49,7 +56,18 @@ export const CompanyUpdate = () => {
     const entity = {
       ...companyEntity,
       ...values,
-      legalEntityInfo: legalEntities.find(it => it.id.toString() === values.legalEntityInfo.toString()),
+      legalEntityInfo: isNew
+        ? {
+            ...values.legalEntity,
+            address: {
+              ...values.address,
+              city: cities.find(it => it.id.toString() === values.address.city.toString()),
+            },
+            contactInfo: {
+              ...values.legalContactInfo,
+            },
+          }
+        : legalEntities.find(it => it.id.toString() === values.legalEntityInfo.toString()),
     };
 
     if (isNew) {
@@ -92,49 +110,142 @@ export const CompanyUpdate = () => {
                   validate={{ required: true }}
                 />
               ) : null}
-              <ValidatedField
-                id="company-legalEntityInfo"
-                name="legalEntityInfo"
-                data-cy="legalEntityInfo"
-                label={translate('donauStorageIncApp.company.legalEntityInfo')}
-                type="select"
-                required
-                disabled={!isNew}
-              >
-                <option value="" key="0" />
-                {legalEntities
-                  ? legalEntities.map(otherEntity => (
-                      <option value={otherEntity.id} key={otherEntity.id}>
-                        {otherEntity.name}
-                      </option>
-                    ))
-                  : null}
-              </ValidatedField>
-              <div className="d-flex justify-content-end">
-                {isNew ? (
+              {!isNew && (
+                <ValidatedField
+                  id="company-legalEntityInfo"
+                  name="legalEntityInfo"
+                  data-cy="legalEntityInfo"
+                  label={translate('donauStorageIncApp.company.legalEntityInfo')}
+                  type="select"
+                  required
+                  disabled
+                >
+                  <option value="" key="0" />
+                  {legalEntities
+                    ? legalEntities.map(otherEntity => (
+                        <option value={otherEntity.id} key={otherEntity.id}>
+                          {otherEntity.name}
+                        </option>
+                      ))
+                    : null}
+                </ValidatedField>
+              )}
+              {!isNew && (
+                <div className="d-flex justify-content-end">
                   <Link
-                    to="/legal-entity/new"
+                    to={`/legal-entity/${companyEntity.legalEntityInfo ? companyEntity.legalEntityInfo.id : ''}/edit`}
                     className="btn btn-primary jh-create-entity"
                     id="jh-create-entity"
                     data-cy="entityCreateButton"
                   >
                     <FontAwesomeIcon icon="plus" />
                     &nbsp;
-                    <Translate contentKey="donauStorageIncApp.legalEntity.home.createLabel">Create new Legal Entity</Translate>
+                    <Translate contentKey="donauStorageIncApp.person.home.editLabel">Edit Legal Entity</Translate>
                   </Link>
-                ) : (
-                  <Link
-                    to={`/legal-entity/${companyEntity.legalEntity ? companyEntity.legalEntity.id : ''}/edit`}
-                    className="btn btn-primary jh-create-entity"
-                    id="jh-create-entity"
-                    data-cy="entityCreateButton"
-                  >
-                    <FontAwesomeIcon icon="plus" />
-                    &nbsp;
-                    <Translate contentKey="donauStorageIncApp.person.home.editLabel">Edit Address</Translate>
-                  </Link>
-                )}
-              </div>
+                </div>
+              )}
+              {isNew && (
+                <ValidatedField
+                  label={translate('donauStorageIncApp.legalEntity.name')}
+                  id="legal-entity-name"
+                  name="legalEntity.name"
+                  data-cy="legalEntity.name"
+                  type="text"
+                  validate={{
+                    required: { value: true, message: translate('entity.validation.required') },
+                  }}
+                />
+              )}
+              {isNew && (
+                <ValidatedField
+                  label={translate('donauStorageIncApp.legalEntity.taxIdentificationNumber')}
+                  id="legal-entity-taxIdentificationNumber"
+                  name="legalEntity.taxIdentificationNumber"
+                  data-cy="legalEntitytaxIdentificationNumber"
+                  type="text"
+                  validate={{
+                    required: { value: true, message: translate('entity.validation.required') },
+                    pattern: { value: /[0-9]{10}/, message: translate('entity.validation.pattern', { pattern: '[0-9]{10}' }) },
+                  }}
+                />
+              )}
+              {isNew && (
+                <ValidatedField
+                  label={translate('donauStorageIncApp.legalEntity.identificationNumber')}
+                  id="legal-entity-identificationNumber"
+                  name="legalEntity.identificationNumber"
+                  data-cy="legalEntity.identificationNumber"
+                  type="text"
+                  validate={{
+                    required: { value: true, message: translate('entity.validation.required') },
+                    pattern: { value: /[0-9]{8}/, message: translate('entity.validation.pattern', { pattern: '[0-9]{8}' }) },
+                  }}
+                />
+              )}
+              {isNew && (
+                <ValidatedField
+                  label={translate('donauStorageIncApp.contactInfo.email')}
+                  id="legalEntity-contactInfo-email"
+                  name="legalContactInfo.email"
+                  data-cy="legalContactInfo.email"
+                  type="text"
+                />
+              )}
+              {isNew && (
+                <ValidatedField
+                  label={translate('donauStorageIncApp.contactInfo.phoneNumber')}
+                  id="legalEntity-contactInfo-phoneNumber"
+                  name="legalContactInfo.phoneNumber"
+                  data-cy="legalContactInfo.phoneNumber"
+                  type="text"
+                />
+              )}
+              {isNew && (
+                <ValidatedField
+                  label={translate('donauStorageIncApp.address.streetName')}
+                  id="employee-address-streetName"
+                  name="address.streetName"
+                  data-cy="address.streetName"
+                  type="text"
+                />
+              )}
+              {isNew && (
+                <ValidatedField
+                  label={translate('donauStorageIncApp.address.streetCode')}
+                  id="employee-address-streetCode"
+                  name="address.streetCode"
+                  data-cy="address.streetCode"
+                  type="text"
+                />
+              )}
+              {isNew && (
+                <ValidatedField
+                  label={translate('donauStorageIncApp.address.postalCode')}
+                  id="employee-address-postalCode"
+                  name="address.postalCode"
+                  data-cy="address.postalCode"
+                  type="text"
+                />
+              )}
+              {isNew && (
+                <ValidatedField
+                  id="employee-address-city"
+                  name="address.city"
+                  data-cy="address.city"
+                  label={translate('donauStorageIncApp.address.city')}
+                  type="select"
+                  required
+                >
+                  <option value="" key="0" />
+                  {cities
+                    ? cities.map(otherEntity => (
+                        <option value={otherEntity.id} key={otherEntity.id}>
+                          {otherEntity.name + ', ' + otherEntity.country.name}
+                        </option>
+                      ))
+                    : null}
+                </ValidatedField>
+              )}
               <FormText>
                 <Translate contentKey="entity.validation.required">This field is required.</Translate>
               </FormText>

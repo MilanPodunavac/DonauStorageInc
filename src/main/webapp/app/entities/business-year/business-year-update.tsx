@@ -63,7 +63,9 @@ export const BusinessYearUpdate = () => {
 
   const defaultValues = () =>
     isNew
-      ? {}
+      ? {
+          completed: false,
+        }
       : {
           ...businessYearEntity,
           company: businessYearEntity?.company?.id,
@@ -100,24 +102,6 @@ export const BusinessYearUpdate = () => {
                 />
               ) : null}
               <ValidatedField
-                label={translate('donauStorageIncApp.businessYear.yearCode')}
-                id="business-year-yearCode"
-                name="yearCode"
-                data-cy="yearCode"
-                type="text"
-                validate={{
-                  required: { value: true, message: translate('entity.validation.required') },
-                }}
-              />
-              <ValidatedField
-                label={translate('donauStorageIncApp.businessYear.completed')}
-                id="business-year-completed"
-                name="completed"
-                data-cy="completed"
-                check
-                type="checkbox"
-              />
-              <ValidatedField
                 id="business-year-company"
                 name="company"
                 data-cy="company"
@@ -134,6 +118,25 @@ export const BusinessYearUpdate = () => {
                     ))
                   : null}
               </ValidatedField>
+              <ValidatedField
+                label={translate('donauStorageIncApp.businessYear.yearCode')}
+                id="business-year-yearCode"
+                name="yearCode"
+                data-cy="yearCode"
+                type="text"
+                validate={{
+                  required: { value: true, message: translate('entity.validation.required') },
+                }}
+              />
+              <ValidatedField
+                label={translate('donauStorageIncApp.businessYear.completed')}
+                id="business-year-completed"
+                name="completed"
+                data-cy="completed"
+                check
+                type="checkbox"
+                disabled
+              />
               <FormText>
                 <Translate contentKey="entity.validation.required">This field is required.</Translate>
               </FormText>
@@ -150,7 +153,13 @@ export const BusinessYearUpdate = () => {
                 &nbsp;
                 <Translate contentKey="entity.action.save">Save</Translate>
               </Button>
-              <Button id="complete-year" data-cy="businessYearCompleteButton" onClick={completeYear} color="primary" disabled={updating}>
+              <Button
+                id="complete-year"
+                data-cy="businessYearCompleteButton"
+                onClick={completeYear}
+                color="primary"
+                disabled={updating || isNew || businessYearEntity.completed}
+              >
                 <FontAwesomeIcon icon="arrow-left" />
                 &nbsp;
                 <span className="d-none d-md-inline">

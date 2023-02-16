@@ -101,7 +101,7 @@ export const BusinessContactUpdate = () => {
                 label={translate('donauStorageIncApp.businessContact.personalInfo')}
                 type="select"
                 required
-                disabled={!isNew}
+                disabled
               >
                 <option value="" key="0" />
                 {people
@@ -121,7 +121,7 @@ export const BusinessContactUpdate = () => {
                   </Link>
                 ) : (
                   <Link
-                    to={`/address/${businessContactEntity.personalInfo ? businessContactEntity.personalInfo.id : ''}/edit`}
+                    to={`/person/${businessContactEntity.personalInfo ? businessContactEntity.personalInfo.id : ''}/edit`}
                     className="btn btn-primary jh-create-entity"
                     id="jh-create-entity"
                     data-cy="entityCreateButton"
