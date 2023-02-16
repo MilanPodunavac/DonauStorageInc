@@ -108,6 +108,7 @@ export const CompanyUpdate = () => {
                   id="company-id"
                   label={translate('global.field.id')}
                   validate={{ required: true }}
+                  disabled
                 />
               ) : null}
               {!isNew && (

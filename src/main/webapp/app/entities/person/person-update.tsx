@@ -95,6 +95,7 @@ export const PersonUpdate = () => {
                   id="person-id"
                   label={translate('global.field.id')}
                   validate={{ required: true }}
+                  disabled
                 />
               ) : null}
               <ValidatedField

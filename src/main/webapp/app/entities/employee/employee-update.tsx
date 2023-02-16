@@ -131,6 +131,7 @@ export const EmployeeUpdate = () => {
                   id="employee-id"
                   label={translate('global.field.id')}
                   validate={{ required: true }}
+                  disabled
                 />
               ) : null}
               {!isNew && (
@@ -367,6 +368,7 @@ export const EmployeeUpdate = () => {
                 label={translate('donauStorageIncApp.employee.company')}
                 type="select"
                 required
+                disabled={!isNew}
               >
                 <option value="" key="0" />
                 {companies

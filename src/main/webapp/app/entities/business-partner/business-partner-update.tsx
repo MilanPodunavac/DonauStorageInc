@@ -144,6 +144,7 @@ export const BusinessPartnerUpdate = () => {
                 label={translate('donauStorageIncApp.businessPartner.company')}
                 type="select"
                 required
+                disabled={!isNew}
               >
                 <option value="" key="0" />
                 {companies

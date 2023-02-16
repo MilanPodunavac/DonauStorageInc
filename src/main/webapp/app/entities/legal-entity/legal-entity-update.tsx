@@ -98,6 +98,7 @@ export const LegalEntityUpdate = () => {
                   id="legal-entity-id"
                   label={translate('global.field.id')}
                   validate={{ required: true }}
+                  disabled
                 />
               ) : null}
               <ValidatedField

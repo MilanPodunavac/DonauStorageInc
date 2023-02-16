@@ -101,8 +101,30 @@ export const ResourceUpdate = () => {
                   id="resource-id"
                   label={translate('global.field.id')}
                   validate={{ required: true }}
+                  disabled
                 />
               ) : null}
+              <ValidatedField
+                id="resource-company"
+                name="company"
+                data-cy="company"
+                label={translate('donauStorageIncApp.resource.company')}
+                type="select"
+                required
+                disabled={!isNew}
+              >
+                <option value="" key="0" />
+                {companies
+                  ? companies.map(otherEntity => (
+                      <option value={otherEntity.id} key={otherEntity.id}>
+                        {otherEntity.legalEntityInfo.name}
+                      </option>
+                    ))
+                  : null}
+              </ValidatedField>
+              <FormText>
+                <Translate contentKey="entity.validation.required">This field is required.</Translate>
+              </FormText>
               <ValidatedField
                 label={translate('donauStorageIncApp.resource.name')}
                 id="resource-name"
@@ -155,26 +177,6 @@ export const ResourceUpdate = () => {
                   <Translate contentKey="donauStorageIncApp.measurementUnit.home.createLabel">Create new Measurement Unit</Translate>
                 </Link>
               </div>
-              <FormText>
-                <Translate contentKey="entity.validation.required">This field is required.</Translate>
-              </FormText>
-              <ValidatedField
-                id="resource-company"
-                name="company"
-                data-cy="company"
-                label={translate('donauStorageIncApp.resource.company')}
-                type="select"
-                required
-              >
-                <option value="" key="0" />
-                {companies
-                  ? companies.map(otherEntity => (
-                      <option value={otherEntity.id} key={otherEntity.id}>
-                        {otherEntity.legalEntityInfo.name}
-                      </option>
-                    ))
-                  : null}
-              </ValidatedField>
               <FormText>
                 <Translate contentKey="entity.validation.required">This field is required.</Translate>
               </FormText>

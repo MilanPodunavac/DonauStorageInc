@@ -15,6 +15,9 @@ import { getEntities as getCompanies } from 'app/entities/company/company.reduce
 import { IStorage } from 'app/shared/model/storage.model';
 import { getEntity, updateEntity, createEntity, reset } from './storage.reducer';
 
+import { ICity } from 'app/shared/model/city.model';
+import { getEntities as getCities } from 'app/entities/city/city.reducer';
+
 export const StorageUpdate = () => {
   const dispatch = useAppDispatch();
 
@@ -30,6 +33,8 @@ export const StorageUpdate = () => {
   const updating = useAppSelector(state => state.storage.updating);
   const updateSuccess = useAppSelector(state => state.storage.updateSuccess);
 
+  const cities = useAppSelector(state => state.city.entities);
+
   const handleClose = () => {
     navigate('/storage' + location.search);
   };
@@ -43,6 +48,8 @@ export const StorageUpdate = () => {
 
     dispatch(getAddresses({}));
     dispatch(getCompanies({}));
+
+    dispatch(getCities({}));
   }, []);
 
   useEffect(() => {
@@ -55,7 +62,12 @@ export const StorageUpdate = () => {
     const entity = {
       ...storageEntity,
       ...values,
-      address: addresses.find(it => it.id.toString() === values.address.toString()),
+      address: isNew
+        ? {
+            ...values.address,
+            city: cities.find(it => it.id.toString() === values.address.city.toString()),
+          }
+        : addresses.find(it => it.id.toString() === values.address.toString()),
       company: companies.find(it => it.id.toString() === values.company.toString()),
     };
 
@@ -98,56 +110,9 @@ export const StorageUpdate = () => {
                   id="storage-id"
                   label={translate('donauStorageIncApp.storage.id')}
                   validate={{ required: true }}
+                  disabled
                 />
               ) : null}
-              <ValidatedField
-                label={translate('donauStorageIncApp.storage.name')}
-                id="storage-name"
-                name="name"
-                data-cy="name"
-                type="text"
-              />
-              <ValidatedField
-                id="storage-address"
-                name="address"
-                data-cy="address"
-                label={translate('donauStorageIncApp.storage.address')}
-                type="select"
-                required
-                disabled={!isNew}
-              >
-                <option value="" key="0" />
-                {addresses
-                  ? addresses.map(otherEntity => (
-                      <option value={otherEntity.id} key={otherEntity.id}>
-                        {otherEntity.streetName + ' ' + otherEntity.streetCode + ', ' + otherEntity.city.name}
-                      </option>
-                    ))
-                  : null}
-              </ValidatedField>
-              <FormText>
-                <Translate contentKey="entity.validation.required">This field is required.</Translate>
-              </FormText>
-              <div className="d-flex justify-content-end">
-                {isNew ? (
-                  <Link to="/address/new" className="btn btn-primary jh-create-entity" id="jh-create-entity" data-cy="entityCreateButton">
-                    <FontAwesomeIcon icon="plus" />
-                    &nbsp;
-                    <Translate contentKey="donauStorageIncApp.address.home.createLabel">Create new Address</Translate>
-                  </Link>
-                ) : (
-                  <Link
-                    to={`/address/${storageEntity.address ? storageEntity.address.id : ''}/edit`}
-                    className="btn btn-primary jh-create-entity"
-                    id="jh-create-entity"
-                    data-cy="entityCreateButton"
-                  >
-                    <FontAwesomeIcon icon="plus" />
-                    &nbsp;
-                    <Translate contentKey="donauStorageIncApp.address.home.editLabel">Edit Address</Translate>
-                  </Link>
-                )}
-              </div>
               <ValidatedField
                 id="storage-company"
                 name="company"
@@ -155,6 +120,7 @@ export const StorageUpdate = () => {
                 label={translate('donauStorageIncApp.storage.company')}
                 type="select"
                 required
+                disabled={!isNew}
               >
                 <option value="" key="0" />
                 {companies
@@ -165,6 +131,115 @@ export const StorageUpdate = () => {
                     ))
                   : null}
               </ValidatedField>
+              <FormText>
+                <Translate contentKey="entity.validation.required">This field is required.</Translate>
+              </FormText>
+              <ValidatedField
+                label={translate('donauStorageIncApp.storage.name')}
+                id="storage-name"
+                name="name"
+                data-cy="name"
+                type="text"
+              />
+              {!isNew && (
+                <ValidatedField
+                  id="storage-address"
+                  name="address"
+                  data-cy="address"
+                  label={translate('donauStorageIncApp.storage.address')}
+                  type="select"
+                  required
+                  disabled={!isNew}
+                >
+                  <option value="" key="0" />
+                  {addresses
+                    ? addresses.map(otherEntity => (
+                        <option value={otherEntity.id} key={otherEntity.id}>
+                          {otherEntity.streetName + ' ' + otherEntity.streetCode + ', ' + otherEntity.city.name}
+                        </option>
+                      ))
+                    : null}
+                </ValidatedField>
+              )}
+              {!isNew && (
+                <FormText>
+                  <Translate contentKey="entity.validation.required">This field is required.</Translate>
+                </FormText>
+              )}
+              {!isNew && (
+                <div className="d-flex justify-content-end">
+                  <Link
+                    to={`/address/${storageEntity.address ? storageEntity.address.id : ''}/edit`}
+                    className="btn btn-primary jh-create-entity"
+                    id="jh-create-entity"
+                    data-cy="entityCreateButton"
+                  >
+                    <FontAwesomeIcon icon="plus" />
+                    &nbsp;
+                    <Translate contentKey="donauStorageIncApp.address.home.editLabel">Edit Address</Translate>
+                  </Link>
+                </div>
+              )}
+              {isNew && (
+                <ValidatedField
+                  label={translate('donauStorageIncApp.address.streetName')}
+                  id="employee-address-streetName"
+                  name="address.streetName"
+                  data-cy="address.streetName"
+                  type="text"
+                />
+              )}
+              {isNew && (
+                <ValidatedField
+                  label={translate('donauStorageIncApp.address.streetCode')}
+                  id="employee-address-streetCode"
+                  name="address.streetCode"
+                  data-cy="address.streetCode"
+                  type="text"
+                />
+              )}
+              {isNew && (
+                <ValidatedField
+                  label={translate('donauStorageIncApp.address.postalCode')}
+                  id="employee-address-postalCode"
+                  name="address.postalCode"
+                  data-cy="address.postalCode"
+                  type="text"
+                />
+              )}
+              {isNew && (
+                <ValidatedField
+                  id="employee-address-city"
+                  name="address.city"
+                  data-cy="address.city"
+                  label={translate('donauStorageIncApp.address.city')}
+                  type="select"
+                  required
+                >
+                  <option value="" key="0" />
+                  {cities
+                    ? cities.map(otherEntity => (
+                        <option value={otherEntity.id} key={otherEntity.id}>
+                          {otherEntity.name + ', ' + otherEntity.country.name}
+                        </option>
+                      ))
+                    : null}
+                </ValidatedField>
+              )}
+              {!isNew && (
+                <div className="d-flex justify-content-end">
+                  <Link
+                    to={`/address/${storageEntity.address ? storageEntity.address.id : ''}/edit`}
+                    className="btn btn-primary jh-create-entity"
+                    id="jh-create-entity"
+                    data-cy="entityCreateButton"
+                  >
+                    <FontAwesomeIcon icon="plus" />
+                    &nbsp;
+                    <Translate contentKey="donauStorageIncApp.address.home.editLabel">Edit Address</Translate>
+                  </Link>
+                </div>
+              )}
               <FormText>
                 <Translate contentKey="entity.validation.required">This field is required.</Translate>
               </FormText>

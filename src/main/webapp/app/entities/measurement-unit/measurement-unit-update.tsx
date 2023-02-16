@@ -85,6 +85,7 @@ export const MeasurementUnitUpdate = () => {
                   id="measurement-unit-id"
                   label={translate('global.field.id')}
                   validate={{ required: true }}
+                  disabled
                 />
               ) : null}
               <ValidatedField

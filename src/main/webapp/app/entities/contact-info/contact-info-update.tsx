@@ -85,6 +85,7 @@ export const ContactInfoUpdate = () => {
                   id="contact-info-id"
                   label={translate('global.field.id')}
                   validate={{ required: true }}
+                  disabled
                 />
               ) : null}
               <ValidatedField

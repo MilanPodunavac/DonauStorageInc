@@ -104,6 +104,7 @@ export const StorageCardUpdate = () => {
                   id="storage-card-id"
                   label={translate('donauStorageIncApp.storageCard.id')}
                   validate={{ required: true }}
+                  disabled
                 />
               ) : null}
               <ValidatedField
@@ -116,6 +117,7 @@ export const StorageCardUpdate = () => {
                   required: { value: true, message: translate('entity.validation.required') },
                   validate: v => isNumber(v) || translate('entity.validation.number'),
                 }}
+                disabled={!isNew}
               />
               <UncontrolledTooltip target="startingAmountLabel">
                 <Translate contentKey="donauStorageIncApp.storageCard.help.startingAmount" />
@@ -130,6 +132,7 @@ export const StorageCardUpdate = () => {
                   required: { value: true, message: translate('entity.validation.required') },
                   validate: v => isNumber(v) || translate('entity.validation.number'),
                 }}
+                disabled={!isNew}
               />
               <UncontrolledTooltip target="receivedAmountLabel">
                 <Translate contentKey="donauStorageIncApp.storageCard.help.receivedAmount" />
@@ -144,6 +147,7 @@ export const StorageCardUpdate = () => {
                   required: { value: true, message: translate('entity.validation.required') },
                   validate: v => isNumber(v) || translate('entity.validation.number'),
                 }}
+                disabled={!isNew}
               />
               <UncontrolledTooltip target="dispatchedAmountLabel">
                 <Translate contentKey="donauStorageIncApp.storageCard.help.dispatchedAmount" />
@@ -154,6 +158,7 @@ export const StorageCardUpdate = () => {
                 name="totalAmount"
                 data-cy="totalAmount"
                 type="text"
+                disabled={!isNew}
               />
               <UncontrolledTooltip target="totalAmountLabel">
                 <Translate contentKey="donauStorageIncApp.storageCard.help.totalAmount" />
@@ -168,6 +173,7 @@ export const StorageCardUpdate = () => {
                   required: { value: true, message: translate('entity.validation.required') },
                   validate: v => isNumber(v) || translate('entity.validation.number'),
                 }}
+                disabled={!isNew}
               />
               <UncontrolledTooltip target="startingValueLabel">
                 <Translate contentKey="donauStorageIncApp.storageCard.help.startingValue" />
@@ -182,6 +188,7 @@ export const StorageCardUpdate = () => {
                   required: { value: true, message: translate('entity.validation.required') },
                   validate: v => isNumber(v) || translate('entity.validation.number'),
                 }}
+                disabled={!isNew}
               />
               <UncontrolledTooltip target="receivedValueLabel">
                 <Translate contentKey="donauStorageIncApp.storageCard.help.receivedValue" />
@@ -196,6 +203,7 @@ export const StorageCardUpdate = () => {
                   required: { value: true, message: translate('entity.validation.required') },
                   validate: v => isNumber(v) || translate('entity.validation.number'),
                 }}
+                disabled={!isNew}
               />
               <UncontrolledTooltip target="dispatchedValueLabel">
                 <Translate contentKey="donauStorageIncApp.storageCard.help.dispatchedValue" />
@@ -206,6 +214,7 @@ export const StorageCardUpdate = () => {
                 name="totalValue"
                 data-cy="totalValue"
                 type="text"
+                disabled={!isNew}
               />
               <UncontrolledTooltip target="totalValueLabel">
                 <Translate contentKey="donauStorageIncApp.storageCard.help.totalValue" />
@@ -220,6 +229,7 @@ export const StorageCardUpdate = () => {
                   required: { value: true, message: translate('entity.validation.required') },
                   validate: v => isNumber(v) || translate('entity.validation.number'),
                 }}
+                disabled={!isNew}
               />
               <ValidatedField
                 id="storage-card-businessYear"
@@ -228,6 +238,7 @@ export const StorageCardUpdate = () => {
                 label={translate('donauStorageIncApp.storageCard.businessYear')}
                 type="select"
                 required
+                disabled={!isNew}
               >
                 <option value="" key="0" />
                 {businessYears
@@ -248,6 +259,7 @@ export const StorageCardUpdate = () => {
                 label={translate('donauStorageIncApp.storageCard.resource')}
                 type="select"
                 required
+                disabled={!isNew}
               >
                 <option value="" key="0" />
                 {resources
@@ -268,6 +280,7 @@ export const StorageCardUpdate = () => {
                 label={translate('donauStorageIncApp.storageCard.storage')}
                 type="select"
                 required
+                disabled={!isNew}
               >
                 <option value="" key="0" />
                 {storages

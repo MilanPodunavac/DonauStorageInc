@@ -77,7 +77,9 @@ export const CensusDocumentUpdate = () => {
 
   const defaultValues = () =>
     isNew
-      ? {}
+      ? {
+          status: 'INCOMPLETE',
+        }
       : {
           status: 'INCOMPLETE',
           ...censusDocumentEntity,
@@ -116,6 +118,7 @@ export const CensusDocumentUpdate = () => {
                   id="census-document-id"
                   label={translate('global.field.id')}
                   validate={{ required: true }}
+                  disabled
                 />
               ) : null}
               <ValidatedField
@@ -137,6 +140,7 @@ export const CensusDocumentUpdate = () => {
                 name="status"
                 data-cy="status"
                 type="select"
+                disabled
               >
                 {censusDocumentStatusValues.map(censusDocumentStatus => (
                   <option value={censusDocumentStatus} key={censusDocumentStatus}>
@@ -169,6 +173,7 @@ export const CensusDocumentUpdate = () => {
                 label={translate('donauStorageIncApp.censusDocument.businessYear')}
                 type="select"
                 required
+                disabled={!isNew}
               >
                 <option value="" key="0" />
                 {businessYears
@@ -249,6 +254,7 @@ export const CensusDocumentUpdate = () => {
                 label={translate('donauStorageIncApp.censusDocument.storage')}
                 type="select"
                 required
+                disabled={!isNew}
               >
                 <option value="" key="0" />
                 {storages

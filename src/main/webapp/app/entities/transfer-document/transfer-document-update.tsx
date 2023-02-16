@@ -78,7 +78,9 @@ export const TransferDocumentUpdate = () => {
 
   const defaultValues = () =>
     isNew
-      ? {}
+      ? {
+          status: 'IN_PREPARATION',
+        }
       : {
           type: 'RECEIVING',
           status: 'IN_PREPARATION',
@@ -122,6 +124,7 @@ export const TransferDocumentUpdate = () => {
                   id="transfer-document-id"
                   label={translate('global.field.id')}
                   validate={{ required: true }}
+                  disabled
                 />
               ) : null}
               <ValidatedField
@@ -153,6 +156,7 @@ export const TransferDocumentUpdate = () => {
                 name="status"
                 data-cy="status"
                 type="select"
+                disabled
               >
                 {transferDocumentStatusValues.map(transferDocumentStatus => (
                   <option value={transferDocumentStatus} key={transferDocumentStatus}>

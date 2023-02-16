@@ -96,6 +96,7 @@ export const CensusItemUpdate = () => {
                   id="census-item-id"
                   label={translate('global.field.id')}
                   validate={{ required: true }}
+                  disabled
                 />
               ) : null}
               <ValidatedField
@@ -117,6 +118,7 @@ export const CensusItemUpdate = () => {
                 label={translate('donauStorageIncApp.censusItem.censusDocument')}
                 type="select"
                 required
+                disabled={!isNew}
               >
                 <option value="" key="0" />
                 {censusDocuments

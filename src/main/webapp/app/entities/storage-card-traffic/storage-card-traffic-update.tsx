@@ -98,14 +98,37 @@ export const StorageCardTrafficUpdate = () => {
                   id="storage-card-traffic-id"
                   label={translate('global.field.id')}
                   validate={{ required: true }}
+                  disabled
                 />
               ) : null}
+              <ValidatedField
+                id="storage-card-traffic-storageCard"
+                name="storageCard"
+                data-cy="storageCard"
+                label={translate('donauStorageIncApp.storageCardTraffic.storageCard')}
+                type="select"
+                required
+                disabled={!isNew}
+              >
+                <option value="" key="0" />
+                {storageCards
+                  ? storageCards.map(otherEntity => (
+                      <option value={otherEntity.id} key={otherEntity.id}>
+                        {otherEntity.storage.name + ', ' + otherEntity.resource.name + ', ' + otherEntity.businessYear.yearCode}
+                      </option>
+                    ))
+                  : null}
+              </ValidatedField>
+              <FormText>
+                <Translate contentKey="entity.validation.required">This field is required.</Translate>
+              </FormText>
               <ValidatedField
                 label={translate('donauStorageIncApp.storageCardTraffic.type')}
                 id="storage-card-traffic-type"
                 name="type"
                 data-cy="type"
                 type="select"
+                disabled={!isNew}
               >
                 {storageCardTrafficTypeValues.map(storageCardTrafficType => (
                   <option value={storageCardTrafficType} key={storageCardTrafficType}>
@@ -119,6 +142,7 @@ export const StorageCardTrafficUpdate = () => {
                 name="direction"
                 data-cy="direction"
                 type="select"
+                disabled={!isNew}
               >
                 {storageCardTrafficDirectionValues.map(storageCardTrafficDirection => (
                   <option value={storageCardTrafficDirection} key={storageCardTrafficDirection}>
@@ -136,6 +160,7 @@ export const StorageCardTrafficUpdate = () => {
                   required: { value: true, message: translate('entity.validation.required') },
                   validate: v => isNumber(v) || translate('entity.validation.number'),
                 }}
+                disabled={!isNew}
               />
               <ValidatedField
                 label={translate('donauStorageIncApp.storageCardTraffic.price')}
@@ -148,6 +173,7 @@ export const StorageCardTrafficUpdate = () => {
                   min: { value: 0, message: translate('entity.validation.min', { min: 0 }) },
                   validate: v => isNumber(v) || translate('entity.validation.number'),
                 }}
+                disabled={!isNew}
               />
               <ValidatedField
                 label={translate('donauStorageIncApp.storageCardTraffic.trafficValue')}
@@ -159,6 +185,7 @@ export const StorageCardTrafficUpdate = () => {
                   required: { value: true, message: translate('entity.validation.required') },
                   validate: v => isNumber(v) || translate('entity.validation.number'),
                 }}
+                disabled={!isNew}
               />
               <UncontrolledTooltip target="trafficValueLabel">
                 <Translate contentKey="donauStorageIncApp.storageCardTraffic.help.trafficValue" />
@@ -169,6 +196,7 @@ export const StorageCardTrafficUpdate = () => {
                 name="document"
                 data-cy="document"
                 type="text"
+                disabled={!isNew}
               />
               <ValidatedField
                 label={translate('donauStorageIncApp.storageCardTraffic.date')}
@@ -176,27 +204,8 @@ export const StorageCardTrafficUpdate = () => {
                 name="date"
                 data-cy="date"
                 type="date"
+                disabled={!isNew}
               />
-              <ValidatedField
-                id="storage-card-traffic-storageCard"
-                name="storageCard"
-                data-cy="storageCard"
-                label={translate('donauStorageIncApp.storageCardTraffic.storageCard')}
-                type="select"
-                required
-              >
-                <option value="" key="0" />
-                {storageCards
-                  ? storageCards.map(otherEntity => (
-                      <option value={otherEntity.id} key={otherEntity.id}>
-                        {otherEntity.storage.name + ', ' + otherEntity.resource.name + ', ' + otherEntity.businessYear.yearCode}
-                      </option>
-                    ))
-                  : null}
-              </ValidatedField>
-              <FormText>
-                <Translate contentKey="entity.validation.required">This field is required.</Translate>
-              </FormText>
               <Button id="cancel-save" data-cy="entityCreateCancelButton" onClick={handleClose} replace color="info">
                 <FontAwesomeIcon icon="arrow-left" />
                 &nbsp;

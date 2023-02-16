@@ -98,6 +98,7 @@ export const TransferDocumentItemUpdate = () => {
                   id="transfer-document-item-id"
                   label={translate('global.field.id')}
                   validate={{ required: true }}
+                  disabled
                 />
               ) : null}
               <ValidatedField
@@ -145,6 +146,7 @@ export const TransferDocumentItemUpdate = () => {
                 label={translate('donauStorageIncApp.transferDocumentItem.transferDocument')}
                 type="select"
                 required
+                disabled={!isNew}
               >
                 <option value="" key="0" />
                 {transferDocuments

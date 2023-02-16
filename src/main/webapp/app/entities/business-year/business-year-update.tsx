@@ -99,6 +99,7 @@ export const BusinessYearUpdate = () => {
                   id="business-year-id"
                   label={translate('global.field.id')}
                   validate={{ required: true }}
+                  disabled
                 />
               ) : null}
               <ValidatedField
@@ -108,6 +109,7 @@ export const BusinessYearUpdate = () => {
                 label={translate('donauStorageIncApp.businessYear.company')}
                 type="select"
                 required
+                disabled={!isNew}
               >
                 <option value="" key="0" />
                 {companies
