@@ -19,6 +19,8 @@ import { TransferDocumentType } from 'app/shared/model/enumerations/transfer-doc
 import { TransferDocumentStatus } from 'app/shared/model/enumerations/transfer-document-status.model';
 import { getEntity, updateEntity, createEntity, reset, account, reverse } from './transfer-document.reducer';
 
+import TransferDocumentItem from '../transfer-document-item';
+
 export const TransferDocumentUpdate = () => {
   const dispatch = useAppDispatch();
 
@@ -111,7 +113,7 @@ export const TransferDocumentUpdate = () => {
         </Col>
       </Row>
       <Row className="justify-content-center">
-        <Col md="8">
+        <Col md="5">
           {loading ? (
             <p>Loading...</p>
           ) : (
@@ -293,6 +295,10 @@ export const TransferDocumentUpdate = () => {
               </Button>
             </ValidatedForm>
           )}
+        </Col>
+
+        <Col>
+          <TransferDocumentItem />
         </Col>
       </Row>
     </div>

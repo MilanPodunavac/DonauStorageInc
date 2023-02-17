@@ -1,11 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
-import { Button, Row, Col, FormText, UncontrolledTooltip } from 'reactstrap';
-import { isNumber, Translate, translate, ValidatedField, ValidatedForm } from 'react-jhipster';
+import { Button, Row, Col, FormText, UncontrolledTooltip, Table } from 'reactstrap';
+import { isNumber, TextFormat, Translate, translate, ValidatedField, ValidatedForm, getSortState } from 'react-jhipster';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
+import { APP_DATE_FORMAT, APP_LOCAL_DATE_FORMAT } from 'app/config/constants';
+
 import { convertDateTimeFromServer, convertDateTimeToServer, displayDefaultDateTime } from 'app/shared/util/date-utils';
-import { mapIdList } from 'app/shared/util/entity-utils';
+import { ASC, DESC, ITEMS_PER_PAGE, SORT } from 'app/shared/util/pagination.constants';
+import { mapIdList, overridePaginationStateWithQueryParams } from 'app/shared/util/entity-utils';
 import { useAppDispatch, useAppSelector } from 'app/config/store';
 
 import { IBusinessYear } from 'app/shared/model/business-year.model';
@@ -16,6 +19,8 @@ import { IStorage } from 'app/shared/model/storage.model';
 import { getEntities as getStorages } from 'app/entities/storage/storage.reducer';
 import { IStorageCard } from 'app/shared/model/storage-card.model';
 import { getEntity, updateEntity, createEntity, reset } from './storage-card.reducer';
+
+import StorageCardTraffic from '../storage-card-traffic';
 
 export const StorageCardUpdate = () => {
   const dispatch = useAppDispatch();
@@ -84,14 +89,14 @@ export const StorageCardUpdate = () => {
   return (
     <div>
       <Row className="justify-content-center">
-        <Col md="8">
+        <Col>
           <h2 id="donauStorageIncApp.storageCard.home.createOrEditLabel" data-cy="StorageCardCreateUpdateHeading">
             <Translate contentKey="donauStorageIncApp.storageCard.home.createOrEditLabel">Create or edit a StorageCard</Translate>
           </h2>
         </Col>
       </Row>
       <Row className="justify-content-center">
-        <Col md="8">
+        <Col md="5">
           {loading ? (
             <p>Loading...</p>
           ) : (
@@ -309,6 +314,10 @@ export const StorageCardUpdate = () => {
               </Button>
             </ValidatedForm>
           )}
+        </Col>
+
+        <Col>
+          <StorageCardTraffic />
         </Col>
       </Row>
     </div>

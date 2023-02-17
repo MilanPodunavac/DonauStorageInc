@@ -17,6 +17,7 @@ import { getEntities as getStorages } from 'app/entities/storage/storage.reducer
 import { ICensusDocument } from 'app/shared/model/census-document.model';
 import { CensusDocumentStatus } from 'app/shared/model/enumerations/census-document-status.model';
 import { getEntity, updateEntity, createEntity, reset, account } from './census-document.reducer';
+import CensusItem from '../census-item';
 
 export const CensusDocumentUpdate = () => {
   const dispatch = useAppDispatch();
@@ -105,7 +106,7 @@ export const CensusDocumentUpdate = () => {
         </Col>
       </Row>
       <Row className="justify-content-center">
-        <Col md="8">
+        <Col md="5">
           {loading ? (
             <p>Loading...</p>
           ) : (
@@ -290,6 +291,10 @@ export const CensusDocumentUpdate = () => {
               </Button>
             </ValidatedForm>
           )}
+        </Col>
+
+        <Col>
+          <CensusItem />
         </Col>
       </Row>
     </div>

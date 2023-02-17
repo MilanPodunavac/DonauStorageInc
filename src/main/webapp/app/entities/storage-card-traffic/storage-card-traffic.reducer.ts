@@ -21,8 +21,10 @@ const apiUrl = 'api/xt/storage-card-traffics';
 
 // Actions
 
-export const getEntities = createAsyncThunk('storageCardTraffic/fetch_entity_list', async ({ page, size, sort }: IQueryParams) => {
-  const requestUrl = `${apiUrl}${sort ? `?page=${page}&size=${size}&sort=${sort}&` : '?'}cacheBuster=${new Date().getTime()}`;
+export const getEntities = createAsyncThunk('storageCardTraffic/fetch_entity_list', async ({ query, page, size, sort }: IQueryParams) => {
+  const requestUrl = `${apiUrl}?${query ? `storageCardId.equals=${query}&` : ''}${
+    sort ? `page=${page}&size=${size}&sort=${sort}&` : ''
+  }cacheBuster=${new Date().getTime()}`;
   return axios.get<IStorageCardTraffic[]>(requestUrl);
 });
 
