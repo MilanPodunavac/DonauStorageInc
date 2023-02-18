@@ -22,6 +22,8 @@ export const CensusItemUpdate = () => {
 
   const { id } = useParams<'id'>();
   const isNew = id === undefined;
+  const { censusId } = useParams<'censusId'>();
+  const isWithCensus = censusId === 'undefined';
 
   const censusDocuments = useAppSelector(state => state.censusDocument.entities);
   const resources = useAppSelector(state => state.resource.entities);
@@ -66,7 +68,9 @@ export const CensusItemUpdate = () => {
 
   const defaultValues = () =>
     isNew
-      ? {}
+      ? {
+          censusDocument: censusId,
+        }
       : {
           ...censusItemEntity,
           censusDocument: censusItemEntity?.censusDocument?.id,
@@ -100,25 +104,13 @@ export const CensusItemUpdate = () => {
                 />
               ) : null}
               <ValidatedField
-                label={translate('donauStorageIncApp.censusItem.amount')}
-                id="census-item-amount"
-                name="amount"
-                data-cy="amount"
-                type="text"
-                validate={{
-                  required: { value: true, message: translate('entity.validation.required') },
-                  min: { value: 0, message: translate('entity.validation.min', { min: 0 }) },
-                  validate: v => isNumber(v) || translate('entity.validation.number'),
-                }}
-              />
-              <ValidatedField
                 id="census-item-censusDocument"
                 name="censusDocument"
                 data-cy="censusDocument"
                 label={translate('donauStorageIncApp.censusItem.censusDocument')}
                 type="select"
                 required
-                disabled={!isNew}
+                disabled={isNew && isWithCensus}
               >
                 <option value="" key="0" />
                 {censusDocuments
@@ -132,6 +124,18 @@ export const CensusItemUpdate = () => {
               <FormText>
                 <Translate contentKey="entity.validation.required">This field is required.</Translate>
               </FormText>
+              <ValidatedField
+                label={translate('donauStorageIncApp.censusItem.amount')}
+                id="census-item-amount"
+                name="amount"
+                data-cy="amount"
+                type="text"
+                validate={{
+                  required: { value: true, message: translate('entity.validation.required') },
+                  min: { value: 0, message: translate('entity.validation.min', { min: 0 }) },
+                  validate: v => isNumber(v) || translate('entity.validation.number'),
+                }}
+              />
               <ValidatedField
                 id="census-item-resource"
                 name="resource"

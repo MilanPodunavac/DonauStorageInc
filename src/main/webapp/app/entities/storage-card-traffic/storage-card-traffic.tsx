@@ -113,7 +113,7 @@ export const StorageCardTraffic = () => {
             <Translate contentKey="donauStorageIncApp.storageCardTraffic.home.refreshListLabel">Refresh List</Translate>
           </Button>
           <Link
-            to="/storage-card-traffic/new"
+            to={'/storage-card-traffic/new/' + id}
             className="btn btn-primary jh-create-entity"
             id="jh-create-entity"
             data-cy="entityCreateButton"

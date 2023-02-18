@@ -11,7 +11,7 @@ import TransferDocumentItemDeleteDialog from './transfer-document-item-delete-di
 const TransferDocumentItemRoutes = () => (
   <ErrorBoundaryRoutes>
     <Route index element={<TransferDocumentItem />} />
-    <Route path="new" element={<TransferDocumentItemUpdate />} />
+    <Route path="/new/:documentId" element={<TransferDocumentItemUpdate />} />
     <Route path=":id">
       <Route index element={<TransferDocumentItemDetail />} />
       <Route path="edit" element={<TransferDocumentItemUpdate />} />

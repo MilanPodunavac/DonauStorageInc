@@ -22,6 +22,8 @@ export const TransferDocumentItemUpdate = () => {
 
   const { id } = useParams<'id'>();
   const isNew = id === undefined;
+  const { documentId } = useParams<'documentId'>();
+  const isWithTransfer = documentId === 'undefined';
 
   const transferDocuments = useAppSelector(state => state.transferDocument.entities);
   const resources = useAppSelector(state => state.resource.entities);
@@ -66,7 +68,9 @@ export const TransferDocumentItemUpdate = () => {
 
   const defaultValues = () =>
     isNew
-      ? {}
+      ? {
+          transferDocument: documentId,
+        }
       : {
           ...transferDocumentItemEntity,
           transferDocument: transferDocumentItemEntity?.transferDocument?.id,
@@ -101,6 +105,27 @@ export const TransferDocumentItemUpdate = () => {
                   disabled
                 />
               ) : null}
+              <ValidatedField
+                id="transfer-document-item-transferDocument"
+                name="transferDocument"
+                data-cy="transferDocument"
+                label={translate('donauStorageIncApp.transferDocumentItem.transferDocument')}
+                type="select"
+                required
+                disabled={isNew && isWithTransfer}
+              >
+                <option value="" key="0" />
+                {transferDocuments
+                  ? transferDocuments.map(otherEntity => (
+                      <option value={otherEntity.id} key={otherEntity.id}>
+                        {otherEntity.type + ' ' + otherEntity.id}
+                      </option>
+                    ))
+                  : null}
+              </ValidatedField>
+              <FormText>
+                <Translate contentKey="entity.validation.required">This field is required.</Translate>
+              </FormText>
               <ValidatedField
                 label={translate('donauStorageIncApp.transferDocumentItem.amount')}
                 id="transfer-document-item-amount"
@@ -139,27 +164,6 @@ export const TransferDocumentItemUpdate = () => {
               <UncontrolledTooltip target="transferValueLabel">
                 <Translate contentKey="donauStorageIncApp.transferDocumentItem.help.transferValue" />
               </UncontrolledTooltip>
-              <ValidatedField
-                id="transfer-document-item-transferDocument"
-                name="transferDocument"
-                data-cy="transferDocument"
-                label={translate('donauStorageIncApp.transferDocumentItem.transferDocument')}
-                type="select"
-                required
-                disabled={!isNew}
-              >
-                <option value="" key="0" />
-                {transferDocuments
-                  ? transferDocuments.map(otherEntity => (
-                      <option value={otherEntity.id} key={otherEntity.id}>
-                        {otherEntity.type + ' ' + otherEntity.id}
-                      </option>
-                    ))
-                  : null}
-              </ValidatedField>
-              <FormText>
-                <Translate contentKey="entity.validation.required">This field is required.</Translate>
-              </FormText>
               <ValidatedField
                 id="transfer-document-item-resource"
                 name="resource"

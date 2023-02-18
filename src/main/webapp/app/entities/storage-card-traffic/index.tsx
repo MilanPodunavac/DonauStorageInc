@@ -11,7 +11,7 @@ import StorageCardTrafficDeleteDialog from './storage-card-traffic-delete-dialog
 const StorageCardTrafficRoutes = () => (
   <ErrorBoundaryRoutes>
     <Route index element={<StorageCardTraffic />} />
-    <Route path="new" element={<StorageCardTrafficUpdate />} />
+    <Route path="new/:cardId" element={<StorageCardTrafficUpdate />} />
     <Route path=":id">
       <Route index element={<StorageCardTrafficDetail />} />
       <Route path="edit" element={<StorageCardTrafficUpdate />} />

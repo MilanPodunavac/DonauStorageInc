@@ -39,6 +39,10 @@ export const TransferDocumentUpdate = () => {
   const transferDocumentTypeValues = Object.keys(TransferDocumentType);
   const transferDocumentStatusValues = Object.keys(TransferDocumentStatus);
 
+  const [transferType, setTransferType] = useState('');
+  var tType = '';
+  const transferDocumentStatus = transferDocumentEntity.status;
+
   const handleClose = () => {
     navigate('/transfer-document' + location.search);
   };
@@ -56,19 +60,28 @@ export const TransferDocumentUpdate = () => {
   }, []);
 
   useEffect(() => {
+    isNew ? setTransferType('RECEIVING') : setTransferType(transferDocumentEntity.type);
+  }, [transferDocumentStatus]);
+
+  useEffect(() => {
     if (updateSuccess) {
       handleClose();
     }
   }, [updateSuccess]);
 
   const saveEntity = values => {
+    console.log(values);
     const entity = {
       ...transferDocumentEntity,
       ...values,
       businessYear: businessYears.find(it => it.id.toString() === values.businessYear.toString()),
-      receivingStorage: storages.find(it => it.id.toString() === values.receivingStorage.toString()),
-      dispatchingStorage: storages.find(it => it.id.toString() === values.dispatchingStorage.toString()),
-      businessPartner: businessPartners.find(it => it.id.toString() === values.businessPartner.toString()),
+      receivingStorage: values.receivingStorage ? storages.find(it => it.id.toString() === values.receivingStorage.toString()) : undefined,
+      dispatchingStorage: values.dispatchingStorage
+        ? storages.find(it => it.id.toString() === values.dispatchingStorage.toString())
+        : undefined,
+      businessPartner: values.businessPartner
+        ? businessPartners.find(it => it.id.toString() === values.businessPartner.toString())
+        : undefined,
     };
 
     if (isNew) {
@@ -84,8 +97,6 @@ export const TransferDocumentUpdate = () => {
           status: 'IN_PREPARATION',
         }
       : {
-          type: 'RECEIVING',
-          status: 'IN_PREPARATION',
           ...transferDocumentEntity,
           businessYear: transferDocumentEntity?.businessYear?.id,
           receivingStorage: transferDocumentEntity?.receivingStorage?.id,
@@ -135,12 +146,86 @@ export const TransferDocumentUpdate = () => {
                 name="type"
                 data-cy="type"
                 type="select"
+                onChange={e => setTransferType(e.target.value)}
+                disabled={!isNew && transferDocumentEntity.status != 'IN_PREPARATION'}
               >
                 {transferDocumentTypeValues.map(transferDocumentType => (
                   <option value={transferDocumentType} key={transferDocumentType}>
                     {translate('donauStorageIncApp.TransferDocumentType.' + transferDocumentType)}
                   </option>
                 ))}
+              </ValidatedField>
+              <ValidatedField
+                id="transfer-document-businessYear"
+                name="businessYear"
+                data-cy="businessYear"
+                label={translate('donauStorageIncApp.transferDocument.businessYear')}
+                type="select"
+                required
+                disabled={!isNew && transferDocumentStatus != 'IN_PREPARATION'}
+              >
+                <option value="" key="0" />
+                {businessYears
+                  ? businessYears.map(otherEntity => (
+                      <option value={otherEntity.id} key={otherEntity.id}>
+                        {otherEntity.yearCode}
+                      </option>
+                    ))
+                  : null}
+              </ValidatedField>
+              <FormText>
+                <Translate contentKey="entity.validation.required">This field is required.</Translate>
+              </FormText>
+              <ValidatedField
+                id="transfer-document-dispatchingStorage"
+                name="dispatchingStorage"
+                data-cy="dispatchingStorage"
+                label={translate('donauStorageIncApp.transferDocument.dispatchingStorage')}
+                type="select"
+                disabled={transferType === 'RECEIVING' || (!isNew && transferDocumentStatus != 'IN_PREPARATION')}
+              >
+                <option value="" key="0" />
+                {storages
+                  ? storages.map(otherEntity => (
+                      <option value={otherEntity.id} key={otherEntity.id}>
+                        {otherEntity.name}
+                      </option>
+                    ))
+                  : null}
+              </ValidatedField>
+              <ValidatedField
+                id="transfer-document-businessPartner"
+                name="businessPartner"
+                data-cy="businessPartner"
+                label={translate('donauStorageIncApp.transferDocument.businessPartner')}
+                type="select"
+                disabled={transferType === 'INTERSTORAGE' || (!isNew && transferDocumentStatus != 'IN_PREPARATION')}
+              >
+                <option value="" key="0" />
+                {businessPartners
+                  ? businessPartners.map(otherEntity => (
+                      <option value={otherEntity.id} key={otherEntity.id}>
+                        {otherEntity.legalEntityInfo.name}
+                      </option>
+                    ))
+                  : null}
+              </ValidatedField>
+              <ValidatedField
+                id="transfer-document-receivingStorage"
+                name="receivingStorage"
+                data-cy="receivingStorage"
+                label={translate('donauStorageIncApp.transferDocument.receivingStorage')}
+                type="select"
+                disabled={transferType === 'DISPATCHING' || (!isNew && transferDocumentStatus != 'IN_PREPARATION')}
+              >
+                <option value="" key="0" />
+                {storages
+                  ? storages.map(otherEntity => (
+                      <option value={otherEntity.id} key={otherEntity.id}>
+                        {otherEntity.name}
+                      </option>
+                    ))
+                  : null}
               </ValidatedField>
               <ValidatedField
                 label={translate('donauStorageIncApp.transferDocument.transferDate')}
@@ -151,6 +236,7 @@ export const TransferDocumentUpdate = () => {
                 validate={{
                   required: { value: true, message: translate('entity.validation.required') },
                 }}
+                disabled={!isNew && transferDocumentStatus != 'IN_PREPARATION'}
               />
               <ValidatedField
                 label={translate('donauStorageIncApp.transferDocument.status')}
@@ -172,6 +258,7 @@ export const TransferDocumentUpdate = () => {
                 name="accountingDate"
                 data-cy="accountingDate"
                 type="date"
+                disabled
               />
               <UncontrolledTooltip target="accountingDateLabel">
                 <Translate contentKey="donauStorageIncApp.transferDocument.help.accountingDate" />
@@ -182,78 +269,11 @@ export const TransferDocumentUpdate = () => {
                 name="reversalDate"
                 data-cy="reversalDate"
                 type="date"
+                disabled
               />
               <UncontrolledTooltip target="reversalDateLabel">
                 <Translate contentKey="donauStorageIncApp.transferDocument.help.reversalDate" />
               </UncontrolledTooltip>
-              <ValidatedField
-                id="transfer-document-businessYear"
-                name="businessYear"
-                data-cy="businessYear"
-                label={translate('donauStorageIncApp.transferDocument.businessYear')}
-                type="select"
-                required
-              >
-                <option value="" key="0" />
-                {businessYears
-                  ? businessYears.map(otherEntity => (
-                      <option value={otherEntity.id} key={otherEntity.id}>
-                        {otherEntity.yearCode}
-                      </option>
-                    ))
-                  : null}
-              </ValidatedField>
-              <FormText>
-                <Translate contentKey="entity.validation.required">This field is required.</Translate>
-              </FormText>
-              <ValidatedField
-                id="transfer-document-receivingStorage"
-                name="receivingStorage"
-                data-cy="receivingStorage"
-                label={translate('donauStorageIncApp.transferDocument.receivingStorage')}
-                type="select"
-              >
-                <option value="" key="0" />
-                {storages
-                  ? storages.map(otherEntity => (
-                      <option value={otherEntity.id} key={otherEntity.id}>
-                        {otherEntity.name}
-                      </option>
-                    ))
-                  : null}
-              </ValidatedField>
-              <ValidatedField
-                id="transfer-document-dispatchingStorage"
-                name="dispatchingStorage"
-                data-cy="dispatchingStorage"
-                label={translate('donauStorageIncApp.transferDocument.dispatchingStorage')}
-                type="select"
-              >
-                <option value="" key="0" />
-                {storages
-                  ? storages.map(otherEntity => (
-                      <option value={otherEntity.id} key={otherEntity.id}>
-                        {otherEntity.name}
-                      </option>
-                    ))
-                  : null}
-              </ValidatedField>
-              <ValidatedField
-                id="transfer-document-businessPartner"
-                name="businessPartner"
-                data-cy="businessPartner"
-                label={translate('donauStorageIncApp.transferDocument.businessPartner')}
-                type="select"
-              >
-                <option value="" key="0" />
-                {businessPartners
-                  ? businessPartners.map(otherEntity => (
-                      <option value={otherEntity.id} key={otherEntity.id}>
-                        {otherEntity.legalEntityInfo.name}
-                      </option>
-                    ))
-                  : null}
-              </ValidatedField>
               <Button tag={Link} id="cancel-save" data-cy="entityCreateCancelButton" to="/transfer-document" replace color="info">
                 <FontAwesomeIcon icon="arrow-left" />
                 &nbsp;
@@ -297,9 +317,11 @@ export const TransferDocumentUpdate = () => {
           )}
         </Col>
 
-        <Col>
-          <TransferDocumentItem />
-        </Col>
+        {!isNew && (
+          <Col>
+            <TransferDocumentItem />
+          </Col>
+        )}
       </Row>
     </div>
   );

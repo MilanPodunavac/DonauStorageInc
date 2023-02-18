@@ -36,6 +36,8 @@ export const CensusDocumentUpdate = () => {
   const updateSuccess = useAppSelector(state => state.censusDocument.updateSuccess);
   const censusDocumentStatusValues = Object.keys(CensusDocumentStatus);
 
+  const censusDocumentStatus = censusDocumentEntity.status;
+
   const handleClose = () => {
     navigate('/census-document' + location.search);
   };
@@ -123,50 +125,26 @@ export const CensusDocumentUpdate = () => {
                 />
               ) : null}
               <ValidatedField
-                label={translate('donauStorageIncApp.censusDocument.censusDate')}
-                id="census-document-censusDate"
-                name="censusDate"
-                data-cy="censusDate"
-                type="date"
-                validate={{
-                  required: { value: true, message: translate('entity.validation.required') },
-                }}
-              />
-              <UncontrolledTooltip target="censusDateLabel">
-                <Translate contentKey="donauStorageIncApp.censusDocument.help.censusDate" />
-              </UncontrolledTooltip>
-              <ValidatedField
-                label={translate('donauStorageIncApp.censusDocument.status')}
-                id="census-document-status"
-                name="status"
-                data-cy="status"
+                id="census-document-storage"
+                name="storage"
+                data-cy="storage"
+                label={translate('donauStorageIncApp.censusDocument.storage')}
                 type="select"
-                disabled
+                required
+                disabled={!isNew && censusDocumentStatus != 'INCOMPLETE'}
               >
-                {censusDocumentStatusValues.map(censusDocumentStatus => (
-                  <option value={censusDocumentStatus} key={censusDocumentStatus}>
-                    {translate('donauStorageIncApp.CensusDocumentStatus.' + censusDocumentStatus)}
-                  </option>
-                ))}
+                <option value="" key="0" />
+                {storages
+                  ? storages.map(otherEntity => (
+                      <option value={otherEntity.id} key={otherEntity.id}>
+                        {otherEntity.name}
+                      </option>
+                    ))
+                  : null}
               </ValidatedField>
-              <ValidatedField
-                label={translate('donauStorageIncApp.censusDocument.accountingDate')}
-                id="census-document-accountingDate"
-                name="accountingDate"
-                data-cy="accountingDate"
-                type="date"
-              />
-              <UncontrolledTooltip target="accountingDateLabel">
-                <Translate contentKey="donauStorageIncApp.censusDocument.help.accountingDate" />
-              </UncontrolledTooltip>
-              <ValidatedField
-                label={translate('donauStorageIncApp.censusDocument.leveling')}
-                id="census-document-leveling"
-                name="leveling"
-                data-cy="leveling"
-                check
-                type="checkbox"
-              />
+              <FormText>
+                <Translate contentKey="entity.validation.required">This field is required.</Translate>
+              </FormText>
               <ValidatedField
                 id="census-document-businessYear"
                 name="businessYear"
@@ -174,7 +152,7 @@ export const CensusDocumentUpdate = () => {
                 label={translate('donauStorageIncApp.censusDocument.businessYear')}
                 type="select"
                 required
-                disabled={!isNew}
+                disabled={!isNew && censusDocumentStatus != 'INCOMPLETE'}
               >
                 <option value="" key="0" />
                 {businessYears
@@ -189,12 +167,36 @@ export const CensusDocumentUpdate = () => {
                 <Translate contentKey="entity.validation.required">This field is required.</Translate>
               </FormText>
               <ValidatedField
+                label={translate('donauStorageIncApp.censusDocument.censusDate')}
+                id="census-document-censusDate"
+                name="censusDate"
+                data-cy="censusDate"
+                type="date"
+                validate={{
+                  required: { value: true, message: translate('entity.validation.required') },
+                }}
+                disabled={!isNew && censusDocumentStatus != 'INCOMPLETE'}
+              />
+              <UncontrolledTooltip target="censusDateLabel">
+                <Translate contentKey="donauStorageIncApp.censusDocument.help.censusDate" />
+              </UncontrolledTooltip>
+              <ValidatedField
+                label={translate('donauStorageIncApp.censusDocument.leveling')}
+                id="census-document-leveling"
+                name="leveling"
+                data-cy="leveling"
+                check
+                type="checkbox"
+                disabled={!isNew && censusDocumentStatus != 'INCOMPLETE'}
+              />
+              <ValidatedField
                 id="census-document-president"
                 name="president"
                 data-cy="president"
                 label={translate('donauStorageIncApp.censusDocument.president')}
                 type="select"
                 required
+                disabled={!isNew && censusDocumentStatus != 'INCOMPLETE'}
               >
                 <option value="" key="0" />
                 {employees
@@ -215,6 +217,7 @@ export const CensusDocumentUpdate = () => {
                 label={translate('donauStorageIncApp.censusDocument.deputy')}
                 type="select"
                 required
+                disabled={!isNew && censusDocumentStatus != 'INCOMPLETE'}
               >
                 <option value="" key="0" />
                 {employees
@@ -235,6 +238,7 @@ export const CensusDocumentUpdate = () => {
                 label={translate('donauStorageIncApp.censusDocument.censusTaker')}
                 type="select"
                 required
+                disabled={!isNew && censusDocumentStatus != 'INCOMPLETE'}
               >
                 <option value="" key="0" />
                 {employees
@@ -249,26 +253,30 @@ export const CensusDocumentUpdate = () => {
                 <Translate contentKey="entity.validation.required">This field is required.</Translate>
               </FormText>
               <ValidatedField
-                id="census-document-storage"
-                name="storage"
-                data-cy="storage"
-                label={translate('donauStorageIncApp.censusDocument.storage')}
+                label={translate('donauStorageIncApp.censusDocument.status')}
+                id="census-document-status"
+                name="status"
+                data-cy="status"
                 type="select"
-                required
-                disabled={!isNew}
+                disabled
               >
-                <option value="" key="0" />
-                {storages
-                  ? storages.map(otherEntity => (
-                      <option value={otherEntity.id} key={otherEntity.id}>
-                        {otherEntity.name}
-                      </option>
-                    ))
-                  : null}
+                {censusDocumentStatusValues.map(censusDocumentStatus => (
+                  <option value={censusDocumentStatus} key={censusDocumentStatus}>
+                    {translate('donauStorageIncApp.CensusDocumentStatus.' + censusDocumentStatus)}
+                  </option>
+                ))}
               </ValidatedField>
-              <FormText>
-                <Translate contentKey="entity.validation.required">This field is required.</Translate>
-              </FormText>
+              <ValidatedField
+                label={translate('donauStorageIncApp.censusDocument.accountingDate')}
+                id="census-document-accountingDate"
+                name="accountingDate"
+                data-cy="accountingDate"
+                type="date"
+                disabled
+              />
+              <UncontrolledTooltip target="accountingDateLabel">
+                <Translate contentKey="donauStorageIncApp.censusDocument.help.accountingDate" />
+              </UncontrolledTooltip>
               <Button tag={Link} id="cancel-save" data-cy="entityCreateCancelButton" to="/census-document" replace color="info">
                 <FontAwesomeIcon icon="arrow-left" />
                 &nbsp;

@@ -113,7 +113,7 @@ export const TransferDocumentItem = () => {
             <Translate contentKey="donauStorageIncApp.transferDocumentItem.home.refreshListLabel">Refresh List</Translate>
           </Button>
           <Link
-            to="/transfer-document-item/new"
+            to={'/transfer-document-item/new/' + id}
             className="btn btn-primary jh-create-entity"
             id="jh-create-entity"
             data-cy="entityCreateButton"

@@ -99,6 +99,7 @@ export const EmployeeUpdate = () => {
     isNew
       ? {
           birthDate: displayDefaultDateTime(),
+          employment: true,
         }
       : {
           ...employeeEntity,
@@ -134,6 +135,27 @@ export const EmployeeUpdate = () => {
                   disabled
                 />
               ) : null}
+              <ValidatedField
+                id="employee-company"
+                name="company"
+                data-cy="company"
+                label={translate('donauStorageIncApp.employee.company')}
+                type="select"
+                required
+                disabled={!isNew}
+              >
+                <option value="" key="0" />
+                {companies
+                  ? companies.map(otherEntity => (
+                      <option value={otherEntity.id} key={otherEntity.id}>
+                        {otherEntity.legalEntityInfo.name}
+                      </option>
+                    ))
+                  : null}
+              </ValidatedField>
+              <FormText>
+                <Translate contentKey="entity.validation.required">This field is required.</Translate>
+              </FormText>
               {!isNew && (
                 <ValidatedField
                   id="employee-personalInfo"
@@ -277,6 +299,7 @@ export const EmployeeUpdate = () => {
                 data-cy="employment"
                 check
                 type="checkbox"
+                disabled={isNew}
               />
               {!isNew && (
                 <ValidatedField
@@ -358,27 +381,6 @@ export const EmployeeUpdate = () => {
                   </Link>
                 </div>
               )}
-              <FormText>
-                <Translate contentKey="entity.validation.required">This field is required.</Translate>
-              </FormText>
-              <ValidatedField
-                id="employee-company"
-                name="company"
-                data-cy="company"
-                label={translate('donauStorageIncApp.employee.company')}
-                type="select"
-                required
-                disabled={!isNew}
-              >
-                <option value="" key="0" />
-                {companies
-                  ? companies.map(otherEntity => (
-                      <option value={otherEntity.id} key={otherEntity.id}>
-                        {otherEntity.legalEntityInfo.name}
-                      </option>
-                    ))
-                  : null}
-              </ValidatedField>
               <FormText>
                 <Translate contentKey="entity.validation.required">This field is required.</Translate>
               </FormText>

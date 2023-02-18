@@ -113,6 +113,69 @@ export const StorageCardUpdate = () => {
                 />
               ) : null}
               <ValidatedField
+                id="storage-card-businessYear"
+                name="businessYear"
+                data-cy="businessYear"
+                label={translate('donauStorageIncApp.storageCard.businessYear')}
+                type="select"
+                required
+                disabled={!isNew}
+              >
+                <option value="" key="0" />
+                {businessYears
+                  ? businessYears.map(otherEntity => (
+                      <option value={otherEntity.id} key={otherEntity.id}>
+                        {otherEntity.yearCode}
+                      </option>
+                    ))
+                  : null}
+              </ValidatedField>
+              <FormText>
+                <Translate contentKey="entity.validation.required">This field is required.</Translate>
+              </FormText>
+              <ValidatedField
+                id="storage-card-resource"
+                name="resource"
+                data-cy="resource"
+                label={translate('donauStorageIncApp.storageCard.resource')}
+                type="select"
+                required
+                disabled={!isNew}
+              >
+                <option value="" key="0" />
+                {resources
+                  ? resources.map(otherEntity => (
+                      <option value={otherEntity.id} key={otherEntity.id}>
+                        {otherEntity.name}
+                      </option>
+                    ))
+                  : null}
+              </ValidatedField>
+              <FormText>
+                <Translate contentKey="entity.validation.required">This field is required.</Translate>
+              </FormText>
+              <ValidatedField
+                id="storage-card-storage"
+                name="storage"
+                data-cy="storage"
+                label={translate('donauStorageIncApp.storageCard.storage')}
+                type="select"
+                required
+                disabled={!isNew}
+              >
+                <option value="" key="0" />
+                {storages
+                  ? storages.map(otherEntity => (
+                      <option value={otherEntity.id} key={otherEntity.id}>
+                        {otherEntity.name}
+                      </option>
+                    ))
+                  : null}
+              </ValidatedField>
+              <FormText>
+                <Translate contentKey="entity.validation.required">This field is required.</Translate>
+              </FormText>
+              <ValidatedField
                 label={translate('donauStorageIncApp.storageCard.startingAmount')}
                 id="storage-card-startingAmount"
                 name="startingAmount"
@@ -236,69 +299,6 @@ export const StorageCardUpdate = () => {
                 }}
                 disabled={!isNew}
               />
-              <ValidatedField
-                id="storage-card-businessYear"
-                name="businessYear"
-                data-cy="businessYear"
-                label={translate('donauStorageIncApp.storageCard.businessYear')}
-                type="select"
-                required
-                disabled={!isNew}
-              >
-                <option value="" key="0" />
-                {businessYears
-                  ? businessYears.map(otherEntity => (
-                      <option value={otherEntity.id} key={otherEntity.id}>
-                        {otherEntity.yearCode}
-                      </option>
-                    ))
-                  : null}
-              </ValidatedField>
-              <FormText>
-                <Translate contentKey="entity.validation.required">This field is required.</Translate>
-              </FormText>
-              <ValidatedField
-                id="storage-card-resource"
-                name="resource"
-                data-cy="resource"
-                label={translate('donauStorageIncApp.storageCard.resource')}
-                type="select"
-                required
-                disabled={!isNew}
-              >
-                <option value="" key="0" />
-                {resources
-                  ? resources.map(otherEntity => (
-                      <option value={otherEntity.id} key={otherEntity.id}>
-                        {otherEntity.name}
-                      </option>
-                    ))
-                  : null}
-              </ValidatedField>
-              <FormText>
-                <Translate contentKey="entity.validation.required">This field is required.</Translate>
-              </FormText>
-              <ValidatedField
-                id="storage-card-storage"
-                name="storage"
-                data-cy="storage"
-                label={translate('donauStorageIncApp.storageCard.storage')}
-                type="select"
-                required
-                disabled={!isNew}
-              >
-                <option value="" key="0" />
-                {storages
-                  ? storages.map(otherEntity => (
-                      <option value={otherEntity.id} key={otherEntity.id}>
-                        {otherEntity.name}
-                      </option>
-                    ))
-                  : null}
-              </ValidatedField>
-              <FormText>
-                <Translate contentKey="entity.validation.required">This field is required.</Translate>
-              </FormText>
               <Button tag={Link} id="cancel-save" data-cy="entityCreateCancelButton" to="/storage-card" replace color="info">
                 <FontAwesomeIcon icon="arrow-left" />
                 &nbsp;
@@ -316,9 +316,11 @@ export const StorageCardUpdate = () => {
           )}
         </Col>
 
-        <Col>
-          <StorageCardTraffic />
-        </Col>
+        {!isNew && (
+          <Col>
+            <StorageCardTraffic />
+          </Col>
+        )}
       </Row>
     </div>
   );

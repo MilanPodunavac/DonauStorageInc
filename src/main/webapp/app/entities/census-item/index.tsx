@@ -11,7 +11,7 @@ import CensusItemDeleteDialog from './census-item-delete-dialog';
 const CensusItemRoutes = () => (
   <ErrorBoundaryRoutes>
     <Route index element={<CensusItem />} />
-    <Route path="new" element={<CensusItemUpdate />} />
+    <Route path="new/:censusId" element={<CensusItemUpdate />} />
     <Route path=":id">
       <Route index element={<CensusItemDetail />} />
       <Route path="edit" element={<CensusItemUpdate />} />

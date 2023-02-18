@@ -112,7 +112,12 @@ export const CensusItem = () => {
             <FontAwesomeIcon icon="sync" spin={loading} />{' '}
             <Translate contentKey="donauStorageIncApp.censusItem.home.refreshListLabel">Refresh List</Translate>
           </Button>
-          <Link to="/census-item/new" className="btn btn-primary jh-create-entity" id="jh-create-entity" data-cy="entityCreateButton">
+          <Link
+            to={'/census-item/new/' + id}
+            className="btn btn-primary jh-create-entity"
+            id="jh-create-entity"
+            data-cy="entityCreateButton"
+          >
             <FontAwesomeIcon icon="plus" />
             &nbsp;
             <Translate contentKey="donauStorageIncApp.censusItem.home.createLabel">Create new Census Item</Translate>

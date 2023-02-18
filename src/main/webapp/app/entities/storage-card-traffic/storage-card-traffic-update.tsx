@@ -22,6 +22,8 @@ export const StorageCardTrafficUpdate = () => {
 
   const { id } = useParams<'id'>();
   const isNew = id === undefined;
+  const { cardId } = useParams<'cardId'>();
+  const isWithCard = cardId === 'undefined';
 
   const storageCards = useAppSelector(state => state.storageCard.entities);
   const storageCardTrafficEntity = useAppSelector(state => state.storageCardTraffic.entity);
@@ -65,7 +67,9 @@ export const StorageCardTrafficUpdate = () => {
 
   const defaultValues = () =>
     isNew
-      ? {}
+      ? {
+          storageCard: cardId,
+        }
       : {
           type: 'STARTING_BALANCE',
           direction: 'IN',
@@ -108,13 +112,13 @@ export const StorageCardTrafficUpdate = () => {
                 label={translate('donauStorageIncApp.storageCardTraffic.storageCard')}
                 type="select"
                 required
-                disabled={!isNew}
+                disabled={isNew && isWithCard}
               >
                 <option value="" key="0" />
                 {storageCards
                   ? storageCards.map(otherEntity => (
                       <option value={otherEntity.id} key={otherEntity.id}>
-                        {otherEntity.storage.name + ', ' + otherEntity.resource.name + ', ' + otherEntity.businessYear.yearCode}
+                        {otherEntity.storage.id}
                       </option>
                     ))
                   : null}
