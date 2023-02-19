@@ -112,16 +112,18 @@ export const StorageCardTraffic = () => {
             <FontAwesomeIcon icon="sync" spin={loading} />{' '}
             <Translate contentKey="donauStorageIncApp.storageCardTraffic.home.refreshListLabel">Refresh List</Translate>
           </Button>
-          <Link
-            to={'/storage-card-traffic/new/' + id}
-            className="btn btn-primary jh-create-entity"
-            id="jh-create-entity"
-            data-cy="entityCreateButton"
-          >
-            <FontAwesomeIcon icon="plus" />
-            &nbsp;
-            <Translate contentKey="donauStorageIncApp.storageCardTraffic.home.createLabel">Create new Storage Card Traffic</Translate>
-          </Link>
+          {id === 'undefined' && (
+            <Link
+              to={'/storage-card-traffic/new/' + id}
+              className="btn btn-primary jh-create-entity"
+              id="jh-create-entity"
+              data-cy="entityCreateButton"
+            >
+              <FontAwesomeIcon icon="plus" />
+              &nbsp;
+              <Translate contentKey="donauStorageIncApp.storageCardTraffic.home.createLabel">Create new Storage Card Traffic</Translate>
+            </Link>
+          )}
         </div>
       </h2>
       <div className="table-responsive">

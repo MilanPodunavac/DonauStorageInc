@@ -14,7 +14,7 @@ const CensusDocumentRoutes = () => (
     <Route path="new" element={<CensusDocumentUpdate />} />
     <Route path=":id">
       <Route index element={<CensusDocumentDetail />} />
-      <Route path="edit" element={<CensusDocumentUpdate />} />
+      <Route path="edit/:status" element={<CensusDocumentUpdate />} />
       <Route path="delete" element={<CensusDocumentDeleteDialog />} />
     </Route>
   </ErrorBoundaryRoutes>

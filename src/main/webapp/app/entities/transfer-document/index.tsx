@@ -14,7 +14,7 @@ const TransferDocumentRoutes = () => (
     <Route path="new" element={<TransferDocumentUpdate />} />
     <Route path=":id">
       <Route index element={<TransferDocumentDetail />} />
-      <Route path="edit" element={<TransferDocumentUpdate />} />
+      <Route path="edit/:status" element={<TransferDocumentUpdate />} />
       <Route path="delete" element={<TransferDocumentDeleteDialog />} />
     </Route>
   </ErrorBoundaryRoutes>

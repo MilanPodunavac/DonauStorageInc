@@ -301,9 +301,11 @@ export const CensusDocumentUpdate = () => {
           )}
         </Col>
 
-        <Col>
-          <CensusItem />
-        </Col>
+        {!isNew && (
+          <Col>
+            <CensusItem />
+          </Col>
+        )}
       </Row>
     </div>
   );

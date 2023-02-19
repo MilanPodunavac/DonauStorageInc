@@ -20,6 +20,7 @@ export const TransferDocumentItem = () => {
   const navigate = useNavigate();
 
   const { id } = useParams<'id'>();
+  const { status } = useParams<'status'>();
 
   const [paginationState, setPaginationState] = useState(
     overridePaginationStateWithQueryParams(getSortState(location, ITEMS_PER_PAGE, 'id'), location.search)
@@ -112,16 +113,18 @@ export const TransferDocumentItem = () => {
             <FontAwesomeIcon icon="sync" spin={loading} />{' '}
             <Translate contentKey="donauStorageIncApp.transferDocumentItem.home.refreshListLabel">Refresh List</Translate>
           </Button>
-          <Link
-            to={'/transfer-document-item/new/' + id}
-            className="btn btn-primary jh-create-entity"
-            id="jh-create-entity"
-            data-cy="entityCreateButton"
-          >
-            <FontAwesomeIcon icon="plus" />
-            &nbsp;
-            <Translate contentKey="donauStorageIncApp.transferDocumentItem.home.createLabel">Create new Transfer Document Item</Translate>
-          </Link>
+          {status === 'IN_PREPARATION' && (
+            <Link
+              to={'/transfer-document-item/new/' + id}
+              className="btn btn-primary jh-create-entity"
+              id="jh-create-entity"
+              data-cy="entityCreateButton"
+            >
+              <FontAwesomeIcon icon="plus" />
+              &nbsp;
+              <Translate contentKey="donauStorageIncApp.transferDocumentItem.home.createLabel">Create new Transfer Document Item</Translate>
+            </Link>
+          )}
         </div>
       </h2>
       <div className="table-responsive">

@@ -20,6 +20,7 @@ export const CensusItem = () => {
   const navigate = useNavigate();
 
   const { id } = useParams<'id'>();
+  const { status } = useParams<'status'>();
 
   const [paginationState, setPaginationState] = useState(
     overridePaginationStateWithQueryParams(getSortState(location, ITEMS_PER_PAGE, 'id'), location.search)
@@ -112,16 +113,18 @@ export const CensusItem = () => {
             <FontAwesomeIcon icon="sync" spin={loading} />{' '}
             <Translate contentKey="donauStorageIncApp.censusItem.home.refreshListLabel">Refresh List</Translate>
           </Button>
-          <Link
-            to={'/census-item/new/' + id}
-            className="btn btn-primary jh-create-entity"
-            id="jh-create-entity"
-            data-cy="entityCreateButton"
-          >
-            <FontAwesomeIcon icon="plus" />
-            &nbsp;
-            <Translate contentKey="donauStorageIncApp.censusItem.home.createLabel">Create new Census Item</Translate>
-          </Link>
+          {status === 'INCOMPLETE' && (
+            <Link
+              to={'/census-item/new/' + id}
+              className="btn btn-primary jh-create-entity"
+              id="jh-create-entity"
+              data-cy="entityCreateButton"
+            >
+              <FontAwesomeIcon icon="plus" />
+              &nbsp;
+              <Translate contentKey="donauStorageIncApp.censusItem.home.createLabel">Create new Census Item</Translate>
+            </Link>
+          )}
         </div>
       </h2>
       <div className="table-responsive">

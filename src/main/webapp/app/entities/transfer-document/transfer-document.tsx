@@ -217,7 +217,7 @@ export const TransferDocument = () => {
                       </Button>
                       <Button
                         tag={Link}
-                        to={`/transfer-document/${transferDocument.id}/edit?page=${paginationState.activePage}&sort=${paginationState.sort},${paginationState.order}`}
+                        to={`/transfer-document/${transferDocument.id}/edit/${transferDocument.status}?page=${paginationState.activePage}&sort=${paginationState.sort},${paginationState.order}`}
                         color="primary"
                         size="sm"
                         data-cy="entityEditButton"

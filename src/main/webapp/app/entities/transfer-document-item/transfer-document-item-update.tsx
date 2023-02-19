@@ -32,6 +32,10 @@ export const TransferDocumentItemUpdate = () => {
   const updating = useAppSelector(state => state.transferDocumentItem.updating);
   const updateSuccess = useAppSelector(state => state.transferDocumentItem.updateSuccess);
 
+  const [amount, setAmount] = useState(0);
+  const [price, setPrice] = useState(0);
+  const [transferValue, setTransferValue] = useState(0);
+
   const handleClose = () => {
     navigate(-1);
   };
@@ -51,10 +55,15 @@ export const TransferDocumentItemUpdate = () => {
     }
   }, [updateSuccess]);
 
+  useEffect(() => {
+    setTransferValue(amount * price);
+  }, [amount, price]);
+
   const saveEntity = values => {
     const entity = {
       ...transferDocumentItemEntity,
       ...values,
+      transferValue: transferValue,
       transferDocument: transferDocuments.find(it => it.id.toString() === values.transferDocument.toString()),
       resource: resources.find(it => it.id.toString() === values.resource.toString()),
     };
@@ -112,7 +121,7 @@ export const TransferDocumentItemUpdate = () => {
                 label={translate('donauStorageIncApp.transferDocumentItem.transferDocument')}
                 type="select"
                 required
-                disabled={isNew && isWithTransfer}
+                disabled={isNew && !isWithTransfer}
               >
                 <option value="" key="0" />
                 {transferDocuments
@@ -126,44 +135,6 @@ export const TransferDocumentItemUpdate = () => {
               <FormText>
                 <Translate contentKey="entity.validation.required">This field is required.</Translate>
               </FormText>
-              <ValidatedField
-                label={translate('donauStorageIncApp.transferDocumentItem.amount')}
-                id="transfer-document-item-amount"
-                name="amount"
-                data-cy="amount"
-                type="text"
-                validate={{
-                  required: { value: true, message: translate('entity.validation.required') },
-                  min: { value: 0, message: translate('entity.validation.min', { min: 0 }) },
-                  validate: v => isNumber(v) || translate('entity.validation.number'),
-                }}
-              />
-              <ValidatedField
-                label={translate('donauStorageIncApp.transferDocumentItem.price')}
-                id="transfer-document-item-price"
-                name="price"
-                data-cy="price"
-                type="text"
-                validate={{
-                  required: { value: true, message: translate('entity.validation.required') },
-                  min: { value: 0, message: translate('entity.validation.min', { min: 0 }) },
-                  validate: v => isNumber(v) || translate('entity.validation.number'),
-                }}
-              />
-              <ValidatedField
-                label={translate('donauStorageIncApp.transferDocumentItem.transferValue')}
-                id="transfer-document-item-transferValue"
-                name="transferValue"
-                data-cy="transferValue"
-                type="text"
-                validate={{
-                  min: { value: 0, message: translate('entity.validation.min', { min: 0 }) },
-                  validate: v => isNumber(v) || translate('entity.validation.number'),
-                }}
-              />
-              <UncontrolledTooltip target="transferValueLabel">
-                <Translate contentKey="donauStorageIncApp.transferDocumentItem.help.transferValue" />
-              </UncontrolledTooltip>
               <ValidatedField
                 id="transfer-document-item-resource"
                 name="resource"
@@ -184,6 +155,48 @@ export const TransferDocumentItemUpdate = () => {
               <FormText>
                 <Translate contentKey="entity.validation.required">This field is required.</Translate>
               </FormText>
+              <ValidatedField
+                label={translate('donauStorageIncApp.transferDocumentItem.amount')}
+                id="transfer-document-item-amount"
+                name="amount"
+                data-cy="amount"
+                type="text"
+                onChange={e => setAmount(parseFloat(e.target.value))}
+                validate={{
+                  required: { value: true, message: translate('entity.validation.required') },
+                  min: { value: 0, message: translate('entity.validation.min', { min: 0 }) },
+                  validate: v => isNumber(v) || translate('entity.validation.number'),
+                }}
+              />
+              <ValidatedField
+                label={translate('donauStorageIncApp.transferDocumentItem.price')}
+                id="transfer-document-item-price"
+                name="price"
+                data-cy="price"
+                type="text"
+                onChange={e => setPrice(parseFloat(e.target.value))}
+                validate={{
+                  required: { value: true, message: translate('entity.validation.required') },
+                  min: { value: 0, message: translate('entity.validation.min', { min: 0 }) },
+                  validate: v => isNumber(v) || translate('entity.validation.number'),
+                }}
+              />
+              <ValidatedField
+                label={translate('donauStorageIncApp.transferDocumentItem.transferValue')}
+                id="transfer-document-item-transferValue"
+                name="transferValue"
+                data-cy="transferValue"
+                type="text"
+                value={transferValue}
+                disabled
+                validate={{
+                  min: { value: 0, message: translate('entity.validation.min', { min: 0 }) },
+                  validate: v => isNumber(v) || translate('entity.validation.number'),
+                }}
+              />
+              <UncontrolledTooltip target="transferValueLabel">
+                <Translate contentKey="donauStorageIncApp.transferDocumentItem.help.transferValue" />
+              </UncontrolledTooltip>
               <Button id="cancel-save" data-cy="entityCreateCancelButton" onClick={handleClose} replace color="info">
                 <FontAwesomeIcon icon="arrow-left" />
                 &nbsp;

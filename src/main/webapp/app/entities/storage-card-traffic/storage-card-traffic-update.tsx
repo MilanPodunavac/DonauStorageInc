@@ -33,6 +33,10 @@ export const StorageCardTrafficUpdate = () => {
   const storageCardTrafficTypeValues = Object.keys(StorageCardTrafficType);
   const storageCardTrafficDirectionValues = Object.keys(StorageCardTrafficDirection);
 
+  const [amount, setAmount] = useState(0);
+  const [price, setPrice] = useState(0);
+  const [trafficValue, setTrafficValue] = useState(0);
+
   const handleClose = () => {
     navigate(-1);
   };
@@ -55,6 +59,7 @@ export const StorageCardTrafficUpdate = () => {
     const entity = {
       ...storageCardTrafficEntity,
       ...values,
+      trafficValue: trafficValue,
       storageCard: storageCards.find(it => it.id.toString() === values.storageCard.toString()),
     };
 
@@ -76,6 +81,10 @@ export const StorageCardTrafficUpdate = () => {
           ...storageCardTrafficEntity,
           storageCard: storageCardTrafficEntity?.storageCard?.id,
         };
+
+  useEffect(() => {
+    setTrafficValue(amount * price);
+  }, [amount, price]);
 
   return (
     <div>
@@ -112,13 +121,13 @@ export const StorageCardTrafficUpdate = () => {
                 label={translate('donauStorageIncApp.storageCardTraffic.storageCard')}
                 type="select"
                 required
-                disabled={isNew && isWithCard}
+                disabled={isNew && !isWithCard}
               >
                 <option value="" key="0" />
                 {storageCards
                   ? storageCards.map(otherEntity => (
                       <option value={otherEntity.id} key={otherEntity.id}>
-                        {otherEntity.storage.id}
+                        {otherEntity.id}
                       </option>
                     ))
                   : null}
@@ -160,6 +169,7 @@ export const StorageCardTrafficUpdate = () => {
                 name="amount"
                 data-cy="amount"
                 type="text"
+                onChange={e => setAmount(parseFloat(e.target.value))}
                 validate={{
                   required: { value: true, message: translate('entity.validation.required') },
                   validate: v => isNumber(v) || translate('entity.validation.number'),
@@ -172,6 +182,7 @@ export const StorageCardTrafficUpdate = () => {
                 name="price"
                 data-cy="price"
                 type="text"
+                onChange={e => setPrice(parseFloat(e.target.value))}
                 validate={{
                   required: { value: true, message: translate('entity.validation.required') },
                   min: { value: 0, message: translate('entity.validation.min', { min: 0 }) },
@@ -185,11 +196,12 @@ export const StorageCardTrafficUpdate = () => {
                 name="trafficValue"
                 data-cy="trafficValue"
                 type="text"
+                value={trafficValue}
                 validate={{
-                  required: { value: true, message: translate('entity.validation.required') },
+                  //required: { value: true, message: translate('entity.validation.required') },
                   validate: v => isNumber(v) || translate('entity.validation.number'),
                 }}
-                disabled={!isNew}
+                disabled
               />
               <UncontrolledTooltip target="trafficValueLabel">
                 <Translate contentKey="donauStorageIncApp.storageCardTraffic.help.trafficValue" />

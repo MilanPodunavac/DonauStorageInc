@@ -110,7 +110,7 @@ export const CensusItemUpdate = () => {
                 label={translate('donauStorageIncApp.censusItem.censusDocument')}
                 type="select"
                 required
-                disabled={isNew && isWithCensus}
+                disabled={isNew && !isWithCensus}
               >
                 <option value="" key="0" />
                 {censusDocuments

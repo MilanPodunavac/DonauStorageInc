@@ -208,7 +208,7 @@ export const CensusDocument = () => {
                       </Button>
                       <Button
                         tag={Link}
-                        to={`/census-document/${censusDocument.id}/edit?page=${paginationState.activePage}&sort=${paginationState.sort},${paginationState.order}`}
+                        to={`/census-document/${censusDocument.id}/edit/${censusDocument.status}?page=${paginationState.activePage}&sort=${paginationState.sort},${paginationState.order}`}
                         color="primary"
                         size="sm"
                         data-cy="entityEditButton"
