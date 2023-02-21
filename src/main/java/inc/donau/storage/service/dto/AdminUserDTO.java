@@ -5,6 +5,7 @@ import inc.donau.storage.domain.Authority;
 import inc.donau.storage.domain.User;
 import java.io.Serializable;
 import java.time.Instant;
+import java.time.LocalDateTime;
 import java.util.Set;
 import java.util.stream.Collectors;
 import javax.validation.constraints.*;
@@ -69,6 +70,15 @@ public class AdminUserDTO implements Serializable {
         this.lastModifiedBy = user.getLastModifiedBy();
         this.lastModifiedDate = user.getLastModifiedDate();
         this.authorities = user.getAuthorities().stream().map(Authority::getName).collect(Collectors.toSet());
+    }
+
+    public AdminUserDTO(String firstName, String lastName, String email) {
+        this.login = firstName + lastName;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.activated = true;
+        this.langKey = "en";
     }
 
     public Long getId() {

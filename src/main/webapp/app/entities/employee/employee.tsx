@@ -127,6 +127,9 @@ export const Employee = () => {
                 <th>
                   <Translate contentKey="donauStorageIncApp.employee.company">Company</Translate> <FontAwesomeIcon icon="sort" />
                 </th>
+                <th>
+                  <Translate contentKey="donauStorageIncApp.employee.user">User</Translate> <FontAwesomeIcon icon="sort" />
+                </th>
                 <th />
               </tr>
             </thead>
@@ -155,6 +158,7 @@ export const Employee = () => {
                   <td>
                     {employee.company ? <Link to={`/company/${employee.company.id}`}>{employee.company.legalEntityInfo.name}</Link> : ''}
                   </td>
+                  <td>{employee.user ? employee.user.login : ''}</td>
                   <td className="text-end">
                     <div className="btn-group flex-btn-group-container">
                       <Button tag={Link} to={`/employee/${employee.id}`} color="info" size="sm" data-cy="entityDetailsButton">

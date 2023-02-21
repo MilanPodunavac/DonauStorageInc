@@ -3,6 +3,7 @@ package inc.donau.storage.web.rest;
 import static inc.donau.storage.web.rest.TestUtil.sameInstant;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.hasItem;
+import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -11,7 +12,9 @@ import inc.donau.storage.domain.Address;
 import inc.donau.storage.domain.Company;
 import inc.donau.storage.domain.Employee;
 import inc.donau.storage.domain.Person;
+import inc.donau.storage.domain.User;
 import inc.donau.storage.repository.EmployeeRepository;
+import inc.donau.storage.service.EmployeeService;
 import inc.donau.storage.service.criteria.EmployeeCriteria;
 import inc.donau.storage.service.dto.EmployeeDTO;
 import inc.donau.storage.service.mapper.EmployeeMapper;
@@ -19,14 +22,21 @@ import java.time.Instant;
 import java.time.ZoneId;
 import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicLong;
 import javax.persistence.EntityManager;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
@@ -36,6 +46,7 @@ import org.springframework.transaction.annotation.Transactional;
  * Integration tests for the {@link EmployeeResource} REST controller.
  */
 @IntegrationTest
+@ExtendWith(MockitoExtension.class)
 @AutoConfigureMockMvc
 @WithMockUser
 class EmployeeResourceIT {
@@ -62,8 +73,14 @@ class EmployeeResourceIT {
     @Autowired
     private EmployeeRepository employeeRepository;
 
+    @Mock
+    private EmployeeRepository employeeRepositoryMock;
+
     @Autowired
     private EmployeeMapper employeeMapper;
+
+    @Mock
+    private EmployeeService employeeServiceMock;
 
     @Autowired
     private EntityManager em;
@@ -115,6 +132,11 @@ class EmployeeResourceIT {
             company = TestUtil.findAll(em, Company.class).get(0);
         }
         employee.setCompany(company);
+        // Add required entity
+        User user = UserResourceIT.createEntity(em);
+        em.persist(user);
+        em.flush();
+        employee.setUser(user);
         return employee;
     }
 
@@ -160,6 +182,11 @@ class EmployeeResourceIT {
             company = TestUtil.findAll(em, Company.class).get(0);
         }
         employee.setCompany(company);
+        // Add required entity
+        User user = UserResourceIT.createEntity(em);
+        em.persist(user);
+        em.flush();
+        employee.setUser(user);
         return employee;
     }
 
@@ -277,6 +304,23 @@ class EmployeeResourceIT {
             .andExpect(jsonPath("$.[*].birthDate").value(hasItem(sameInstant(DEFAULT_BIRTH_DATE))))
             .andExpect(jsonPath("$.[*].disability").value(hasItem(DEFAULT_DISABILITY.booleanValue())))
             .andExpect(jsonPath("$.[*].employment").value(hasItem(DEFAULT_EMPLOYMENT.booleanValue())));
+    }
+
+    @SuppressWarnings({ "unchecked" })
+    void getAllEmployeesWithEagerRelationshipsIsEnabled() throws Exception {
+        when(employeeServiceMock.findAllWithEagerRelationships(any())).thenReturn(new PageImpl(new ArrayList<>()));
+
+        restEmployeeMockMvc.perform(get(ENTITY_API_URL + "?eagerload=true")).andExpect(status().isOk());
+
+        verify(employeeServiceMock, times(1)).findAllWithEagerRelationships(any());
+    }
+
+    @SuppressWarnings({ "unchecked" })
+    void getAllEmployeesWithEagerRelationshipsIsNotEnabled() throws Exception {
+        when(employeeServiceMock.findAllWithEagerRelationships(any())).thenReturn(new PageImpl(new ArrayList<>()));
+
+        restEmployeeMockMvc.perform(get(ENTITY_API_URL + "?eagerload=false")).andExpect(status().isOk());
+        verify(employeeRepositoryMock, times(1)).findAll(any(Pageable.class));
     }
 
     @Test
@@ -602,6 +646,21 @@ class EmployeeResourceIT {
 
         // Get all the employeeList where company equals to (companyId + 1)
         defaultEmployeeShouldNotBeFound("companyId.equals=" + (companyId + 1));
+    }
+
+    @Test
+    @Transactional
+    void getAllEmployeesByUserIsEqualToSomething() throws Exception {
+        // Get already existing entity
+        User user = employee.getUser();
+        employeeRepository.saveAndFlush(employee);
+        Long userId = user.getId();
+
+        // Get all the employeeList where user equals to userId
+        defaultEmployeeShouldBeFound("userId.equals=" + userId);
+
+        // Get all the employeeList where user equals to (userId + 1)
+        defaultEmployeeShouldNotBeFound("userId.equals=" + (userId + 1));
     }
 
     /**

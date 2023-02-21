@@ -25,6 +25,7 @@
       "address": "Address",
       "personalInfo": "Personal Info",
       "company": "Company",
+      "user": "User",
       "help": {
         "uniqueIdentificationNumber": "sr: Jedinstveni maticni broj gradjana (JMBG)"
       }

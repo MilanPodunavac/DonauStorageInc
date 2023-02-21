@@ -4,10 +4,12 @@ import inc.donau.storage.domain.Address;
 import inc.donau.storage.domain.Company;
 import inc.donau.storage.domain.Employee;
 import inc.donau.storage.domain.Person;
+import inc.donau.storage.domain.User;
 import inc.donau.storage.service.dto.AddressDTO;
 import inc.donau.storage.service.dto.CompanyDTO;
 import inc.donau.storage.service.dto.EmployeeDTO;
 import inc.donau.storage.service.dto.PersonDTO;
+import inc.donau.storage.service.dto.UserDTO;
 import org.mapstruct.*;
 
 /**
@@ -18,6 +20,7 @@ public interface EmployeeMapper extends EntityMapper<EmployeeDTO, Employee> {
     @Mapping(target = "address", source = "address", qualifiedByName = "addressId")
     @Mapping(target = "personalInfo", source = "personalInfo", qualifiedByName = "personId")
     @Mapping(target = "company", source = "company", qualifiedByName = "companyId")
+    @Mapping(target = "user", source = "user", qualifiedByName = "userLogin")
     EmployeeDTO toDto(Employee s);
 
     @Named("addressId")
@@ -45,4 +48,10 @@ public interface EmployeeMapper extends EntityMapper<EmployeeDTO, Employee> {
     @Mapping(target = "id", source = "id")
     @Mapping(target = "legalEntityInfo", source = "legalEntityInfo")
     CompanyDTO toDtoCompanyId(Company company);
+
+    @Named("userLogin")
+    @BeanMapping(ignoreByDefault = true)
+    @Mapping(target = "id", source = "id")
+    @Mapping(target = "login", source = "login")
+    UserDTO toDtoUserLogin(User user);
 }

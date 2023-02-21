@@ -37,6 +37,8 @@ public class EmployeeCriteria implements Serializable, Criteria {
 
     private LongFilter companyId;
 
+    private LongFilter userId;
+
     private Boolean distinct;
 
     public EmployeeCriteria() {}
@@ -50,6 +52,7 @@ public class EmployeeCriteria implements Serializable, Criteria {
         this.addressId = other.addressId == null ? null : other.addressId.copy();
         this.personalInfoId = other.personalInfoId == null ? null : other.personalInfoId.copy();
         this.companyId = other.companyId == null ? null : other.companyId.copy();
+        this.userId = other.userId == null ? null : other.userId.copy();
         this.distinct = other.distinct;
     }
 
@@ -178,6 +181,21 @@ public class EmployeeCriteria implements Serializable, Criteria {
         this.companyId = companyId;
     }
 
+    public LongFilter getUserId() {
+        return userId;
+    }
+
+    public LongFilter userId() {
+        if (userId == null) {
+            userId = new LongFilter();
+        }
+        return userId;
+    }
+
+    public void setUserId(LongFilter userId) {
+        this.userId = userId;
+    }
+
     public Boolean getDistinct() {
         return distinct;
     }
@@ -204,6 +222,7 @@ public class EmployeeCriteria implements Serializable, Criteria {
             Objects.equals(addressId, that.addressId) &&
             Objects.equals(personalInfoId, that.personalInfoId) &&
             Objects.equals(companyId, that.companyId) &&
+            Objects.equals(userId, that.userId) &&
             Objects.equals(distinct, that.distinct)
         );
     }
@@ -219,6 +238,7 @@ public class EmployeeCriteria implements Serializable, Criteria {
             addressId,
             personalInfoId,
             companyId,
+            userId,
             distinct
         );
     }
@@ -235,6 +255,7 @@ public class EmployeeCriteria implements Serializable, Criteria {
             (addressId != null ? "addressId=" + addressId + ", " : "") +
             (personalInfoId != null ? "personalInfoId=" + personalInfoId + ", " : "") +
             (companyId != null ? "companyId=" + companyId + ", " : "") +
+            (userId != null ? "userId=" + userId + ", " : "") +
             (distinct != null ? "distinct=" + distinct + ", " : "") +
             "}";
     }

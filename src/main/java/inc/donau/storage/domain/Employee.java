@@ -67,6 +67,11 @@ public class Employee implements Serializable {
     @JsonIgnoreProperties(value = { "legalEntityInfo", "resources", "businessPartners", "businessYears", "employees" }, allowSetters = true)
     private Company company;
 
+    @OneToOne(optional = false)
+    @NotNull
+    @JoinColumn(unique = true)
+    private User user;
+
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
     public Long getId() {
@@ -170,6 +175,19 @@ public class Employee implements Serializable {
 
     public Employee company(Company company) {
         this.setCompany(company);
+        return this;
+    }
+
+    public User getUser() {
+        return this.user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public Employee user(User user) {
+        this.setUser(user);
         return this;
     }
 

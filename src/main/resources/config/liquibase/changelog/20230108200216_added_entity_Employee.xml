@@ -35,6 +35,9 @@
             <column name="company_id" type="bigint">
                 <constraints nullable="false" />
             </column>
+            <column name="user_id" type="bigint">
+                <constraints nullable="false" unique="true" uniqueConstraintName="ux_employee__user_id" />
+            </column>
             <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here -->
         </createTable>
         <dropDefaultValue tableName="employee" columnName="birth_date" columnDataType="${datetimeType}"/>
@@ -64,6 +67,7 @@
             <column name="address_id" type="numeric"/>
             <column name="personal_info_id" type="numeric"/>
             <column name="company_id" type="numeric"/>
+            <column name="user_id" type="numeric"/>
             <!-- jhipster-needle-liquibase-add-loadcolumn - JHipster (and/or extensions) can add load columns here -->
         </loadData>
     </changeSet>

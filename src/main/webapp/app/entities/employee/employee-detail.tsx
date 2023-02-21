@@ -100,7 +100,11 @@ export const EmployeeDetail = () => {
           <dt>
             <Translate contentKey="donauStorageIncApp.employee.company">Company</Translate>
           </dt>
-          <dd>{employeeEntity.company ? employeeEntity.company.legalEntityInfo.name : ''}</dd>
+          <dd>{employeeEntity.company ? employeeEntity.legalEntityInfo.name : ''}</dd>
+          <dt>
+            <Translate contentKey="donauStorageIncApp.employee.user">User</Translate>
+          </dt>
+          <dd>{employeeEntity.user ? employeeEntity.user.login : ''}</dd>
         </dl>
         <Button tag={Link} to="/employee" replace color="info" data-cy="entityDetailsBackButton">
           <FontAwesomeIcon icon="arrow-left" />{' '}

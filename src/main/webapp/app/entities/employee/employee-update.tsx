@@ -14,6 +14,8 @@ import { IPerson } from 'app/shared/model/person.model';
 import { getEntities as getPeople } from 'app/entities/person/person.reducer';
 import { ICompany } from 'app/shared/model/company.model';
 import { getEntities as getCompanies } from 'app/entities/company/company.reducer';
+import { IUser } from 'app/shared/model/user.model';
+import { getUsers } from 'app/modules/administration/user-management/user-management.reducer';
 import { IEmployee } from 'app/shared/model/employee.model';
 import { getEntity, updateEntity, createEntity, reset } from './employee.reducer';
 
@@ -32,6 +34,7 @@ export const EmployeeUpdate = () => {
   const addresses = useAppSelector(state => state.address.entities);
   const people = useAppSelector(state => state.person.entities);
   const companies = useAppSelector(state => state.company.entities);
+  const users = useAppSelector(state => state.userManagement.users);
   const employeeEntity = useAppSelector(state => state.employee.entity);
   const loading = useAppSelector(state => state.employee.loading);
   const updating = useAppSelector(state => state.employee.updating);
@@ -54,6 +57,7 @@ export const EmployeeUpdate = () => {
     dispatch(getAddresses({}));
     dispatch(getPeople({}));
     dispatch(getCompanies({}));
+    dispatch(getUsers({}));
 
     dispatch(getCities({}));
   }, []);
@@ -66,6 +70,8 @@ export const EmployeeUpdate = () => {
 
   const saveEntity = values => {
     values.birthDate = convertDateTimeToServer(values.birthDate);
+
+    console.log(values);
 
     const entity = {
       ...employeeEntity,
@@ -86,6 +92,7 @@ export const EmployeeUpdate = () => {
           }
         : people.find(it => it.id.toString() === values.personalInfo.toString()),
       company: companies.find(it => it.id.toString() === values.company.toString()),
+      //user: users.find(it => it.id.toString() === values.user.toString()),
     };
 
     if (isNew) {
@@ -107,6 +114,7 @@ export const EmployeeUpdate = () => {
           address: employeeEntity?.address?.id,
           personalInfo: employeeEntity?.personalInfo?.id,
           company: employeeEntity?.company?.id,
+          user: employeeEntity?.user?.id,
         };
 
   return (
@@ -384,6 +392,25 @@ export const EmployeeUpdate = () => {
               <FormText>
                 <Translate contentKey="entity.validation.required">This field is required.</Translate>
               </FormText>
+              {!isNew && (
+                <ValidatedField
+                  id="employee-user"
+                  name="user"
+                  data-cy="user"
+                  label={translate('donauStorageIncApp.user.login')}
+                  type="select"
+                  required
+                >
+                  <option value="" key="0" />
+                  {users
+                    ? users.map(otherEntity => (
+                        <option value={otherEntity.id} key={otherEntity.id}>
+                          {otherEntity.login}
+                        </option>
+                      ))
+                    : null}
+                </ValidatedField>
+              )}
               <Button tag={Link} id="cancel-save" data-cy="entityCreateCancelButton" to="/employee" replace color="info">
                 <FontAwesomeIcon icon="arrow-left" />
                 &nbsp;
