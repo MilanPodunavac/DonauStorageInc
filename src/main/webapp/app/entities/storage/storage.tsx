@@ -108,6 +108,9 @@ export const Storage = () => {
                 <th className="hand" onClick={sort('name')}>
                   <Translate contentKey="donauStorageIncApp.storage.name">Name</Translate> <FontAwesomeIcon icon="sort" />
                 </th>
+                <th className="hand" onClick={sort('code')}>
+                  <Translate contentKey="donauStorageIncApp.storage.code">Code</Translate> <FontAwesomeIcon icon="sort" />
+                </th>
                 <th>
                   <Translate contentKey="donauStorageIncApp.storage.address">Address</Translate> <FontAwesomeIcon icon="sort" />
                 </th>
@@ -126,6 +129,7 @@ export const Storage = () => {
                     </Button>
                   </td>
                   <td>{storage.name}</td>
+                  <td>{storage.code}</td>
                   <td>
                     {storage.address ? (
                       <Link to={`/address/${storage.address.id}`}>

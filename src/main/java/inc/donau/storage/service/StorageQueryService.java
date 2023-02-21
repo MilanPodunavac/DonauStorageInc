@@ -93,6 +93,9 @@ public class StorageQueryService extends QueryService<Storage> {
             if (criteria.getName() != null) {
                 specification = specification.and(buildStringSpecification(criteria.getName(), Storage_.name));
             }
+            if (criteria.getCode() != null) {
+                specification = specification.and(buildStringSpecification(criteria.getCode(), Storage_.code));
+            }
             if (criteria.getAddressId() != null) {
                 specification =
                     specification.and(

@@ -1,11 +1,11 @@
-id;name;address_id;company_id
-1;lime Computer;1;1
-2;Savings red Realigned;2;2
-3;Corporate;3;3
-4;toolset generating;4;4
-5;USB;5;5
-6;North withdrawal auxiliary;6;6
-7;Avon Pa'anga;7;7
-8;Internal invoice blue;8;8
-9;incentivize Buckinghamshire bus;9;9
-10;collaboration;10;10
+id;name;code;address_id;company_id
+1;lime Computer;Savings red Realigned;1;1
+2;Corporate;toolset generating;2;2
+3;USB;North withdrawal auxiliary;3;3
+4;Avon Pa'anga;Internal invoice blue;4;4
+5;incentivize Buckinghamshire bus;collaboration;5;5
+6;optical Home Facilitator;engage;6;6
+7;Operative;Key web;7;7
+8;Generic;connect unleash Shirt;8;8
+9;Berkshire Berkshire;Vision-oriented;9;9
+10;Usability Bedfordshire;Cambridgeshire calculating Awesome;10;10

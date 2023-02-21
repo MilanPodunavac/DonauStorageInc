@@ -42,6 +42,12 @@ export const StorageDetail = () => {
           </dt>
           <dd>{storageEntity.name}</dd>
           <dt>
+            <span id="code">
+              <Translate contentKey="donauStorageIncApp.storage.code">Code</Translate>
+            </span>
+          </dt>
+          <dd>{storageEntity.code}</dd>
+          <dt>
             <Translate contentKey="donauStorageIncApp.storage.address">Address</Translate>
           </dt>
           <dd>
@@ -55,11 +61,10 @@ export const StorageDetail = () => {
                 storageEntity.address.postalCode
               : ''}
           </dd>
-
           <dt>
             <Translate contentKey="donauStorageIncApp.storage.company">Company</Translate>
           </dt>
-          <dd>{storageEntity.company ? storageEntity.company.legalEntityInfo.name : ''}</dd>
+          <dd>{storageEntity.company ? storageEntity.legalEntityInfo.name : ''}</dd>
         </dl>
         <Button tag={Link} to="/storage" replace color="info" data-cy="entityDetailsBackButton">
           <FontAwesomeIcon icon="arrow-left" />{' '}

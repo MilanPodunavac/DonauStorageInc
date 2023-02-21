@@ -20,6 +20,9 @@ public class StorageDTO implements Serializable {
 
     private String name;
 
+    @NotNull
+    private String code;
+
     private AddressDTO address;
 
     private CompanyDTO company;
@@ -38,6 +41,14 @@ public class StorageDTO implements Serializable {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
     }
 
     public AddressDTO getAddress() {
@@ -83,6 +94,7 @@ public class StorageDTO implements Serializable {
         return "StorageDTO{" +
             "id=" + getId() +
             ", name='" + getName() + "'" +
+            ", code='" + getCode() + "'" +
             ", address=" + getAddress() +
             ", company=" + getCompany() +
             "}";

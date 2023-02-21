@@ -25,6 +25,8 @@ public class StorageCriteria implements Serializable, Criteria {
 
     private StringFilter name;
 
+    private StringFilter code;
+
     private LongFilter addressId;
 
     private StringFilter storageCardId;
@@ -44,6 +46,7 @@ public class StorageCriteria implements Serializable, Criteria {
     public StorageCriteria(StorageCriteria other) {
         this.id = other.id == null ? null : other.id.copy();
         this.name = other.name == null ? null : other.name.copy();
+        this.code = other.code == null ? null : other.code.copy();
         this.addressId = other.addressId == null ? null : other.addressId.copy();
         this.storageCardId = other.storageCardId == null ? null : other.storageCardId.copy();
         this.receivedId = other.receivedId == null ? null : other.receivedId.copy();
@@ -86,6 +89,21 @@ public class StorageCriteria implements Serializable, Criteria {
 
     public void setName(StringFilter name) {
         this.name = name;
+    }
+
+    public StringFilter getCode() {
+        return code;
+    }
+
+    public StringFilter code() {
+        if (code == null) {
+            code = new StringFilter();
+        }
+        return code;
+    }
+
+    public void setCode(StringFilter code) {
+        this.code = code;
     }
 
     public LongFilter getAddressId() {
@@ -198,6 +216,7 @@ public class StorageCriteria implements Serializable, Criteria {
         return (
             Objects.equals(id, that.id) &&
             Objects.equals(name, that.name) &&
+            Objects.equals(code, that.code) &&
             Objects.equals(addressId, that.addressId) &&
             Objects.equals(storageCardId, that.storageCardId) &&
             Objects.equals(receivedId, that.receivedId) &&
@@ -210,7 +229,7 @@ public class StorageCriteria implements Serializable, Criteria {
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, addressId, storageCardId, receivedId, dispatchedId, censusDocumentId, companyId, distinct);
+        return Objects.hash(id, name, code, addressId, storageCardId, receivedId, dispatchedId, censusDocumentId, companyId, distinct);
     }
 
     // prettier-ignore
@@ -219,6 +238,7 @@ public class StorageCriteria implements Serializable, Criteria {
         return "StorageCriteria{" +
             (id != null ? "id=" + id + ", " : "") +
             (name != null ? "name=" + name + ", " : "") +
+            (code != null ? "code=" + code + ", " : "") +
             (addressId != null ? "addressId=" + addressId + ", " : "") +
             (storageCardId != null ? "storageCardId=" + storageCardId + ", " : "") +
             (receivedId != null ? "receivedId=" + receivedId + ", " : "") +

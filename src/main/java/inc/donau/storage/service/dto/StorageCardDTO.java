@@ -239,7 +239,7 @@ public class StorageCardDTO implements Serializable {
         this.businessYear = businessYearDTO;
         this.resource = resourceDTO;
         this.storage = storageDTO;
-        this.id = storageDTO.getId() + "-" + resourceDTO.getId() + "-" + businessYearDTO.getId();
+        this.id = storageDTO.getCode() + "-" + resourceDTO.getId() + "-" + businessYearDTO.getYearCode();
 
         this.startingAmount = amount;
         this.receivedAmount = 0.0f;

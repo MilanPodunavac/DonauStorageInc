@@ -40,6 +40,9 @@ class StorageResourceIT {
     private static final String DEFAULT_NAME = "AAAAAAAAAA";
     private static final String UPDATED_NAME = "BBBBBBBBBB";
 
+    private static final String DEFAULT_CODE = "AAAAAAAAAA";
+    private static final String UPDATED_CODE = "BBBBBBBBBB";
+
     private static final String ENTITY_API_URL = "/api/storages";
     private static final String ENTITY_API_URL_ID = ENTITY_API_URL + "/{id}";
 
@@ -67,7 +70,7 @@ class StorageResourceIT {
      * if they test an entity which requires the current entity.
      */
     public static Storage createEntity(EntityManager em) {
-        Storage storage = new Storage().name(DEFAULT_NAME);
+        Storage storage = new Storage().name(DEFAULT_NAME).code(DEFAULT_CODE);
         // Add required entity
         Address address;
         if (TestUtil.findAll(em, Address.class).isEmpty()) {
@@ -98,7 +101,7 @@ class StorageResourceIT {
      * if they test an entity which requires the current entity.
      */
     public static Storage createUpdatedEntity(EntityManager em) {
-        Storage storage = new Storage().name(UPDATED_NAME);
+        Storage storage = new Storage().name(UPDATED_NAME).code(UPDATED_CODE);
         // Add required entity
         Address address;
         if (TestUtil.findAll(em, Address.class).isEmpty()) {
@@ -142,6 +145,7 @@ class StorageResourceIT {
         assertThat(storageList).hasSize(databaseSizeBeforeCreate + 1);
         Storage testStorage = storageList.get(storageList.size() - 1);
         assertThat(testStorage.getName()).isEqualTo(DEFAULT_NAME);
+        assertThat(testStorage.getCode()).isEqualTo(DEFAULT_CODE);
     }
 
     @Test
@@ -165,6 +169,24 @@ class StorageResourceIT {
 
     @Test
     @Transactional
+    void checkCodeIsRequired() throws Exception {
+        int databaseSizeBeforeTest = storageRepository.findAll().size();
+        // set the field null
+        storage.setCode(null);
+
+        // Create the Storage, which fails.
+        StorageDTO storageDTO = storageMapper.toDto(storage);
+
+        restStorageMockMvc
+            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(storageDTO)))
+            .andExpect(status().isBadRequest());
+
+        List<Storage> storageList = storageRepository.findAll();
+        assertThat(storageList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
     void getAllStorages() throws Exception {
         // Initialize the database
         storageRepository.saveAndFlush(storage);
@@ -175,7 +197,8 @@ class StorageResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(storage.getId().intValue())))
-            .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME)));
+            .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME)))
+            .andExpect(jsonPath("$.[*].code").value(hasItem(DEFAULT_CODE)));
     }
 
     @Test
@@ -190,7 +213,8 @@ class StorageResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.id").value(storage.getId().intValue()))
-            .andExpect(jsonPath("$.name").value(DEFAULT_NAME));
+            .andExpect(jsonPath("$.name").value(DEFAULT_NAME))
+            .andExpect(jsonPath("$.code").value(DEFAULT_CODE));
     }
 
     @Test
@@ -274,6 +298,71 @@ class StorageResourceIT {
 
         // Get all the storageList where name does not contain UPDATED_NAME
         defaultStorageShouldBeFound("name.doesNotContain=" + UPDATED_NAME);
+    }
+
+    @Test
+    @Transactional
+    void getAllStoragesByCodeIsEqualToSomething() throws Exception {
+        // Initialize the database
+        storageRepository.saveAndFlush(storage);
+
+        // Get all the storageList where code equals to DEFAULT_CODE
+        defaultStorageShouldBeFound("code.equals=" + DEFAULT_CODE);
+
+        // Get all the storageList where code equals to UPDATED_CODE
+        defaultStorageShouldNotBeFound("code.equals=" + UPDATED_CODE);
+    }
+
+    @Test
+    @Transactional
+    void getAllStoragesByCodeIsInShouldWork() throws Exception {
+        // Initialize the database
+        storageRepository.saveAndFlush(storage);
+
+        // Get all the storageList where code in DEFAULT_CODE or UPDATED_CODE
+        defaultStorageShouldBeFound("code.in=" + DEFAULT_CODE + "," + UPDATED_CODE);
+
+        // Get all the storageList where code equals to UPDATED_CODE
+        defaultStorageShouldNotBeFound("code.in=" + UPDATED_CODE);
+    }
+
+    @Test
+    @Transactional
+    void getAllStoragesByCodeIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        storageRepository.saveAndFlush(storage);
+
+        // Get all the storageList where code is not null
+        defaultStorageShouldBeFound("code.specified=true");
+
+        // Get all the storageList where code is null
+        defaultStorageShouldNotBeFound("code.specified=false");
+    }
+
+    @Test
+    @Transactional
+    void getAllStoragesByCodeContainsSomething() throws Exception {
+        // Initialize the database
+        storageRepository.saveAndFlush(storage);
+
+        // Get all the storageList where code contains DEFAULT_CODE
+        defaultStorageShouldBeFound("code.contains=" + DEFAULT_CODE);
+
+        // Get all the storageList where code contains UPDATED_CODE
+        defaultStorageShouldNotBeFound("code.contains=" + UPDATED_CODE);
+    }
+
+    @Test
+    @Transactional
+    void getAllStoragesByCodeNotContainsSomething() throws Exception {
+        // Initialize the database
+        storageRepository.saveAndFlush(storage);
+
+        // Get all the storageList where code does not contain DEFAULT_CODE
+        defaultStorageShouldNotBeFound("code.doesNotContain=" + DEFAULT_CODE);
+
+        // Get all the storageList where code does not contain UPDATED_CODE
+        defaultStorageShouldBeFound("code.doesNotContain=" + UPDATED_CODE);
     }
 
     @Test
@@ -415,7 +504,8 @@ class StorageResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(storage.getId().intValue())))
-            .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME)));
+            .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME)))
+            .andExpect(jsonPath("$.[*].code").value(hasItem(DEFAULT_CODE)));
 
         // Check, that the count call also returns 1
         restStorageMockMvc
@@ -463,7 +553,7 @@ class StorageResourceIT {
         Storage updatedStorage = storageRepository.findById(storage.getId()).get();
         // Disconnect from session so that the updates on updatedStorage are not directly saved in db
         em.detach(updatedStorage);
-        updatedStorage.name(UPDATED_NAME);
+        updatedStorage.name(UPDATED_NAME).code(UPDATED_CODE);
         StorageDTO storageDTO = storageMapper.toDto(updatedStorage);
 
         restStorageMockMvc
@@ -479,6 +569,7 @@ class StorageResourceIT {
         assertThat(storageList).hasSize(databaseSizeBeforeUpdate);
         Storage testStorage = storageList.get(storageList.size() - 1);
         assertThat(testStorage.getName()).isEqualTo(UPDATED_NAME);
+        assertThat(testStorage.getCode()).isEqualTo(UPDATED_CODE);
     }
 
     @Test
@@ -558,6 +649,8 @@ class StorageResourceIT {
         Storage partialUpdatedStorage = new Storage();
         partialUpdatedStorage.setId(storage.getId());
 
+        partialUpdatedStorage.code(UPDATED_CODE);
+
         restStorageMockMvc
             .perform(
                 patch(ENTITY_API_URL_ID, partialUpdatedStorage.getId())
@@ -571,6 +664,7 @@ class StorageResourceIT {
         assertThat(storageList).hasSize(databaseSizeBeforeUpdate);
         Storage testStorage = storageList.get(storageList.size() - 1);
         assertThat(testStorage.getName()).isEqualTo(DEFAULT_NAME);
+        assertThat(testStorage.getCode()).isEqualTo(UPDATED_CODE);
     }
 
     @Test
@@ -585,7 +679,7 @@ class StorageResourceIT {
         Storage partialUpdatedStorage = new Storage();
         partialUpdatedStorage.setId(storage.getId());
 
-        partialUpdatedStorage.name(UPDATED_NAME);
+        partialUpdatedStorage.name(UPDATED_NAME).code(UPDATED_CODE);
 
         restStorageMockMvc
             .perform(
@@ -600,6 +694,7 @@ class StorageResourceIT {
         assertThat(storageList).hasSize(databaseSizeBeforeUpdate);
         Storage testStorage = storageList.get(storageList.size() - 1);
         assertThat(testStorage.getName()).isEqualTo(UPDATED_NAME);
+        assertThat(testStorage.getCode()).isEqualTo(UPDATED_CODE);
     }
 
     @Test

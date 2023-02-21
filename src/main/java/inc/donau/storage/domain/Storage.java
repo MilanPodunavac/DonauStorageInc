@@ -32,6 +32,10 @@ public class Storage implements Serializable {
     @Column(name = "name")
     private String name;
 
+    @NotNull
+    @Column(name = "code", nullable = false)
+    private String code;
+
     /**
      * Cascade delete
      */
@@ -101,6 +105,19 @@ public class Storage implements Serializable {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getCode() {
+        return this.code;
+    }
+
+    public Storage code(String code) {
+        this.setCode(code);
+        return this;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
     }
 
     public Address getAddress() {
@@ -278,6 +295,7 @@ public class Storage implements Serializable {
         return "Storage{" +
             "id=" + getId() +
             ", name='" + getName() + "'" +
+            ", code='" + getCode() + "'" +
             "}";
     }
 }
