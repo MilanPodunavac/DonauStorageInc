@@ -3,7 +3,7 @@ import { translate } from 'react-jhipster';
 import { NavDropdown } from './menu-components';
 import EntitiesMenuItems from 'app/entities/menu';
 
-export const EntitiesMenu = () => (
+export const EntitiesMenu = ({ isAdmin }: { isAdmin: boolean }) => (
   <NavDropdown
     icon="th-list"
     name={translate('global.menu.entities.main')}
@@ -11,6 +11,6 @@ export const EntitiesMenu = () => (
     data-cy="entity"
     style={{ maxHeight: '80vh', overflow: 'auto' }}
   >
-    <EntitiesMenuItems />
+    <EntitiesMenuItems isAdmin={isAdmin} />
   </NavDropdown>
 );

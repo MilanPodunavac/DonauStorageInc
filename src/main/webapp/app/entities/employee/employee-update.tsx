@@ -397,9 +397,10 @@ export const EmployeeUpdate = () => {
                   id="employee-user"
                   name="user"
                   data-cy="user"
-                  label={translate('donauStorageIncApp.user.login')}
+                  label={translate('userManagement.login')}
                   type="select"
                   required
+                  disabled
                 >
                   <option value="" key="0" />
                   {users
