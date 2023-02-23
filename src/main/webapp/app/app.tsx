@@ -35,6 +35,8 @@ export const App = () => {
   const isInProduction = useAppSelector(state => state.applicationProfile.inProduction);
   const isOpenAPIEnabled = useAppSelector(state => state.applicationProfile.isOpenAPIEnabled);
 
+  const chosenBusinessYear = useAppSelector(state => state.locale.businessYear);
+
   const paddingTop = '60px';
   return (
     <BrowserRouter basename={baseHref}>
@@ -48,12 +50,13 @@ export const App = () => {
             ribbonEnv={ribbonEnv}
             isInProduction={isInProduction}
             isOpenAPIEnabled={isOpenAPIEnabled}
+            chosenBusinessYear={chosenBusinessYear}
           />
         </ErrorBoundary>
         <div className="container-fluid view-container" id="app-view-container">
           <Card className="jh-card">
             <ErrorBoundary>
-              <AppRoutes />
+              <AppRoutes chosenBusinessYear={chosenBusinessYear} />
             </ErrorBoundary>
           </Card>
           <Footer />

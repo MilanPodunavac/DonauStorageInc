@@ -14,6 +14,7 @@ import PrivateRoute from 'app/shared/auth/private-route';
 import ErrorBoundaryRoutes from 'app/shared/error/error-boundary-routes';
 import PageNotFound from 'app/shared/error/page-not-found';
 import { AUTHORITIES } from 'app/config/constants';
+import ChooseBusinessYear from './shared/layout/chosen-business-year/choose-business-year';
 
 const loading = <div>loading ...</div>;
 
@@ -27,7 +28,7 @@ const Admin = Loadable({
   loading: () => loading,
 });
 
-const AppRoutes = () => {
+const AppRoutes = chosenBusinessYear => {
   return (
     <div className="view-routes">
       <ErrorBoundaryRoutes>
@@ -67,6 +68,8 @@ const AppRoutes = () => {
           }
         />
         <Route path="*" element={<PageNotFound />} />
+
+        <Route path="choose-business-year" element={<ChooseBusinessYear />} />
       </ErrorBoundaryRoutes>
     </div>
   );

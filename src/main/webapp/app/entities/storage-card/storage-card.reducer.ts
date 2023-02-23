@@ -4,6 +4,7 @@ import { createAsyncThunk, isFulfilled, isPending, isRejected } from '@reduxjs/t
 import { cleanEntity } from 'app/shared/util/entity-utils';
 import { IQueryParams, createEntitySlice, EntityState, serializeAxiosError } from 'app/shared/reducers/reducer.utils';
 import { IStorageCard, defaultValue } from 'app/shared/model/storage-card.model';
+import { useAppSelector } from 'app/config/store';
 
 const initialState: EntityState<IStorageCard> = {
   loading: false,
@@ -19,8 +20,10 @@ const apiUrl = 'api/xt/storage-cards';
 
 // Actions
 
-export const getEntities = createAsyncThunk('storageCard/fetch_entity_list', async ({ page, size, sort }: IQueryParams) => {
-  const requestUrl = `${apiUrl}${sort ? `?page=${page}&size=${size}&sort=${sort}&` : '?'}cacheBuster=${new Date().getTime()}`;
+export const getEntities = createAsyncThunk('storageCard/fetch_entity_list', async ({ query, page, size, sort }: IQueryParams) => {
+  const requestUrl = `${apiUrl}?${query ? `businessYearId.equals=${query}&` : ''}${
+    sort ? `page=${page}&size=${size}&sort=${sort}&` : ''
+  }cacheBuster=${new Date().getTime()}`;
   return axios.get<IStorageCard[]>(requestUrl);
 });
 

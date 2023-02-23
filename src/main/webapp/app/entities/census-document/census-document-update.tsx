@@ -37,6 +37,7 @@ export const CensusDocumentUpdate = () => {
   const censusDocumentStatusValues = Object.keys(CensusDocumentStatus);
 
   const censusDocumentStatus = censusDocumentEntity.status;
+  const chosenBusinessYear = useAppSelector(state => state.locale.businessYear);
 
   const handleClose = () => {
     navigate('/census-document' + location.search);
@@ -82,6 +83,7 @@ export const CensusDocumentUpdate = () => {
     isNew
       ? {
           status: 'INCOMPLETE',
+          businessYear: chosenBusinessYear?.id,
         }
       : {
           status: 'INCOMPLETE',
@@ -152,7 +154,7 @@ export const CensusDocumentUpdate = () => {
                 label={translate('donauStorageIncApp.censusDocument.businessYear')}
                 type="select"
                 required
-                disabled={!isNew && censusDocumentStatus != 'INCOMPLETE'}
+                disabled={!isNew || (chosenBusinessYear.id != 0 && censusDocumentStatus != 'INCOMPLETE')}
               >
                 <option value="" key="0" />
                 {businessYears
@@ -200,11 +202,13 @@ export const CensusDocumentUpdate = () => {
               >
                 <option value="" key="0" />
                 {employees
-                  ? employees.map(otherEntity => (
-                      <option value={otherEntity.id} key={otherEntity.id}>
-                        {otherEntity.personalInfo.firstName + ' ' + otherEntity.personalInfo.lastName}
-                      </option>
-                    ))
+                  ? employees
+                      .filter(e => e.company.id === chosenBusinessYear.company.id)
+                      .map(otherEntity => (
+                        <option value={otherEntity.id} key={otherEntity.id}>
+                          {otherEntity.personalInfo.firstName + ' ' + otherEntity.personalInfo.lastName}
+                        </option>
+                      ))
                   : null}
               </ValidatedField>
               <FormText>
@@ -221,11 +225,13 @@ export const CensusDocumentUpdate = () => {
               >
                 <option value="" key="0" />
                 {employees
-                  ? employees.map(otherEntity => (
-                      <option value={otherEntity.id} key={otherEntity.id}>
-                        {otherEntity.personalInfo.firstName + ' ' + otherEntity.personalInfo.lastName}
-                      </option>
-                    ))
+                  ? employees
+                      .filter(e => e.company.id === chosenBusinessYear.company.id)
+                      .map(otherEntity => (
+                        <option value={otherEntity.id} key={otherEntity.id}>
+                          {otherEntity.personalInfo.firstName + ' ' + otherEntity.personalInfo.lastName}
+                        </option>
+                      ))
                   : null}
               </ValidatedField>
               <FormText>
@@ -242,11 +248,13 @@ export const CensusDocumentUpdate = () => {
               >
                 <option value="" key="0" />
                 {employees
-                  ? employees.map(otherEntity => (
-                      <option value={otherEntity.id} key={otherEntity.id}>
-                        {otherEntity.personalInfo.firstName + ' ' + otherEntity.personalInfo.lastName}
-                      </option>
-                    ))
+                  ? employees
+                      .filter(e => e.company.id === chosenBusinessYear.company.id)
+                      .map(otherEntity => (
+                        <option value={otherEntity.id} key={otherEntity.id}>
+                          {otherEntity.personalInfo.firstName + ' ' + otherEntity.personalInfo.lastName}
+                        </option>
+                      ))
                   : null}
               </ValidatedField>
               <FormText>

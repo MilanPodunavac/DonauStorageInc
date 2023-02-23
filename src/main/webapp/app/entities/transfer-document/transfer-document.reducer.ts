@@ -19,8 +19,10 @@ const apiUrl = 'api/xt/transfer-documents';
 
 // Actions
 
-export const getEntities = createAsyncThunk('transferDocument/fetch_entity_list', async ({ page, size, sort }: IQueryParams) => {
-  const requestUrl = `${apiUrl}${sort ? `?page=${page}&size=${size}&sort=${sort}&` : '?'}cacheBuster=${new Date().getTime()}`;
+export const getEntities = createAsyncThunk('transferDocument/fetch_entity_list', async ({ query, page, size, sort }: IQueryParams) => {
+  const requestUrl = `${apiUrl}?${query ? `businessYearId.equals=${query}&` : ''}${
+    sort ? `page=${page}&size=${size}&sort=${sort}&` : ''
+  }cacheBuster=${new Date().getTime()}`;
   return axios.get<ITransferDocument[]>(requestUrl);
 });
 

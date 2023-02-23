@@ -42,6 +42,7 @@ export const TransferDocumentUpdate = () => {
   const [transferType, setTransferType] = useState('');
   var tType = '';
   const transferDocumentStatus = transferDocumentEntity.status;
+  const chosenBusinessYear = useAppSelector(state => state.locale.businessYear);
 
   const handleClose = () => {
     navigate('/transfer-document' + location.search);
@@ -70,7 +71,6 @@ export const TransferDocumentUpdate = () => {
   }, [updateSuccess]);
 
   const saveEntity = values => {
-    console.log(values);
     const entity = {
       ...transferDocumentEntity,
       ...values,
@@ -95,6 +95,7 @@ export const TransferDocumentUpdate = () => {
     isNew
       ? {
           status: 'IN_PREPARATION',
+          businessYear: chosenBusinessYear?.id,
         }
       : {
           ...transferDocumentEntity,
@@ -162,15 +163,17 @@ export const TransferDocumentUpdate = () => {
                 label={translate('donauStorageIncApp.transferDocument.businessYear')}
                 type="select"
                 required
-                disabled={!isNew && transferDocumentStatus != 'IN_PREPARATION'}
+                disabled={!isNew || (chosenBusinessYear.id != 0 && transferDocumentStatus != 'IN_PREPARATION')}
               >
                 <option value="" key="0" />
                 {businessYears
-                  ? businessYears.map(otherEntity => (
-                      <option value={otherEntity.id} key={otherEntity.id}>
-                        {otherEntity.yearCode}
-                      </option>
-                    ))
+                  ? businessYears
+                      .filter(e => e.company.id === chosenBusinessYear.company.id)
+                      .map(otherEntity => (
+                        <option value={otherEntity.id} key={otherEntity.id}>
+                          {otherEntity.yearCode}
+                        </option>
+                      ))
                   : null}
               </ValidatedField>
               <FormText>
@@ -186,11 +189,13 @@ export const TransferDocumentUpdate = () => {
               >
                 <option value="" key="0" />
                 {storages
-                  ? storages.map(otherEntity => (
-                      <option value={otherEntity.id} key={otherEntity.id}>
-                        {otherEntity.name}
-                      </option>
-                    ))
+                  ? storages
+                      .filter(e => e.company.id === chosenBusinessYear.company.id)
+                      .map(otherEntity => (
+                        <option value={otherEntity.id} key={otherEntity.id}>
+                          {otherEntity.name}
+                        </option>
+                      ))
                   : null}
               </ValidatedField>
               <ValidatedField
@@ -203,11 +208,13 @@ export const TransferDocumentUpdate = () => {
               >
                 <option value="" key="0" />
                 {businessPartners
-                  ? businessPartners.map(otherEntity => (
-                      <option value={otherEntity.id} key={otherEntity.id}>
-                        {otherEntity.legalEntityInfo.name}
-                      </option>
-                    ))
+                  ? businessPartners
+                      .filter(e => e.company.id === chosenBusinessYear.company.id)
+                      .map(otherEntity => (
+                        <option value={otherEntity.id} key={otherEntity.id}>
+                          {otherEntity.legalEntityInfo.name}
+                        </option>
+                      ))
                   : null}
               </ValidatedField>
               <ValidatedField
@@ -220,11 +227,13 @@ export const TransferDocumentUpdate = () => {
               >
                 <option value="" key="0" />
                 {storages
-                  ? storages.map(otherEntity => (
-                      <option value={otherEntity.id} key={otherEntity.id}>
-                        {otherEntity.name}
-                      </option>
-                    ))
+                  ? storages
+                      .filter(e => e.company.id === chosenBusinessYear.company.id)
+                      .map(otherEntity => (
+                        <option value={otherEntity.id} key={otherEntity.id}>
+                          {otherEntity.name}
+                        </option>
+                      ))
                   : null}
               </ValidatedField>
               <ValidatedField

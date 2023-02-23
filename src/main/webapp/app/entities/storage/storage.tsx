@@ -26,12 +26,16 @@ export const Storage = () => {
   const loading = useAppSelector(state => state.storage.loading);
   const totalItems = useAppSelector(state => state.storage.totalItems);
 
+  const chosenCompany = useAppSelector(state => state.locale.businessYear.company);
+
   const getAllEntities = () => {
     dispatch(
       getEntities({
         page: paginationState.activePage - 1,
         size: paginationState.itemsPerPage,
         sort: `${paginationState.sort},${paginationState.order}`,
+
+        query: chosenCompany.id,
       })
     );
   };
@@ -85,17 +89,19 @@ export const Storage = () => {
     <div>
       <h2 id="storage-heading" data-cy="StorageHeading">
         <Translate contentKey="donauStorageIncApp.storage.home.title">Storages</Translate>
-        <div className="d-flex justify-content-end">
-          <Button className="me-2" color="info" onClick={handleSyncList} disabled={loading}>
-            <FontAwesomeIcon icon="sync" spin={loading} />{' '}
-            <Translate contentKey="donauStorageIncApp.storage.home.refreshListLabel">Refresh List</Translate>
-          </Button>
-          <Link to="/storage/new" className="btn btn-primary jh-create-entity" id="jh-create-entity" data-cy="entityCreateButton">
-            <FontAwesomeIcon icon="plus" />
-            &nbsp;
-            <Translate contentKey="donauStorageIncApp.storage.home.createLabel">Create new Storage</Translate>
-          </Link>
-        </div>
+        {chosenCompany.id != 0 && (
+          <div className="d-flex justify-content-end">
+            <Button className="me-2" color="info" onClick={handleSyncList} disabled={loading}>
+              <FontAwesomeIcon icon="sync" spin={loading} />{' '}
+              <Translate contentKey="donauStorageIncApp.storage.home.refreshListLabel">Refresh List</Translate>
+            </Button>
+            <Link to="/storage/new" className="btn btn-primary jh-create-entity" id="jh-create-entity" data-cy="entityCreateButton">
+              <FontAwesomeIcon icon="plus" />
+              &nbsp;
+              <Translate contentKey="donauStorageIncApp.storage.home.createLabel">Create new Storage</Translate>
+            </Link>
+          </div>
+        )}
       </h2>
       <div className="table-responsive">
         {storageList && storageList.length > 0 ? (
@@ -180,12 +186,16 @@ export const Storage = () => {
               ))}
             </tbody>
           </Table>
-        ) : (
+        ) : chosenCompany.id != 0 ? (
           !loading && (
             <div className="alert alert-warning">
               <Translate contentKey="donauStorageIncApp.storage.home.notFound">No Storages found</Translate>
             </div>
           )
+        ) : (
+          <div className="alert alert-warning">
+            <Translate contentKey="donauStorageIncApp.storage.home.noBusinessYearChosen">No Business Year Chosen</Translate>
+          </div>
         )}
       </div>
       {totalItems ? (

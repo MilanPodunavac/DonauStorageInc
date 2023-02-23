@@ -34,6 +34,7 @@ export const StorageUpdate = () => {
   const updateSuccess = useAppSelector(state => state.storage.updateSuccess);
 
   const cities = useAppSelector(state => state.city.entities);
+  const chosenCompany = useAppSelector(state => state.locale.businessYear.company);
 
   const handleClose = () => {
     navigate('/storage' + location.search);
@@ -80,7 +81,9 @@ export const StorageUpdate = () => {
 
   const defaultValues = () =>
     isNew
-      ? {}
+      ? {
+          company: chosenCompany?.id,
+        }
       : {
           ...storageEntity,
           address: storageEntity?.address?.id,
@@ -120,7 +123,7 @@ export const StorageUpdate = () => {
                 label={translate('donauStorageIncApp.storage.company')}
                 type="select"
                 required
-                disabled={!isNew}
+                disabled={!isNew || chosenCompany.id != 0}
               >
                 <option value="" key="0" />
                 {companies

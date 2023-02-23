@@ -39,6 +39,7 @@ export const BusinessPartnerUpdate = () => {
 
   const cities = useAppSelector(state => state.city.entities);
   const genderValues = Object.keys(Gender);
+  const chosenCompany = useAppSelector(state => state.locale.businessYear.company);
 
   const handleClose = () => {
     navigate('/business-partner' + location.search);
@@ -104,7 +105,9 @@ export const BusinessPartnerUpdate = () => {
 
   const defaultValues = () =>
     isNew
-      ? {}
+      ? {
+          company: chosenCompany?.id,
+        }
       : {
           ...businessPartnerEntity,
           businessContact: businessPartnerEntity?.businessContact?.id,
@@ -144,7 +147,7 @@ export const BusinessPartnerUpdate = () => {
                 label={translate('donauStorageIncApp.businessPartner.company')}
                 type="select"
                 required
-                disabled={!isNew}
+                disabled={!isNew || chosenCompany.id != 0}
               >
                 <option value="" key="0" />
                 {companies

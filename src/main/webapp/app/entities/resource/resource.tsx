@@ -26,12 +26,16 @@ export const Resource = () => {
   const loading = useAppSelector(state => state.resource.loading);
   const totalItems = useAppSelector(state => state.resource.totalItems);
 
+  const chosenCompany = useAppSelector(state => state.locale.businessYear.company);
+
   const getAllEntities = () => {
     dispatch(
       getEntities({
         page: paginationState.activePage - 1,
         size: paginationState.itemsPerPage,
         sort: `${paginationState.sort},${paginationState.order}`,
+
+        query: chosenCompany.id,
       })
     );
   };
@@ -85,17 +89,19 @@ export const Resource = () => {
     <div>
       <h2 id="resource-heading" data-cy="ResourceHeading">
         <Translate contentKey="donauStorageIncApp.resource.home.title">Resources</Translate>
-        <div className="d-flex justify-content-end">
-          <Button className="me-2" color="info" onClick={handleSyncList} disabled={loading}>
-            <FontAwesomeIcon icon="sync" spin={loading} />{' '}
-            <Translate contentKey="donauStorageIncApp.resource.home.refreshListLabel">Refresh List</Translate>
-          </Button>
-          <Link to="/resource/new" className="btn btn-primary jh-create-entity" id="jh-create-entity" data-cy="entityCreateButton">
-            <FontAwesomeIcon icon="plus" />
-            &nbsp;
-            <Translate contentKey="donauStorageIncApp.resource.home.createLabel">Create new Resource</Translate>
-          </Link>
-        </div>
+        {chosenCompany.id != 0 && (
+          <div className="d-flex justify-content-end">
+            <Button className="me-2" color="info" onClick={handleSyncList} disabled={loading}>
+              <FontAwesomeIcon icon="sync" spin={loading} />{' '}
+              <Translate contentKey="donauStorageIncApp.resource.home.refreshListLabel">Refresh List</Translate>
+            </Button>
+            <Link to="/resource/new" className="btn btn-primary jh-create-entity" id="jh-create-entity" data-cy="entityCreateButton">
+              <FontAwesomeIcon icon="plus" />
+              &nbsp;
+              <Translate contentKey="donauStorageIncApp.resource.home.createLabel">Create new Resource</Translate>
+            </Link>
+          </div>
+        )}
       </h2>
       <div className="table-responsive">
         {resourceList && resourceList.length > 0 ? (
@@ -174,12 +180,16 @@ export const Resource = () => {
               ))}
             </tbody>
           </Table>
-        ) : (
+        ) : chosenCompany.id != 0 ? (
           !loading && (
             <div className="alert alert-warning">
               <Translate contentKey="donauStorageIncApp.resource.home.notFound">No Resources found</Translate>
             </div>
           )
+        ) : (
+          <div className="alert alert-warning">
+            <Translate contentKey="donauStorageIncApp.resource.home.noBusinessYearChosen">No Business Year Chosen</Translate>
+          </div>
         )}
       </div>
       {totalItems ? (

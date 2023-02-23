@@ -32,6 +32,8 @@ export const CensusItemUpdate = () => {
   const updating = useAppSelector(state => state.censusItem.updating);
   const updateSuccess = useAppSelector(state => state.censusItem.updateSuccess);
 
+  const chosenBusinessYear = useAppSelector(state => state.locale.businessYear);
+
   const handleClose = () => {
     navigate(-1);
   };
@@ -146,11 +148,13 @@ export const CensusItemUpdate = () => {
               >
                 <option value="" key="0" />
                 {resources
-                  ? resources.map(otherEntity => (
-                      <option value={otherEntity.id} key={otherEntity.id}>
-                        {otherEntity.name}
-                      </option>
-                    ))
+                  ? resources
+                      .filter(e => e.company.id === chosenBusinessYear.company.id)
+                      .map(otherEntity => (
+                        <option value={otherEntity.id} key={otherEntity.id}>
+                          {otherEntity.name}
+                        </option>
+                      ))
                   : null}
               </ValidatedField>
               <FormText>

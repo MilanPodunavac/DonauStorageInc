@@ -42,6 +42,7 @@ export const EmployeeUpdate = () => {
 
   const cities = useAppSelector(state => state.city.entities);
   const genderValues = Object.keys(Gender);
+  const chosenCompany = useAppSelector(state => state.locale.businessYear.company);
 
   const handleClose = () => {
     navigate('/employee' + location.search);
@@ -107,6 +108,7 @@ export const EmployeeUpdate = () => {
       ? {
           birthDate: displayDefaultDateTime(),
           employment: true,
+          company: chosenCompany?.id,
         }
       : {
           ...employeeEntity,
@@ -150,7 +152,7 @@ export const EmployeeUpdate = () => {
                 label={translate('donauStorageIncApp.employee.company')}
                 type="select"
                 required
-                disabled={!isNew}
+                disabled={!isNew || chosenCompany.id != 0}
               >
                 <option value="" key="0" />
                 {companies

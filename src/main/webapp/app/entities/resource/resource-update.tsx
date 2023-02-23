@@ -32,6 +32,8 @@ export const ResourceUpdate = () => {
   const updateSuccess = useAppSelector(state => state.resource.updateSuccess);
   const resourceTypeValues = Object.keys(ResourceType);
 
+  const chosenCompany = useAppSelector(state => state.locale.businessYear.company);
+
   const handleClose = () => {
     navigate('/resource' + location.search);
   };
@@ -70,7 +72,9 @@ export const ResourceUpdate = () => {
 
   const defaultValues = () =>
     isNew
-      ? {}
+      ? {
+          company: chosenCompany?.id,
+        }
       : {
           type: 'MATERIAL',
           ...resourceEntity,
@@ -111,7 +115,7 @@ export const ResourceUpdate = () => {
                 label={translate('donauStorageIncApp.resource.company')}
                 type="select"
                 required
-                disabled={!isNew}
+                disabled={!isNew || chosenCompany.id != 0}
               >
                 <option value="" key="0" />
                 {companies

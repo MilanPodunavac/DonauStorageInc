@@ -8,7 +8,7 @@ import StorageCardDetail from './storage-card-detail';
 import StorageCardUpdate from './storage-card-update';
 import StorageCardDeleteDialog from './storage-card-delete-dialog';
 
-const StorageCardRoutes = () => (
+const StorageCardRoutes = chosenBusinessYear => (
   <ErrorBoundaryRoutes>
     <Route index element={<StorageCard />} />
     <Route path="new" element={<StorageCardUpdate />} />

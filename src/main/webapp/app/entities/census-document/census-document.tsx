@@ -26,12 +26,16 @@ export const CensusDocument = () => {
   const loading = useAppSelector(state => state.censusDocument.loading);
   const totalItems = useAppSelector(state => state.censusDocument.totalItems);
 
+  const chosenBusinessYear = useAppSelector(state => state.locale.businessYear);
+
   const getAllEntities = () => {
     dispatch(
       getEntities({
         page: paginationState.activePage - 1,
         size: paginationState.itemsPerPage,
         sort: `${paginationState.sort},${paginationState.order}`,
+
+        query: chosenBusinessYear.id,
       })
     );
   };
@@ -85,20 +89,22 @@ export const CensusDocument = () => {
     <div>
       <h2 id="census-document-heading" data-cy="CensusDocumentHeading">
         <Translate contentKey="donauStorageIncApp.censusDocument.home.title">Census Documents</Translate>
-        <div className="d-flex justify-content-end">
-          <Button className="me-2" color="info" onClick={handleSyncList} disabled={loading}>
-            <FontAwesomeIcon icon="sync" spin={loading} />{' '}
-            <Translate contentKey="donauStorageIncApp.censusDocument.home.refreshListLabel">Refresh List</Translate>
-          </Button>
-          <Link to="/census-document/new" className="btn btn-primary jh-create-entity" id="jh-create-entity" data-cy="entityCreateButton">
-            <FontAwesomeIcon icon="plus" />
-            &nbsp;
-            <Translate contentKey="donauStorageIncApp.censusDocument.home.createLabel">Create new Census Document</Translate>
-          </Link>
-        </div>
+        {chosenBusinessYear.id != 0 && (
+          <div className="d-flex justify-content-end">
+            <Button className="me-2" color="info" onClick={handleSyncList} disabled={loading}>
+              <FontAwesomeIcon icon="sync" spin={loading} />{' '}
+              <Translate contentKey="donauStorageIncApp.censusDocument.home.refreshListLabel">Refresh List</Translate>
+            </Button>
+            <Link to="/census-document/new" className="btn btn-primary jh-create-entity" id="jh-create-entity" data-cy="entityCreateButton">
+              <FontAwesomeIcon icon="plus" />
+              &nbsp;
+              <Translate contentKey="donauStorageIncApp.censusDocument.home.createLabel">Create new Census Document</Translate>
+            </Link>
+          </div>
+        )}
       </h2>
       <div className="table-responsive">
-        {censusDocumentList && censusDocumentList.length > 0 ? (
+        {censusDocumentList && censusDocumentList.length > 0 && chosenBusinessYear.id != 0 ? (
           <Table responsive>
             <thead>
               <tr>
@@ -236,12 +242,16 @@ export const CensusDocument = () => {
               ))}
             </tbody>
           </Table>
-        ) : (
+        ) : chosenBusinessYear.id != 0 ? (
           !loading && (
             <div className="alert alert-warning">
               <Translate contentKey="donauStorageIncApp.censusDocument.home.notFound">No Census Documents found</Translate>
             </div>
           )
+        ) : (
+          <div className="alert alert-warning">
+            <Translate contentKey="donauStorageIncApp.censusDocument.home.noBusinessYearChosen">No Business Year Chosen</Translate>
+          </div>
         )}
       </div>
       {totalItems ? (

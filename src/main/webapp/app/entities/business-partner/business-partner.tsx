@@ -26,12 +26,16 @@ export const BusinessPartner = () => {
   const loading = useAppSelector(state => state.businessPartner.loading);
   const totalItems = useAppSelector(state => state.businessPartner.totalItems);
 
+  const chosenCompany = useAppSelector(state => state.locale.businessYear.company);
+
   const getAllEntities = () => {
     dispatch(
       getEntities({
         page: paginationState.activePage - 1,
         size: paginationState.itemsPerPage,
         sort: `${paginationState.sort},${paginationState.order}`,
+
+        query: chosenCompany.id,
       })
     );
   };
@@ -85,17 +89,24 @@ export const BusinessPartner = () => {
     <div>
       <h2 id="business-partner-heading" data-cy="BusinessPartnerHeading">
         <Translate contentKey="donauStorageIncApp.businessPartner.home.title">Business Partners</Translate>
-        <div className="d-flex justify-content-end">
-          <Button className="me-2" color="info" onClick={handleSyncList} disabled={loading}>
-            <FontAwesomeIcon icon="sync" spin={loading} />{' '}
-            <Translate contentKey="donauStorageIncApp.businessPartner.home.refreshListLabel">Refresh List</Translate>
-          </Button>
-          <Link to="/business-partner/new" className="btn btn-primary jh-create-entity" id="jh-create-entity" data-cy="entityCreateButton">
-            <FontAwesomeIcon icon="plus" />
-            &nbsp;
-            <Translate contentKey="donauStorageIncApp.businessPartner.home.createLabel">Create new Business Partner</Translate>
-          </Link>
-        </div>
+        {chosenCompany.id != 0 && (
+          <div className="d-flex justify-content-end">
+            <Button className="me-2" color="info" onClick={handleSyncList} disabled={loading}>
+              <FontAwesomeIcon icon="sync" spin={loading} />{' '}
+              <Translate contentKey="donauStorageIncApp.businessPartner.home.refreshListLabel">Refresh List</Translate>
+            </Button>
+            <Link
+              to="/business-partner/new"
+              className="btn btn-primary jh-create-entity"
+              id="jh-create-entity"
+              data-cy="entityCreateButton"
+            >
+              <FontAwesomeIcon icon="plus" />
+              &nbsp;
+              <Translate contentKey="donauStorageIncApp.businessPartner.home.createLabel">Create new Business Partner</Translate>
+            </Link>
+          </div>
+        )}
       </h2>
       <div className="table-responsive">
         {businessPartnerList && businessPartnerList.length > 0 ? (
@@ -200,12 +211,16 @@ export const BusinessPartner = () => {
               ))}
             </tbody>
           </Table>
-        ) : (
+        ) : chosenCompany.id != 0 ? (
           !loading && (
             <div className="alert alert-warning">
               <Translate contentKey="donauStorageIncApp.businessPartner.home.notFound">No Business Partners found</Translate>
             </div>
           )
+        ) : (
+          <div className="alert alert-warning">
+            <Translate contentKey="donauStorageIncApp.businessPartner.home.noBusinessYearChosen">No Business Year Chosen</Translate>
+          </div>
         )}
       </div>
       {totalItems ? (

@@ -10,6 +10,14 @@ const initialState = {
   lastChange: TranslatorContext.context.lastChange,
   loadedKeys: [],
   loadedLocales: [],
+  businessYear: {
+    id: 0,
+    yearCode: '',
+    completed: false,
+    company: {
+      id: 0,
+    },
+  },
 };
 
 export type LocaleState = Readonly<typeof initialState>;
@@ -80,10 +88,14 @@ export const LocaleSlice = createSlice({
       }
       state.lastChange = TranslatorContext.context.lastChange;
     },
+    setBusinessYear(state, action) {
+      const businessYear = action.payload;
+      state.businessYear = businessYear;
+    },
   },
 });
 
-export const { updateLocale, loaded } = LocaleSlice.actions;
+export const { updateLocale, loaded, setBusinessYear } = LocaleSlice.actions;
 
 // Reducer
 export default LocaleSlice.reducer;

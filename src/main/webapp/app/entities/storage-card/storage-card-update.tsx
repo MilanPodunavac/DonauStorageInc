@@ -38,6 +38,8 @@ export const StorageCardUpdate = () => {
   const updating = useAppSelector(state => state.storageCard.updating);
   const updateSuccess = useAppSelector(state => state.storageCard.updateSuccess);
 
+  const chosenBusinessYear = useAppSelector(state => state.locale.businessYear);
+
   const handleClose = () => {
     navigate('/storage-card' + location.search);
   };
@@ -78,7 +80,9 @@ export const StorageCardUpdate = () => {
 
   const defaultValues = () =>
     isNew
-      ? {}
+      ? {
+          businessYear: chosenBusinessYear?.id,
+        }
       : {
           ...storageCardEntity,
           businessYear: storageCardEntity?.businessYear?.id,
@@ -119,15 +123,17 @@ export const StorageCardUpdate = () => {
                 label={translate('donauStorageIncApp.storageCard.businessYear')}
                 type="select"
                 required
-                disabled={!isNew}
+                disabled={!isNew || chosenBusinessYear.id != 0}
               >
                 <option value="" key="0" />
                 {businessYears
-                  ? businessYears.map(otherEntity => (
-                      <option value={otherEntity.id} key={otherEntity.id}>
-                        {otherEntity.yearCode}
-                      </option>
-                    ))
+                  ? businessYears
+                      .filter(e => e.company.id === chosenBusinessYear.company.id)
+                      .map(otherEntity => (
+                        <option value={otherEntity.id} key={otherEntity.id}>
+                          {otherEntity.yearCode}
+                        </option>
+                      ))
                   : null}
               </ValidatedField>
               <FormText>
@@ -144,11 +150,13 @@ export const StorageCardUpdate = () => {
               >
                 <option value="" key="0" />
                 {resources
-                  ? resources.map(otherEntity => (
-                      <option value={otherEntity.id} key={otherEntity.id}>
-                        {otherEntity.name}
-                      </option>
-                    ))
+                  ? resources
+                      .filter(e => e.company.id === chosenBusinessYear.company.id)
+                      .map(otherEntity => (
+                        <option value={otherEntity.id} key={otherEntity.id}>
+                          {otherEntity.name}
+                        </option>
+                      ))
                   : null}
               </ValidatedField>
               <FormText>
@@ -165,11 +173,13 @@ export const StorageCardUpdate = () => {
               >
                 <option value="" key="0" />
                 {storages
-                  ? storages.map(otherEntity => (
-                      <option value={otherEntity.id} key={otherEntity.id}>
-                        {otherEntity.name}
-                      </option>
-                    ))
+                  ? storages
+                      .filter(e => e.company.id === chosenBusinessYear.company.id)
+                      .map(otherEntity => (
+                        <option value={otherEntity.id} key={otherEntity.id}>
+                          {otherEntity.name}
+                        </option>
+                      ))
                   : null}
               </ValidatedField>
               <FormText>

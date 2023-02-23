@@ -12,6 +12,8 @@ import { ICompany } from 'app/shared/model/company.model';
 import { getEntities as getCompanies } from 'app/entities/company/company.reducer';
 import { IBusinessYear } from 'app/shared/model/business-year.model';
 import { getEntity, updateEntity, createEntity, reset, complete } from './business-year.reducer';
+import { hasAnyAuthority } from 'app/shared/auth/private-route';
+import { AUTHORITIES } from 'app/config/constants';
 
 export const BusinessYearUpdate = () => {
   const dispatch = useAppDispatch();
@@ -26,6 +28,9 @@ export const BusinessYearUpdate = () => {
   const loading = useAppSelector(state => state.businessYear.loading);
   const updating = useAppSelector(state => state.businessYear.updating);
   const updateSuccess = useAppSelector(state => state.businessYear.updateSuccess);
+
+  const chosenCompany = useAppSelector(state => state.locale.businessYear.company);
+  const isAdmin = useAppSelector(state => hasAnyAuthority(state.authentication.account.authorities, [AUTHORITIES.ADMIN]));
 
   const handleClose = () => {
     navigate('/business-year' + location.search);
@@ -65,6 +70,7 @@ export const BusinessYearUpdate = () => {
     isNew
       ? {
           completed: false,
+          company: chosenCompany?.id,
         }
       : {
           ...businessYearEntity,
@@ -109,7 +115,7 @@ export const BusinessYearUpdate = () => {
                 label={translate('donauStorageIncApp.businessYear.company')}
                 type="select"
                 required
-                disabled={!isNew}
+                disabled={!isNew || (chosenCompany.id != 0 && !isAdmin)}
               >
                 <option value="" key="0" />
                 {companies

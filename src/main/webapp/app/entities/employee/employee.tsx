@@ -26,12 +26,16 @@ export const Employee = () => {
   const loading = useAppSelector(state => state.employee.loading);
   const totalItems = useAppSelector(state => state.employee.totalItems);
 
+  const chosenCompany = useAppSelector(state => state.locale.businessYear.company);
+
   const getAllEntities = () => {
     dispatch(
       getEntities({
         page: paginationState.activePage - 1,
         size: paginationState.itemsPerPage,
         sort: `${paginationState.sort},${paginationState.order}`,
+
+        query: chosenCompany.id,
       })
     );
   };
@@ -85,20 +89,22 @@ export const Employee = () => {
     <div>
       <h2 id="employee-heading" data-cy="EmployeeHeading">
         <Translate contentKey="donauStorageIncApp.employee.home.title">Employees</Translate>
-        <div className="d-flex justify-content-end">
-          <Button className="me-2" color="info" onClick={handleSyncList} disabled={loading}>
-            <FontAwesomeIcon icon="sync" spin={loading} />{' '}
-            <Translate contentKey="donauStorageIncApp.employee.home.refreshListLabel">Refresh List</Translate>
-          </Button>
-          <Link to="/employee/new" className="btn btn-primary jh-create-entity" id="jh-create-entity" data-cy="entityCreateButton">
-            <FontAwesomeIcon icon="plus" />
-            &nbsp;
-            <Translate contentKey="donauStorageIncApp.employee.home.createLabel">Create new Employee</Translate>
-          </Link>
-        </div>
+        {chosenCompany.id != 0 && (
+          <div className="d-flex justify-content-end">
+            <Button className="me-2" color="info" onClick={handleSyncList} disabled={loading}>
+              <FontAwesomeIcon icon="sync" spin={loading} />{' '}
+              <Translate contentKey="donauStorageIncApp.employee.home.refreshListLabel">Refresh List</Translate>
+            </Button>
+            <Link to="/employee/new" className="btn btn-primary jh-create-entity" id="jh-create-entity" data-cy="entityCreateButton">
+              <FontAwesomeIcon icon="plus" />
+              &nbsp;
+              <Translate contentKey="donauStorageIncApp.employee.home.createLabel">Create new Employee</Translate>
+            </Link>
+          </div>
+        )}
       </h2>
       <div className="table-responsive">
-        {employeeList && employeeList.length > 0 ? (
+        {employeeList && employeeList.length > 0 && chosenCompany.id != 0 ? (
           <Table responsive>
             <thead>
               <tr>
@@ -197,12 +203,16 @@ export const Employee = () => {
               ))}
             </tbody>
           </Table>
-        ) : (
+        ) : chosenCompany.id != 0 ? (
           !loading && (
             <div className="alert alert-warning">
               <Translate contentKey="donauStorageIncApp.employee.home.notFound">No Employees found</Translate>
             </div>
           )
+        ) : (
+          <div className="alert alert-warning">
+            <Translate contentKey="donauStorageIncApp.employee.home.noBusinessYearChosen">No Business Year Chosen</Translate>
+          </div>
         )}
       </div>
       {totalItems ? (

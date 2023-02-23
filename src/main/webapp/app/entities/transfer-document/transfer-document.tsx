@@ -26,12 +26,16 @@ export const TransferDocument = () => {
   const loading = useAppSelector(state => state.transferDocument.loading);
   const totalItems = useAppSelector(state => state.transferDocument.totalItems);
 
+  const chosenBusinessYear = useAppSelector(state => state.locale.businessYear);
+
   const getAllEntities = () => {
     dispatch(
       getEntities({
         page: paginationState.activePage - 1,
         size: paginationState.itemsPerPage,
         sort: `${paginationState.sort},${paginationState.order}`,
+
+        query: chosenBusinessYear.id,
       })
     );
   };
@@ -85,20 +89,27 @@ export const TransferDocument = () => {
     <div>
       <h2 id="transfer-document-heading" data-cy="TransferDocumentHeading">
         <Translate contentKey="donauStorageIncApp.transferDocument.home.title">Transfer Documents</Translate>
-        <div className="d-flex justify-content-end">
-          <Button className="me-2" color="info" onClick={handleSyncList} disabled={loading}>
-            <FontAwesomeIcon icon="sync" spin={loading} />{' '}
-            <Translate contentKey="donauStorageIncApp.transferDocument.home.refreshListLabel">Refresh List</Translate>
-          </Button>
-          <Link to="/transfer-document/new" className="btn btn-primary jh-create-entity" id="jh-create-entity" data-cy="entityCreateButton">
-            <FontAwesomeIcon icon="plus" />
-            &nbsp;
-            <Translate contentKey="donauStorageIncApp.transferDocument.home.createLabel">Create new Transfer Document</Translate>
-          </Link>
-        </div>
+        {chosenBusinessYear.id != 0 && (
+          <div className="d-flex justify-content-end">
+            <Button className="me-2" color="info" onClick={handleSyncList} disabled={loading}>
+              <FontAwesomeIcon icon="sync" spin={loading} />{' '}
+              <Translate contentKey="donauStorageIncApp.transferDocument.home.refreshListLabel">Refresh List</Translate>
+            </Button>
+            <Link
+              to="/transfer-document/new"
+              className="btn btn-primary jh-create-entity"
+              id="jh-create-entity"
+              data-cy="entityCreateButton"
+            >
+              <FontAwesomeIcon icon="plus" />
+              &nbsp;
+              <Translate contentKey="donauStorageIncApp.transferDocument.home.createLabel">Create new Transfer Document</Translate>
+            </Link>
+          </div>
+        )}
       </h2>
       <div className="table-responsive">
-        {transferDocumentList && transferDocumentList.length > 0 ? (
+        {transferDocumentList && transferDocumentList.length > 0 && chosenBusinessYear.id != 0 ? (
           <Table responsive>
             <thead>
               <tr>
@@ -245,12 +256,16 @@ export const TransferDocument = () => {
               ))}
             </tbody>
           </Table>
-        ) : (
+        ) : chosenBusinessYear.id != 0 ? (
           !loading && (
             <div className="alert alert-warning">
               <Translate contentKey="donauStorageIncApp.transferDocument.home.notFound">No Transfer Documents found</Translate>
             </div>
           )
+        ) : (
+          <div className="alert alert-warning">
+            <Translate contentKey="donauStorageIncApp.transferDocument.home.noBusinessYearChosen">No Business Year Chosen</Translate>
+          </div>
         )}
       </div>
       {totalItems ? (

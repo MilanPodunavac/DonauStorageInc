@@ -26,12 +26,16 @@ export const StorageCard = () => {
   const loading = useAppSelector(state => state.storageCard.loading);
   const totalItems = useAppSelector(state => state.storageCard.totalItems);
 
+  const chosenBusinessYear = useAppSelector(state => state.locale.businessYear);
+
   const getAllEntities = () => {
     dispatch(
       getEntities({
         page: paginationState.activePage - 1,
         size: paginationState.itemsPerPage,
         sort: `${paginationState.sort},${paginationState.order}`,
+
+        query: chosenBusinessYear.id,
       })
     );
   };
@@ -85,20 +89,22 @@ export const StorageCard = () => {
     <div>
       <h2 id="storage-card-heading" data-cy="StorageCardHeading">
         <Translate contentKey="donauStorageIncApp.storageCard.home.title">Storage Cards</Translate>
-        <div className="d-flex justify-content-end">
-          <Button className="me-2" color="info" onClick={handleSyncList} disabled={loading}>
-            <FontAwesomeIcon icon="sync" spin={loading} />{' '}
-            <Translate contentKey="donauStorageIncApp.storageCard.home.refreshListLabel">Refresh List</Translate>
-          </Button>
-          <Link to="/storage-card/new" className="btn btn-primary jh-create-entity" id="jh-create-entity" data-cy="entityCreateButton">
-            <FontAwesomeIcon icon="plus" />
-            &nbsp;
-            <Translate contentKey="donauStorageIncApp.storageCard.home.createLabel">Create new Storage Card</Translate>
-          </Link>
-        </div>
+        {chosenBusinessYear.id != 0 && (
+          <div className="d-flex justify-content-end">
+            <Button className="me-2" color="info" onClick={handleSyncList} disabled={loading}>
+              <FontAwesomeIcon icon="sync" spin={loading} />{' '}
+              <Translate contentKey="donauStorageIncApp.storageCard.home.refreshListLabel">Refresh List</Translate>
+            </Button>
+            <Link to="/storage-card/new" className="btn btn-primary jh-create-entity" id="jh-create-entity" data-cy="entityCreateButton">
+              <FontAwesomeIcon icon="plus" />
+              &nbsp;
+              <Translate contentKey="donauStorageIncApp.storageCard.home.createLabel">Create new Storage Card</Translate>
+            </Link>
+          </div>
+        )}
       </h2>
       <div className="table-responsive">
-        {storageCardList && storageCardList.length > 0 ? (
+        {storageCardList && storageCardList.length > 0 && chosenBusinessYear.id ? (
           <Table responsive>
             <thead>
               <tr>
@@ -188,12 +194,16 @@ export const StorageCard = () => {
               ))}
             </tbody>
           </Table>
-        ) : (
+        ) : chosenBusinessYear.id != 0 ? (
           !loading && (
             <div className="alert alert-warning">
               <Translate contentKey="donauStorageIncApp.storageCard.home.notFound">No Storage Cards found</Translate>
             </div>
           )
+        ) : (
+          <div className="alert alert-warning">
+            <Translate contentKey="donauStorageIncApp.storageCard.home.noBusinessYearChosen">No Business Year Chosen</Translate>
+          </div>
         )}
       </div>
       {totalItems ? (

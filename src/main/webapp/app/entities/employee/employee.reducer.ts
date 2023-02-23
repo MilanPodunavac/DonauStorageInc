@@ -4,6 +4,7 @@ import { createAsyncThunk, isFulfilled, isPending, isRejected } from '@reduxjs/t
 import { cleanEntity } from 'app/shared/util/entity-utils';
 import { IQueryParams, createEntitySlice, EntityState, serializeAxiosError } from 'app/shared/reducers/reducer.utils';
 import { IEmployee, defaultValue } from 'app/shared/model/employee.model';
+import { useAppSelector } from 'app/config/store';
 
 const initialState: EntityState<IEmployee> = {
   loading: false,
@@ -19,8 +20,10 @@ const apiUrl = 'api/xt/employees';
 
 // Actions
 
-export const getEntities = createAsyncThunk('employee/fetch_entity_list', async ({ page, size, sort }: IQueryParams) => {
-  const requestUrl = `${apiUrl}${sort ? `?page=${page}&size=${size}&sort=${sort}&` : '?'}cacheBuster=${new Date().getTime()}`;
+export const getEntities = createAsyncThunk('employee/fetch_entity_list', async ({ query, page, size, sort }: IQueryParams) => {
+  const requestUrl = `${apiUrl}?${query ? `companyId.equals=${query}&` : ''}${
+    sort ? `page=${page}&size=${size}&sort=${sort}&` : ''
+  }cacheBuster=${new Date().getTime()}`;
   return axios.get<IEmployee[]>(requestUrl);
 });
 
