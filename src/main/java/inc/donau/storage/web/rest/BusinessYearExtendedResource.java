@@ -1,5 +1,8 @@
 package inc.donau.storage.web.rest;
 
+import inc.donau.storage.domain.enumeration.CensusDocumentStatus;
+import inc.donau.storage.domain.enumeration.TransferDocumentStatus;
+import inc.donau.storage.domain.enumeration.TransferDocumentType;
 import inc.donau.storage.repository.BusinessYearExtendedRepository;
 import inc.donau.storage.service.*;
 import inc.donau.storage.service.criteria.*;
@@ -147,6 +150,47 @@ public class BusinessYearExtendedResource extends BusinessYearResource {
                 )
                 .build();
         }
+
+        LongFilter longFilter = new LongFilter();
+        longFilter.setEquals(id);
+
+        TransferDocumentCriteria transferDocumentCriteria = new TransferDocumentCriteria();
+        transferDocumentCriteria.setBusinessYearId(longFilter);
+        TransferDocumentCriteria.TransferDocumentStatusFilter transferDocumentStatusFilter = new TransferDocumentCriteria.TransferDocumentStatusFilter();
+        transferDocumentStatusFilter.setEquals(TransferDocumentStatus.IN_PREPARATION);
+        transferDocumentCriteria.setStatus(transferDocumentStatusFilter);
+        List<TransferDocumentDTO> transferDocuments = transferDocumentQueryExtendedService.findByCriteria(transferDocumentCriteria);
+        if (!transferDocuments.isEmpty()) return ResponseEntity
+            .badRequest()
+            .headers(
+                HeaderUtil.createFailureAlert(
+                    applicationName,
+                    true,
+                    ENTITY_NAME,
+                    "transferDocumentIncompleteBusinessYear",
+                    "A transfer document id: " + transferDocuments.get(0).getId() + " " + "is incomplete, year cannot be completed"
+                )
+            )
+            .build();
+
+        CensusDocumentCriteria censusDocumentCriteria = new CensusDocumentCriteria();
+        censusDocumentCriteria.setBusinessYearId(longFilter);
+        CensusDocumentCriteria.CensusDocumentStatusFilter censusDocumentStatusFilter = new CensusDocumentCriteria.CensusDocumentStatusFilter();
+        censusDocumentStatusFilter.setEquals(CensusDocumentStatus.INCOMPLETE);
+        censusDocumentCriteria.setStatus(censusDocumentStatusFilter);
+        List<CensusDocumentDTO> censusDocuments = censusDocumentQueryExtendedService.findByCriteria(censusDocumentCriteria);
+        if (!censusDocuments.isEmpty()) return ResponseEntity
+            .badRequest()
+            .headers(
+                HeaderUtil.createFailureAlert(
+                    applicationName,
+                    true,
+                    ENTITY_NAME,
+                    "censusDocumentIncompleteBusinessYear",
+                    "A census document id: " + censusDocuments.get(0).getId() + " " + "is incomplete, year cannot be completed"
+                )
+            )
+            .build();
 
         BusinessYearDTO result = businessYearExtendedService.complete(businessYearDTO);
 
