@@ -25,6 +25,11 @@
     {
       "fieldName": "employment",
       "fieldType": "Boolean"
+    },
+    {
+      "fieldName": "profileImage",
+      "fieldType": "byte[]",
+      "fieldTypeBlobContent": "image"
     }
   ],
   "fluentMethods": true,

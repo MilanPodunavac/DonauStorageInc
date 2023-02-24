@@ -141,6 +141,11 @@ relationship OneToOne {
 	/** Prevent delete */
 	Person
 
+	/** Cascade delete */
+	Employee{user required} 
+	to 
+	/** Prevent delete */
+	User
 
 	/** Cascade delete */
 	BusinessPartner{legalEntityInfo required} 

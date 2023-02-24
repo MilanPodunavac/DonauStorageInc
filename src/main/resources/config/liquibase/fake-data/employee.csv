@@ -1,3 +1,1 @@
-id;unique_identification_number;birth_date;disability;employment;address_id;personal_info_id;company_id;user_id
-1;"7664817647263";2023-01-08T17:00:33;false;true;1;1;1;1
-2;"1615331164507";2023-01-08T14:59:29;true;true;2;2;2;2
+id;unique_identification_number;birth_date;disability;employment;profile_image;profile_image_content_type;address_id;personal_info_id;company_id;user_id

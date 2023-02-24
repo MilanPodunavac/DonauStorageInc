@@ -28,11 +28,9 @@ export const EntitiesMenu = ({ isAdmin }: { isAdmin: boolean }) => {
           <Translate contentKey="global.menu.entities.legalEntity" />
         </MenuItem>
       */}
-      {isAdmin && (
-        <MenuItem icon="asterisk" to="/employee">
-          <Translate contentKey="global.menu.entities.employee" />
-        </MenuItem>
-      )}
+      <MenuItem icon="asterisk" to="/employee">
+        <Translate contentKey="global.menu.entities.employee" />
+      </MenuItem>
       {/*
         <MenuItem icon="asterisk" to="/contact-info">
           <Translate contentKey="global.menu.entities.contactInfo" />

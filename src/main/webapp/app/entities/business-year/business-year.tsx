@@ -4,13 +4,14 @@ import { Button, Table } from 'reactstrap';
 import { Translate, getSortState, JhiPagination, JhiItemCount } from 'react-jhipster';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-import { APP_DATE_FORMAT, APP_LOCAL_DATE_FORMAT } from 'app/config/constants';
+import { APP_DATE_FORMAT, APP_LOCAL_DATE_FORMAT, AUTHORITIES } from 'app/config/constants';
 import { ASC, DESC, ITEMS_PER_PAGE, SORT } from 'app/shared/util/pagination.constants';
 import { overridePaginationStateWithQueryParams } from 'app/shared/util/entity-utils';
 import { useAppDispatch, useAppSelector } from 'app/config/store';
 
 import { IBusinessYear } from 'app/shared/model/business-year.model';
 import { getEntities } from './business-year.reducer';
+import { hasAnyAuthority } from 'app/shared/auth/private-route';
 
 export const BusinessYear = () => {
   const dispatch = useAppDispatch();
@@ -27,6 +28,7 @@ export const BusinessYear = () => {
   const totalItems = useAppSelector(state => state.businessYear.totalItems);
 
   const chosenCompany = useAppSelector(state => state.locale.businessYear.company);
+  const isAdmin = useAppSelector(state => hasAnyAuthority(state.authentication.account.authorities, [AUTHORITIES.ADMIN]));
 
   const getAllEntities = () => {
     dispatch(
@@ -89,22 +91,23 @@ export const BusinessYear = () => {
     <div>
       <h2 id="business-year-heading" data-cy="BusinessYearHeading">
         <Translate contentKey="donauStorageIncApp.businessYear.home.title">Business Years</Translate>
-        {chosenCompany.id != 0 && (
-          <div className="d-flex justify-content-end">
-            <Button className="me-2" color="info" onClick={handleSyncList} disabled={loading}>
-              <FontAwesomeIcon icon="sync" spin={loading} />{' '}
-              <Translate contentKey="donauStorageIncApp.businessYear.home.refreshListLabel">Refresh List</Translate>
-            </Button>
-            <Link to="/business-year/new" className="btn btn-primary jh-create-entity" id="jh-create-entity" data-cy="entityCreateButton">
-              <FontAwesomeIcon icon="plus" />
-              &nbsp;
-              <Translate contentKey="donauStorageIncApp.businessYear.home.createLabel">Create new Business Year</Translate>
-            </Link>
-          </div>
-        )}
+        {chosenCompany.id != 0 ||
+          (isAdmin && (
+            <div className="d-flex justify-content-end">
+              <Button className="me-2" color="info" onClick={handleSyncList} disabled={loading}>
+                <FontAwesomeIcon icon="sync" spin={loading} />{' '}
+                <Translate contentKey="donauStorageIncApp.businessYear.home.refreshListLabel">Refresh List</Translate>
+              </Button>
+              <Link to="/business-year/new" className="btn btn-primary jh-create-entity" id="jh-create-entity" data-cy="entityCreateButton">
+                <FontAwesomeIcon icon="plus" />
+                &nbsp;
+                <Translate contentKey="donauStorageIncApp.businessYear.home.createLabel">Create new Business Year</Translate>
+              </Link>
+            </div>
+          ))}
       </h2>
       <div className="table-responsive">
-        {businessYearList && businessYearList.length > 0 && chosenCompany.id != 0 ? (
+        {businessYearList && businessYearList.length > 0 && (chosenCompany.id != 0 || isAdmin) ? (
           <Table responsive>
             <thead>
               <tr>
@@ -178,7 +181,7 @@ export const BusinessYear = () => {
               ))}
             </tbody>
           </Table>
-        ) : chosenCompany.id != 0 ? (
+        ) : chosenCompany.id != 0 || isAdmin ? (
           !loading && (
             <div className="alert alert-warning">
               <Translate contentKey="donauStorageIncApp.businessYear.home.notFound">No Business Years found</Translate>

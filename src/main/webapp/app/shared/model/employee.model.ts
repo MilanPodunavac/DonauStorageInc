@@ -10,6 +10,8 @@ export interface IEmployee {
   birthDate?: string;
   disability?: boolean;
   employment?: boolean | null;
+  profileImageContentType?: string | null;
+  profileImage?: string | null;
   address?: IAddress;
   personalInfo?: IPerson;
   company?: ICompany;

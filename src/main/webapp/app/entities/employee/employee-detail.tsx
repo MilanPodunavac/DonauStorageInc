@@ -1,18 +1,21 @@
 import React, { useEffect } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { Button, UncontrolledTooltip, Row, Col } from 'reactstrap';
-import { Translate, TextFormat } from 'react-jhipster';
+import { Translate, TextFormat, openFile, byteSize } from 'react-jhipster';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-import { APP_DATE_FORMAT, APP_LOCAL_DATE_FORMAT } from 'app/config/constants';
+import { APP_DATE_FORMAT, APP_LOCAL_DATE_FORMAT, AUTHORITIES } from 'app/config/constants';
 import { useAppDispatch, useAppSelector } from 'app/config/store';
 
 import { getEntity } from './employee.reducer';
+import { hasAnyAuthority } from 'app/shared/auth/private-route';
 
 export const EmployeeDetail = () => {
   const dispatch = useAppDispatch();
 
   const { id } = useParams<'id'>();
+
+  const isAdmin = useAppSelector(state => hasAnyAuthority(state.authentication.account.authorities, [AUTHORITIES.ADMIN]));
 
   useEffect(() => {
     dispatch(getEntity(id));
@@ -100,11 +103,30 @@ export const EmployeeDetail = () => {
           <dt>
             <Translate contentKey="donauStorageIncApp.employee.company">Company</Translate>
           </dt>
-          <dd>{employeeEntity.company ? employeeEntity.legalEntityInfo.name : ''}</dd>
+          <dd>{employeeEntity.company ? employeeEntity.company.legalEntityInfo.name : ''}</dd>
           <dt>
             <Translate contentKey="donauStorageIncApp.employee.user">User</Translate>
           </dt>
           <dd>{employeeEntity.user ? employeeEntity.user.login : ''}</dd>
+          <dt>
+            <span id="profileImage">
+              <Translate contentKey="donauStorageIncApp.employee.profileImage">Profile Image</Translate>
+            </span>
+          </dt>
+          <dd>
+            {employeeEntity.profileImage ? (
+              <div>
+                {employeeEntity.profileImageContentType ? (
+                  <a onClick={openFile(employeeEntity.profileImageContentType, employeeEntity.profileImage)}>
+                    <img
+                      src={`data:${employeeEntity.profileImageContentType};base64,${employeeEntity.profileImage}`}
+                      style={{ maxHeight: '30px' }}
+                    />
+                  </a>
+                ) : null}
+              </div>
+            ) : null}
+          </dd>
         </dl>
         <Button tag={Link} to="/employee" replace color="info" data-cy="entityDetailsBackButton">
           <FontAwesomeIcon icon="arrow-left" />{' '}
@@ -113,12 +135,14 @@ export const EmployeeDetail = () => {
           </span>
         </Button>
         &nbsp;
-        <Button tag={Link} to={`/employee/${employeeEntity.id}/edit`} replace color="primary">
-          <FontAwesomeIcon icon="pencil-alt" />{' '}
-          <span className="d-none d-md-inline">
-            <Translate contentKey="entity.action.edit">Edit</Translate>
-          </span>
-        </Button>
+        {isAdmin && (
+          <Button tag={Link} to={`/employee/${employeeEntity.id}/edit`} replace color="primary">
+            <FontAwesomeIcon icon="pencil-alt" />{' '}
+            <span className="d-none d-md-inline">
+              <Translate contentKey="entity.action.edit">Edit</Translate>
+            </span>
+          </Button>
+        )}
       </Col>
     </Row>
   );

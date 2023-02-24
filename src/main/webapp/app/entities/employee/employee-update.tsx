@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { Button, Row, Col, FormText, UncontrolledTooltip } from 'reactstrap';
-import { isNumber, Translate, translate, ValidatedField, ValidatedForm } from 'react-jhipster';
+import { isNumber, Translate, translate, ValidatedBlobField, ValidatedField, ValidatedForm } from 'react-jhipster';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { convertDateTimeFromServer, convertDateTimeToServer, displayDefaultDateTime } from 'app/shared/util/date-utils';
@@ -93,7 +93,7 @@ export const EmployeeUpdate = () => {
           }
         : people.find(it => it.id.toString() === values.personalInfo.toString()),
       company: companies.find(it => it.id.toString() === values.company.toString()),
-      //user: users.find(it => it.id.toString() === values.user.toString()),
+      user: users.find(it => it.id.toString() === values.user.toString()),
     };
 
     if (isNew) {
@@ -394,6 +394,14 @@ export const EmployeeUpdate = () => {
               <FormText>
                 <Translate contentKey="entity.validation.required">This field is required.</Translate>
               </FormText>
+              <ValidatedBlobField
+                label={translate('donauStorageIncApp.employee.profileImage')}
+                id="employee-profileImage"
+                name="profileImage"
+                data-cy="profileImage"
+                isImage
+                accept="image/*"
+              />
               {!isNew && (
                 <ValidatedField
                   id="employee-user"

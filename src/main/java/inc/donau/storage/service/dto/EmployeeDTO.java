@@ -4,6 +4,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import java.io.Serializable;
 import java.time.ZonedDateTime;
 import java.util.Objects;
+import javax.persistence.Lob;
 import javax.validation.constraints.*;
 
 /**
@@ -30,6 +31,10 @@ public class EmployeeDTO implements Serializable {
 
     private Boolean employment;
 
+    @Lob
+    private byte[] profileImage;
+
+    private String profileImageContentType;
     private AddressDTO address;
 
     private PersonDTO personalInfo;
@@ -76,6 +81,22 @@ public class EmployeeDTO implements Serializable {
 
     public void setEmployment(Boolean employment) {
         this.employment = employment;
+    }
+
+    public byte[] getProfileImage() {
+        return profileImage;
+    }
+
+    public void setProfileImage(byte[] profileImage) {
+        this.profileImage = profileImage;
+    }
+
+    public String getProfileImageContentType() {
+        return profileImageContentType;
+    }
+
+    public void setProfileImageContentType(String profileImageContentType) {
+        this.profileImageContentType = profileImageContentType;
     }
 
     public AddressDTO getAddress() {
@@ -140,6 +161,7 @@ public class EmployeeDTO implements Serializable {
             ", birthDate='" + getBirthDate() + "'" +
             ", disability='" + getDisability() + "'" +
             ", employment='" + getEmployment() + "'" +
+            ", profileImage='" + getProfileImage() + "'" +
             ", address=" + getAddress() +
             ", personalInfo=" + getPersonalInfo() +
             ", company=" + getCompany() +

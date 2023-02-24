@@ -41,6 +41,7 @@ import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.Base64Utils;
 
 /**
  * Integration tests for the {@link EmployeeResource} REST controller.
@@ -63,6 +64,11 @@ class EmployeeResourceIT {
 
     private static final Boolean DEFAULT_EMPLOYMENT = false;
     private static final Boolean UPDATED_EMPLOYMENT = true;
+
+    private static final byte[] DEFAULT_PROFILE_IMAGE = TestUtil.createByteArray(1, "0");
+    private static final byte[] UPDATED_PROFILE_IMAGE = TestUtil.createByteArray(1, "1");
+    private static final String DEFAULT_PROFILE_IMAGE_CONTENT_TYPE = "image/jpg";
+    private static final String UPDATED_PROFILE_IMAGE_CONTENT_TYPE = "image/png";
 
     private static final String ENTITY_API_URL = "/api/employees";
     private static final String ENTITY_API_URL_ID = ENTITY_API_URL + "/{id}";
@@ -101,7 +107,9 @@ class EmployeeResourceIT {
             .uniqueIdentificationNumber(DEFAULT_UNIQUE_IDENTIFICATION_NUMBER)
             .birthDate(DEFAULT_BIRTH_DATE)
             .disability(DEFAULT_DISABILITY)
-            .employment(DEFAULT_EMPLOYMENT);
+            .employment(DEFAULT_EMPLOYMENT)
+            .profileImage(DEFAULT_PROFILE_IMAGE)
+            .profileImageContentType(DEFAULT_PROFILE_IMAGE_CONTENT_TYPE);
         // Add required entity
         Address address;
         if (TestUtil.findAll(em, Address.class).isEmpty()) {
@@ -151,7 +159,9 @@ class EmployeeResourceIT {
             .uniqueIdentificationNumber(UPDATED_UNIQUE_IDENTIFICATION_NUMBER)
             .birthDate(UPDATED_BIRTH_DATE)
             .disability(UPDATED_DISABILITY)
-            .employment(UPDATED_EMPLOYMENT);
+            .employment(UPDATED_EMPLOYMENT)
+            .profileImage(UPDATED_PROFILE_IMAGE)
+            .profileImageContentType(UPDATED_PROFILE_IMAGE_CONTENT_TYPE);
         // Add required entity
         Address address;
         if (TestUtil.findAll(em, Address.class).isEmpty()) {
@@ -213,6 +223,8 @@ class EmployeeResourceIT {
         assertThat(testEmployee.getBirthDate()).isEqualTo(DEFAULT_BIRTH_DATE);
         assertThat(testEmployee.getDisability()).isEqualTo(DEFAULT_DISABILITY);
         assertThat(testEmployee.getEmployment()).isEqualTo(DEFAULT_EMPLOYMENT);
+        assertThat(testEmployee.getProfileImage()).isEqualTo(DEFAULT_PROFILE_IMAGE);
+        assertThat(testEmployee.getProfileImageContentType()).isEqualTo(DEFAULT_PROFILE_IMAGE_CONTENT_TYPE);
     }
 
     @Test
@@ -303,7 +315,9 @@ class EmployeeResourceIT {
             .andExpect(jsonPath("$.[*].uniqueIdentificationNumber").value(hasItem(DEFAULT_UNIQUE_IDENTIFICATION_NUMBER)))
             .andExpect(jsonPath("$.[*].birthDate").value(hasItem(sameInstant(DEFAULT_BIRTH_DATE))))
             .andExpect(jsonPath("$.[*].disability").value(hasItem(DEFAULT_DISABILITY.booleanValue())))
-            .andExpect(jsonPath("$.[*].employment").value(hasItem(DEFAULT_EMPLOYMENT.booleanValue())));
+            .andExpect(jsonPath("$.[*].employment").value(hasItem(DEFAULT_EMPLOYMENT.booleanValue())))
+            .andExpect(jsonPath("$.[*].profileImageContentType").value(hasItem(DEFAULT_PROFILE_IMAGE_CONTENT_TYPE)))
+            .andExpect(jsonPath("$.[*].profileImage").value(hasItem(Base64Utils.encodeToString(DEFAULT_PROFILE_IMAGE))));
     }
 
     @SuppressWarnings({ "unchecked" })
@@ -338,7 +352,9 @@ class EmployeeResourceIT {
             .andExpect(jsonPath("$.uniqueIdentificationNumber").value(DEFAULT_UNIQUE_IDENTIFICATION_NUMBER))
             .andExpect(jsonPath("$.birthDate").value(sameInstant(DEFAULT_BIRTH_DATE)))
             .andExpect(jsonPath("$.disability").value(DEFAULT_DISABILITY.booleanValue()))
-            .andExpect(jsonPath("$.employment").value(DEFAULT_EMPLOYMENT.booleanValue()));
+            .andExpect(jsonPath("$.employment").value(DEFAULT_EMPLOYMENT.booleanValue()))
+            .andExpect(jsonPath("$.profileImageContentType").value(DEFAULT_PROFILE_IMAGE_CONTENT_TYPE))
+            .andExpect(jsonPath("$.profileImage").value(Base64Utils.encodeToString(DEFAULT_PROFILE_IMAGE)));
     }
 
     @Test
@@ -675,7 +691,9 @@ class EmployeeResourceIT {
             .andExpect(jsonPath("$.[*].uniqueIdentificationNumber").value(hasItem(DEFAULT_UNIQUE_IDENTIFICATION_NUMBER)))
             .andExpect(jsonPath("$.[*].birthDate").value(hasItem(sameInstant(DEFAULT_BIRTH_DATE))))
             .andExpect(jsonPath("$.[*].disability").value(hasItem(DEFAULT_DISABILITY.booleanValue())))
-            .andExpect(jsonPath("$.[*].employment").value(hasItem(DEFAULT_EMPLOYMENT.booleanValue())));
+            .andExpect(jsonPath("$.[*].employment").value(hasItem(DEFAULT_EMPLOYMENT.booleanValue())))
+            .andExpect(jsonPath("$.[*].profileImageContentType").value(hasItem(DEFAULT_PROFILE_IMAGE_CONTENT_TYPE)))
+            .andExpect(jsonPath("$.[*].profileImage").value(hasItem(Base64Utils.encodeToString(DEFAULT_PROFILE_IMAGE))));
 
         // Check, that the count call also returns 1
         restEmployeeMockMvc
@@ -727,7 +745,9 @@ class EmployeeResourceIT {
             .uniqueIdentificationNumber(UPDATED_UNIQUE_IDENTIFICATION_NUMBER)
             .birthDate(UPDATED_BIRTH_DATE)
             .disability(UPDATED_DISABILITY)
-            .employment(UPDATED_EMPLOYMENT);
+            .employment(UPDATED_EMPLOYMENT)
+            .profileImage(UPDATED_PROFILE_IMAGE)
+            .profileImageContentType(UPDATED_PROFILE_IMAGE_CONTENT_TYPE);
         EmployeeDTO employeeDTO = employeeMapper.toDto(updatedEmployee);
 
         restEmployeeMockMvc
@@ -746,6 +766,8 @@ class EmployeeResourceIT {
         assertThat(testEmployee.getBirthDate()).isEqualTo(UPDATED_BIRTH_DATE);
         assertThat(testEmployee.getDisability()).isEqualTo(UPDATED_DISABILITY);
         assertThat(testEmployee.getEmployment()).isEqualTo(UPDATED_EMPLOYMENT);
+        assertThat(testEmployee.getProfileImage()).isEqualTo(UPDATED_PROFILE_IMAGE);
+        assertThat(testEmployee.getProfileImageContentType()).isEqualTo(UPDATED_PROFILE_IMAGE_CONTENT_TYPE);
     }
 
     @Test
@@ -825,7 +847,12 @@ class EmployeeResourceIT {
         Employee partialUpdatedEmployee = new Employee();
         partialUpdatedEmployee.setId(employee.getId());
 
-        partialUpdatedEmployee.birthDate(UPDATED_BIRTH_DATE).disability(UPDATED_DISABILITY).employment(UPDATED_EMPLOYMENT);
+        partialUpdatedEmployee
+            .birthDate(UPDATED_BIRTH_DATE)
+            .disability(UPDATED_DISABILITY)
+            .employment(UPDATED_EMPLOYMENT)
+            .profileImage(UPDATED_PROFILE_IMAGE)
+            .profileImageContentType(UPDATED_PROFILE_IMAGE_CONTENT_TYPE);
 
         restEmployeeMockMvc
             .perform(
@@ -843,6 +870,8 @@ class EmployeeResourceIT {
         assertThat(testEmployee.getBirthDate()).isEqualTo(UPDATED_BIRTH_DATE);
         assertThat(testEmployee.getDisability()).isEqualTo(UPDATED_DISABILITY);
         assertThat(testEmployee.getEmployment()).isEqualTo(UPDATED_EMPLOYMENT);
+        assertThat(testEmployee.getProfileImage()).isEqualTo(UPDATED_PROFILE_IMAGE);
+        assertThat(testEmployee.getProfileImageContentType()).isEqualTo(UPDATED_PROFILE_IMAGE_CONTENT_TYPE);
     }
 
     @Test
@@ -861,7 +890,9 @@ class EmployeeResourceIT {
             .uniqueIdentificationNumber(UPDATED_UNIQUE_IDENTIFICATION_NUMBER)
             .birthDate(UPDATED_BIRTH_DATE)
             .disability(UPDATED_DISABILITY)
-            .employment(UPDATED_EMPLOYMENT);
+            .employment(UPDATED_EMPLOYMENT)
+            .profileImage(UPDATED_PROFILE_IMAGE)
+            .profileImageContentType(UPDATED_PROFILE_IMAGE_CONTENT_TYPE);
 
         restEmployeeMockMvc
             .perform(
@@ -879,6 +910,8 @@ class EmployeeResourceIT {
         assertThat(testEmployee.getBirthDate()).isEqualTo(UPDATED_BIRTH_DATE);
         assertThat(testEmployee.getDisability()).isEqualTo(UPDATED_DISABILITY);
         assertThat(testEmployee.getEmployment()).isEqualTo(UPDATED_EMPLOYMENT);
+        assertThat(testEmployee.getProfileImage()).isEqualTo(UPDATED_PROFILE_IMAGE);
+        assertThat(testEmployee.getProfileImageContentType()).isEqualTo(UPDATED_PROFILE_IMAGE_CONTENT_TYPE);
     }
 
     @Test

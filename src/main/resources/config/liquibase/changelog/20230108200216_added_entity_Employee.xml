@@ -26,6 +26,12 @@
             <column name="employment" type="boolean">
                 <constraints nullable="true" />
             </column>
+            <column name="profile_image" type="${blobType}">
+                <constraints nullable="true" />
+            </column>
+            <column name="profile_image_content_type" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
             <column name="address_id" type="bigint">
                 <constraints nullable="false" unique="true" uniqueConstraintName="ux_employee__address_id" />
             </column>
@@ -64,6 +70,8 @@
             <column name="birth_date" type="date"/>
             <column name="disability" type="boolean"/>
             <column name="employment" type="boolean"/>
+            <column name="profile_image" type="blob"/>
+            <column name="profile_image_content_type" type="string"/>
             <column name="address_id" type="numeric"/>
             <column name="personal_info_id" type="numeric"/>
             <column name="company_id" type="numeric"/>

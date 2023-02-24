@@ -1,16 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { Button, Table } from 'reactstrap';
-import { Translate, TextFormat, getSortState, JhiPagination, JhiItemCount } from 'react-jhipster';
+import { Translate, TextFormat, getSortState, JhiPagination, JhiItemCount, openFile, byteSize } from 'react-jhipster';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-import { APP_DATE_FORMAT, APP_LOCAL_DATE_FORMAT } from 'app/config/constants';
+import { APP_DATE_FORMAT, APP_LOCAL_DATE_FORMAT, AUTHORITIES } from 'app/config/constants';
 import { ASC, DESC, ITEMS_PER_PAGE, SORT } from 'app/shared/util/pagination.constants';
 import { overridePaginationStateWithQueryParams } from 'app/shared/util/entity-utils';
 import { useAppDispatch, useAppSelector } from 'app/config/store';
 
 import { IEmployee } from 'app/shared/model/employee.model';
 import { getEntities } from './employee.reducer';
+import { hasAnyAuthority } from 'app/shared/auth/private-route';
 
 export const Employee = () => {
   const dispatch = useAppDispatch();
@@ -27,6 +28,7 @@ export const Employee = () => {
   const totalItems = useAppSelector(state => state.employee.totalItems);
 
   const chosenCompany = useAppSelector(state => state.locale.businessYear.company);
+  const isAdmin = useAppSelector(state => hasAnyAuthority(state.authentication.account.authorities, [AUTHORITIES.ADMIN]));
 
   const getAllEntities = () => {
     dispatch(
@@ -133,8 +135,8 @@ export const Employee = () => {
                 <th>
                   <Translate contentKey="donauStorageIncApp.employee.company">Company</Translate> <FontAwesomeIcon icon="sort" />
                 </th>
-                <th>
-                  <Translate contentKey="donauStorageIncApp.employee.user">User</Translate> <FontAwesomeIcon icon="sort" />
+                <th className="hand" onClick={sort('profileImage')}>
+                  <Translate contentKey="donauStorageIncApp.employee.profileImage">Profile Image</Translate> <FontAwesomeIcon icon="sort" />
                 </th>
                 <th />
               </tr>
@@ -164,7 +166,21 @@ export const Employee = () => {
                   <td>
                     {employee.company ? <Link to={`/company/${employee.company.id}`}>{employee.company.legalEntityInfo.name}</Link> : ''}
                   </td>
-                  <td>{employee.user ? employee.user.login : ''}</td>
+                  <td>
+                    {employee.profileImage ? (
+                      <div>
+                        {employee.profileImageContentType ? (
+                          <a onClick={openFile(employee.profileImageContentType, employee.profileImage)}>
+                            <img
+                              src={`data:${employee.profileImageContentType};base64,${employee.profileImage}`}
+                              style={{ maxHeight: '30px' }}
+                            />
+                            &nbsp;
+                          </a>
+                        ) : null}
+                      </div>
+                    ) : null}
+                  </td>
                   <td className="text-end">
                     <div className="btn-group flex-btn-group-container">
                       <Button tag={Link} to={`/employee/${employee.id}`} color="info" size="sm" data-cy="entityDetailsButton">
@@ -173,18 +189,20 @@ export const Employee = () => {
                           <Translate contentKey="entity.action.view">View</Translate>
                         </span>
                       </Button>
-                      <Button
-                        tag={Link}
-                        to={`/employee/${employee.id}/edit?page=${paginationState.activePage}&sort=${paginationState.sort},${paginationState.order}`}
-                        color="primary"
-                        size="sm"
-                        data-cy="entityEditButton"
-                      >
-                        <FontAwesomeIcon icon="pencil-alt" />{' '}
-                        <span className="d-none d-md-inline">
-                          <Translate contentKey="entity.action.edit">Edit</Translate>
-                        </span>
-                      </Button>
+                      {isAdmin && (
+                        <Button
+                          tag={Link}
+                          to={`/employee/${employee.id}/edit?page=${paginationState.activePage}&sort=${paginationState.sort},${paginationState.order}`}
+                          color="primary"
+                          size="sm"
+                          data-cy="entityEditButton"
+                        >
+                          <FontAwesomeIcon icon="pencil-alt" />{' '}
+                          <span className="d-none d-md-inline">
+                            <Translate contentKey="entity.action.edit">Edit</Translate>
+                          </span>
+                        </Button>
+                      )}
                       <Button
                         tag={Link}
                         to={`/employee/${employee.id}/delete?page=${paginationState.activePage}&sort=${paginationState.sort},${paginationState.order}`}

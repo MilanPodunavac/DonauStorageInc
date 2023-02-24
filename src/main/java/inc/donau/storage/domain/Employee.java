@@ -44,6 +44,13 @@ public class Employee implements Serializable {
     @Column(name = "employment")
     private Boolean employment;
 
+    @Lob
+    @Column(name = "profile_image")
+    private byte[] profileImage;
+
+    @Column(name = "profile_image_content_type")
+    private String profileImageContentType;
+
     /**
      * Cascade delete
      */
@@ -67,7 +74,7 @@ public class Employee implements Serializable {
     @JsonIgnoreProperties(value = { "legalEntityInfo", "resources", "businessPartners", "businessYears", "employees" }, allowSetters = true)
     private Company company;
 
-    @OneToOne(optional = false)
+    @OneToOne(optional = false, cascade = CascadeType.REMOVE)
     @NotNull
     @JoinColumn(unique = true)
     private User user;
@@ -137,6 +144,32 @@ public class Employee implements Serializable {
 
     public void setEmployment(Boolean employment) {
         this.employment = employment;
+    }
+
+    public byte[] getProfileImage() {
+        return this.profileImage;
+    }
+
+    public Employee profileImage(byte[] profileImage) {
+        this.setProfileImage(profileImage);
+        return this;
+    }
+
+    public void setProfileImage(byte[] profileImage) {
+        this.profileImage = profileImage;
+    }
+
+    public String getProfileImageContentType() {
+        return this.profileImageContentType;
+    }
+
+    public Employee profileImageContentType(String profileImageContentType) {
+        this.profileImageContentType = profileImageContentType;
+        return this;
+    }
+
+    public void setProfileImageContentType(String profileImageContentType) {
+        this.profileImageContentType = profileImageContentType;
     }
 
     public Address getAddress() {
@@ -219,6 +252,8 @@ public class Employee implements Serializable {
             ", birthDate='" + getBirthDate() + "'" +
             ", disability='" + getDisability() + "'" +
             ", employment='" + getEmployment() + "'" +
+            ", profileImage='" + getProfileImage() + "'" +
+            ", profileImageContentType='" + getProfileImageContentType() + "'" +
             "}";
     }
 }
