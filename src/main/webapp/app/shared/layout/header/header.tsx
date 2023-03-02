@@ -58,7 +58,7 @@ const Header = (props: IHeaderProps) => {
         <Collapse isOpen={menuOpen} navbar>
           <Nav id="header-tabs" className="ms-auto" navbar>
             {props.chosenBusinessYear.id != 0 && <BusinessYearButton businessYear={props.chosenBusinessYear} />}
-            <ChooseBusinessYearButton businessYear={props.chosenBusinessYear} />
+            {props.isAuthenticated && <ChooseBusinessYearButton businessYear={props.chosenBusinessYear} />}
             <Home />
             {props.isAuthenticated && <EntitiesMenu isAdmin={props.isAdmin} />}
             {props.isAuthenticated && props.isAdmin && (

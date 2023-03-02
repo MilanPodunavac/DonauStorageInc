@@ -137,11 +137,13 @@ export const CensusDocumentUpdate = () => {
               >
                 <option value="" key="0" />
                 {storages
-                  ? storages.map(otherEntity => (
-                      <option value={otherEntity.id} key={otherEntity.id}>
-                        {otherEntity.name}
-                      </option>
-                    ))
+                  ? storages
+                      .filter(e => e.company.id === chosenBusinessYear.company.id)
+                      .map(otherEntity => (
+                        <option value={otherEntity.id} key={otherEntity.id}>
+                          {otherEntity.name}
+                        </option>
+                      ))
                   : null}
               </ValidatedField>
               <FormText>
@@ -204,6 +206,7 @@ export const CensusDocumentUpdate = () => {
                 {employees
                   ? employees
                       .filter(e => e.company.id === chosenBusinessYear.company.id)
+                      .filter(e => e.employment === true)
                       .map(otherEntity => (
                         <option value={otherEntity.id} key={otherEntity.id}>
                           {otherEntity.personalInfo.firstName + ' ' + otherEntity.personalInfo.lastName}
@@ -227,6 +230,7 @@ export const CensusDocumentUpdate = () => {
                 {employees
                   ? employees
                       .filter(e => e.company.id === chosenBusinessYear.company.id)
+                      .filter(e => e.employment === true)
                       .map(otherEntity => (
                         <option value={otherEntity.id} key={otherEntity.id}>
                           {otherEntity.personalInfo.firstName + ' ' + otherEntity.personalInfo.lastName}
@@ -250,6 +254,7 @@ export const CensusDocumentUpdate = () => {
                 {employees
                   ? employees
                       .filter(e => e.company.id === chosenBusinessYear.company.id)
+                      .filter(e => e.employment === true)
                       .map(otherEntity => (
                         <option value={otherEntity.id} key={otherEntity.id}>
                           {otherEntity.personalInfo.firstName + ' ' + otherEntity.personalInfo.lastName}
