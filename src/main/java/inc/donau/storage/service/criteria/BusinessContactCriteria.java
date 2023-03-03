@@ -25,6 +25,8 @@ public class BusinessContactCriteria implements Serializable, Criteria {
 
     private LongFilter personalInfoId;
 
+    private LongFilter businessPartnerId;
+
     private Boolean distinct;
 
     public BusinessContactCriteria() {}
@@ -32,6 +34,7 @@ public class BusinessContactCriteria implements Serializable, Criteria {
     public BusinessContactCriteria(BusinessContactCriteria other) {
         this.id = other.id == null ? null : other.id.copy();
         this.personalInfoId = other.personalInfoId == null ? null : other.personalInfoId.copy();
+        this.businessPartnerId = other.businessPartnerId == null ? null : other.businessPartnerId.copy();
         this.distinct = other.distinct;
     }
 
@@ -70,6 +73,21 @@ public class BusinessContactCriteria implements Serializable, Criteria {
         this.personalInfoId = personalInfoId;
     }
 
+    public LongFilter getBusinessPartnerId() {
+        return businessPartnerId;
+    }
+
+    public LongFilter businessPartnerId() {
+        if (businessPartnerId == null) {
+            businessPartnerId = new LongFilter();
+        }
+        return businessPartnerId;
+    }
+
+    public void setBusinessPartnerId(LongFilter businessPartnerId) {
+        this.businessPartnerId = businessPartnerId;
+    }
+
     public Boolean getDistinct() {
         return distinct;
     }
@@ -88,13 +106,16 @@ public class BusinessContactCriteria implements Serializable, Criteria {
         }
         final BusinessContactCriteria that = (BusinessContactCriteria) o;
         return (
-            Objects.equals(id, that.id) && Objects.equals(personalInfoId, that.personalInfoId) && Objects.equals(distinct, that.distinct)
+            Objects.equals(id, that.id) &&
+            Objects.equals(personalInfoId, that.personalInfoId) &&
+            Objects.equals(businessPartnerId, that.businessPartnerId) &&
+            Objects.equals(distinct, that.distinct)
         );
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, personalInfoId, distinct);
+        return Objects.hash(id, personalInfoId, businessPartnerId, distinct);
     }
 
     // prettier-ignore
@@ -103,6 +124,7 @@ public class BusinessContactCriteria implements Serializable, Criteria {
         return "BusinessContactCriteria{" +
             (id != null ? "id=" + id + ", " : "") +
             (personalInfoId != null ? "personalInfoId=" + personalInfoId + ", " : "") +
+            (businessPartnerId != null ? "businessPartnerId=" + businessPartnerId + ", " : "") +
             (distinct != null ? "distinct=" + distinct + ", " : "") +
             "}";
     }

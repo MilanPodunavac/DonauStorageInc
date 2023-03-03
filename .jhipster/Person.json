@@ -27,7 +27,7 @@
       "fieldName": "gender",
       "fieldType": "Gender",
       "fieldValidateRules": ["required"],
-      "fieldValues": "MALE,FEMALE,OTHER"
+      "fieldValues": "MALE (Male),FEMALE (Female),OTHER (Other)"
     }
   ],
   "fluentMethods": true,
@@ -38,11 +38,29 @@
   "relationships": [
     {
       "javadoc": "Email and phone number\\nCascade delete",
+      "otherEntityField": "email",
       "otherEntityName": "contactInfo",
+      "otherEntityRelationshipName": "person",
       "ownerSide": true,
       "relationshipName": "contactInfo",
       "relationshipType": "one-to-one",
       "relationshipValidateRules": "required"
+    },
+    {
+      "javadoc": "Prevent delete",
+      "otherEntityName": "businessContact",
+      "otherEntityRelationshipName": "personalInfo",
+      "ownerSide": false,
+      "relationshipName": "businessContact",
+      "relationshipType": "one-to-one"
+    },
+    {
+      "javadoc": "Prevent delete",
+      "otherEntityName": "employee",
+      "otherEntityRelationshipName": "personalInfo",
+      "ownerSide": false,
+      "relationshipName": "employee",
+      "relationshipType": "one-to-one"
     }
   ],
   "service": "serviceClass"

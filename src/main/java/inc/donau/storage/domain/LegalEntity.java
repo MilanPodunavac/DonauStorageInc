@@ -47,6 +47,7 @@ public class LegalEntity implements Serializable {
     /**
      * Email and phone number\nCascade delete
      */
+    @JsonIgnoreProperties(value = { "person", "legalEntity" }, allowSetters = true)
     @OneToOne(optional = false)
     @NotNull
     @JoinColumn(unique = true)
@@ -55,11 +56,28 @@ public class LegalEntity implements Serializable {
     /**
      * Cascade delete
      */
-    @JsonIgnoreProperties(value = { "city" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "city", "employee", "legalEntity", "storage" }, allowSetters = true)
     @OneToOne(optional = false)
     @NotNull
     @JoinColumn(unique = true)
     private Address address;
+
+    /**
+     * Prevent delete
+     */
+    @JsonIgnoreProperties(value = { "businessContact", "legalEntityInfo", "transfers", "company" }, allowSetters = true)
+    @OneToOne(mappedBy = "legalEntityInfo")
+    private BusinessPartner businessPartner;
+
+    /**
+     * Prevent delete
+     */
+    @JsonIgnoreProperties(
+        value = { "legalEntityInfo", "resources", "partners", "businessYears", "employees", "storages" },
+        allowSetters = true
+    )
+    @OneToOne(mappedBy = "legalEntityInfo")
+    private Company company;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
@@ -138,6 +156,44 @@ public class LegalEntity implements Serializable {
 
     public LegalEntity address(Address address) {
         this.setAddress(address);
+        return this;
+    }
+
+    public BusinessPartner getBusinessPartner() {
+        return this.businessPartner;
+    }
+
+    public void setBusinessPartner(BusinessPartner businessPartner) {
+        if (this.businessPartner != null) {
+            this.businessPartner.setLegalEntityInfo(null);
+        }
+        if (businessPartner != null) {
+            businessPartner.setLegalEntityInfo(this);
+        }
+        this.businessPartner = businessPartner;
+    }
+
+    public LegalEntity businessPartner(BusinessPartner businessPartner) {
+        this.setBusinessPartner(businessPartner);
+        return this;
+    }
+
+    public Company getCompany() {
+        return this.company;
+    }
+
+    public void setCompany(Company company) {
+        if (this.company != null) {
+            this.company.setLegalEntityInfo(null);
+        }
+        if (company != null) {
+            company.setLegalEntityInfo(this);
+        }
+        this.company = company;
+    }
+
+    public LegalEntity company(Company company) {
+        this.setCompany(company);
         return this;
     }
 

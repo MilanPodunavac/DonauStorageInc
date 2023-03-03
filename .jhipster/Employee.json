@@ -27,7 +27,7 @@
       "fieldType": "Boolean"
     },
     {
-      "fieldName": "profileImage",
+      "fieldName": "profilePicture",
       "fieldType": "byte[]",
       "fieldTypeBlobContent": "image"
     }
@@ -41,6 +41,7 @@
     {
       "javadoc": "Cascade delete",
       "otherEntityName": "address",
+      "otherEntityRelationshipName": "employee",
       "ownerSide": true,
       "relationshipName": "address",
       "relationshipType": "one-to-one",
@@ -49,27 +50,27 @@
     {
       "javadoc": "Cascade delete",
       "otherEntityName": "person",
+      "otherEntityRelationshipName": "employee",
       "ownerSide": true,
       "relationshipName": "personalInfo",
       "relationshipType": "one-to-one",
       "relationshipValidateRules": "required"
     },
     {
-      "otherEntityName": "company",
-      "otherEntityRelationshipName": "employee",
-      "relationshipName": "company",
-      "relationshipType": "many-to-one",
-      "relationshipValidateRules": "required"
-    },
-    {
-      "id": false,
+      "javadoc": "Cascade delete",
       "otherEntityField": "login",
       "otherEntityName": "user",
-      "otherEntityRelationshipName": "employee",
       "ownerSide": true,
       "relationshipName": "user",
       "relationshipType": "one-to-one",
-      "relationshipValidateRules": ["required"]
+      "relationshipValidateRules": "required"
+    },
+    {
+      "otherEntityName": "company",
+      "otherEntityRelationshipName": "employees",
+      "relationshipName": "company",
+      "relationshipType": "many-to-one",
+      "relationshipValidateRules": "required"
     }
   ],
   "service": "serviceClass"

@@ -45,16 +45,16 @@ public class Employee implements Serializable {
     private Boolean employment;
 
     @Lob
-    @Column(name = "profile_image")
-    private byte[] profileImage;
+    @Column(name = "profile_picture")
+    private byte[] profilePicture;
 
-    @Column(name = "profile_image_content_type")
-    private String profileImageContentType;
+    @Column(name = "profile_picture_content_type")
+    private String profilePictureContentType;
 
     /**
      * Cascade delete
      */
-    @JsonIgnoreProperties(value = { "city" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "city", "employee", "legalEntity", "storage" }, allowSetters = true)
     @OneToOne(optional = false, cascade = CascadeType.REMOVE)
     @NotNull
     @JoinColumn(unique = true)
@@ -63,21 +63,27 @@ public class Employee implements Serializable {
     /**
      * Cascade delete
      */
-    @JsonIgnoreProperties(value = { "contactInfo" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "contactInfo", "businessContact", "employee" }, allowSetters = true)
     @OneToOne(optional = false, cascade = CascadeType.REMOVE)
     @NotNull
     @JoinColumn(unique = true)
     private Person personalInfo;
 
-    @ManyToOne(optional = false)
-    @NotNull
-    @JsonIgnoreProperties(value = { "legalEntityInfo", "resources", "businessPartners", "businessYears", "employees" }, allowSetters = true)
-    private Company company;
-
-    @OneToOne(optional = false, cascade = CascadeType.REMOVE)
+    /**
+     * Cascade delete
+     */
+    @OneToOne(optional = false)
     @NotNull
     @JoinColumn(unique = true)
     private User user;
+
+    @ManyToOne(optional = false)
+    @NotNull
+    @JsonIgnoreProperties(
+        value = { "legalEntityInfo", "resources", "partners", "businessYears", "employees", "storages" },
+        allowSetters = true
+    )
+    private Company company;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
@@ -146,30 +152,30 @@ public class Employee implements Serializable {
         this.employment = employment;
     }
 
-    public byte[] getProfileImage() {
-        return this.profileImage;
+    public byte[] getProfilePicture() {
+        return this.profilePicture;
     }
 
-    public Employee profileImage(byte[] profileImage) {
-        this.setProfileImage(profileImage);
+    public Employee profilePicture(byte[] profilePicture) {
+        this.setProfilePicture(profilePicture);
         return this;
     }
 
-    public void setProfileImage(byte[] profileImage) {
-        this.profileImage = profileImage;
+    public void setProfilePicture(byte[] profilePicture) {
+        this.profilePicture = profilePicture;
     }
 
-    public String getProfileImageContentType() {
-        return this.profileImageContentType;
+    public String getProfilePictureContentType() {
+        return this.profilePictureContentType;
     }
 
-    public Employee profileImageContentType(String profileImageContentType) {
-        this.profileImageContentType = profileImageContentType;
+    public Employee profilePictureContentType(String profilePictureContentType) {
+        this.profilePictureContentType = profilePictureContentType;
         return this;
     }
 
-    public void setProfileImageContentType(String profileImageContentType) {
-        this.profileImageContentType = profileImageContentType;
+    public void setProfilePictureContentType(String profilePictureContentType) {
+        this.profilePictureContentType = profilePictureContentType;
     }
 
     public Address getAddress() {
@@ -198,19 +204,6 @@ public class Employee implements Serializable {
         return this;
     }
 
-    public Company getCompany() {
-        return this.company;
-    }
-
-    public void setCompany(Company company) {
-        this.company = company;
-    }
-
-    public Employee company(Company company) {
-        this.setCompany(company);
-        return this;
-    }
-
     public User getUser() {
         return this.user;
     }
@@ -221,6 +214,19 @@ public class Employee implements Serializable {
 
     public Employee user(User user) {
         this.setUser(user);
+        return this;
+    }
+
+    public Company getCompany() {
+        return this.company;
+    }
+
+    public void setCompany(Company company) {
+        this.company = company;
+    }
+
+    public Employee company(Company company) {
+        this.setCompany(company);
         return this;
     }
 
@@ -252,8 +258,8 @@ public class Employee implements Serializable {
             ", birthDate='" + getBirthDate() + "'" +
             ", disability='" + getDisability() + "'" +
             ", employment='" + getEmployment() + "'" +
-            ", profileImage='" + getProfileImage() + "'" +
-            ", profileImageContentType='" + getProfileImageContentType() + "'" +
+            ", profilePicture='" + getProfilePicture() + "'" +
+            ", profilePictureContentType='" + getProfilePictureContentType() + "'" +
             "}";
     }
 }

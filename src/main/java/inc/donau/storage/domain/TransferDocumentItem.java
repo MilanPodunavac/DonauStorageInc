@@ -41,6 +41,9 @@ public class TransferDocumentItem implements Serializable {
     @Column(name = "transfer_value")
     private Float transferValue;
 
+    /**
+     * Cascade delete
+     */
     @ManyToOne(optional = false)
     @NotNull
     @JsonIgnoreProperties(
@@ -51,7 +54,7 @@ public class TransferDocumentItem implements Serializable {
 
     @ManyToOne(optional = false)
     @NotNull
-    @JsonIgnoreProperties(value = { "censusItems", "transferDocumentItems", "unit", "company" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "censusItems", "transferItems", "unit", "company", "storageCards" }, allowSetters = true)
     private Resource resource;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here

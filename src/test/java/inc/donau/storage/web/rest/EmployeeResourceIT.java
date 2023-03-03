@@ -65,10 +65,10 @@ class EmployeeResourceIT {
     private static final Boolean DEFAULT_EMPLOYMENT = false;
     private static final Boolean UPDATED_EMPLOYMENT = true;
 
-    private static final byte[] DEFAULT_PROFILE_IMAGE = TestUtil.createByteArray(1, "0");
-    private static final byte[] UPDATED_PROFILE_IMAGE = TestUtil.createByteArray(1, "1");
-    private static final String DEFAULT_PROFILE_IMAGE_CONTENT_TYPE = "image/jpg";
-    private static final String UPDATED_PROFILE_IMAGE_CONTENT_TYPE = "image/png";
+    private static final byte[] DEFAULT_PROFILE_PICTURE = TestUtil.createByteArray(1, "0");
+    private static final byte[] UPDATED_PROFILE_PICTURE = TestUtil.createByteArray(1, "1");
+    private static final String DEFAULT_PROFILE_PICTURE_CONTENT_TYPE = "image/jpg";
+    private static final String UPDATED_PROFILE_PICTURE_CONTENT_TYPE = "image/png";
 
     private static final String ENTITY_API_URL = "/api/employees";
     private static final String ENTITY_API_URL_ID = ENTITY_API_URL + "/{id}";
@@ -108,8 +108,8 @@ class EmployeeResourceIT {
             .birthDate(DEFAULT_BIRTH_DATE)
             .disability(DEFAULT_DISABILITY)
             .employment(DEFAULT_EMPLOYMENT)
-            .profileImage(DEFAULT_PROFILE_IMAGE)
-            .profileImageContentType(DEFAULT_PROFILE_IMAGE_CONTENT_TYPE);
+            .profilePicture(DEFAULT_PROFILE_PICTURE)
+            .profilePictureContentType(DEFAULT_PROFILE_PICTURE_CONTENT_TYPE);
         // Add required entity
         Address address;
         if (TestUtil.findAll(em, Address.class).isEmpty()) {
@@ -131,6 +131,11 @@ class EmployeeResourceIT {
         }
         employee.setPersonalInfo(person);
         // Add required entity
+        User user = UserResourceIT.createEntity(em);
+        em.persist(user);
+        em.flush();
+        employee.setUser(user);
+        // Add required entity
         Company company;
         if (TestUtil.findAll(em, Company.class).isEmpty()) {
             company = CompanyResourceIT.createEntity(em);
@@ -140,11 +145,6 @@ class EmployeeResourceIT {
             company = TestUtil.findAll(em, Company.class).get(0);
         }
         employee.setCompany(company);
-        // Add required entity
-        User user = UserResourceIT.createEntity(em);
-        em.persist(user);
-        em.flush();
-        employee.setUser(user);
         return employee;
     }
 
@@ -160,8 +160,8 @@ class EmployeeResourceIT {
             .birthDate(UPDATED_BIRTH_DATE)
             .disability(UPDATED_DISABILITY)
             .employment(UPDATED_EMPLOYMENT)
-            .profileImage(UPDATED_PROFILE_IMAGE)
-            .profileImageContentType(UPDATED_PROFILE_IMAGE_CONTENT_TYPE);
+            .profilePicture(UPDATED_PROFILE_PICTURE)
+            .profilePictureContentType(UPDATED_PROFILE_PICTURE_CONTENT_TYPE);
         // Add required entity
         Address address;
         if (TestUtil.findAll(em, Address.class).isEmpty()) {
@@ -183,6 +183,11 @@ class EmployeeResourceIT {
         }
         employee.setPersonalInfo(person);
         // Add required entity
+        User user = UserResourceIT.createEntity(em);
+        em.persist(user);
+        em.flush();
+        employee.setUser(user);
+        // Add required entity
         Company company;
         if (TestUtil.findAll(em, Company.class).isEmpty()) {
             company = CompanyResourceIT.createUpdatedEntity(em);
@@ -192,11 +197,6 @@ class EmployeeResourceIT {
             company = TestUtil.findAll(em, Company.class).get(0);
         }
         employee.setCompany(company);
-        // Add required entity
-        User user = UserResourceIT.createEntity(em);
-        em.persist(user);
-        em.flush();
-        employee.setUser(user);
         return employee;
     }
 
@@ -223,8 +223,8 @@ class EmployeeResourceIT {
         assertThat(testEmployee.getBirthDate()).isEqualTo(DEFAULT_BIRTH_DATE);
         assertThat(testEmployee.getDisability()).isEqualTo(DEFAULT_DISABILITY);
         assertThat(testEmployee.getEmployment()).isEqualTo(DEFAULT_EMPLOYMENT);
-        assertThat(testEmployee.getProfileImage()).isEqualTo(DEFAULT_PROFILE_IMAGE);
-        assertThat(testEmployee.getProfileImageContentType()).isEqualTo(DEFAULT_PROFILE_IMAGE_CONTENT_TYPE);
+        assertThat(testEmployee.getProfilePicture()).isEqualTo(DEFAULT_PROFILE_PICTURE);
+        assertThat(testEmployee.getProfilePictureContentType()).isEqualTo(DEFAULT_PROFILE_PICTURE_CONTENT_TYPE);
     }
 
     @Test
@@ -316,8 +316,8 @@ class EmployeeResourceIT {
             .andExpect(jsonPath("$.[*].birthDate").value(hasItem(sameInstant(DEFAULT_BIRTH_DATE))))
             .andExpect(jsonPath("$.[*].disability").value(hasItem(DEFAULT_DISABILITY.booleanValue())))
             .andExpect(jsonPath("$.[*].employment").value(hasItem(DEFAULT_EMPLOYMENT.booleanValue())))
-            .andExpect(jsonPath("$.[*].profileImageContentType").value(hasItem(DEFAULT_PROFILE_IMAGE_CONTENT_TYPE)))
-            .andExpect(jsonPath("$.[*].profileImage").value(hasItem(Base64Utils.encodeToString(DEFAULT_PROFILE_IMAGE))));
+            .andExpect(jsonPath("$.[*].profilePictureContentType").value(hasItem(DEFAULT_PROFILE_PICTURE_CONTENT_TYPE)))
+            .andExpect(jsonPath("$.[*].profilePicture").value(hasItem(Base64Utils.encodeToString(DEFAULT_PROFILE_PICTURE))));
     }
 
     @SuppressWarnings({ "unchecked" })
@@ -353,8 +353,8 @@ class EmployeeResourceIT {
             .andExpect(jsonPath("$.birthDate").value(sameInstant(DEFAULT_BIRTH_DATE)))
             .andExpect(jsonPath("$.disability").value(DEFAULT_DISABILITY.booleanValue()))
             .andExpect(jsonPath("$.employment").value(DEFAULT_EMPLOYMENT.booleanValue()))
-            .andExpect(jsonPath("$.profileImageContentType").value(DEFAULT_PROFILE_IMAGE_CONTENT_TYPE))
-            .andExpect(jsonPath("$.profileImage").value(Base64Utils.encodeToString(DEFAULT_PROFILE_IMAGE)));
+            .andExpect(jsonPath("$.profilePictureContentType").value(DEFAULT_PROFILE_PICTURE_CONTENT_TYPE))
+            .andExpect(jsonPath("$.profilePicture").value(Base64Utils.encodeToString(DEFAULT_PROFILE_PICTURE)));
     }
 
     @Test
@@ -643,6 +643,21 @@ class EmployeeResourceIT {
 
     @Test
     @Transactional
+    void getAllEmployeesByUserIsEqualToSomething() throws Exception {
+        // Get already existing entity
+        User user = employee.getUser();
+        employeeRepository.saveAndFlush(employee);
+        Long userId = user.getId();
+
+        // Get all the employeeList where user equals to userId
+        defaultEmployeeShouldBeFound("userId.equals=" + userId);
+
+        // Get all the employeeList where user equals to (userId + 1)
+        defaultEmployeeShouldNotBeFound("userId.equals=" + (userId + 1));
+    }
+
+    @Test
+    @Transactional
     void getAllEmployeesByCompanyIsEqualToSomething() throws Exception {
         Company company;
         if (TestUtil.findAll(em, Company.class).isEmpty()) {
@@ -664,21 +679,6 @@ class EmployeeResourceIT {
         defaultEmployeeShouldNotBeFound("companyId.equals=" + (companyId + 1));
     }
 
-    @Test
-    @Transactional
-    void getAllEmployeesByUserIsEqualToSomething() throws Exception {
-        // Get already existing entity
-        User user = employee.getUser();
-        employeeRepository.saveAndFlush(employee);
-        Long userId = user.getId();
-
-        // Get all the employeeList where user equals to userId
-        defaultEmployeeShouldBeFound("userId.equals=" + userId);
-
-        // Get all the employeeList where user equals to (userId + 1)
-        defaultEmployeeShouldNotBeFound("userId.equals=" + (userId + 1));
-    }
-
     /**
      * Executes the search, and checks that the default entity is returned.
      */
@@ -692,8 +692,8 @@ class EmployeeResourceIT {
             .andExpect(jsonPath("$.[*].birthDate").value(hasItem(sameInstant(DEFAULT_BIRTH_DATE))))
             .andExpect(jsonPath("$.[*].disability").value(hasItem(DEFAULT_DISABILITY.booleanValue())))
             .andExpect(jsonPath("$.[*].employment").value(hasItem(DEFAULT_EMPLOYMENT.booleanValue())))
-            .andExpect(jsonPath("$.[*].profileImageContentType").value(hasItem(DEFAULT_PROFILE_IMAGE_CONTENT_TYPE)))
-            .andExpect(jsonPath("$.[*].profileImage").value(hasItem(Base64Utils.encodeToString(DEFAULT_PROFILE_IMAGE))));
+            .andExpect(jsonPath("$.[*].profilePictureContentType").value(hasItem(DEFAULT_PROFILE_PICTURE_CONTENT_TYPE)))
+            .andExpect(jsonPath("$.[*].profilePicture").value(hasItem(Base64Utils.encodeToString(DEFAULT_PROFILE_PICTURE))));
 
         // Check, that the count call also returns 1
         restEmployeeMockMvc
@@ -746,8 +746,8 @@ class EmployeeResourceIT {
             .birthDate(UPDATED_BIRTH_DATE)
             .disability(UPDATED_DISABILITY)
             .employment(UPDATED_EMPLOYMENT)
-            .profileImage(UPDATED_PROFILE_IMAGE)
-            .profileImageContentType(UPDATED_PROFILE_IMAGE_CONTENT_TYPE);
+            .profilePicture(UPDATED_PROFILE_PICTURE)
+            .profilePictureContentType(UPDATED_PROFILE_PICTURE_CONTENT_TYPE);
         EmployeeDTO employeeDTO = employeeMapper.toDto(updatedEmployee);
 
         restEmployeeMockMvc
@@ -766,8 +766,8 @@ class EmployeeResourceIT {
         assertThat(testEmployee.getBirthDate()).isEqualTo(UPDATED_BIRTH_DATE);
         assertThat(testEmployee.getDisability()).isEqualTo(UPDATED_DISABILITY);
         assertThat(testEmployee.getEmployment()).isEqualTo(UPDATED_EMPLOYMENT);
-        assertThat(testEmployee.getProfileImage()).isEqualTo(UPDATED_PROFILE_IMAGE);
-        assertThat(testEmployee.getProfileImageContentType()).isEqualTo(UPDATED_PROFILE_IMAGE_CONTENT_TYPE);
+        assertThat(testEmployee.getProfilePicture()).isEqualTo(UPDATED_PROFILE_PICTURE);
+        assertThat(testEmployee.getProfilePictureContentType()).isEqualTo(UPDATED_PROFILE_PICTURE_CONTENT_TYPE);
     }
 
     @Test
@@ -851,8 +851,8 @@ class EmployeeResourceIT {
             .birthDate(UPDATED_BIRTH_DATE)
             .disability(UPDATED_DISABILITY)
             .employment(UPDATED_EMPLOYMENT)
-            .profileImage(UPDATED_PROFILE_IMAGE)
-            .profileImageContentType(UPDATED_PROFILE_IMAGE_CONTENT_TYPE);
+            .profilePicture(UPDATED_PROFILE_PICTURE)
+            .profilePictureContentType(UPDATED_PROFILE_PICTURE_CONTENT_TYPE);
 
         restEmployeeMockMvc
             .perform(
@@ -870,8 +870,8 @@ class EmployeeResourceIT {
         assertThat(testEmployee.getBirthDate()).isEqualTo(UPDATED_BIRTH_DATE);
         assertThat(testEmployee.getDisability()).isEqualTo(UPDATED_DISABILITY);
         assertThat(testEmployee.getEmployment()).isEqualTo(UPDATED_EMPLOYMENT);
-        assertThat(testEmployee.getProfileImage()).isEqualTo(UPDATED_PROFILE_IMAGE);
-        assertThat(testEmployee.getProfileImageContentType()).isEqualTo(UPDATED_PROFILE_IMAGE_CONTENT_TYPE);
+        assertThat(testEmployee.getProfilePicture()).isEqualTo(UPDATED_PROFILE_PICTURE);
+        assertThat(testEmployee.getProfilePictureContentType()).isEqualTo(UPDATED_PROFILE_PICTURE_CONTENT_TYPE);
     }
 
     @Test
@@ -891,8 +891,8 @@ class EmployeeResourceIT {
             .birthDate(UPDATED_BIRTH_DATE)
             .disability(UPDATED_DISABILITY)
             .employment(UPDATED_EMPLOYMENT)
-            .profileImage(UPDATED_PROFILE_IMAGE)
-            .profileImageContentType(UPDATED_PROFILE_IMAGE_CONTENT_TYPE);
+            .profilePicture(UPDATED_PROFILE_PICTURE)
+            .profilePictureContentType(UPDATED_PROFILE_PICTURE_CONTENT_TYPE);
 
         restEmployeeMockMvc
             .perform(
@@ -910,8 +910,8 @@ class EmployeeResourceIT {
         assertThat(testEmployee.getBirthDate()).isEqualTo(UPDATED_BIRTH_DATE);
         assertThat(testEmployee.getDisability()).isEqualTo(UPDATED_DISABILITY);
         assertThat(testEmployee.getEmployment()).isEqualTo(UPDATED_EMPLOYMENT);
-        assertThat(testEmployee.getProfileImage()).isEqualTo(UPDATED_PROFILE_IMAGE);
-        assertThat(testEmployee.getProfileImageContentType()).isEqualTo(UPDATED_PROFILE_IMAGE_CONTENT_TYPE);
+        assertThat(testEmployee.getProfilePicture()).isEqualTo(UPDATED_PROFILE_PICTURE);
+        assertThat(testEmployee.getProfilePictureContentType()).isEqualTo(UPDATED_PROFILE_PICTURE_CONTENT_TYPE);
     }
 
     @Test

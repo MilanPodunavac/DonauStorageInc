@@ -14,7 +14,7 @@
       "fieldName": "type",
       "fieldType": "ResourceType",
       "fieldValidateRules": ["required"],
-      "fieldValues": "MATERIAL,PRODUCT,HALF_PRODUCT,ENERGY_SOURCE,WRITE_OFF"
+      "fieldValues": "MATERIAL (Material),PRODUCT (Product),HALF_PRODUCT (Half_product),ENERGY_SOURCE (Energy_source),WRITE_OFF (Write_off)"
     }
   ],
   "fluentMethods": true,
@@ -27,17 +27,18 @@
       "javadoc": "Prevent deletion",
       "otherEntityName": "censusItem",
       "otherEntityRelationshipName": "resource",
-      "relationshipName": "censusItem",
+      "relationshipName": "censusItems",
       "relationshipType": "one-to-many"
     },
     {
       "javadoc": "Prevent deletion",
       "otherEntityName": "transferDocumentItem",
       "otherEntityRelationshipName": "resource",
-      "relationshipName": "transferDocumentItem",
+      "relationshipName": "transferItems",
       "relationshipType": "one-to-many"
     },
     {
+      "otherEntityField": "name",
       "otherEntityName": "measurementUnit",
       "relationshipName": "unit",
       "relationshipType": "many-to-one",
@@ -45,10 +46,17 @@
     },
     {
       "otherEntityName": "company",
-      "otherEntityRelationshipName": "resource",
+      "otherEntityRelationshipName": "resources",
       "relationshipName": "company",
       "relationshipType": "many-to-one",
       "relationshipValidateRules": "required"
+    },
+    {
+      "javadoc": "Prevent deletion",
+      "otherEntityName": "storageCard",
+      "otherEntityRelationshipName": "resource",
+      "relationshipName": "storageCards",
+      "relationshipType": "one-to-many"
     }
   ],
   "service": "serviceClass"

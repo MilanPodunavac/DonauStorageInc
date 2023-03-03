@@ -2,6 +2,7 @@ package inc.donau.storage.web.rest;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.hasItem;
+import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -10,20 +11,29 @@ import inc.donau.storage.domain.CensusItem;
 import inc.donau.storage.domain.Company;
 import inc.donau.storage.domain.MeasurementUnit;
 import inc.donau.storage.domain.Resource;
+import inc.donau.storage.domain.StorageCard;
 import inc.donau.storage.domain.TransferDocumentItem;
 import inc.donau.storage.domain.enumeration.ResourceType;
 import inc.donau.storage.repository.ResourceRepository;
+import inc.donau.storage.service.ResourceService;
 import inc.donau.storage.service.criteria.ResourceCriteria;
 import inc.donau.storage.service.dto.ResourceDTO;
 import inc.donau.storage.service.mapper.ResourceMapper;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicLong;
 import javax.persistence.EntityManager;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
@@ -33,6 +43,7 @@ import org.springframework.transaction.annotation.Transactional;
  * Integration tests for the {@link ResourceResource} REST controller.
  */
 @IntegrationTest
+@ExtendWith(MockitoExtension.class)
 @AutoConfigureMockMvc
 @WithMockUser
 class ResourceResourceIT {
@@ -52,8 +63,14 @@ class ResourceResourceIT {
     @Autowired
     private ResourceRepository resourceRepository;
 
+    @Mock
+    private ResourceRepository resourceRepositoryMock;
+
     @Autowired
     private ResourceMapper resourceMapper;
+
+    @Mock
+    private ResourceService resourceServiceMock;
 
     @Autowired
     private EntityManager em;
@@ -219,6 +236,23 @@ class ResourceResourceIT {
             .andExpect(jsonPath("$.[*].type").value(hasItem(DEFAULT_TYPE.toString())));
     }
 
+    @SuppressWarnings({ "unchecked" })
+    void getAllResourcesWithEagerRelationshipsIsEnabled() throws Exception {
+        when(resourceServiceMock.findAllWithEagerRelationships(any())).thenReturn(new PageImpl(new ArrayList<>()));
+
+        restResourceMockMvc.perform(get(ENTITY_API_URL + "?eagerload=true")).andExpect(status().isOk());
+
+        verify(resourceServiceMock, times(1)).findAllWithEagerRelationships(any());
+    }
+
+    @SuppressWarnings({ "unchecked" })
+    void getAllResourcesWithEagerRelationshipsIsNotEnabled() throws Exception {
+        when(resourceServiceMock.findAllWithEagerRelationships(any())).thenReturn(new PageImpl(new ArrayList<>()));
+
+        restResourceMockMvc.perform(get(ENTITY_API_URL + "?eagerload=false")).andExpect(status().isOk());
+        verify(resourceRepositoryMock, times(1)).findAll(any(Pageable.class));
+    }
+
     @Test
     @Transactional
     void getResource() throws Exception {
@@ -359,48 +393,48 @@ class ResourceResourceIT {
 
     @Test
     @Transactional
-    void getAllResourcesByCensusItemIsEqualToSomething() throws Exception {
-        CensusItem censusItem;
+    void getAllResourcesByCensusItemsIsEqualToSomething() throws Exception {
+        CensusItem censusItems;
         if (TestUtil.findAll(em, CensusItem.class).isEmpty()) {
             resourceRepository.saveAndFlush(resource);
-            censusItem = CensusItemResourceIT.createEntity(em);
+            censusItems = CensusItemResourceIT.createEntity(em);
         } else {
-            censusItem = TestUtil.findAll(em, CensusItem.class).get(0);
+            censusItems = TestUtil.findAll(em, CensusItem.class).get(0);
         }
-        em.persist(censusItem);
+        em.persist(censusItems);
         em.flush();
-        resource.addCensusItem(censusItem);
+        resource.addCensusItems(censusItems);
         resourceRepository.saveAndFlush(resource);
-        Long censusItemId = censusItem.getId();
+        Long censusItemsId = censusItems.getId();
 
-        // Get all the resourceList where censusItem equals to censusItemId
-        defaultResourceShouldBeFound("censusItemId.equals=" + censusItemId);
+        // Get all the resourceList where censusItems equals to censusItemsId
+        defaultResourceShouldBeFound("censusItemsId.equals=" + censusItemsId);
 
-        // Get all the resourceList where censusItem equals to (censusItemId + 1)
-        defaultResourceShouldNotBeFound("censusItemId.equals=" + (censusItemId + 1));
+        // Get all the resourceList where censusItems equals to (censusItemsId + 1)
+        defaultResourceShouldNotBeFound("censusItemsId.equals=" + (censusItemsId + 1));
     }
 
     @Test
     @Transactional
-    void getAllResourcesByTransferDocumentItemIsEqualToSomething() throws Exception {
-        TransferDocumentItem transferDocumentItem;
+    void getAllResourcesByTransferItemsIsEqualToSomething() throws Exception {
+        TransferDocumentItem transferItems;
         if (TestUtil.findAll(em, TransferDocumentItem.class).isEmpty()) {
             resourceRepository.saveAndFlush(resource);
-            transferDocumentItem = TransferDocumentItemResourceIT.createEntity(em);
+            transferItems = TransferDocumentItemResourceIT.createEntity(em);
         } else {
-            transferDocumentItem = TestUtil.findAll(em, TransferDocumentItem.class).get(0);
+            transferItems = TestUtil.findAll(em, TransferDocumentItem.class).get(0);
         }
-        em.persist(transferDocumentItem);
+        em.persist(transferItems);
         em.flush();
-        resource.addTransferDocumentItem(transferDocumentItem);
+        resource.addTransferItems(transferItems);
         resourceRepository.saveAndFlush(resource);
-        Long transferDocumentItemId = transferDocumentItem.getId();
+        Long transferItemsId = transferItems.getId();
 
-        // Get all the resourceList where transferDocumentItem equals to transferDocumentItemId
-        defaultResourceShouldBeFound("transferDocumentItemId.equals=" + transferDocumentItemId);
+        // Get all the resourceList where transferItems equals to transferItemsId
+        defaultResourceShouldBeFound("transferItemsId.equals=" + transferItemsId);
 
-        // Get all the resourceList where transferDocumentItem equals to (transferDocumentItemId + 1)
-        defaultResourceShouldNotBeFound("transferDocumentItemId.equals=" + (transferDocumentItemId + 1));
+        // Get all the resourceList where transferItems equals to (transferItemsId + 1)
+        defaultResourceShouldNotBeFound("transferItemsId.equals=" + (transferItemsId + 1));
     }
 
     @Test
@@ -447,6 +481,29 @@ class ResourceResourceIT {
 
         // Get all the resourceList where company equals to (companyId + 1)
         defaultResourceShouldNotBeFound("companyId.equals=" + (companyId + 1));
+    }
+
+    @Test
+    @Transactional
+    void getAllResourcesByStorageCardsIsEqualToSomething() throws Exception {
+        StorageCard storageCards;
+        if (TestUtil.findAll(em, StorageCard.class).isEmpty()) {
+            resourceRepository.saveAndFlush(resource);
+            storageCards = StorageCardResourceIT.createEntity(em);
+        } else {
+            storageCards = TestUtil.findAll(em, StorageCard.class).get(0);
+        }
+        em.persist(storageCards);
+        em.flush();
+        resource.addStorageCards(storageCards);
+        resourceRepository.saveAndFlush(resource);
+        String storageCardsId = storageCards.getId();
+
+        // Get all the resourceList where storageCards equals to storageCardsId
+        defaultResourceShouldBeFound("storageCardsId.equals=" + storageCardsId);
+
+        // Get all the resourceList where storageCards equals to "invalid-id"
+        defaultResourceShouldNotBeFound("storageCardsId.equals=" + "invalid-id");
     }
 
     /**

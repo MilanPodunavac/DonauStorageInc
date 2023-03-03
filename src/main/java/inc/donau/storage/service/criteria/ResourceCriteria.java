@@ -45,13 +45,15 @@ public class ResourceCriteria implements Serializable, Criteria {
 
     private ResourceTypeFilter type;
 
-    private LongFilter censusItemId;
+    private LongFilter censusItemsId;
 
-    private LongFilter transferDocumentItemId;
+    private LongFilter transferItemsId;
 
     private LongFilter unitId;
 
     private LongFilter companyId;
+
+    private StringFilter storageCardsId;
 
     private Boolean distinct;
 
@@ -61,10 +63,11 @@ public class ResourceCriteria implements Serializable, Criteria {
         this.id = other.id == null ? null : other.id.copy();
         this.name = other.name == null ? null : other.name.copy();
         this.type = other.type == null ? null : other.type.copy();
-        this.censusItemId = other.censusItemId == null ? null : other.censusItemId.copy();
-        this.transferDocumentItemId = other.transferDocumentItemId == null ? null : other.transferDocumentItemId.copy();
+        this.censusItemsId = other.censusItemsId == null ? null : other.censusItemsId.copy();
+        this.transferItemsId = other.transferItemsId == null ? null : other.transferItemsId.copy();
         this.unitId = other.unitId == null ? null : other.unitId.copy();
         this.companyId = other.companyId == null ? null : other.companyId.copy();
+        this.storageCardsId = other.storageCardsId == null ? null : other.storageCardsId.copy();
         this.distinct = other.distinct;
     }
 
@@ -118,34 +121,34 @@ public class ResourceCriteria implements Serializable, Criteria {
         this.type = type;
     }
 
-    public LongFilter getCensusItemId() {
-        return censusItemId;
+    public LongFilter getCensusItemsId() {
+        return censusItemsId;
     }
 
-    public LongFilter censusItemId() {
-        if (censusItemId == null) {
-            censusItemId = new LongFilter();
+    public LongFilter censusItemsId() {
+        if (censusItemsId == null) {
+            censusItemsId = new LongFilter();
         }
-        return censusItemId;
+        return censusItemsId;
     }
 
-    public void setCensusItemId(LongFilter censusItemId) {
-        this.censusItemId = censusItemId;
+    public void setCensusItemsId(LongFilter censusItemsId) {
+        this.censusItemsId = censusItemsId;
     }
 
-    public LongFilter getTransferDocumentItemId() {
-        return transferDocumentItemId;
+    public LongFilter getTransferItemsId() {
+        return transferItemsId;
     }
 
-    public LongFilter transferDocumentItemId() {
-        if (transferDocumentItemId == null) {
-            transferDocumentItemId = new LongFilter();
+    public LongFilter transferItemsId() {
+        if (transferItemsId == null) {
+            transferItemsId = new LongFilter();
         }
-        return transferDocumentItemId;
+        return transferItemsId;
     }
 
-    public void setTransferDocumentItemId(LongFilter transferDocumentItemId) {
-        this.transferDocumentItemId = transferDocumentItemId;
+    public void setTransferItemsId(LongFilter transferItemsId) {
+        this.transferItemsId = transferItemsId;
     }
 
     public LongFilter getUnitId() {
@@ -178,6 +181,21 @@ public class ResourceCriteria implements Serializable, Criteria {
         this.companyId = companyId;
     }
 
+    public StringFilter getStorageCardsId() {
+        return storageCardsId;
+    }
+
+    public StringFilter storageCardsId() {
+        if (storageCardsId == null) {
+            storageCardsId = new StringFilter();
+        }
+        return storageCardsId;
+    }
+
+    public void setStorageCardsId(StringFilter storageCardsId) {
+        this.storageCardsId = storageCardsId;
+    }
+
     public Boolean getDistinct() {
         return distinct;
     }
@@ -199,17 +217,18 @@ public class ResourceCriteria implements Serializable, Criteria {
             Objects.equals(id, that.id) &&
             Objects.equals(name, that.name) &&
             Objects.equals(type, that.type) &&
-            Objects.equals(censusItemId, that.censusItemId) &&
-            Objects.equals(transferDocumentItemId, that.transferDocumentItemId) &&
+            Objects.equals(censusItemsId, that.censusItemsId) &&
+            Objects.equals(transferItemsId, that.transferItemsId) &&
             Objects.equals(unitId, that.unitId) &&
             Objects.equals(companyId, that.companyId) &&
+            Objects.equals(storageCardsId, that.storageCardsId) &&
             Objects.equals(distinct, that.distinct)
         );
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, type, censusItemId, transferDocumentItemId, unitId, companyId, distinct);
+        return Objects.hash(id, name, type, censusItemsId, transferItemsId, unitId, companyId, storageCardsId, distinct);
     }
 
     // prettier-ignore
@@ -219,10 +238,11 @@ public class ResourceCriteria implements Serializable, Criteria {
             (id != null ? "id=" + id + ", " : "") +
             (name != null ? "name=" + name + ", " : "") +
             (type != null ? "type=" + type + ", " : "") +
-            (censusItemId != null ? "censusItemId=" + censusItemId + ", " : "") +
-            (transferDocumentItemId != null ? "transferDocumentItemId=" + transferDocumentItemId + ", " : "") +
+            (censusItemsId != null ? "censusItemsId=" + censusItemsId + ", " : "") +
+            (transferItemsId != null ? "transferItemsId=" + transferItemsId + ", " : "") +
             (unitId != null ? "unitId=" + unitId + ", " : "") +
             (companyId != null ? "companyId=" + companyId + ", " : "") +
+            (storageCardsId != null ? "storageCardsId=" + storageCardsId + ", " : "") +
             (distinct != null ? "distinct=" + distinct + ", " : "") +
             "}";
     }

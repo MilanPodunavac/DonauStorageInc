@@ -96,6 +96,21 @@ public class ContactInfoQueryService extends QueryService<ContactInfo> {
             if (criteria.getPhoneNumber() != null) {
                 specification = specification.and(buildStringSpecification(criteria.getPhoneNumber(), ContactInfo_.phoneNumber));
             }
+            if (criteria.getPersonId() != null) {
+                specification =
+                    specification.and(
+                        buildSpecification(criteria.getPersonId(), root -> root.join(ContactInfo_.person, JoinType.LEFT).get(Person_.id))
+                    );
+            }
+            if (criteria.getLegalEntityId() != null) {
+                specification =
+                    specification.and(
+                        buildSpecification(
+                            criteria.getLegalEntityId(),
+                            root -> root.join(ContactInfo_.legalEntity, JoinType.LEFT).get(LegalEntity_.id)
+                        )
+                    );
+            }
         }
         return specification;
     }

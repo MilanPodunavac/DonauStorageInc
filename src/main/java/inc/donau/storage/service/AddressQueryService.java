@@ -105,6 +105,27 @@ public class AddressQueryService extends QueryService<Address> {
                         buildSpecification(criteria.getCityId(), root -> root.join(Address_.city, JoinType.LEFT).get(City_.id))
                     );
             }
+            if (criteria.getEmployeeId() != null) {
+                specification =
+                    specification.and(
+                        buildSpecification(criteria.getEmployeeId(), root -> root.join(Address_.employee, JoinType.LEFT).get(Employee_.id))
+                    );
+            }
+            if (criteria.getLegalEntityId() != null) {
+                specification =
+                    specification.and(
+                        buildSpecification(
+                            criteria.getLegalEntityId(),
+                            root -> root.join(Address_.legalEntity, JoinType.LEFT).get(LegalEntity_.id)
+                        )
+                    );
+            }
+            if (criteria.getStorageId() != null) {
+                specification =
+                    specification.and(
+                        buildSpecification(criteria.getStorageId(), root -> root.join(Address_.storage, JoinType.LEFT).get(Storage_.id))
+                    );
+            }
         }
         return specification;
     }

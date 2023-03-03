@@ -85,6 +85,15 @@ public class CacheConfiguration {
             createCache(cm, inc.donau.storage.domain.CensusDocument.class.getName());
             createCache(cm, inc.donau.storage.domain.CensusDocument.class.getName() + ".censusItems");
             createCache(cm, inc.donau.storage.domain.CensusItem.class.getName());
+            createCache(cm, inc.donau.storage.domain.BusinessPartner.class.getName() + ".transfers");
+            createCache(cm, inc.donau.storage.domain.Company.class.getName() + ".partners");
+            createCache(cm, inc.donau.storage.domain.Company.class.getName() + ".storages");
+            createCache(cm, inc.donau.storage.domain.BusinessYear.class.getName() + ".censusDocuments");
+            createCache(cm, inc.donau.storage.domain.BusinessYear.class.getName() + ".storageCards");
+            createCache(cm, inc.donau.storage.domain.BusinessYear.class.getName() + ".transfers");
+            createCache(cm, inc.donau.storage.domain.Resource.class.getName() + ".transferItems");
+            createCache(cm, inc.donau.storage.domain.Resource.class.getName() + ".storageCards");
+            createCache(cm, inc.donau.storage.domain.StorageCard.class.getName() + ".traffic");
             // jhipster-needle-ehcache-add-entry
         };
     }

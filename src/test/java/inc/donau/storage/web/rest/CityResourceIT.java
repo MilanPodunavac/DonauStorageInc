@@ -2,6 +2,7 @@ package inc.donau.storage.web.rest;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.hasItem;
+import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -9,17 +10,25 @@ import inc.donau.storage.IntegrationTest;
 import inc.donau.storage.domain.City;
 import inc.donau.storage.domain.Country;
 import inc.donau.storage.repository.CityRepository;
+import inc.donau.storage.service.CityService;
 import inc.donau.storage.service.criteria.CityCriteria;
 import inc.donau.storage.service.dto.CityDTO;
 import inc.donau.storage.service.mapper.CityMapper;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicLong;
 import javax.persistence.EntityManager;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
@@ -29,6 +38,7 @@ import org.springframework.transaction.annotation.Transactional;
  * Integration tests for the {@link CityResource} REST controller.
  */
 @IntegrationTest
+@ExtendWith(MockitoExtension.class)
 @AutoConfigureMockMvc
 @WithMockUser
 class CityResourceIT {
@@ -48,8 +58,14 @@ class CityResourceIT {
     @Autowired
     private CityRepository cityRepository;
 
+    @Mock
+    private CityRepository cityRepositoryMock;
+
     @Autowired
     private CityMapper cityMapper;
+
+    @Mock
+    private CityService cityServiceMock;
 
     @Autowired
     private EntityManager em;
@@ -193,6 +209,23 @@ class CityResourceIT {
             .andExpect(jsonPath("$.[*].id").value(hasItem(city.getId().intValue())))
             .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME)))
             .andExpect(jsonPath("$.[*].postalCode").value(hasItem(DEFAULT_POSTAL_CODE)));
+    }
+
+    @SuppressWarnings({ "unchecked" })
+    void getAllCitiesWithEagerRelationshipsIsEnabled() throws Exception {
+        when(cityServiceMock.findAllWithEagerRelationships(any())).thenReturn(new PageImpl(new ArrayList<>()));
+
+        restCityMockMvc.perform(get(ENTITY_API_URL + "?eagerload=true")).andExpect(status().isOk());
+
+        verify(cityServiceMock, times(1)).findAllWithEagerRelationships(any());
+    }
+
+    @SuppressWarnings({ "unchecked" })
+    void getAllCitiesWithEagerRelationshipsIsNotEnabled() throws Exception {
+        when(cityServiceMock.findAllWithEagerRelationships(any())).thenReturn(new PageImpl(new ArrayList<>()));
+
+        restCityMockMvc.perform(get(ENTITY_API_URL + "?eagerload=false")).andExpect(status().isOk());
+        verify(cityRepositoryMock, times(1)).findAll(any(Pageable.class));
     }
 
     @Test

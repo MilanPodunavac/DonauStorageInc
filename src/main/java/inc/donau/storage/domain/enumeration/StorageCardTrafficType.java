@@ -7,21 +7,31 @@ public enum StorageCardTrafficType {
     /**
      * sr: POCETNO_STANJE
      */
-    STARTING_BALANCE,
+    STARTING_BALANCE("Starting_balance"),
     /**
      * sr: PROMET
      */
-    TRANSFER,
+    TRANSFER("Transfer"),
     /**
      * sr: NIVELACIJA
      */
-    LEVELING,
+    LEVELING("Leveling"),
     /**
      * sr: KOREKCIJA
      */
-    CORRECTION,
+    CORRECTION("Correction"),
     /**
      * sr: STORNIRANJE
      */
-    REVERSAL,
+    REVERSAL("Reversal");
+
+    private final String value;
+
+    StorageCardTrafficType(String value) {
+        this.value = value;
+    }
+
+    public String getValue() {
+        return value;
+    }
 }

@@ -2,6 +2,7 @@ package inc.donau.storage.service.dto;
 
 import java.io.Serializable;
 import java.util.Objects;
+import javax.validation.constraints.*;
 
 /**
  * A DTO for the {@link inc.donau.storage.domain.MeasurementUnit} entity.
@@ -11,8 +12,10 @@ public class MeasurementUnitDTO implements Serializable {
 
     private Long id;
 
+    @NotNull
     private String name;
 
+    @NotNull
     private String abbreviation;
 
     public Long getId() {

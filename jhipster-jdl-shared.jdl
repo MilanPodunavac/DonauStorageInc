@@ -38,7 +38,7 @@ entity Employee {
     birthDate ZonedDateTime required,
     disability Boolean required,
     employment Boolean,
-	// profilePicture ImageBlob
+	profilePicture ImageBlob
 }
 
 entity ContactInfo {
@@ -47,7 +47,9 @@ entity ContactInfo {
 }
 
 enum Gender {
-    MALE, FEMALE, OTHER
+    MALE (Male), 
+	FEMALE (Female), 
+	OTHER (Other)
 }
 
 entity BusinessPartner
@@ -67,27 +69,33 @@ entity Resource {
 }
 
 enum ResourceType {
-	MATERIAL, PRODUCT, HALF_PRODUCT, ENERGY_SOURCE, WRITE_OFF
+	MATERIAL (Material), 
+	PRODUCT (Product), 
+	HALF_PRODUCT (Half_product), 
+	ENERGY_SOURCE (Energy_source), 
+	WRITE_OFF (Write_off)
 }
 
 entity MeasurementUnit {
-	name String,
-    abbreviation String
+	name String required,
+    abbreviation String required
 }
 
 
 relationship ManyToOne {
-	City{country required} 
+	City{country(name) required} 
 	to 
 	/** Cascade delete */
 	Country,
 
-    Address{city required} 
+    Address{city(name) required} 
 	to 
 	/** Cascade delete */
 	City,
 
-	Resource{unit required} to MeasurementUnit
+	Resource{unit(name) required} 
+	to 
+	MeasurementUnit
 }
 
 relationship OneToOne {
@@ -95,89 +103,88 @@ relationship OneToOne {
 	Email and phone number 
 	Cascade delete
 	*/ 
-	Person{contactInfo required} 
+	Person{contactInfo(email) required} 
 	to 
 	/** Prevent delete */
-	ContactInfo,
+	ContactInfo{person},
 
     /** 
 	Email and phone number 
 	Cascade delete
 	*/ 
-	LegalEntity{contactInfo required} 
+	LegalEntity{contactInfo(email) required} 
 	to 
 	/** Prevent delete */
-	ContactInfo
+	ContactInfo{legalEntity}
 
 
 	/** Cascade delete */
 	Employee{address required} 
 	to 
 	/** Prevent delete */
-	Address
+	Address{employee}
 
 	/** Cascade delete */
 	LegalEntity{address required} 
 	to 
 	/** Prevent delete */
-	Address
+	Address{legalEntity}
 
 	/** Cascade delete */
 	BusinessPartner{businessContact required} 
 	to 
 	/** Prevent delete */
-	BusinessContact
+	BusinessContact{businessPartner}
 
 
 	/** Cascade delete */
 	BusinessContact{personalInfo required} 
 	to 
 	/** Prevent delete */
-	Person,
+	Person{businessContact},
 
 	/** Cascade delete */
 	Employee{personalInfo required} 
 	to 
 	/** Prevent delete */
-	Person
+	Person{employee}
 
 	/** Cascade delete */
-	Employee{user required} 
+	Employee{user(login) required} 
 	to 
-	/** Prevent delete */
 	User
 
 	/** Cascade delete */
 	BusinessPartner{legalEntityInfo required} 
 	to 
 	/** Prevent delete */
-	LegalEntity,
+	LegalEntity{businessPartner},
 
 	/** Cascade delete */
 	Company{legalEntityInfo required} 
 	to 
 	/** Prevent delete */
-	LegalEntity
+	LegalEntity{company}
 }
 
 relationship OneToMany {
-	/** Cascade delete */
-	Company 
+	/** Prevent delete */
+	Company{resources} 
 	to 
 	Resource{company required},
 
-	/** Cascade delete */
-    Company 
+	/** Prevent delete */
+    Company{partners} 
 	to 
 	BusinessPartner{company required},
     
-	/** Cascade delete */
-	Company 
+	/** Prevent delete */
+	Company{businessYears} 
 	to 
 	BusinessYear{company required},
     
-	/** Cascade delete */
-	Company 
+	/** Prevent delete */
+	Company{employees} 
 	to 
 	Employee{company required}
 }

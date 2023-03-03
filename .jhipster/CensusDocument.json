@@ -39,7 +39,6 @@
   "readOnly": false,
   "relationships": [
     {
-      "javadoc": "Cascade delete",
       "otherEntityName": "censusItem",
       "otherEntityRelationshipName": "censusDocument",
       "relationshipName": "censusItem",
@@ -47,6 +46,7 @@
     },
     {
       "otherEntityName": "businessYear",
+      "otherEntityRelationshipName": "censusDocuments",
       "relationshipName": "businessYear",
       "relationshipType": "many-to-one",
       "relationshipValidateRules": "required"
@@ -70,6 +70,7 @@
       "relationshipValidateRules": "required"
     },
     {
+      "otherEntityField": "code",
       "otherEntityName": "storage",
       "otherEntityRelationshipName": "censusDocument",
       "relationshipName": "storage",

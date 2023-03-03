@@ -11,14 +11,14 @@ import org.mapstruct.*;
  */
 @Mapper(componentModel = "spring")
 public interface AddressMapper extends EntityMapper<AddressDTO, Address> {
-    @Mapping(target = "city", source = "city", qualifiedByName = "cityId")
+    @Mapping(target = "city", source = "city", qualifiedByName = "cityName")
     AddressDTO toDto(Address s);
 
-    @Named("cityId")
+    @Named("cityName")
     @BeanMapping(ignoreByDefault = true)
     @Mapping(target = "id", source = "id")
     @Mapping(target = "name", source = "name")
     @Mapping(target = "postalCode", source = "postalCode")
     @Mapping(target = "country", source = "country")
-    CityDTO toDtoCityId(City city);
+    CityDTO toDtoCityName(City city);
 }

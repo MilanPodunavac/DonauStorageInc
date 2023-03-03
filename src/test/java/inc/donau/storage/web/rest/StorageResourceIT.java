@@ -37,11 +37,11 @@ import org.springframework.transaction.annotation.Transactional;
 @WithMockUser
 class StorageResourceIT {
 
-    private static final String DEFAULT_NAME = "AAAAAAAAAA";
-    private static final String UPDATED_NAME = "BBBBBBBBBB";
-
     private static final String DEFAULT_CODE = "AAAAAAAAAA";
     private static final String UPDATED_CODE = "BBBBBBBBBB";
+
+    private static final String DEFAULT_NAME = "AAAAAAAAAA";
+    private static final String UPDATED_NAME = "BBBBBBBBBB";
 
     private static final String ENTITY_API_URL = "/api/storages";
     private static final String ENTITY_API_URL_ID = ENTITY_API_URL + "/{id}";
@@ -70,7 +70,7 @@ class StorageResourceIT {
      * if they test an entity which requires the current entity.
      */
     public static Storage createEntity(EntityManager em) {
-        Storage storage = new Storage().name(DEFAULT_NAME).code(DEFAULT_CODE);
+        Storage storage = new Storage().code(DEFAULT_CODE).name(DEFAULT_NAME);
         // Add required entity
         Address address;
         if (TestUtil.findAll(em, Address.class).isEmpty()) {
@@ -101,7 +101,7 @@ class StorageResourceIT {
      * if they test an entity which requires the current entity.
      */
     public static Storage createUpdatedEntity(EntityManager em) {
-        Storage storage = new Storage().name(UPDATED_NAME).code(UPDATED_CODE);
+        Storage storage = new Storage().code(UPDATED_CODE).name(UPDATED_NAME);
         // Add required entity
         Address address;
         if (TestUtil.findAll(em, Address.class).isEmpty()) {
@@ -144,8 +144,8 @@ class StorageResourceIT {
         List<Storage> storageList = storageRepository.findAll();
         assertThat(storageList).hasSize(databaseSizeBeforeCreate + 1);
         Storage testStorage = storageList.get(storageList.size() - 1);
-        assertThat(testStorage.getName()).isEqualTo(DEFAULT_NAME);
         assertThat(testStorage.getCode()).isEqualTo(DEFAULT_CODE);
+        assertThat(testStorage.getName()).isEqualTo(DEFAULT_NAME);
     }
 
     @Test
@@ -169,24 +169,6 @@ class StorageResourceIT {
 
     @Test
     @Transactional
-    void checkCodeIsRequired() throws Exception {
-        int databaseSizeBeforeTest = storageRepository.findAll().size();
-        // set the field null
-        storage.setCode(null);
-
-        // Create the Storage, which fails.
-        StorageDTO storageDTO = storageMapper.toDto(storage);
-
-        restStorageMockMvc
-            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(storageDTO)))
-            .andExpect(status().isBadRequest());
-
-        List<Storage> storageList = storageRepository.findAll();
-        assertThat(storageList).hasSize(databaseSizeBeforeTest);
-    }
-
-    @Test
-    @Transactional
     void getAllStorages() throws Exception {
         // Initialize the database
         storageRepository.saveAndFlush(storage);
@@ -197,8 +179,8 @@ class StorageResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(storage.getId().intValue())))
-            .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME)))
-            .andExpect(jsonPath("$.[*].code").value(hasItem(DEFAULT_CODE)));
+            .andExpect(jsonPath("$.[*].code").value(hasItem(DEFAULT_CODE)))
+            .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME)));
     }
 
     @Test
@@ -213,8 +195,8 @@ class StorageResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.id").value(storage.getId().intValue()))
-            .andExpect(jsonPath("$.name").value(DEFAULT_NAME))
-            .andExpect(jsonPath("$.code").value(DEFAULT_CODE));
+            .andExpect(jsonPath("$.code").value(DEFAULT_CODE))
+            .andExpect(jsonPath("$.name").value(DEFAULT_NAME));
     }
 
     @Test
@@ -233,71 +215,6 @@ class StorageResourceIT {
 
         defaultStorageShouldBeFound("id.lessThanOrEqual=" + id);
         defaultStorageShouldNotBeFound("id.lessThan=" + id);
-    }
-
-    @Test
-    @Transactional
-    void getAllStoragesByNameIsEqualToSomething() throws Exception {
-        // Initialize the database
-        storageRepository.saveAndFlush(storage);
-
-        // Get all the storageList where name equals to DEFAULT_NAME
-        defaultStorageShouldBeFound("name.equals=" + DEFAULT_NAME);
-
-        // Get all the storageList where name equals to UPDATED_NAME
-        defaultStorageShouldNotBeFound("name.equals=" + UPDATED_NAME);
-    }
-
-    @Test
-    @Transactional
-    void getAllStoragesByNameIsInShouldWork() throws Exception {
-        // Initialize the database
-        storageRepository.saveAndFlush(storage);
-
-        // Get all the storageList where name in DEFAULT_NAME or UPDATED_NAME
-        defaultStorageShouldBeFound("name.in=" + DEFAULT_NAME + "," + UPDATED_NAME);
-
-        // Get all the storageList where name equals to UPDATED_NAME
-        defaultStorageShouldNotBeFound("name.in=" + UPDATED_NAME);
-    }
-
-    @Test
-    @Transactional
-    void getAllStoragesByNameIsNullOrNotNull() throws Exception {
-        // Initialize the database
-        storageRepository.saveAndFlush(storage);
-
-        // Get all the storageList where name is not null
-        defaultStorageShouldBeFound("name.specified=true");
-
-        // Get all the storageList where name is null
-        defaultStorageShouldNotBeFound("name.specified=false");
-    }
-
-    @Test
-    @Transactional
-    void getAllStoragesByNameContainsSomething() throws Exception {
-        // Initialize the database
-        storageRepository.saveAndFlush(storage);
-
-        // Get all the storageList where name contains DEFAULT_NAME
-        defaultStorageShouldBeFound("name.contains=" + DEFAULT_NAME);
-
-        // Get all the storageList where name contains UPDATED_NAME
-        defaultStorageShouldNotBeFound("name.contains=" + UPDATED_NAME);
-    }
-
-    @Test
-    @Transactional
-    void getAllStoragesByNameNotContainsSomething() throws Exception {
-        // Initialize the database
-        storageRepository.saveAndFlush(storage);
-
-        // Get all the storageList where name does not contain DEFAULT_NAME
-        defaultStorageShouldNotBeFound("name.doesNotContain=" + DEFAULT_NAME);
-
-        // Get all the storageList where name does not contain UPDATED_NAME
-        defaultStorageShouldBeFound("name.doesNotContain=" + UPDATED_NAME);
     }
 
     @Test
@@ -367,6 +284,71 @@ class StorageResourceIT {
 
     @Test
     @Transactional
+    void getAllStoragesByNameIsEqualToSomething() throws Exception {
+        // Initialize the database
+        storageRepository.saveAndFlush(storage);
+
+        // Get all the storageList where name equals to DEFAULT_NAME
+        defaultStorageShouldBeFound("name.equals=" + DEFAULT_NAME);
+
+        // Get all the storageList where name equals to UPDATED_NAME
+        defaultStorageShouldNotBeFound("name.equals=" + UPDATED_NAME);
+    }
+
+    @Test
+    @Transactional
+    void getAllStoragesByNameIsInShouldWork() throws Exception {
+        // Initialize the database
+        storageRepository.saveAndFlush(storage);
+
+        // Get all the storageList where name in DEFAULT_NAME or UPDATED_NAME
+        defaultStorageShouldBeFound("name.in=" + DEFAULT_NAME + "," + UPDATED_NAME);
+
+        // Get all the storageList where name equals to UPDATED_NAME
+        defaultStorageShouldNotBeFound("name.in=" + UPDATED_NAME);
+    }
+
+    @Test
+    @Transactional
+    void getAllStoragesByNameIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        storageRepository.saveAndFlush(storage);
+
+        // Get all the storageList where name is not null
+        defaultStorageShouldBeFound("name.specified=true");
+
+        // Get all the storageList where name is null
+        defaultStorageShouldNotBeFound("name.specified=false");
+    }
+
+    @Test
+    @Transactional
+    void getAllStoragesByNameContainsSomething() throws Exception {
+        // Initialize the database
+        storageRepository.saveAndFlush(storage);
+
+        // Get all the storageList where name contains DEFAULT_NAME
+        defaultStorageShouldBeFound("name.contains=" + DEFAULT_NAME);
+
+        // Get all the storageList where name contains UPDATED_NAME
+        defaultStorageShouldNotBeFound("name.contains=" + UPDATED_NAME);
+    }
+
+    @Test
+    @Transactional
+    void getAllStoragesByNameNotContainsSomething() throws Exception {
+        // Initialize the database
+        storageRepository.saveAndFlush(storage);
+
+        // Get all the storageList where name does not contain DEFAULT_NAME
+        defaultStorageShouldNotBeFound("name.doesNotContain=" + DEFAULT_NAME);
+
+        // Get all the storageList where name does not contain UPDATED_NAME
+        defaultStorageShouldBeFound("name.doesNotContain=" + UPDATED_NAME);
+    }
+
+    @Test
+    @Transactional
     void getAllStoragesByAddressIsEqualToSomething() throws Exception {
         // Get already existing entity
         Address address = storage.getAddress();
@@ -382,25 +364,25 @@ class StorageResourceIT {
 
     @Test
     @Transactional
-    void getAllStoragesByStorageCardIsEqualToSomething() throws Exception {
-        StorageCard storageCard;
+    void getAllStoragesByStorageCardsIsEqualToSomething() throws Exception {
+        StorageCard storageCards;
         if (TestUtil.findAll(em, StorageCard.class).isEmpty()) {
             storageRepository.saveAndFlush(storage);
-            storageCard = StorageCardResourceIT.createEntity(em);
+            storageCards = StorageCardResourceIT.createEntity(em);
         } else {
-            storageCard = TestUtil.findAll(em, StorageCard.class).get(0);
+            storageCards = TestUtil.findAll(em, StorageCard.class).get(0);
         }
-        em.persist(storageCard);
+        em.persist(storageCards);
         em.flush();
-        storage.addStorageCard(storageCard);
+        storage.addStorageCards(storageCards);
         storageRepository.saveAndFlush(storage);
-        String storageCardId = storageCard.getId();
+        String storageCardsId = storageCards.getId();
 
-        // Get all the storageList where storageCard equals to storageCardId
-        defaultStorageShouldBeFound("storageCardId.equals=" + storageCardId);
+        // Get all the storageList where storageCards equals to storageCardsId
+        defaultStorageShouldBeFound("storageCardsId.equals=" + storageCardsId);
 
-        // Get all the storageList where storageCard equals to "invalid-id"
-        defaultStorageShouldNotBeFound("storageCardId.equals=" + "invalid-id");
+        // Get all the storageList where storageCards equals to "invalid-id"
+        defaultStorageShouldNotBeFound("storageCardsId.equals=" + "invalid-id");
     }
 
     @Test
@@ -504,8 +486,8 @@ class StorageResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(storage.getId().intValue())))
-            .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME)))
-            .andExpect(jsonPath("$.[*].code").value(hasItem(DEFAULT_CODE)));
+            .andExpect(jsonPath("$.[*].code").value(hasItem(DEFAULT_CODE)))
+            .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME)));
 
         // Check, that the count call also returns 1
         restStorageMockMvc
@@ -553,7 +535,7 @@ class StorageResourceIT {
         Storage updatedStorage = storageRepository.findById(storage.getId()).get();
         // Disconnect from session so that the updates on updatedStorage are not directly saved in db
         em.detach(updatedStorage);
-        updatedStorage.name(UPDATED_NAME).code(UPDATED_CODE);
+        updatedStorage.code(UPDATED_CODE).name(UPDATED_NAME);
         StorageDTO storageDTO = storageMapper.toDto(updatedStorage);
 
         restStorageMockMvc
@@ -568,8 +550,8 @@ class StorageResourceIT {
         List<Storage> storageList = storageRepository.findAll();
         assertThat(storageList).hasSize(databaseSizeBeforeUpdate);
         Storage testStorage = storageList.get(storageList.size() - 1);
-        assertThat(testStorage.getName()).isEqualTo(UPDATED_NAME);
         assertThat(testStorage.getCode()).isEqualTo(UPDATED_CODE);
+        assertThat(testStorage.getName()).isEqualTo(UPDATED_NAME);
     }
 
     @Test
@@ -649,7 +631,7 @@ class StorageResourceIT {
         Storage partialUpdatedStorage = new Storage();
         partialUpdatedStorage.setId(storage.getId());
 
-        partialUpdatedStorage.code(UPDATED_CODE);
+        partialUpdatedStorage.name(UPDATED_NAME);
 
         restStorageMockMvc
             .perform(
@@ -663,8 +645,8 @@ class StorageResourceIT {
         List<Storage> storageList = storageRepository.findAll();
         assertThat(storageList).hasSize(databaseSizeBeforeUpdate);
         Storage testStorage = storageList.get(storageList.size() - 1);
-        assertThat(testStorage.getName()).isEqualTo(DEFAULT_NAME);
-        assertThat(testStorage.getCode()).isEqualTo(UPDATED_CODE);
+        assertThat(testStorage.getCode()).isEqualTo(DEFAULT_CODE);
+        assertThat(testStorage.getName()).isEqualTo(UPDATED_NAME);
     }
 
     @Test
@@ -679,7 +661,7 @@ class StorageResourceIT {
         Storage partialUpdatedStorage = new Storage();
         partialUpdatedStorage.setId(storage.getId());
 
-        partialUpdatedStorage.name(UPDATED_NAME).code(UPDATED_CODE);
+        partialUpdatedStorage.code(UPDATED_CODE).name(UPDATED_NAME);
 
         restStorageMockMvc
             .perform(
@@ -693,8 +675,8 @@ class StorageResourceIT {
         List<Storage> storageList = storageRepository.findAll();
         assertThat(storageList).hasSize(databaseSizeBeforeUpdate);
         Storage testStorage = storageList.get(storageList.size() - 1);
-        assertThat(testStorage.getName()).isEqualTo(UPDATED_NAME);
         assertThat(testStorage.getCode()).isEqualTo(UPDATED_CODE);
+        assertThat(testStorage.getName()).isEqualTo(UPDATED_NAME);
     }
 
     @Test

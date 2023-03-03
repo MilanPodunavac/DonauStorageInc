@@ -33,7 +33,9 @@
   "relationships": [
     {
       "javadoc": "Email and phone number\\nCascade delete",
+      "otherEntityField": "email",
       "otherEntityName": "contactInfo",
+      "otherEntityRelationshipName": "legalEntity",
       "ownerSide": true,
       "relationshipName": "contactInfo",
       "relationshipType": "one-to-one",
@@ -42,10 +44,27 @@
     {
       "javadoc": "Cascade delete",
       "otherEntityName": "address",
+      "otherEntityRelationshipName": "legalEntity",
       "ownerSide": true,
       "relationshipName": "address",
       "relationshipType": "one-to-one",
       "relationshipValidateRules": "required"
+    },
+    {
+      "javadoc": "Prevent delete",
+      "otherEntityName": "businessPartner",
+      "otherEntityRelationshipName": "legalEntityInfo",
+      "ownerSide": false,
+      "relationshipName": "businessPartner",
+      "relationshipType": "one-to-one"
+    },
+    {
+      "javadoc": "Prevent delete",
+      "otherEntityName": "company",
+      "otherEntityRelationshipName": "legalEntityInfo",
+      "ownerSide": false,
+      "relationshipName": "company",
+      "relationshipType": "one-to-one"
     }
   ],
   "service": "serviceClass"

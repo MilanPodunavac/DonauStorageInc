@@ -35,9 +35,9 @@ public class EmployeeCriteria implements Serializable, Criteria {
 
     private LongFilter personalInfoId;
 
-    private LongFilter companyId;
-
     private LongFilter userId;
+
+    private LongFilter companyId;
 
     private Boolean distinct;
 
@@ -51,8 +51,8 @@ public class EmployeeCriteria implements Serializable, Criteria {
         this.employment = other.employment == null ? null : other.employment.copy();
         this.addressId = other.addressId == null ? null : other.addressId.copy();
         this.personalInfoId = other.personalInfoId == null ? null : other.personalInfoId.copy();
-        this.companyId = other.companyId == null ? null : other.companyId.copy();
         this.userId = other.userId == null ? null : other.userId.copy();
+        this.companyId = other.companyId == null ? null : other.companyId.copy();
         this.distinct = other.distinct;
     }
 
@@ -166,21 +166,6 @@ public class EmployeeCriteria implements Serializable, Criteria {
         this.personalInfoId = personalInfoId;
     }
 
-    public LongFilter getCompanyId() {
-        return companyId;
-    }
-
-    public LongFilter companyId() {
-        if (companyId == null) {
-            companyId = new LongFilter();
-        }
-        return companyId;
-    }
-
-    public void setCompanyId(LongFilter companyId) {
-        this.companyId = companyId;
-    }
-
     public LongFilter getUserId() {
         return userId;
     }
@@ -194,6 +179,21 @@ public class EmployeeCriteria implements Serializable, Criteria {
 
     public void setUserId(LongFilter userId) {
         this.userId = userId;
+    }
+
+    public LongFilter getCompanyId() {
+        return companyId;
+    }
+
+    public LongFilter companyId() {
+        if (companyId == null) {
+            companyId = new LongFilter();
+        }
+        return companyId;
+    }
+
+    public void setCompanyId(LongFilter companyId) {
+        this.companyId = companyId;
     }
 
     public Boolean getDistinct() {
@@ -221,8 +221,8 @@ public class EmployeeCriteria implements Serializable, Criteria {
             Objects.equals(employment, that.employment) &&
             Objects.equals(addressId, that.addressId) &&
             Objects.equals(personalInfoId, that.personalInfoId) &&
-            Objects.equals(companyId, that.companyId) &&
             Objects.equals(userId, that.userId) &&
+            Objects.equals(companyId, that.companyId) &&
             Objects.equals(distinct, that.distinct)
         );
     }
@@ -237,8 +237,8 @@ public class EmployeeCriteria implements Serializable, Criteria {
             employment,
             addressId,
             personalInfoId,
-            companyId,
             userId,
+            companyId,
             distinct
         );
     }
@@ -254,8 +254,8 @@ public class EmployeeCriteria implements Serializable, Criteria {
             (employment != null ? "employment=" + employment + ", " : "") +
             (addressId != null ? "addressId=" + addressId + ", " : "") +
             (personalInfoId != null ? "personalInfoId=" + personalInfoId + ", " : "") +
-            (companyId != null ? "companyId=" + companyId + ", " : "") +
             (userId != null ? "userId=" + userId + ", " : "") +
+            (companyId != null ? "companyId=" + companyId + ", " : "") +
             (distinct != null ? "distinct=" + distinct + ", " : "") +
             "}";
     }

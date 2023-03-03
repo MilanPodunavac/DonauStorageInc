@@ -2,25 +2,36 @@ package inc.donau.storage.web.rest;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.hasItem;
+import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 import inc.donau.storage.IntegrationTest;
 import inc.donau.storage.domain.Address;
+import inc.donau.storage.domain.BusinessPartner;
+import inc.donau.storage.domain.Company;
 import inc.donau.storage.domain.ContactInfo;
 import inc.donau.storage.domain.LegalEntity;
 import inc.donau.storage.repository.LegalEntityRepository;
+import inc.donau.storage.service.LegalEntityService;
 import inc.donau.storage.service.criteria.LegalEntityCriteria;
 import inc.donau.storage.service.dto.LegalEntityDTO;
 import inc.donau.storage.service.mapper.LegalEntityMapper;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicLong;
 import javax.persistence.EntityManager;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
@@ -30,6 +41,7 @@ import org.springframework.transaction.annotation.Transactional;
  * Integration tests for the {@link LegalEntityResource} REST controller.
  */
 @IntegrationTest
+@ExtendWith(MockitoExtension.class)
 @AutoConfigureMockMvc
 @WithMockUser
 class LegalEntityResourceIT {
@@ -52,8 +64,14 @@ class LegalEntityResourceIT {
     @Autowired
     private LegalEntityRepository legalEntityRepository;
 
+    @Mock
+    private LegalEntityRepository legalEntityRepositoryMock;
+
     @Autowired
     private LegalEntityMapper legalEntityMapper;
+
+    @Mock
+    private LegalEntityService legalEntityServiceMock;
 
     @Autowired
     private EntityManager em;
@@ -253,6 +271,23 @@ class LegalEntityResourceIT {
             .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME)))
             .andExpect(jsonPath("$.[*].taxIdentificationNumber").value(hasItem(DEFAULT_TAX_IDENTIFICATION_NUMBER)))
             .andExpect(jsonPath("$.[*].identificationNumber").value(hasItem(DEFAULT_IDENTIFICATION_NUMBER)));
+    }
+
+    @SuppressWarnings({ "unchecked" })
+    void getAllLegalEntitiesWithEagerRelationshipsIsEnabled() throws Exception {
+        when(legalEntityServiceMock.findAllWithEagerRelationships(any())).thenReturn(new PageImpl(new ArrayList<>()));
+
+        restLegalEntityMockMvc.perform(get(ENTITY_API_URL + "?eagerload=true")).andExpect(status().isOk());
+
+        verify(legalEntityServiceMock, times(1)).findAllWithEagerRelationships(any());
+    }
+
+    @SuppressWarnings({ "unchecked" })
+    void getAllLegalEntitiesWithEagerRelationshipsIsNotEnabled() throws Exception {
+        when(legalEntityServiceMock.findAllWithEagerRelationships(any())).thenReturn(new PageImpl(new ArrayList<>()));
+
+        restLegalEntityMockMvc.perform(get(ENTITY_API_URL + "?eagerload=false")).andExpect(status().isOk());
+        verify(legalEntityRepositoryMock, times(1)).findAll(any(Pageable.class));
     }
 
     @Test
@@ -515,6 +550,54 @@ class LegalEntityResourceIT {
 
         // Get all the legalEntityList where address equals to (addressId + 1)
         defaultLegalEntityShouldNotBeFound("addressId.equals=" + (addressId + 1));
+    }
+
+    @Test
+    @Transactional
+    void getAllLegalEntitiesByBusinessPartnerIsEqualToSomething() throws Exception {
+        BusinessPartner businessPartner;
+        if (TestUtil.findAll(em, BusinessPartner.class).isEmpty()) {
+            legalEntityRepository.saveAndFlush(legalEntity);
+            businessPartner = BusinessPartnerResourceIT.createEntity(em);
+        } else {
+            businessPartner = TestUtil.findAll(em, BusinessPartner.class).get(0);
+        }
+        em.persist(businessPartner);
+        em.flush();
+        legalEntity.setBusinessPartner(businessPartner);
+        businessPartner.setLegalEntityInfo(legalEntity);
+        legalEntityRepository.saveAndFlush(legalEntity);
+        Long businessPartnerId = businessPartner.getId();
+
+        // Get all the legalEntityList where businessPartner equals to businessPartnerId
+        defaultLegalEntityShouldBeFound("businessPartnerId.equals=" + businessPartnerId);
+
+        // Get all the legalEntityList where businessPartner equals to (businessPartnerId + 1)
+        defaultLegalEntityShouldNotBeFound("businessPartnerId.equals=" + (businessPartnerId + 1));
+    }
+
+    @Test
+    @Transactional
+    void getAllLegalEntitiesByCompanyIsEqualToSomething() throws Exception {
+        Company company;
+        if (TestUtil.findAll(em, Company.class).isEmpty()) {
+            legalEntityRepository.saveAndFlush(legalEntity);
+            company = CompanyResourceIT.createEntity(em);
+        } else {
+            company = TestUtil.findAll(em, Company.class).get(0);
+        }
+        em.persist(company);
+        em.flush();
+        legalEntity.setCompany(company);
+        company.setLegalEntityInfo(legalEntity);
+        legalEntityRepository.saveAndFlush(legalEntity);
+        Long companyId = company.getId();
+
+        // Get all the legalEntityList where company equals to companyId
+        defaultLegalEntityShouldBeFound("companyId.equals=" + companyId);
+
+        // Get all the legalEntityList where company equals to (companyId + 1)
+        defaultLegalEntityShouldNotBeFound("companyId.equals=" + (companyId + 1));
     }
 
     /**

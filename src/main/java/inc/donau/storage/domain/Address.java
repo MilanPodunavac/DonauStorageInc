@@ -46,6 +46,30 @@ public class Address implements Serializable {
     @JsonIgnoreProperties(value = { "country" }, allowSetters = true)
     private City city;
 
+    /**
+     * Prevent delete
+     */
+    @JsonIgnoreProperties(value = { "address", "personalInfo", "user", "company" }, allowSetters = true)
+    @OneToOne(mappedBy = "address")
+    private Employee employee;
+
+    /**
+     * Prevent delete
+     */
+    @JsonIgnoreProperties(value = { "contactInfo", "address", "legalEntity", "company" }, allowSetters = true)
+    @OneToOne(mappedBy = "address")
+    private LegalEntity legalEntity;
+
+    /**
+     * Prevent deletion
+     */
+    @JsonIgnoreProperties(
+        value = { "address", "storageCards", "receiveds", "dispatcheds", "censusDocuments", "company" },
+        allowSetters = true
+    )
+    @OneToOne(mappedBy = "address")
+    private Storage storage;
+
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
     public Long getId() {
@@ -110,6 +134,63 @@ public class Address implements Serializable {
 
     public Address city(City city) {
         this.setCity(city);
+        return this;
+    }
+
+    public Employee getEmployee() {
+        return this.employee;
+    }
+
+    public void setEmployee(Employee employee) {
+        if (this.employee != null) {
+            this.employee.setAddress(null);
+        }
+        if (employee != null) {
+            employee.setAddress(this);
+        }
+        this.employee = employee;
+    }
+
+    public Address employee(Employee employee) {
+        this.setEmployee(employee);
+        return this;
+    }
+
+    public LegalEntity getLegalEntity() {
+        return this.legalEntity;
+    }
+
+    public void setLegalEntity(LegalEntity legalEntity) {
+        if (this.legalEntity != null) {
+            this.legalEntity.setAddress(null);
+        }
+        if (legalEntity != null) {
+            legalEntity.setAddress(this);
+        }
+        this.legalEntity = legalEntity;
+    }
+
+    public Address legalEntity(LegalEntity legalEntity) {
+        this.setLegalEntity(legalEntity);
+        return this;
+    }
+
+    public Storage getStorage() {
+        return this.storage;
+    }
+
+    public void setStorage(Storage storage) {
+        if (this.storage != null) {
+            this.storage.setAddress(null);
+        }
+        if (storage != null) {
+            storage.setAddress(this);
+        }
+        this.storage = storage;
+    }
+
+    public Address storage(Storage storage) {
+        this.setStorage(storage);
         return this;
     }
 

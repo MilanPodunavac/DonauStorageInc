@@ -99,34 +99,46 @@ public class CompanyQueryService extends QueryService<Company> {
                         )
                     );
             }
-            if (criteria.getResourceId() != null) {
-                specification =
-                    specification.and(
-                        buildSpecification(criteria.getResourceId(), root -> root.join(Company_.resources, JoinType.LEFT).get(Resource_.id))
-                    );
-            }
-            if (criteria.getBusinessPartnerId() != null) {
+            if (criteria.getResourcesId() != null) {
                 specification =
                     specification.and(
                         buildSpecification(
-                            criteria.getBusinessPartnerId(),
-                            root -> root.join(Company_.businessPartners, JoinType.LEFT).get(BusinessPartner_.id)
+                            criteria.getResourcesId(),
+                            root -> root.join(Company_.resources, JoinType.LEFT).get(Resource_.id)
                         )
                     );
             }
-            if (criteria.getBusinessYearId() != null) {
+            if (criteria.getPartnersId() != null) {
                 specification =
                     specification.and(
                         buildSpecification(
-                            criteria.getBusinessYearId(),
+                            criteria.getPartnersId(),
+                            root -> root.join(Company_.partners, JoinType.LEFT).get(BusinessPartner_.id)
+                        )
+                    );
+            }
+            if (criteria.getBusinessYearsId() != null) {
+                specification =
+                    specification.and(
+                        buildSpecification(
+                            criteria.getBusinessYearsId(),
                             root -> root.join(Company_.businessYears, JoinType.LEFT).get(BusinessYear_.id)
                         )
                     );
             }
-            if (criteria.getEmployeeId() != null) {
+            if (criteria.getEmployeesId() != null) {
                 specification =
                     specification.and(
-                        buildSpecification(criteria.getEmployeeId(), root -> root.join(Company_.employees, JoinType.LEFT).get(Employee_.id))
+                        buildSpecification(
+                            criteria.getEmployeesId(),
+                            root -> root.join(Company_.employees, JoinType.LEFT).get(Employee_.id)
+                        )
+                    );
+            }
+            if (criteria.getStoragesId() != null) {
+                specification =
+                    specification.and(
+                        buildSpecification(criteria.getStoragesId(), root -> root.join(Company_.storages, JoinType.LEFT).get(Storage_.id))
                     );
             }
         }

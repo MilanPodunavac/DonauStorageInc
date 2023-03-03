@@ -96,16 +96,16 @@ public class StorageCard implements Serializable, Persistable<String> {
     @OneToMany(mappedBy = "storageCard")
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     @JsonIgnoreProperties(value = { "storageCard" }, allowSetters = true)
-    private Set<StorageCardTraffic> storageCardTraffics = new HashSet<>();
+    private Set<StorageCardTraffic> traffic = new HashSet<>();
 
     @ManyToOne(optional = false)
     @NotNull
-    @JsonIgnoreProperties(value = { "company" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "company", "censusDocuments", "storageCards", "transfers" }, allowSetters = true)
     private BusinessYear businessYear;
 
     @ManyToOne(optional = false)
     @NotNull
-    @JsonIgnoreProperties(value = { "censusItems", "transferDocumentItems", "unit", "company" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "censusItems", "transferItems", "unit", "company", "storageCards" }, allowSetters = true)
     private Resource resource;
 
     @ManyToOne(optional = false)
@@ -265,33 +265,33 @@ public class StorageCard implements Serializable, Persistable<String> {
         this.setIsPersisted();
     }
 
-    public Set<StorageCardTraffic> getStorageCardTraffics() {
-        return this.storageCardTraffics;
+    public Set<StorageCardTraffic> getTraffic() {
+        return this.traffic;
     }
 
-    public void setStorageCardTraffics(Set<StorageCardTraffic> storageCardTraffics) {
-        if (this.storageCardTraffics != null) {
-            this.storageCardTraffics.forEach(i -> i.setStorageCard(null));
+    public void setTraffic(Set<StorageCardTraffic> storageCardTraffics) {
+        if (this.traffic != null) {
+            this.traffic.forEach(i -> i.setStorageCard(null));
         }
         if (storageCardTraffics != null) {
             storageCardTraffics.forEach(i -> i.setStorageCard(this));
         }
-        this.storageCardTraffics = storageCardTraffics;
+        this.traffic = storageCardTraffics;
     }
 
-    public StorageCard storageCardTraffics(Set<StorageCardTraffic> storageCardTraffics) {
-        this.setStorageCardTraffics(storageCardTraffics);
+    public StorageCard traffic(Set<StorageCardTraffic> storageCardTraffics) {
+        this.setTraffic(storageCardTraffics);
         return this;
     }
 
-    public StorageCard addStorageCardTraffic(StorageCardTraffic storageCardTraffic) {
-        this.storageCardTraffics.add(storageCardTraffic);
+    public StorageCard addTraffic(StorageCardTraffic storageCardTraffic) {
+        this.traffic.add(storageCardTraffic);
         storageCardTraffic.setStorageCard(this);
         return this;
     }
 
-    public StorageCard removeStorageCardTraffic(StorageCardTraffic storageCardTraffic) {
-        this.storageCardTraffics.remove(storageCardTraffic);
+    public StorageCard removeTraffic(StorageCardTraffic storageCardTraffic) {
+        this.traffic.remove(storageCardTraffic);
         storageCardTraffic.setStorageCard(null);
         return this;
     }

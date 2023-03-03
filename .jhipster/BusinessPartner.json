@@ -14,6 +14,7 @@
     {
       "javadoc": "Cascade delete",
       "otherEntityName": "businessContact",
+      "otherEntityRelationshipName": "businessPartner",
       "ownerSide": true,
       "relationshipName": "businessContact",
       "relationshipType": "one-to-one",
@@ -22,6 +23,7 @@
     {
       "javadoc": "Cascade delete",
       "otherEntityName": "legalEntity",
+      "otherEntityRelationshipName": "businessPartner",
       "ownerSide": true,
       "relationshipName": "legalEntityInfo",
       "relationshipType": "one-to-one",
@@ -30,12 +32,12 @@
     {
       "otherEntityName": "transferDocument",
       "otherEntityRelationshipName": "businessPartner",
-      "relationshipName": "transferDocument",
+      "relationshipName": "transfers",
       "relationshipType": "one-to-many"
     },
     {
       "otherEntityName": "company",
-      "otherEntityRelationshipName": "businessPartner",
+      "otherEntityRelationshipName": "partners",
       "relationshipName": "company",
       "relationshipType": "many-to-one",
       "relationshipValidateRules": "required"

@@ -22,6 +22,9 @@
       "streetCode": "Street Code",
       "postalCode": "Postal Code",
       "city": "City",
+      "employee": "Employee",
+      "legalEntity": "Legal Entity",
+      "storage": "Storage",
       "help": {
         "postalCode": "Local postal code"
       }

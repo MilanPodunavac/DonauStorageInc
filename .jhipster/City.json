@@ -25,6 +25,7 @@
   "readOnly": false,
   "relationships": [
     {
+      "otherEntityField": "name",
       "otherEntityName": "country",
       "relationshipName": "country",
       "relationshipType": "many-to-one",

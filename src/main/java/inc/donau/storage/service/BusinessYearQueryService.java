@@ -105,6 +105,33 @@ public class BusinessYearQueryService extends QueryService<BusinessYear> {
                         )
                     );
             }
+            if (criteria.getCensusDocumentsId() != null) {
+                specification =
+                    specification.and(
+                        buildSpecification(
+                            criteria.getCensusDocumentsId(),
+                            root -> root.join(BusinessYear_.censusDocuments, JoinType.LEFT).get(CensusDocument_.id)
+                        )
+                    );
+            }
+            if (criteria.getStorageCardsId() != null) {
+                specification =
+                    specification.and(
+                        buildSpecification(
+                            criteria.getStorageCardsId(),
+                            root -> root.join(BusinessYear_.storageCards, JoinType.LEFT).get(StorageCard_.id)
+                        )
+                    );
+            }
+            if (criteria.getTransfersId() != null) {
+                specification =
+                    specification.and(
+                        buildSpecification(
+                            criteria.getTransfersId(),
+                            root -> root.join(BusinessYear_.transfers, JoinType.LEFT).get(TransferDocument_.id)
+                        )
+                    );
+            }
         }
         return specification;
     }

@@ -94,6 +94,9 @@ export const MeasurementUnitUpdate = () => {
                 name="name"
                 data-cy="name"
                 type="text"
+                validate={{
+                  required: { value: true, message: translate('entity.validation.required') },
+                }}
               />
               <ValidatedField
                 label={translate('donauStorageIncApp.measurementUnit.abbreviation')}
@@ -101,6 +104,9 @@ export const MeasurementUnitUpdate = () => {
                 name="abbreviation"
                 data-cy="abbreviation"
                 type="text"
+                validate={{
+                  required: { value: true, message: translate('entity.validation.required') },
+                }}
               />
               <Button id="cancel-save" data-cy="entityCreateCancelButton" onClick={handleClose} replace color="info">
                 <FontAwesomeIcon icon="arrow-left" />

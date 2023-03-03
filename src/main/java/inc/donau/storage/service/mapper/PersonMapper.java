@@ -11,13 +11,13 @@ import org.mapstruct.*;
  */
 @Mapper(componentModel = "spring")
 public interface PersonMapper extends EntityMapper<PersonDTO, Person> {
-    @Mapping(target = "contactInfo", source = "contactInfo", qualifiedByName = "contactInfoId")
+    @Mapping(target = "contactInfo", source = "contactInfo", qualifiedByName = "contactInfoEmail")
     PersonDTO toDto(Person s);
 
-    @Named("contactInfoId")
+    @Named("contactInfoEmail")
     @BeanMapping(ignoreByDefault = true)
     @Mapping(target = "id", source = "id")
     @Mapping(target = "email", source = "email")
     @Mapping(target = "phoneNumber", source = "phoneNumber")
-    ContactInfoDTO toDtoContactInfoId(ContactInfo contactInfo);
+    ContactInfoDTO toDtoContactInfoEmail(ContactInfo contactInfo);
 }

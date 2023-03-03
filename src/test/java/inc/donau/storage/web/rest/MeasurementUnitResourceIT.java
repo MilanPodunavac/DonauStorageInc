@@ -128,6 +128,46 @@ class MeasurementUnitResourceIT {
 
     @Test
     @Transactional
+    void checkNameIsRequired() throws Exception {
+        int databaseSizeBeforeTest = measurementUnitRepository.findAll().size();
+        // set the field null
+        measurementUnit.setName(null);
+
+        // Create the MeasurementUnit, which fails.
+        MeasurementUnitDTO measurementUnitDTO = measurementUnitMapper.toDto(measurementUnit);
+
+        restMeasurementUnitMockMvc
+            .perform(
+                post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(measurementUnitDTO))
+            )
+            .andExpect(status().isBadRequest());
+
+        List<MeasurementUnit> measurementUnitList = measurementUnitRepository.findAll();
+        assertThat(measurementUnitList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
+    void checkAbbreviationIsRequired() throws Exception {
+        int databaseSizeBeforeTest = measurementUnitRepository.findAll().size();
+        // set the field null
+        measurementUnit.setAbbreviation(null);
+
+        // Create the MeasurementUnit, which fails.
+        MeasurementUnitDTO measurementUnitDTO = measurementUnitMapper.toDto(measurementUnit);
+
+        restMeasurementUnitMockMvc
+            .perform(
+                post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(measurementUnitDTO))
+            )
+            .andExpect(status().isBadRequest());
+
+        List<MeasurementUnit> measurementUnitList = measurementUnitRepository.findAll();
+        assertThat(measurementUnitList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
     void getAllMeasurementUnits() throws Exception {
         // Initialize the database
         measurementUnitRepository.saveAndFlush(measurementUnit);

@@ -14,13 +14,12 @@
       }
     },
     {
-      "fieldName": "name",
+      "fieldName": "code",
       "fieldType": "String"
     },
     {
-      "fieldName": "code",
-      "fieldType": "String",
-      "fieldValidateRules": ["required"]
+      "fieldName": "name",
+      "fieldType": "String"
     }
   ],
   "fluentMethods": true,
@@ -33,6 +32,7 @@
     {
       "javadoc": "Cascade delete",
       "otherEntityName": "address",
+      "otherEntityRelationshipName": "storage",
       "ownerSide": true,
       "relationshipName": "address",
       "relationshipType": "one-to-one",
@@ -42,7 +42,7 @@
       "javadoc": "Prevent deletion",
       "otherEntityName": "storageCard",
       "otherEntityRelationshipName": "storage",
-      "relationshipName": "storageCard",
+      "relationshipName": "storageCards",
       "relationshipType": "one-to-many"
     },
     {
@@ -65,6 +65,7 @@
     },
     {
       "otherEntityName": "company",
+      "otherEntityRelationshipName": "storages",
       "relationshipName": "company",
       "relationshipType": "many-to-one",
       "relationshipValidateRules": "required"

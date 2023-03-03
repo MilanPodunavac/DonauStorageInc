@@ -23,6 +23,23 @@
   "name": "ContactInfo",
   "pagination": "no",
   "readOnly": false,
-  "relationships": [],
+  "relationships": [
+    {
+      "javadoc": "Prevent delete",
+      "otherEntityName": "person",
+      "otherEntityRelationshipName": "contactInfo",
+      "ownerSide": false,
+      "relationshipName": "person",
+      "relationshipType": "one-to-one"
+    },
+    {
+      "javadoc": "Prevent delete",
+      "otherEntityName": "legalEntity",
+      "otherEntityRelationshipName": "contactInfo",
+      "ownerSide": false,
+      "relationshipName": "legalEntity",
+      "relationshipType": "one-to-one"
+    }
+  ],
   "service": "serviceClass"
 }

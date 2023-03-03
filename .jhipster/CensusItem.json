@@ -20,6 +20,7 @@
   "readOnly": false,
   "relationships": [
     {
+      "javadoc": "Cascade delete",
       "otherEntityName": "censusDocument",
       "otherEntityRelationshipName": "censusItem",
       "relationshipName": "censusDocument",
@@ -27,8 +28,9 @@
       "relationshipValidateRules": "required"
     },
     {
+      "otherEntityField": "name",
       "otherEntityName": "resource",
-      "otherEntityRelationshipName": "censusItem",
+      "otherEntityRelationshipName": "censusItems",
       "relationshipName": "resource",
       "relationshipType": "many-to-one",
       "relationshipValidateRules": "required"

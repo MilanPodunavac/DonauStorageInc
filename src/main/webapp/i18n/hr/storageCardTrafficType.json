@@ -2,11 +2,11 @@
   "donauStorageIncApp": {
     "StorageCardTrafficType": {
       "null": "",
-      "STARTING_BALANCE": "STARTING_BALANCE",
-      "TRANSFER": "TRANSFER",
-      "LEVELING": "LEVELING",
-      "CORRECTION": "CORRECTION",
-      "REVERSAL": "REVERSAL"
+      "STARTING_BALANCE": "Starting_balance",
+      "TRANSFER": "Transfer",
+      "LEVELING": "Leveling",
+      "CORRECTION": "Correction",
+      "REVERSAL": "Reversal"
     }
   }
 }

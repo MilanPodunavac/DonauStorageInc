@@ -1,7 +1,7 @@
 export interface IMeasurementUnit {
   id?: number;
-  name?: string | null;
-  abbreviation?: string | null;
+  name?: string;
+  abbreviation?: string;
 }
 
 export const defaultValue: Readonly<IMeasurementUnit> = {};

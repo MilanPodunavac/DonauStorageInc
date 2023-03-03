@@ -260,25 +260,25 @@ class BusinessPartnerResourceIT {
 
     @Test
     @Transactional
-    void getAllBusinessPartnersByTransferDocumentIsEqualToSomething() throws Exception {
-        TransferDocument transferDocument;
+    void getAllBusinessPartnersByTransfersIsEqualToSomething() throws Exception {
+        TransferDocument transfers;
         if (TestUtil.findAll(em, TransferDocument.class).isEmpty()) {
             businessPartnerRepository.saveAndFlush(businessPartner);
-            transferDocument = TransferDocumentResourceIT.createEntity(em);
+            transfers = TransferDocumentResourceIT.createEntity(em);
         } else {
-            transferDocument = TestUtil.findAll(em, TransferDocument.class).get(0);
+            transfers = TestUtil.findAll(em, TransferDocument.class).get(0);
         }
-        em.persist(transferDocument);
+        em.persist(transfers);
         em.flush();
-        businessPartner.addTransferDocument(transferDocument);
+        businessPartner.addTransfers(transfers);
         businessPartnerRepository.saveAndFlush(businessPartner);
-        Long transferDocumentId = transferDocument.getId();
+        Long transfersId = transfers.getId();
 
-        // Get all the businessPartnerList where transferDocument equals to transferDocumentId
-        defaultBusinessPartnerShouldBeFound("transferDocumentId.equals=" + transferDocumentId);
+        // Get all the businessPartnerList where transfers equals to transfersId
+        defaultBusinessPartnerShouldBeFound("transfersId.equals=" + transfersId);
 
-        // Get all the businessPartnerList where transferDocument equals to (transferDocumentId + 1)
-        defaultBusinessPartnerShouldNotBeFound("transferDocumentId.equals=" + (transferDocumentId + 1));
+        // Get all the businessPartnerList where transfers equals to (transfersId + 1)
+        defaultBusinessPartnerShouldNotBeFound("transfersId.equals=" + (transfersId + 1));
     }
 
     @Test

@@ -29,6 +29,12 @@ public class BusinessYearCriteria implements Serializable, Criteria {
 
     private LongFilter companyId;
 
+    private LongFilter censusDocumentsId;
+
+    private StringFilter storageCardsId;
+
+    private LongFilter transfersId;
+
     private Boolean distinct;
 
     public BusinessYearCriteria() {}
@@ -38,6 +44,9 @@ public class BusinessYearCriteria implements Serializable, Criteria {
         this.yearCode = other.yearCode == null ? null : other.yearCode.copy();
         this.completed = other.completed == null ? null : other.completed.copy();
         this.companyId = other.companyId == null ? null : other.companyId.copy();
+        this.censusDocumentsId = other.censusDocumentsId == null ? null : other.censusDocumentsId.copy();
+        this.storageCardsId = other.storageCardsId == null ? null : other.storageCardsId.copy();
+        this.transfersId = other.transfersId == null ? null : other.transfersId.copy();
         this.distinct = other.distinct;
     }
 
@@ -106,6 +115,51 @@ public class BusinessYearCriteria implements Serializable, Criteria {
         this.companyId = companyId;
     }
 
+    public LongFilter getCensusDocumentsId() {
+        return censusDocumentsId;
+    }
+
+    public LongFilter censusDocumentsId() {
+        if (censusDocumentsId == null) {
+            censusDocumentsId = new LongFilter();
+        }
+        return censusDocumentsId;
+    }
+
+    public void setCensusDocumentsId(LongFilter censusDocumentsId) {
+        this.censusDocumentsId = censusDocumentsId;
+    }
+
+    public StringFilter getStorageCardsId() {
+        return storageCardsId;
+    }
+
+    public StringFilter storageCardsId() {
+        if (storageCardsId == null) {
+            storageCardsId = new StringFilter();
+        }
+        return storageCardsId;
+    }
+
+    public void setStorageCardsId(StringFilter storageCardsId) {
+        this.storageCardsId = storageCardsId;
+    }
+
+    public LongFilter getTransfersId() {
+        return transfersId;
+    }
+
+    public LongFilter transfersId() {
+        if (transfersId == null) {
+            transfersId = new LongFilter();
+        }
+        return transfersId;
+    }
+
+    public void setTransfersId(LongFilter transfersId) {
+        this.transfersId = transfersId;
+    }
+
     public Boolean getDistinct() {
         return distinct;
     }
@@ -128,13 +182,16 @@ public class BusinessYearCriteria implements Serializable, Criteria {
             Objects.equals(yearCode, that.yearCode) &&
             Objects.equals(completed, that.completed) &&
             Objects.equals(companyId, that.companyId) &&
+            Objects.equals(censusDocumentsId, that.censusDocumentsId) &&
+            Objects.equals(storageCardsId, that.storageCardsId) &&
+            Objects.equals(transfersId, that.transfersId) &&
             Objects.equals(distinct, that.distinct)
         );
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, yearCode, completed, companyId, distinct);
+        return Objects.hash(id, yearCode, completed, companyId, censusDocumentsId, storageCardsId, transfersId, distinct);
     }
 
     // prettier-ignore
@@ -145,6 +202,9 @@ public class BusinessYearCriteria implements Serializable, Criteria {
             (yearCode != null ? "yearCode=" + yearCode + ", " : "") +
             (completed != null ? "completed=" + completed + ", " : "") +
             (companyId != null ? "companyId=" + companyId + ", " : "") +
+            (censusDocumentsId != null ? "censusDocumentsId=" + censusDocumentsId + ", " : "") +
+            (storageCardsId != null ? "storageCardsId=" + storageCardsId + ", " : "") +
+            (transfersId != null ? "transfersId=" + transfersId + ", " : "") +
             (distinct != null ? "distinct=" + distinct + ", " : "") +
             "}";
     }

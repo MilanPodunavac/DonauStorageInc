@@ -10,7 +10,7 @@
       "fieldType": "TransferDocumentType",
       "fieldTypeJavadoc": "sr: Vrsta prometnog dokumenta",
       "fieldValidateRules": ["required"],
-      "fieldValues": "RECEIVING,DISPATCHING,INTERSTORAGE",
+      "fieldValues": "RECEIVING (Receiving),DISPATCHING (Dispatching),INTERSTORAGE (Interstorage)",
       "fieldValuesJavadocs": {
         "DISPATCHING": "sr: OTPREMNICA",
         "INTERSTORAGE": "sr: MEDJUMAGACINSKO POSLOVANJE",
@@ -27,7 +27,7 @@
       "fieldType": "TransferDocumentStatus",
       "fieldTypeJavadoc": "sr: Status prometnog dokumenta",
       "fieldValidateRules": ["required"],
-      "fieldValues": "IN_PREPARATION,ACCOUNTED,REVERSED",
+      "fieldValues": "IN_PREPARATION (In_preparation),ACCOUNTED (Accounted),REVERSED (Reversed)",
       "fieldValuesJavadocs": {
         "ACCOUNTED": "sr: PROKNJIZEN",
         "IN_PREPARATION": "sr: U IZRADI",
@@ -53,7 +53,6 @@
   "readOnly": false,
   "relationships": [
     {
-      "javadoc": "Cascade delete",
       "otherEntityName": "transferDocumentItem",
       "otherEntityRelationshipName": "transferDocument",
       "relationshipName": "transferDocumentItem",
@@ -61,12 +60,14 @@
     },
     {
       "otherEntityName": "businessYear",
+      "otherEntityRelationshipName": "transfers",
       "relationshipName": "businessYear",
       "relationshipType": "many-to-one",
       "relationshipValidateRules": "required"
     },
     {
       "javadoc": "en: Storage that receives goods (if RECEIVING or INTERSTORAGE it is NOT NULL, if DISPATCHING it is NULL)\\nsr: Magacin koji prima robu (u slucaju primke i medjumagacinskog poslovanja NOT NULL, u slucaju otpremnice NULL)",
+      "otherEntityField": "code",
       "otherEntityName": "storage",
       "otherEntityRelationshipName": "received",
       "relationshipName": "receivingStorage",
@@ -74,6 +75,7 @@
     },
     {
       "javadoc": "en: Storage that receives goods (if DISPATCHING or INTERSTORAGE it is NOT NULL, if RECEIVING it is NULL)\\nsr: Magacin koji otprema robu (u slucaju otpremnice i medjumagacinskog poslovanja NOT NULL, u slucaju primke NULL)",
+      "otherEntityField": "code",
       "otherEntityName": "storage",
       "otherEntityRelationshipName": "dispatched",
       "relationshipName": "dispatchingStorage",
@@ -82,7 +84,7 @@
     {
       "javadoc": "en: Storage that receives goods (if RECEIVING or DISPATCHING it is NOT NULL, if INTERSTORAGE it is NULL)\\nsr: Poslovni partner koji prima ili otprema robu (u slucaju primke i otpremnice NOT NULL, u slucaju medjumagacinskog poslovanja NULL)",
       "otherEntityName": "businessPartner",
-      "otherEntityRelationshipName": "transferDocument",
+      "otherEntityRelationshipName": "transfers",
       "relationshipName": "businessPartner",
       "relationshipType": "many-to-one"
     }

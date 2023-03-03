@@ -25,13 +25,15 @@ public class CompanyCriteria implements Serializable, Criteria {
 
     private LongFilter legalEntityInfoId;
 
-    private LongFilter resourceId;
+    private LongFilter resourcesId;
 
-    private LongFilter businessPartnerId;
+    private LongFilter partnersId;
 
-    private LongFilter businessYearId;
+    private LongFilter businessYearsId;
 
-    private LongFilter employeeId;
+    private LongFilter employeesId;
+
+    private LongFilter storagesId;
 
     private Boolean distinct;
 
@@ -40,10 +42,11 @@ public class CompanyCriteria implements Serializable, Criteria {
     public CompanyCriteria(CompanyCriteria other) {
         this.id = other.id == null ? null : other.id.copy();
         this.legalEntityInfoId = other.legalEntityInfoId == null ? null : other.legalEntityInfoId.copy();
-        this.resourceId = other.resourceId == null ? null : other.resourceId.copy();
-        this.businessPartnerId = other.businessPartnerId == null ? null : other.businessPartnerId.copy();
-        this.businessYearId = other.businessYearId == null ? null : other.businessYearId.copy();
-        this.employeeId = other.employeeId == null ? null : other.employeeId.copy();
+        this.resourcesId = other.resourcesId == null ? null : other.resourcesId.copy();
+        this.partnersId = other.partnersId == null ? null : other.partnersId.copy();
+        this.businessYearsId = other.businessYearsId == null ? null : other.businessYearsId.copy();
+        this.employeesId = other.employeesId == null ? null : other.employeesId.copy();
+        this.storagesId = other.storagesId == null ? null : other.storagesId.copy();
         this.distinct = other.distinct;
     }
 
@@ -82,64 +85,79 @@ public class CompanyCriteria implements Serializable, Criteria {
         this.legalEntityInfoId = legalEntityInfoId;
     }
 
-    public LongFilter getResourceId() {
-        return resourceId;
+    public LongFilter getResourcesId() {
+        return resourcesId;
     }
 
-    public LongFilter resourceId() {
-        if (resourceId == null) {
-            resourceId = new LongFilter();
+    public LongFilter resourcesId() {
+        if (resourcesId == null) {
+            resourcesId = new LongFilter();
         }
-        return resourceId;
+        return resourcesId;
     }
 
-    public void setResourceId(LongFilter resourceId) {
-        this.resourceId = resourceId;
+    public void setResourcesId(LongFilter resourcesId) {
+        this.resourcesId = resourcesId;
     }
 
-    public LongFilter getBusinessPartnerId() {
-        return businessPartnerId;
+    public LongFilter getPartnersId() {
+        return partnersId;
     }
 
-    public LongFilter businessPartnerId() {
-        if (businessPartnerId == null) {
-            businessPartnerId = new LongFilter();
+    public LongFilter partnersId() {
+        if (partnersId == null) {
+            partnersId = new LongFilter();
         }
-        return businessPartnerId;
+        return partnersId;
     }
 
-    public void setBusinessPartnerId(LongFilter businessPartnerId) {
-        this.businessPartnerId = businessPartnerId;
+    public void setPartnersId(LongFilter partnersId) {
+        this.partnersId = partnersId;
     }
 
-    public LongFilter getBusinessYearId() {
-        return businessYearId;
+    public LongFilter getBusinessYearsId() {
+        return businessYearsId;
     }
 
-    public LongFilter businessYearId() {
-        if (businessYearId == null) {
-            businessYearId = new LongFilter();
+    public LongFilter businessYearsId() {
+        if (businessYearsId == null) {
+            businessYearsId = new LongFilter();
         }
-        return businessYearId;
+        return businessYearsId;
     }
 
-    public void setBusinessYearId(LongFilter businessYearId) {
-        this.businessYearId = businessYearId;
+    public void setBusinessYearsId(LongFilter businessYearsId) {
+        this.businessYearsId = businessYearsId;
     }
 
-    public LongFilter getEmployeeId() {
-        return employeeId;
+    public LongFilter getEmployeesId() {
+        return employeesId;
     }
 
-    public LongFilter employeeId() {
-        if (employeeId == null) {
-            employeeId = new LongFilter();
+    public LongFilter employeesId() {
+        if (employeesId == null) {
+            employeesId = new LongFilter();
         }
-        return employeeId;
+        return employeesId;
     }
 
-    public void setEmployeeId(LongFilter employeeId) {
-        this.employeeId = employeeId;
+    public void setEmployeesId(LongFilter employeesId) {
+        this.employeesId = employeesId;
+    }
+
+    public LongFilter getStoragesId() {
+        return storagesId;
+    }
+
+    public LongFilter storagesId() {
+        if (storagesId == null) {
+            storagesId = new LongFilter();
+        }
+        return storagesId;
+    }
+
+    public void setStoragesId(LongFilter storagesId) {
+        this.storagesId = storagesId;
     }
 
     public Boolean getDistinct() {
@@ -162,17 +180,18 @@ public class CompanyCriteria implements Serializable, Criteria {
         return (
             Objects.equals(id, that.id) &&
             Objects.equals(legalEntityInfoId, that.legalEntityInfoId) &&
-            Objects.equals(resourceId, that.resourceId) &&
-            Objects.equals(businessPartnerId, that.businessPartnerId) &&
-            Objects.equals(businessYearId, that.businessYearId) &&
-            Objects.equals(employeeId, that.employeeId) &&
+            Objects.equals(resourcesId, that.resourcesId) &&
+            Objects.equals(partnersId, that.partnersId) &&
+            Objects.equals(businessYearsId, that.businessYearsId) &&
+            Objects.equals(employeesId, that.employeesId) &&
+            Objects.equals(storagesId, that.storagesId) &&
             Objects.equals(distinct, that.distinct)
         );
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, legalEntityInfoId, resourceId, businessPartnerId, businessYearId, employeeId, distinct);
+        return Objects.hash(id, legalEntityInfoId, resourcesId, partnersId, businessYearsId, employeesId, storagesId, distinct);
     }
 
     // prettier-ignore
@@ -181,10 +200,11 @@ public class CompanyCriteria implements Serializable, Criteria {
         return "CompanyCriteria{" +
             (id != null ? "id=" + id + ", " : "") +
             (legalEntityInfoId != null ? "legalEntityInfoId=" + legalEntityInfoId + ", " : "") +
-            (resourceId != null ? "resourceId=" + resourceId + ", " : "") +
-            (businessPartnerId != null ? "businessPartnerId=" + businessPartnerId + ", " : "") +
-            (businessYearId != null ? "businessYearId=" + businessYearId + ", " : "") +
-            (employeeId != null ? "employeeId=" + employeeId + ", " : "") +
+            (resourcesId != null ? "resourcesId=" + resourcesId + ", " : "") +
+            (partnersId != null ? "partnersId=" + partnersId + ", " : "") +
+            (businessYearsId != null ? "businessYearsId=" + businessYearsId + ", " : "") +
+            (employeesId != null ? "employeesId=" + employeesId + ", " : "") +
+            (storagesId != null ? "storagesId=" + storagesId + ", " : "") +
             (distinct != null ? "distinct=" + distinct + ", " : "") +
             "}";
     }

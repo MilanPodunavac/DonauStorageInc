@@ -89,6 +89,15 @@ public class CityService {
     }
 
     /**
+     * Get all the cities with eager load of many-to-many relationships.
+     *
+     * @return the list of entities.
+     */
+    public Page<CityDTO> findAllWithEagerRelationships(Pageable pageable) {
+        return cityRepository.findAllWithEagerRelationships(pageable).map(cityMapper::toDto);
+    }
+
+    /**
      * Get one city by id.
      *
      * @param id the id of the entity.
@@ -97,7 +106,7 @@ public class CityService {
     @Transactional(readOnly = true)
     public Optional<CityDTO> findOne(Long id) {
         log.debug("Request to get City : {}", id);
-        return cityRepository.findById(id).map(cityMapper::toDto);
+        return cityRepository.findOneWithEagerRelationships(id).map(cityMapper::toDto);
     }
 
     /**

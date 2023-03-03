@@ -2,25 +2,36 @@ package inc.donau.storage.web.rest;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.hasItem;
+import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 import inc.donau.storage.IntegrationTest;
+import inc.donau.storage.domain.BusinessContact;
 import inc.donau.storage.domain.ContactInfo;
+import inc.donau.storage.domain.Employee;
 import inc.donau.storage.domain.Person;
 import inc.donau.storage.domain.enumeration.Gender;
 import inc.donau.storage.repository.PersonRepository;
+import inc.donau.storage.service.PersonService;
 import inc.donau.storage.service.criteria.PersonCriteria;
 import inc.donau.storage.service.dto.PersonDTO;
 import inc.donau.storage.service.mapper.PersonMapper;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicLong;
 import javax.persistence.EntityManager;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
@@ -30,6 +41,7 @@ import org.springframework.transaction.annotation.Transactional;
  * Integration tests for the {@link PersonResource} REST controller.
  */
 @IntegrationTest
+@ExtendWith(MockitoExtension.class)
 @AutoConfigureMockMvc
 @WithMockUser
 class PersonResourceIT {
@@ -58,8 +70,14 @@ class PersonResourceIT {
     @Autowired
     private PersonRepository personRepository;
 
+    @Mock
+    private PersonRepository personRepositoryMock;
+
     @Autowired
     private PersonMapper personMapper;
+
+    @Mock
+    private PersonService personServiceMock;
 
     @Autowired
     private EntityManager em;
@@ -237,6 +255,23 @@ class PersonResourceIT {
             .andExpect(jsonPath("$.[*].lastName").value(hasItem(DEFAULT_LAST_NAME)))
             .andExpect(jsonPath("$.[*].maidenName").value(hasItem(DEFAULT_MAIDEN_NAME)))
             .andExpect(jsonPath("$.[*].gender").value(hasItem(DEFAULT_GENDER.toString())));
+    }
+
+    @SuppressWarnings({ "unchecked" })
+    void getAllPeopleWithEagerRelationshipsIsEnabled() throws Exception {
+        when(personServiceMock.findAllWithEagerRelationships(any())).thenReturn(new PageImpl(new ArrayList<>()));
+
+        restPersonMockMvc.perform(get(ENTITY_API_URL + "?eagerload=true")).andExpect(status().isOk());
+
+        verify(personServiceMock, times(1)).findAllWithEagerRelationships(any());
+    }
+
+    @SuppressWarnings({ "unchecked" })
+    void getAllPeopleWithEagerRelationshipsIsNotEnabled() throws Exception {
+        when(personServiceMock.findAllWithEagerRelationships(any())).thenReturn(new PageImpl(new ArrayList<>()));
+
+        restPersonMockMvc.perform(get(ENTITY_API_URL + "?eagerload=false")).andExpect(status().isOk());
+        verify(personRepositoryMock, times(1)).findAll(any(Pageable.class));
     }
 
     @Test
@@ -588,6 +623,54 @@ class PersonResourceIT {
 
         // Get all the personList where contactInfo equals to (contactInfoId + 1)
         defaultPersonShouldNotBeFound("contactInfoId.equals=" + (contactInfoId + 1));
+    }
+
+    @Test
+    @Transactional
+    void getAllPeopleByBusinessContactIsEqualToSomething() throws Exception {
+        BusinessContact businessContact;
+        if (TestUtil.findAll(em, BusinessContact.class).isEmpty()) {
+            personRepository.saveAndFlush(person);
+            businessContact = BusinessContactResourceIT.createEntity(em);
+        } else {
+            businessContact = TestUtil.findAll(em, BusinessContact.class).get(0);
+        }
+        em.persist(businessContact);
+        em.flush();
+        person.setBusinessContact(businessContact);
+        businessContact.setPersonalInfo(person);
+        personRepository.saveAndFlush(person);
+        Long businessContactId = businessContact.getId();
+
+        // Get all the personList where businessContact equals to businessContactId
+        defaultPersonShouldBeFound("businessContactId.equals=" + businessContactId);
+
+        // Get all the personList where businessContact equals to (businessContactId + 1)
+        defaultPersonShouldNotBeFound("businessContactId.equals=" + (businessContactId + 1));
+    }
+
+    @Test
+    @Transactional
+    void getAllPeopleByEmployeeIsEqualToSomething() throws Exception {
+        Employee employee;
+        if (TestUtil.findAll(em, Employee.class).isEmpty()) {
+            personRepository.saveAndFlush(person);
+            employee = EmployeeResourceIT.createEntity(em);
+        } else {
+            employee = TestUtil.findAll(em, Employee.class).get(0);
+        }
+        em.persist(employee);
+        em.flush();
+        person.setEmployee(employee);
+        employee.setPersonalInfo(person);
+        personRepository.saveAndFlush(person);
+        Long employeeId = employee.getId();
+
+        // Get all the personList where employee equals to employeeId
+        defaultPersonShouldBeFound("employeeId.equals=" + employeeId);
+
+        // Get all the personList where employee equals to (employeeId + 1)
+        defaultPersonShouldNotBeFound("employeeId.equals=" + (employeeId + 1));
     }
 
     /**

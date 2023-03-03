@@ -10,6 +10,8 @@ import { useAppDispatch, useAppSelector } from 'app/config/store';
 
 import { IPerson } from 'app/shared/model/person.model';
 import { getEntities as getPeople } from 'app/entities/person/person.reducer';
+import { IBusinessPartner } from 'app/shared/model/business-partner.model';
+import { getEntities as getBusinessPartners } from 'app/entities/business-partner/business-partner.reducer';
 import { IBusinessContact } from 'app/shared/model/business-contact.model';
 import { getEntity, updateEntity, createEntity, reset } from './business-contact.reducer';
 
@@ -22,6 +24,7 @@ export const BusinessContactUpdate = () => {
   const isNew = id === undefined;
 
   const people = useAppSelector(state => state.person.entities);
+  const businessPartners = useAppSelector(state => state.businessPartner.entities);
   const businessContactEntity = useAppSelector(state => state.businessContact.entity);
   const loading = useAppSelector(state => state.businessContact.loading);
   const updating = useAppSelector(state => state.businessContact.updating);
@@ -39,6 +42,7 @@ export const BusinessContactUpdate = () => {
     }
 
     dispatch(getPeople({}));
+    dispatch(getBusinessPartners({}));
   }, []);
 
   useEffect(() => {

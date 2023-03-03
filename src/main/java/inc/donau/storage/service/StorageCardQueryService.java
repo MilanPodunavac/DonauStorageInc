@@ -117,12 +117,12 @@ public class StorageCardQueryService extends QueryService<StorageCard> {
             if (criteria.getPrice() != null) {
                 specification = specification.and(buildRangeSpecification(criteria.getPrice(), StorageCard_.price));
             }
-            if (criteria.getStorageCardTrafficId() != null) {
+            if (criteria.getTrafficId() != null) {
                 specification =
                     specification.and(
                         buildSpecification(
-                            criteria.getStorageCardTrafficId(),
-                            root -> root.join(StorageCard_.storageCardTraffics, JoinType.LEFT).get(StorageCardTraffic_.id)
+                            criteria.getTrafficId(),
+                            root -> root.join(StorageCard_.traffic, JoinType.LEFT).get(StorageCardTraffic_.id)
                         )
                     );
             }

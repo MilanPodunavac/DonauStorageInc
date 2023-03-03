@@ -10,6 +10,12 @@ import { useAppDispatch, useAppSelector } from 'app/config/store';
 
 import { ICity } from 'app/shared/model/city.model';
 import { getEntities as getCities } from 'app/entities/city/city.reducer';
+import { IEmployee } from 'app/shared/model/employee.model';
+import { getEntities as getEmployees } from 'app/entities/employee/employee.reducer';
+import { ILegalEntity } from 'app/shared/model/legal-entity.model';
+import { getEntities as getLegalEntities } from 'app/entities/legal-entity/legal-entity.reducer';
+import { IStorage } from 'app/shared/model/storage.model';
+import { getEntities as getStorages } from 'app/entities/storage/storage.reducer';
 import { IAddress } from 'app/shared/model/address.model';
 import { getEntity, updateEntity, createEntity, reset } from './address.reducer';
 
@@ -22,6 +28,9 @@ export const AddressUpdate = () => {
   const isNew = id === undefined;
 
   const cities = useAppSelector(state => state.city.entities);
+  const employees = useAppSelector(state => state.employee.entities);
+  const legalEntities = useAppSelector(state => state.legalEntity.entities);
+  const storages = useAppSelector(state => state.storage.entities);
   const addressEntity = useAppSelector(state => state.address.entity);
   const loading = useAppSelector(state => state.address.loading);
   const updating = useAppSelector(state => state.address.updating);
@@ -39,6 +48,9 @@ export const AddressUpdate = () => {
     }
 
     dispatch(getCities({}));
+    dispatch(getEmployees({}));
+    dispatch(getLegalEntities({}));
+    dispatch(getStorages({}));
   }, []);
 
   useEffect(() => {

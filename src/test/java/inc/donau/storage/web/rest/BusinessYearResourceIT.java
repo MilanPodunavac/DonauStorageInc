@@ -7,7 +7,10 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import inc.donau.storage.IntegrationTest;
 import inc.donau.storage.domain.BusinessYear;
+import inc.donau.storage.domain.CensusDocument;
 import inc.donau.storage.domain.Company;
+import inc.donau.storage.domain.StorageCard;
+import inc.donau.storage.domain.TransferDocument;
 import inc.donau.storage.repository.BusinessYearRepository;
 import inc.donau.storage.service.criteria.BusinessYearCriteria;
 import inc.donau.storage.service.dto.BusinessYearDTO;
@@ -362,6 +365,75 @@ class BusinessYearResourceIT {
 
         // Get all the businessYearList where company equals to (companyId + 1)
         defaultBusinessYearShouldNotBeFound("companyId.equals=" + (companyId + 1));
+    }
+
+    @Test
+    @Transactional
+    void getAllBusinessYearsByCensusDocumentsIsEqualToSomething() throws Exception {
+        CensusDocument censusDocuments;
+        if (TestUtil.findAll(em, CensusDocument.class).isEmpty()) {
+            businessYearRepository.saveAndFlush(businessYear);
+            censusDocuments = CensusDocumentResourceIT.createEntity(em);
+        } else {
+            censusDocuments = TestUtil.findAll(em, CensusDocument.class).get(0);
+        }
+        em.persist(censusDocuments);
+        em.flush();
+        businessYear.addCensusDocuments(censusDocuments);
+        businessYearRepository.saveAndFlush(businessYear);
+        Long censusDocumentsId = censusDocuments.getId();
+
+        // Get all the businessYearList where censusDocuments equals to censusDocumentsId
+        defaultBusinessYearShouldBeFound("censusDocumentsId.equals=" + censusDocumentsId);
+
+        // Get all the businessYearList where censusDocuments equals to (censusDocumentsId + 1)
+        defaultBusinessYearShouldNotBeFound("censusDocumentsId.equals=" + (censusDocumentsId + 1));
+    }
+
+    @Test
+    @Transactional
+    void getAllBusinessYearsByStorageCardsIsEqualToSomething() throws Exception {
+        StorageCard storageCards;
+        if (TestUtil.findAll(em, StorageCard.class).isEmpty()) {
+            businessYearRepository.saveAndFlush(businessYear);
+            storageCards = StorageCardResourceIT.createEntity(em);
+        } else {
+            storageCards = TestUtil.findAll(em, StorageCard.class).get(0);
+        }
+        em.persist(storageCards);
+        em.flush();
+        businessYear.addStorageCards(storageCards);
+        businessYearRepository.saveAndFlush(businessYear);
+        String storageCardsId = storageCards.getId();
+
+        // Get all the businessYearList where storageCards equals to storageCardsId
+        defaultBusinessYearShouldBeFound("storageCardsId.equals=" + storageCardsId);
+
+        // Get all the businessYearList where storageCards equals to "invalid-id"
+        defaultBusinessYearShouldNotBeFound("storageCardsId.equals=" + "invalid-id");
+    }
+
+    @Test
+    @Transactional
+    void getAllBusinessYearsByTransfersIsEqualToSomething() throws Exception {
+        TransferDocument transfers;
+        if (TestUtil.findAll(em, TransferDocument.class).isEmpty()) {
+            businessYearRepository.saveAndFlush(businessYear);
+            transfers = TransferDocumentResourceIT.createEntity(em);
+        } else {
+            transfers = TestUtil.findAll(em, TransferDocument.class).get(0);
+        }
+        em.persist(transfers);
+        em.flush();
+        businessYear.addTransfers(transfers);
+        businessYearRepository.saveAndFlush(businessYear);
+        Long transfersId = transfers.getId();
+
+        // Get all the businessYearList where transfers equals to transfersId
+        defaultBusinessYearShouldBeFound("transfersId.equals=" + transfersId);
+
+        // Get all the businessYearList where transfers equals to (transfersId + 1)
+        defaultBusinessYearShouldNotBeFound("transfersId.equals=" + (transfersId + 1));
     }
 
     /**

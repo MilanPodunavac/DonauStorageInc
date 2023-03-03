@@ -198,7 +198,7 @@ export const StorageCardTrafficUpdate = () => {
                 type="text"
                 value={trafficValue}
                 validate={{
-                  //required: { value: true, message: translate('entity.validation.required') },
+                  required: { value: true, message: translate('entity.validation.required') },
                   validate: v => isNumber(v) || translate('entity.validation.number'),
                 }}
                 disabled

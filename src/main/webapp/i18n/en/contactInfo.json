@@ -19,7 +19,9 @@
       },
       "id": "ID",
       "email": "Email",
-      "phoneNumber": "Phone Number"
+      "phoneNumber": "Phone Number",
+      "person": "Person",
+      "legalEntity": "Legal Entity"
     }
   }
 }

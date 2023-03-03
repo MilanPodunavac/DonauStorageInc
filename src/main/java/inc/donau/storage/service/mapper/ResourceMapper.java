@@ -13,16 +13,16 @@ import org.mapstruct.*;
  */
 @Mapper(componentModel = "spring")
 public interface ResourceMapper extends EntityMapper<ResourceDTO, Resource> {
-    @Mapping(target = "unit", source = "unit", qualifiedByName = "measurementUnitId")
+    @Mapping(target = "unit", source = "unit", qualifiedByName = "measurementUnitName")
     @Mapping(target = "company", source = "company", qualifiedByName = "companyId")
     ResourceDTO toDto(Resource s);
 
-    @Named("measurementUnitId")
+    @Named("measurementUnitName")
     @BeanMapping(ignoreByDefault = true)
     @Mapping(target = "id", source = "id")
     @Mapping(target = "name", source = "name")
     @Mapping(target = "abbreviation", source = "abbreviation")
-    MeasurementUnitDTO toDtoMeasurementUnitId(MeasurementUnit measurementUnit);
+    MeasurementUnitDTO toDtoMeasurementUnitName(MeasurementUnit measurementUnit);
 
     @Named("companyId")
     @BeanMapping(ignoreByDefault = true)

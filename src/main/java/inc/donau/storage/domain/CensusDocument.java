@@ -48,9 +48,6 @@ public class CensusDocument implements Serializable {
     @Column(name = "leveling")
     private Boolean leveling;
 
-    /**
-     * Cascade delete
-     */
     @OneToMany(mappedBy = "censusDocument", cascade = CascadeType.REMOVE)
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     @JsonIgnoreProperties(value = { "censusDocument", "resource" }, allowSetters = true)
@@ -58,22 +55,22 @@ public class CensusDocument implements Serializable {
 
     @ManyToOne(optional = false)
     @NotNull
-    @JsonIgnoreProperties(value = { "company" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "company", "censusDocuments", "storageCards", "transfers" }, allowSetters = true)
     private BusinessYear businessYear;
 
     @ManyToOne(optional = false)
     @NotNull
-    @JsonIgnoreProperties(value = { "address", "personalInfo", "company" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "address", "personalInfo", "user", "company" }, allowSetters = true)
     private Employee president;
 
     @ManyToOne(optional = false)
     @NotNull
-    @JsonIgnoreProperties(value = { "address", "personalInfo", "company" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "address", "personalInfo", "user", "company" }, allowSetters = true)
     private Employee deputy;
 
     @ManyToOne(optional = false)
     @NotNull
-    @JsonIgnoreProperties(value = { "address", "personalInfo", "company" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "address", "personalInfo", "user", "company" }, allowSetters = true)
     private Employee censusTaker;
 
     @ManyToOne(optional = false)

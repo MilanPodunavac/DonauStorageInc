@@ -29,18 +29,17 @@ public class Storage implements Serializable {
     @Column(name = "id")
     private Long id;
 
+    @Column(name = "code")
+    private String code;
+
     @Column(name = "name")
     private String name;
-
-    @NotNull
-    @Column(name = "code", nullable = false)
-    private String code;
 
     /**
      * Cascade delete
      */
-    @JsonIgnoreProperties(value = { "city" }, allowSetters = true)
-    @OneToOne(optional = false, cascade = CascadeType.REMOVE)
+    @JsonIgnoreProperties(value = { "city", "employee", "legalEntity", "storage" }, allowSetters = true)
+    @OneToOne(optional = false)
     @NotNull
     @JoinColumn(unique = true)
     private Address address;
@@ -50,7 +49,7 @@ public class Storage implements Serializable {
      */
     @OneToMany(mappedBy = "storage")
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-    @JsonIgnoreProperties(value = { "storageCardTraffics", "businessYear", "resource", "storage" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "traffic", "businessYear", "resource", "storage" }, allowSetters = true)
     private Set<StorageCard> storageCards = new HashSet<>();
 
     @OneToMany(mappedBy = "receivingStorage")
@@ -76,7 +75,10 @@ public class Storage implements Serializable {
 
     @ManyToOne(optional = false)
     @NotNull
-    @JsonIgnoreProperties(value = { "legalEntityInfo", "resources", "businessPartners", "businessYears", "employees" }, allowSetters = true)
+    @JsonIgnoreProperties(
+        value = { "legalEntityInfo", "resources", "partners", "businessYears", "employees", "storages" },
+        allowSetters = true
+    )
     private Company company;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
@@ -94,19 +96,6 @@ public class Storage implements Serializable {
         this.id = id;
     }
 
-    public String getName() {
-        return this.name;
-    }
-
-    public Storage name(String name) {
-        this.setName(name);
-        return this;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
     public String getCode() {
         return this.code;
     }
@@ -118,6 +107,19 @@ public class Storage implements Serializable {
 
     public void setCode(String code) {
         this.code = code;
+    }
+
+    public String getName() {
+        return this.name;
+    }
+
+    public Storage name(String name) {
+        this.setName(name);
+        return this;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public Address getAddress() {
@@ -152,13 +154,13 @@ public class Storage implements Serializable {
         return this;
     }
 
-    public Storage addStorageCard(StorageCard storageCard) {
+    public Storage addStorageCards(StorageCard storageCard) {
         this.storageCards.add(storageCard);
         storageCard.setStorage(this);
         return this;
     }
 
-    public Storage removeStorageCard(StorageCard storageCard) {
+    public Storage removeStorageCards(StorageCard storageCard) {
         this.storageCards.remove(storageCard);
         storageCard.setStorage(null);
         return this;
@@ -294,8 +296,8 @@ public class Storage implements Serializable {
     public String toString() {
         return "Storage{" +
             "id=" + getId() +
-            ", name='" + getName() + "'" +
             ", code='" + getCode() + "'" +
+            ", name='" + getName() + "'" +
             "}";
     }
 }

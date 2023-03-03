@@ -96,21 +96,21 @@ public class ResourceQueryService extends QueryService<Resource> {
             if (criteria.getType() != null) {
                 specification = specification.and(buildSpecification(criteria.getType(), Resource_.type));
             }
-            if (criteria.getCensusItemId() != null) {
+            if (criteria.getCensusItemsId() != null) {
                 specification =
                     specification.and(
                         buildSpecification(
-                            criteria.getCensusItemId(),
+                            criteria.getCensusItemsId(),
                             root -> root.join(Resource_.censusItems, JoinType.LEFT).get(CensusItem_.id)
                         )
                     );
             }
-            if (criteria.getTransferDocumentItemId() != null) {
+            if (criteria.getTransferItemsId() != null) {
                 specification =
                     specification.and(
                         buildSpecification(
-                            criteria.getTransferDocumentItemId(),
-                            root -> root.join(Resource_.transferDocumentItems, JoinType.LEFT).get(TransferDocumentItem_.id)
+                            criteria.getTransferItemsId(),
+                            root -> root.join(Resource_.transferItems, JoinType.LEFT).get(TransferDocumentItem_.id)
                         )
                     );
             }
@@ -124,6 +124,15 @@ public class ResourceQueryService extends QueryService<Resource> {
                 specification =
                     specification.and(
                         buildSpecification(criteria.getCompanyId(), root -> root.join(Resource_.company, JoinType.LEFT).get(Company_.id))
+                    );
+            }
+            if (criteria.getStorageCardsId() != null) {
+                specification =
+                    specification.and(
+                        buildSpecification(
+                            criteria.getStorageCardsId(),
+                            root -> root.join(Resource_.storageCards, JoinType.LEFT).get(StorageCard_.id)
+                        )
                     );
             }
         }

@@ -89,6 +89,15 @@ public class ResourceService {
     }
 
     /**
+     * Get all the resources with eager load of many-to-many relationships.
+     *
+     * @return the list of entities.
+     */
+    public Page<ResourceDTO> findAllWithEagerRelationships(Pageable pageable) {
+        return resourceRepository.findAllWithEagerRelationships(pageable).map(resourceMapper::toDto);
+    }
+
+    /**
      * Get one resource by id.
      *
      * @param id the id of the entity.
@@ -97,7 +106,7 @@ public class ResourceService {
     @Transactional(readOnly = true)
     public Optional<ResourceDTO> findOne(Long id) {
         log.debug("Request to get Resource : {}", id);
-        return resourceRepository.findById(id).map(resourceMapper::toDto);
+        return resourceRepository.findOneWithEagerRelationships(id).map(resourceMapper::toDto);
     }
 
     /**

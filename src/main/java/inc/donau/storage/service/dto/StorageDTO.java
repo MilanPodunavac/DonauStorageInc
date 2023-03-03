@@ -18,10 +18,9 @@ public class StorageDTO implements Serializable {
     @Schema(description = "AutoNumber")
     private Long id;
 
-    private String name;
-
-    @NotNull
     private String code;
+
+    private String name;
 
     private AddressDTO address;
 
@@ -35,20 +34,20 @@ public class StorageDTO implements Serializable {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
     public String getCode() {
         return code;
     }
 
     public void setCode(String code) {
         this.code = code;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public AddressDTO getAddress() {
@@ -93,8 +92,8 @@ public class StorageDTO implements Serializable {
     public String toString() {
         return "StorageDTO{" +
             "id=" + getId() +
-            ", name='" + getName() + "'" +
             ", code='" + getCode() + "'" +
+            ", name='" + getName() + "'" +
             ", address=" + getAddress() +
             ", company=" + getCompany() +
             "}";

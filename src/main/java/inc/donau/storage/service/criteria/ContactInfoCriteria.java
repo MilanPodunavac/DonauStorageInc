@@ -27,6 +27,10 @@ public class ContactInfoCriteria implements Serializable, Criteria {
 
     private StringFilter phoneNumber;
 
+    private LongFilter personId;
+
+    private LongFilter legalEntityId;
+
     private Boolean distinct;
 
     public ContactInfoCriteria() {}
@@ -35,6 +39,8 @@ public class ContactInfoCriteria implements Serializable, Criteria {
         this.id = other.id == null ? null : other.id.copy();
         this.email = other.email == null ? null : other.email.copy();
         this.phoneNumber = other.phoneNumber == null ? null : other.phoneNumber.copy();
+        this.personId = other.personId == null ? null : other.personId.copy();
+        this.legalEntityId = other.legalEntityId == null ? null : other.legalEntityId.copy();
         this.distinct = other.distinct;
     }
 
@@ -88,6 +94,36 @@ public class ContactInfoCriteria implements Serializable, Criteria {
         this.phoneNumber = phoneNumber;
     }
 
+    public LongFilter getPersonId() {
+        return personId;
+    }
+
+    public LongFilter personId() {
+        if (personId == null) {
+            personId = new LongFilter();
+        }
+        return personId;
+    }
+
+    public void setPersonId(LongFilter personId) {
+        this.personId = personId;
+    }
+
+    public LongFilter getLegalEntityId() {
+        return legalEntityId;
+    }
+
+    public LongFilter legalEntityId() {
+        if (legalEntityId == null) {
+            legalEntityId = new LongFilter();
+        }
+        return legalEntityId;
+    }
+
+    public void setLegalEntityId(LongFilter legalEntityId) {
+        this.legalEntityId = legalEntityId;
+    }
+
     public Boolean getDistinct() {
         return distinct;
     }
@@ -109,13 +145,15 @@ public class ContactInfoCriteria implements Serializable, Criteria {
             Objects.equals(id, that.id) &&
             Objects.equals(email, that.email) &&
             Objects.equals(phoneNumber, that.phoneNumber) &&
+            Objects.equals(personId, that.personId) &&
+            Objects.equals(legalEntityId, that.legalEntityId) &&
             Objects.equals(distinct, that.distinct)
         );
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, email, phoneNumber, distinct);
+        return Objects.hash(id, email, phoneNumber, personId, legalEntityId, distinct);
     }
 
     // prettier-ignore
@@ -125,6 +163,8 @@ public class ContactInfoCriteria implements Serializable, Criteria {
             (id != null ? "id=" + id + ", " : "") +
             (email != null ? "email=" + email + ", " : "") +
             (phoneNumber != null ? "phoneNumber=" + phoneNumber + ", " : "") +
+            (personId != null ? "personId=" + personId + ", " : "") +
+            (legalEntityId != null ? "legalEntityId=" + legalEntityId + ", " : "") +
             (distinct != null ? "distinct=" + distinct + ", " : "") +
             "}";
     }

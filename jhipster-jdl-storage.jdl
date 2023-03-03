@@ -20,21 +20,21 @@ entity TransferDocument {
 /** sr: Vrsta prometnog dokumenta */
 enum TransferDocumentType {
 	/** sr: PRIMKA */
-    RECEIVING, 
+    RECEIVING (Receiving), 
     /** sr: OTPREMNICA */
-    DISPATCHING,
+    DISPATCHING (Dispatching),
     /** sr: MEDJUMAGACINSKO POSLOVANJE */
-    INTERSTORAGE
+    INTERSTORAGE (Interstorage)
 }
 
 /** sr: Status prometnog dokumenta */
 enum TransferDocumentStatus {
     /** sr: U IZRADI */
-	IN_PREPARATION, 
+	IN_PREPARATION (In_preparation), 
     /** sr: PROKNJIZEN */
-    ACCOUNTED, 
+    ACCOUNTED (Accounted), 
     /** sr: STORNIRAN */
-    REVERSED
+    REVERSED (Reversed)
 }
 
 /** sr: Stavka prometnog dokumenta */
@@ -89,15 +89,15 @@ entity StorageCardTraffic {
 /** sr: Vrsta prometa magacinske kartice */
 enum StorageCardTrafficType {
 	/** sr: POCETNO_STANJE */
-    STARTING_BALANCE, 
+    STARTING_BALANCE (Starting_balance), 
     /** sr: PROMET */
-    TRANSFER, 
+    TRANSFER (Transfer), 
     /** sr: NIVELACIJA */
-    LEVELING, 
+    LEVELING (Leveling), 
     /** sr: KOREKCIJA */
-    CORRECTION, 
+    CORRECTION (Correction), 
     /** sr: STORNIRANJE */
-    REVERSAL
+    REVERSAL (Reversal)
 }
 
 /** sr: Smer prometa magacinske kartice */
@@ -134,9 +134,9 @@ entity CensusItem {
 
 relationship OneToMany {
     /** Prevent deletion */
-	Storage 
+	Storage{storageCards} 
     to 
-    StorageCard{storage required},
+    StorageCard{storage(code) required},
 
     Storage{received} 
     to
@@ -144,7 +144,7 @@ relationship OneToMany {
     en: Storage that receives goods (if RECEIVING or INTERSTORAGE it is NOT NULL, if DISPATCHING it is NULL) 
     sr: Magacin koji prima robu (u slucaju primke i medjumagacinskog poslovanja NOT NULL, u slucaju otpremnice NULL) 
     */
-    TransferDocument{receivingStorage},
+    TransferDocument{receivingStorage(code)},
 
     Storage{dispatched} 
     to 
@@ -152,9 +152,9 @@ relationship OneToMany {
     en: Storage that receives goods (if DISPATCHING or INTERSTORAGE it is NOT NULL, if RECEIVING it is NULL) 
     sr: Magacin koji otprema robu (u slucaju otpremnice i medjumagacinskog poslovanja NOT NULL, u slucaju primke NULL) 
     */
-    TransferDocument{dispatchingStorage},
+    TransferDocument{dispatchingStorage(code)},
 
-    BusinessPartner 
+    BusinessPartner{transfers}
     to
     /** 
     en: Storage that receives goods (if RECEIVING or DISPATCHING it is NOT NULL, if INTERSTORAGE it is NULL) 
@@ -164,34 +164,34 @@ relationship OneToMany {
 
     Storage 
     to 
-    CensusDocument{storage required}
+    CensusDocument{storage(code) required}
 
 
     /** Prevent deletion */
-    StorageCard 
+    StorageCard{traffic} 
     to 
     StorageCardTraffic{storageCard required}
 
-    /** Cascade delete */
     TransferDocument 
     to 
+    /** Cascade delete */
     TransferDocumentItem{transferDocument required}
 
-    /** Cascade delete */
     CensusDocument 
     to 
+    /** Cascade delete */
     CensusItem{censusDocument required}
 
 
     /** Prevent deletion */
-    Resource 
+    Resource{censusItems} 
     to 
-    CensusItem{resource required}
+    CensusItem{resource(name) required}
 
     /** Prevent deletion */
-    Resource 
+    Resource{transferItems} 
     to 
-    TransferDocumentItem{resource required}
+    TransferDocumentItem{resource(name) required}
 }
 
 
@@ -199,7 +199,7 @@ relationship ManyToOne {
 	CensusDocument{businessYear required} 
     to 
     /** Prevent deletion */
-    BusinessYear,
+    BusinessYear{censusDocuments},
 
     CensusDocument{president required} 
     to 
@@ -217,24 +217,24 @@ relationship ManyToOne {
     StorageCard{businessYear required} 
     to 
     /** Prevent deletion */
-    BusinessYear,
+    BusinessYear{storageCards},
 
     StorageCard{resource required} 
     to 
     /** Prevent deletion */
-    Resource
+    Resource{storageCards}
 
 
     Storage{company required} 
     to 
     /** Prevent deletion */
-    Company
+    Company{storages}
 
 
     TransferDocument{businessYear required} 
     to 
     /** Prevent deletion */
-    BusinessYear
+    BusinessYear{transfers}
 }
 
 relationship OneToOne {
@@ -242,7 +242,7 @@ relationship OneToOne {
 	Storage{address required} 
     to 
     /** Prevent deletion */
-    Address
+    Address{storage}
 }
 
 paginate StorageCardTraffic, CensusItem, TransferDocumentItem with infinite-scroll

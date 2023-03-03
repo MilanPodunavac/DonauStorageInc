@@ -1,1 +1,1 @@
-id;unique_identification_number;birth_date;disability;employment;profile_image;profile_image_content_type;address_id;personal_info_id;company_id;user_id
+id;unique_identification_number;birth_date;disability;employment;profile_picture;profile_picture_content_type;address_id;personal_info_id;user_id;company_id

@@ -18,10 +18,10 @@
         "title": "Storage"
       },
       "id": "Id",
-      "name": "Name",
       "code": "Code",
+      "name": "Name",
       "address": "Address",
-      "storageCard": "Storage Card",
+      "storageCards": "Storage Cards",
       "received": "Received",
       "dispatched": "Dispatched",
       "censusDocument": "Census Document",

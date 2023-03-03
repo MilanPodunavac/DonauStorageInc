@@ -7,7 +7,7 @@ export interface IBusinessPartner {
   id?: number;
   businessContact?: IBusinessContact;
   legalEntityInfo?: ILegalEntity;
-  transferDocuments?: ITransferDocument[] | null;
+  transfers?: ITransferDocument[] | null;
   company?: ICompany;
 }
 

@@ -27,7 +27,7 @@ public class BusinessPartnerCriteria implements Serializable, Criteria {
 
     private LongFilter legalEntityInfoId;
 
-    private LongFilter transferDocumentId;
+    private LongFilter transfersId;
 
     private LongFilter companyId;
 
@@ -39,7 +39,7 @@ public class BusinessPartnerCriteria implements Serializable, Criteria {
         this.id = other.id == null ? null : other.id.copy();
         this.businessContactId = other.businessContactId == null ? null : other.businessContactId.copy();
         this.legalEntityInfoId = other.legalEntityInfoId == null ? null : other.legalEntityInfoId.copy();
-        this.transferDocumentId = other.transferDocumentId == null ? null : other.transferDocumentId.copy();
+        this.transfersId = other.transfersId == null ? null : other.transfersId.copy();
         this.companyId = other.companyId == null ? null : other.companyId.copy();
         this.distinct = other.distinct;
     }
@@ -94,19 +94,19 @@ public class BusinessPartnerCriteria implements Serializable, Criteria {
         this.legalEntityInfoId = legalEntityInfoId;
     }
 
-    public LongFilter getTransferDocumentId() {
-        return transferDocumentId;
+    public LongFilter getTransfersId() {
+        return transfersId;
     }
 
-    public LongFilter transferDocumentId() {
-        if (transferDocumentId == null) {
-            transferDocumentId = new LongFilter();
+    public LongFilter transfersId() {
+        if (transfersId == null) {
+            transfersId = new LongFilter();
         }
-        return transferDocumentId;
+        return transfersId;
     }
 
-    public void setTransferDocumentId(LongFilter transferDocumentId) {
-        this.transferDocumentId = transferDocumentId;
+    public void setTransfersId(LongFilter transfersId) {
+        this.transfersId = transfersId;
     }
 
     public LongFilter getCompanyId() {
@@ -145,7 +145,7 @@ public class BusinessPartnerCriteria implements Serializable, Criteria {
             Objects.equals(id, that.id) &&
             Objects.equals(businessContactId, that.businessContactId) &&
             Objects.equals(legalEntityInfoId, that.legalEntityInfoId) &&
-            Objects.equals(transferDocumentId, that.transferDocumentId) &&
+            Objects.equals(transfersId, that.transfersId) &&
             Objects.equals(companyId, that.companyId) &&
             Objects.equals(distinct, that.distinct)
         );
@@ -153,7 +153,7 @@ public class BusinessPartnerCriteria implements Serializable, Criteria {
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, businessContactId, legalEntityInfoId, transferDocumentId, companyId, distinct);
+        return Objects.hash(id, businessContactId, legalEntityInfoId, transfersId, companyId, distinct);
     }
 
     // prettier-ignore
@@ -163,7 +163,7 @@ public class BusinessPartnerCriteria implements Serializable, Criteria {
             (id != null ? "id=" + id + ", " : "") +
             (businessContactId != null ? "businessContactId=" + businessContactId + ", " : "") +
             (legalEntityInfoId != null ? "legalEntityInfoId=" + legalEntityInfoId + ", " : "") +
-            (transferDocumentId != null ? "transferDocumentId=" + transferDocumentId + ", " : "") +
+            (transfersId != null ? "transfersId=" + transfersId + ", " : "") +
             (companyId != null ? "companyId=" + companyId + ", " : "") +
             (distinct != null ? "distinct=" + distinct + ", " : "") +
             "}";

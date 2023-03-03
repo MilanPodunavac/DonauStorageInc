@@ -10,7 +10,7 @@
       "fieldType": "StorageCardTrafficType",
       "fieldTypeJavadoc": "sr: Vrsta prometa magacinske kartice",
       "fieldValidateRules": ["required"],
-      "fieldValues": "STARTING_BALANCE,TRANSFER,LEVELING,CORRECTION,REVERSAL",
+      "fieldValues": "STARTING_BALANCE (Starting_balance),TRANSFER (Transfer),LEVELING (Leveling),CORRECTION (Correction),REVERSAL (Reversal)",
       "fieldValuesJavadocs": {
         "CORRECTION": "sr: KOREKCIJA",
         "LEVELING": "sr: NIVELACIJA",
@@ -65,7 +65,7 @@
   "relationships": [
     {
       "otherEntityName": "storageCard",
-      "otherEntityRelationshipName": "storageCardTraffic",
+      "otherEntityRelationshipName": "traffic",
       "relationshipName": "storageCard",
       "relationshipType": "many-to-one",
       "relationshipValidateRules": "required"

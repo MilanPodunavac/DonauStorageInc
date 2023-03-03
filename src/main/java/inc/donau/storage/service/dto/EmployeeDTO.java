@@ -32,16 +32,16 @@ public class EmployeeDTO implements Serializable {
     private Boolean employment;
 
     @Lob
-    private byte[] profileImage;
+    private byte[] profilePicture;
 
-    private String profileImageContentType;
+    private String profilePictureContentType;
     private AddressDTO address;
 
     private PersonDTO personalInfo;
 
-    private CompanyDTO company;
-
     private UserDTO user;
+
+    private CompanyDTO company;
 
     public Long getId() {
         return id;
@@ -83,20 +83,20 @@ public class EmployeeDTO implements Serializable {
         this.employment = employment;
     }
 
-    public byte[] getProfileImage() {
-        return profileImage;
+    public byte[] getProfilePicture() {
+        return profilePicture;
     }
 
-    public void setProfileImage(byte[] profileImage) {
-        this.profileImage = profileImage;
+    public void setProfilePicture(byte[] profilePicture) {
+        this.profilePicture = profilePicture;
     }
 
-    public String getProfileImageContentType() {
-        return profileImageContentType;
+    public String getProfilePictureContentType() {
+        return profilePictureContentType;
     }
 
-    public void setProfileImageContentType(String profileImageContentType) {
-        this.profileImageContentType = profileImageContentType;
+    public void setProfilePictureContentType(String profilePictureContentType) {
+        this.profilePictureContentType = profilePictureContentType;
     }
 
     public AddressDTO getAddress() {
@@ -115,20 +115,20 @@ public class EmployeeDTO implements Serializable {
         this.personalInfo = personalInfo;
     }
 
-    public CompanyDTO getCompany() {
-        return company;
-    }
-
-    public void setCompany(CompanyDTO company) {
-        this.company = company;
-    }
-
     public UserDTO getUser() {
         return user;
     }
 
     public void setUser(UserDTO user) {
         this.user = user;
+    }
+
+    public CompanyDTO getCompany() {
+        return company;
+    }
+
+    public void setCompany(CompanyDTO company) {
+        this.company = company;
     }
 
     @Override
@@ -161,11 +161,11 @@ public class EmployeeDTO implements Serializable {
             ", birthDate='" + getBirthDate() + "'" +
             ", disability='" + getDisability() + "'" +
             ", employment='" + getEmployment() + "'" +
-            ", profileImage='" + getProfileImage() + "'" +
+            ", profilePicture='" + getProfilePicture() + "'" +
             ", address=" + getAddress() +
             ", personalInfo=" + getPersonalInfo() +
-            ", company=" + getCompany() +
             ", user=" + getUser() +
+            ", company=" + getCompany() +
             "}";
     }
 }

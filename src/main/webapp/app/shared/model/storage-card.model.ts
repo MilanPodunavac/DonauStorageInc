@@ -14,7 +14,7 @@ export interface IStorageCard {
   dispatchedValue?: number;
   totalValue?: number | null;
   price?: number;
-  storageCardTraffics?: IStorageCardTraffic[] | null;
+  traffic?: IStorageCardTraffic[] | null;
   businessYear?: IBusinessYear;
   resource?: IResource;
   storage?: IStorage;

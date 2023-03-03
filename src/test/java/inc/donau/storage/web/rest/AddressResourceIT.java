@@ -2,24 +2,36 @@ package inc.donau.storage.web.rest;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.hasItem;
+import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 import inc.donau.storage.IntegrationTest;
 import inc.donau.storage.domain.Address;
 import inc.donau.storage.domain.City;
+import inc.donau.storage.domain.Employee;
+import inc.donau.storage.domain.LegalEntity;
+import inc.donau.storage.domain.Storage;
 import inc.donau.storage.repository.AddressRepository;
+import inc.donau.storage.service.AddressService;
 import inc.donau.storage.service.criteria.AddressCriteria;
 import inc.donau.storage.service.dto.AddressDTO;
 import inc.donau.storage.service.mapper.AddressMapper;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicLong;
 import javax.persistence.EntityManager;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
@@ -29,6 +41,7 @@ import org.springframework.transaction.annotation.Transactional;
  * Integration tests for the {@link AddressResource} REST controller.
  */
 @IntegrationTest
+@ExtendWith(MockitoExtension.class)
 @AutoConfigureMockMvc
 @WithMockUser
 class AddressResourceIT {
@@ -51,8 +64,14 @@ class AddressResourceIT {
     @Autowired
     private AddressRepository addressRepository;
 
+    @Mock
+    private AddressRepository addressRepositoryMock;
+
     @Autowired
     private AddressMapper addressMapper;
+
+    @Mock
+    private AddressService addressServiceMock;
 
     @Autowired
     private EntityManager em;
@@ -216,6 +235,23 @@ class AddressResourceIT {
             .andExpect(jsonPath("$.[*].streetName").value(hasItem(DEFAULT_STREET_NAME)))
             .andExpect(jsonPath("$.[*].streetCode").value(hasItem(DEFAULT_STREET_CODE)))
             .andExpect(jsonPath("$.[*].postalCode").value(hasItem(DEFAULT_POSTAL_CODE)));
+    }
+
+    @SuppressWarnings({ "unchecked" })
+    void getAllAddressesWithEagerRelationshipsIsEnabled() throws Exception {
+        when(addressServiceMock.findAllWithEagerRelationships(any())).thenReturn(new PageImpl(new ArrayList<>()));
+
+        restAddressMockMvc.perform(get(ENTITY_API_URL + "?eagerload=true")).andExpect(status().isOk());
+
+        verify(addressServiceMock, times(1)).findAllWithEagerRelationships(any());
+    }
+
+    @SuppressWarnings({ "unchecked" })
+    void getAllAddressesWithEagerRelationshipsIsNotEnabled() throws Exception {
+        when(addressServiceMock.findAllWithEagerRelationships(any())).thenReturn(new PageImpl(new ArrayList<>()));
+
+        restAddressMockMvc.perform(get(ENTITY_API_URL + "?eagerload=false")).andExpect(status().isOk());
+        verify(addressRepositoryMock, times(1)).findAll(any(Pageable.class));
     }
 
     @Test
@@ -469,6 +505,78 @@ class AddressResourceIT {
 
         // Get all the addressList where city equals to (cityId + 1)
         defaultAddressShouldNotBeFound("cityId.equals=" + (cityId + 1));
+    }
+
+    @Test
+    @Transactional
+    void getAllAddressesByEmployeeIsEqualToSomething() throws Exception {
+        Employee employee;
+        if (TestUtil.findAll(em, Employee.class).isEmpty()) {
+            addressRepository.saveAndFlush(address);
+            employee = EmployeeResourceIT.createEntity(em);
+        } else {
+            employee = TestUtil.findAll(em, Employee.class).get(0);
+        }
+        em.persist(employee);
+        em.flush();
+        address.setEmployee(employee);
+        employee.setAddress(address);
+        addressRepository.saveAndFlush(address);
+        Long employeeId = employee.getId();
+
+        // Get all the addressList where employee equals to employeeId
+        defaultAddressShouldBeFound("employeeId.equals=" + employeeId);
+
+        // Get all the addressList where employee equals to (employeeId + 1)
+        defaultAddressShouldNotBeFound("employeeId.equals=" + (employeeId + 1));
+    }
+
+    @Test
+    @Transactional
+    void getAllAddressesByLegalEntityIsEqualToSomething() throws Exception {
+        LegalEntity legalEntity;
+        if (TestUtil.findAll(em, LegalEntity.class).isEmpty()) {
+            addressRepository.saveAndFlush(address);
+            legalEntity = LegalEntityResourceIT.createEntity(em);
+        } else {
+            legalEntity = TestUtil.findAll(em, LegalEntity.class).get(0);
+        }
+        em.persist(legalEntity);
+        em.flush();
+        address.setLegalEntity(legalEntity);
+        legalEntity.setAddress(address);
+        addressRepository.saveAndFlush(address);
+        Long legalEntityId = legalEntity.getId();
+
+        // Get all the addressList where legalEntity equals to legalEntityId
+        defaultAddressShouldBeFound("legalEntityId.equals=" + legalEntityId);
+
+        // Get all the addressList where legalEntity equals to (legalEntityId + 1)
+        defaultAddressShouldNotBeFound("legalEntityId.equals=" + (legalEntityId + 1));
+    }
+
+    @Test
+    @Transactional
+    void getAllAddressesByStorageIsEqualToSomething() throws Exception {
+        Storage storage;
+        if (TestUtil.findAll(em, Storage.class).isEmpty()) {
+            addressRepository.saveAndFlush(address);
+            storage = StorageResourceIT.createEntity(em);
+        } else {
+            storage = TestUtil.findAll(em, Storage.class).get(0);
+        }
+        em.persist(storage);
+        em.flush();
+        address.setStorage(storage);
+        storage.setAddress(address);
+        addressRepository.saveAndFlush(address);
+        Long storageId = storage.getId();
+
+        // Get all the addressList where storage equals to storageId
+        defaultAddressShouldBeFound("storageId.equals=" + storageId);
+
+        // Get all the addressList where storage equals to (storageId + 1)
+        defaultAddressShouldNotBeFound("storageId.equals=" + (storageId + 1));
     }
 
     /**

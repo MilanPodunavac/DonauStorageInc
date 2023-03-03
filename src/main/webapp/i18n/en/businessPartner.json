@@ -20,7 +20,7 @@
       "id": "ID",
       "businessContact": "Business Contact",
       "legalEntityInfo": "Legal Entity Info",
-      "transferDocument": "Transfer Document",
+      "transfers": "Transfers",
       "company": "Company"
     }
   }

@@ -20,10 +20,11 @@
       "id": "ID",
       "name": "Name",
       "type": "Type",
-      "censusItem": "Census Item",
-      "transferDocumentItem": "Transfer Document Item",
+      "censusItems": "Census Items",
+      "transferItems": "Transfer Items",
       "unit": "Unit",
-      "company": "Company"
+      "company": "Company",
+      "storageCards": "Storage Cards"
     }
   }
 }

@@ -76,24 +76,27 @@
       "javadoc": "Prevent deletion",
       "otherEntityName": "storageCardTraffic",
       "otherEntityRelationshipName": "storageCard",
-      "relationshipName": "storageCardTraffic",
+      "relationshipName": "traffic",
       "relationshipType": "one-to-many"
     },
     {
       "otherEntityName": "businessYear",
+      "otherEntityRelationshipName": "storageCards",
       "relationshipName": "businessYear",
       "relationshipType": "many-to-one",
       "relationshipValidateRules": "required"
     },
     {
       "otherEntityName": "resource",
+      "otherEntityRelationshipName": "storageCards",
       "relationshipName": "resource",
       "relationshipType": "many-to-one",
       "relationshipValidateRules": "required"
     },
     {
+      "otherEntityField": "code",
       "otherEntityName": "storage",
-      "otherEntityRelationshipName": "storageCard",
+      "otherEntityRelationshipName": "storageCards",
       "relationshipName": "storage",
       "relationshipType": "many-to-one",
       "relationshipValidateRules": "required"

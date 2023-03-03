@@ -55,9 +55,6 @@ public class TransferDocument implements Serializable {
     @Column(name = "reversal_date")
     private LocalDate reversalDate;
 
-    /**
-     * Cascade delete
-     */
     @OneToMany(mappedBy = "transferDocument", cascade = CascadeType.REMOVE)
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     @JsonIgnoreProperties(value = { "transferDocument", "resource" }, allowSetters = true)
@@ -65,7 +62,7 @@ public class TransferDocument implements Serializable {
 
     @ManyToOne(optional = false)
     @NotNull
-    @JsonIgnoreProperties(value = { "company" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "company", "censusDocuments", "storageCards", "transfers" }, allowSetters = true)
     private BusinessYear businessYear;
 
     /**
@@ -92,7 +89,7 @@ public class TransferDocument implements Serializable {
      * en: Storage that receives goods (if RECEIVING or DISPATCHING it is NOT NULL, if INTERSTORAGE it is NULL)\nsr: Poslovni partner koji prima ili otprema robu (u slucaju primke i otpremnice NOT NULL, u slucaju medjumagacinskog poslovanja NULL)
      */
     @ManyToOne
-    @JsonIgnoreProperties(value = { "businessContact", "legalEntityInfo", "transferDocuments", "company" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "businessContact", "legalEntityInfo", "transfers", "company" }, allowSetters = true)
     private BusinessPartner businessPartner;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here

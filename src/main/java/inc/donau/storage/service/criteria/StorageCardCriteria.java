@@ -41,7 +41,7 @@ public class StorageCardCriteria implements Serializable, Criteria {
 
     private FloatFilter price;
 
-    private LongFilter storageCardTrafficId;
+    private LongFilter trafficId;
 
     private LongFilter businessYearId;
 
@@ -64,7 +64,7 @@ public class StorageCardCriteria implements Serializable, Criteria {
         this.dispatchedValue = other.dispatchedValue == null ? null : other.dispatchedValue.copy();
         this.totalValue = other.totalValue == null ? null : other.totalValue.copy();
         this.price = other.price == null ? null : other.price.copy();
-        this.storageCardTrafficId = other.storageCardTrafficId == null ? null : other.storageCardTrafficId.copy();
+        this.trafficId = other.trafficId == null ? null : other.trafficId.copy();
         this.businessYearId = other.businessYearId == null ? null : other.businessYearId.copy();
         this.resourceId = other.resourceId == null ? null : other.resourceId.copy();
         this.storageId = other.storageId == null ? null : other.storageId.copy();
@@ -226,19 +226,19 @@ public class StorageCardCriteria implements Serializable, Criteria {
         this.price = price;
     }
 
-    public LongFilter getStorageCardTrafficId() {
-        return storageCardTrafficId;
+    public LongFilter getTrafficId() {
+        return trafficId;
     }
 
-    public LongFilter storageCardTrafficId() {
-        if (storageCardTrafficId == null) {
-            storageCardTrafficId = new LongFilter();
+    public LongFilter trafficId() {
+        if (trafficId == null) {
+            trafficId = new LongFilter();
         }
-        return storageCardTrafficId;
+        return trafficId;
     }
 
-    public void setStorageCardTrafficId(LongFilter storageCardTrafficId) {
-        this.storageCardTrafficId = storageCardTrafficId;
+    public void setTrafficId(LongFilter trafficId) {
+        this.trafficId = trafficId;
     }
 
     public LongFilter getBusinessYearId() {
@@ -314,7 +314,7 @@ public class StorageCardCriteria implements Serializable, Criteria {
             Objects.equals(dispatchedValue, that.dispatchedValue) &&
             Objects.equals(totalValue, that.totalValue) &&
             Objects.equals(price, that.price) &&
-            Objects.equals(storageCardTrafficId, that.storageCardTrafficId) &&
+            Objects.equals(trafficId, that.trafficId) &&
             Objects.equals(businessYearId, that.businessYearId) &&
             Objects.equals(resourceId, that.resourceId) &&
             Objects.equals(storageId, that.storageId) &&
@@ -335,7 +335,7 @@ public class StorageCardCriteria implements Serializable, Criteria {
             dispatchedValue,
             totalValue,
             price,
-            storageCardTrafficId,
+            trafficId,
             businessYearId,
             resourceId,
             storageId,
@@ -357,7 +357,7 @@ public class StorageCardCriteria implements Serializable, Criteria {
             (dispatchedValue != null ? "dispatchedValue=" + dispatchedValue + ", " : "") +
             (totalValue != null ? "totalValue=" + totalValue + ", " : "") +
             (price != null ? "price=" + price + ", " : "") +
-            (storageCardTrafficId != null ? "storageCardTrafficId=" + storageCardTrafficId + ", " : "") +
+            (trafficId != null ? "trafficId=" + trafficId + ", " : "") +
             (businessYearId != null ? "businessYearId=" + businessYearId + ", " : "") +
             (resourceId != null ? "resourceId=" + resourceId + ", " : "") +
             (storageId != null ? "storageId=" + storageId + ", " : "") +

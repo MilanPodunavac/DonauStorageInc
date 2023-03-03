@@ -12,6 +12,7 @@ import inc.donau.storage.domain.Company;
 import inc.donau.storage.domain.Employee;
 import inc.donau.storage.domain.LegalEntity;
 import inc.donau.storage.domain.Resource;
+import inc.donau.storage.domain.Storage;
 import inc.donau.storage.repository.CompanyRepository;
 import inc.donau.storage.service.criteria.CompanyCriteria;
 import inc.donau.storage.service.dto.CompanyDTO;
@@ -202,94 +203,117 @@ class CompanyResourceIT {
 
     @Test
     @Transactional
-    void getAllCompaniesByResourceIsEqualToSomething() throws Exception {
-        Resource resource;
+    void getAllCompaniesByResourcesIsEqualToSomething() throws Exception {
+        Resource resources;
         if (TestUtil.findAll(em, Resource.class).isEmpty()) {
             companyRepository.saveAndFlush(company);
-            resource = ResourceResourceIT.createEntity(em);
+            resources = ResourceResourceIT.createEntity(em);
         } else {
-            resource = TestUtil.findAll(em, Resource.class).get(0);
+            resources = TestUtil.findAll(em, Resource.class).get(0);
         }
-        em.persist(resource);
+        em.persist(resources);
         em.flush();
-        company.addResource(resource);
+        company.addResources(resources);
         companyRepository.saveAndFlush(company);
-        Long resourceId = resource.getId();
+        Long resourcesId = resources.getId();
 
-        // Get all the companyList where resource equals to resourceId
-        defaultCompanyShouldBeFound("resourceId.equals=" + resourceId);
+        // Get all the companyList where resources equals to resourcesId
+        defaultCompanyShouldBeFound("resourcesId.equals=" + resourcesId);
 
-        // Get all the companyList where resource equals to (resourceId + 1)
-        defaultCompanyShouldNotBeFound("resourceId.equals=" + (resourceId + 1));
+        // Get all the companyList where resources equals to (resourcesId + 1)
+        defaultCompanyShouldNotBeFound("resourcesId.equals=" + (resourcesId + 1));
     }
 
     @Test
     @Transactional
-    void getAllCompaniesByBusinessPartnerIsEqualToSomething() throws Exception {
-        BusinessPartner businessPartner;
+    void getAllCompaniesByPartnersIsEqualToSomething() throws Exception {
+        BusinessPartner partners;
         if (TestUtil.findAll(em, BusinessPartner.class).isEmpty()) {
             companyRepository.saveAndFlush(company);
-            businessPartner = BusinessPartnerResourceIT.createEntity(em);
+            partners = BusinessPartnerResourceIT.createEntity(em);
         } else {
-            businessPartner = TestUtil.findAll(em, BusinessPartner.class).get(0);
+            partners = TestUtil.findAll(em, BusinessPartner.class).get(0);
         }
-        em.persist(businessPartner);
+        em.persist(partners);
         em.flush();
-        company.addBusinessPartner(businessPartner);
+        company.addPartners(partners);
         companyRepository.saveAndFlush(company);
-        Long businessPartnerId = businessPartner.getId();
+        Long partnersId = partners.getId();
 
-        // Get all the companyList where businessPartner equals to businessPartnerId
-        defaultCompanyShouldBeFound("businessPartnerId.equals=" + businessPartnerId);
+        // Get all the companyList where partners equals to partnersId
+        defaultCompanyShouldBeFound("partnersId.equals=" + partnersId);
 
-        // Get all the companyList where businessPartner equals to (businessPartnerId + 1)
-        defaultCompanyShouldNotBeFound("businessPartnerId.equals=" + (businessPartnerId + 1));
+        // Get all the companyList where partners equals to (partnersId + 1)
+        defaultCompanyShouldNotBeFound("partnersId.equals=" + (partnersId + 1));
     }
 
     @Test
     @Transactional
-    void getAllCompaniesByBusinessYearIsEqualToSomething() throws Exception {
-        BusinessYear businessYear;
+    void getAllCompaniesByBusinessYearsIsEqualToSomething() throws Exception {
+        BusinessYear businessYears;
         if (TestUtil.findAll(em, BusinessYear.class).isEmpty()) {
             companyRepository.saveAndFlush(company);
-            businessYear = BusinessYearResourceIT.createEntity(em);
+            businessYears = BusinessYearResourceIT.createEntity(em);
         } else {
-            businessYear = TestUtil.findAll(em, BusinessYear.class).get(0);
+            businessYears = TestUtil.findAll(em, BusinessYear.class).get(0);
         }
-        em.persist(businessYear);
+        em.persist(businessYears);
         em.flush();
-        company.addBusinessYear(businessYear);
+        company.addBusinessYears(businessYears);
         companyRepository.saveAndFlush(company);
-        Long businessYearId = businessYear.getId();
+        Long businessYearsId = businessYears.getId();
 
-        // Get all the companyList where businessYear equals to businessYearId
-        defaultCompanyShouldBeFound("businessYearId.equals=" + businessYearId);
+        // Get all the companyList where businessYears equals to businessYearsId
+        defaultCompanyShouldBeFound("businessYearsId.equals=" + businessYearsId);
 
-        // Get all the companyList where businessYear equals to (businessYearId + 1)
-        defaultCompanyShouldNotBeFound("businessYearId.equals=" + (businessYearId + 1));
+        // Get all the companyList where businessYears equals to (businessYearsId + 1)
+        defaultCompanyShouldNotBeFound("businessYearsId.equals=" + (businessYearsId + 1));
     }
 
     @Test
     @Transactional
-    void getAllCompaniesByEmployeeIsEqualToSomething() throws Exception {
-        Employee employee;
+    void getAllCompaniesByEmployeesIsEqualToSomething() throws Exception {
+        Employee employees;
         if (TestUtil.findAll(em, Employee.class).isEmpty()) {
             companyRepository.saveAndFlush(company);
-            employee = EmployeeResourceIT.createEntity(em);
+            employees = EmployeeResourceIT.createEntity(em);
         } else {
-            employee = TestUtil.findAll(em, Employee.class).get(0);
+            employees = TestUtil.findAll(em, Employee.class).get(0);
         }
-        em.persist(employee);
+        em.persist(employees);
         em.flush();
-        company.addEmployee(employee);
+        company.addEmployees(employees);
         companyRepository.saveAndFlush(company);
-        Long employeeId = employee.getId();
+        Long employeesId = employees.getId();
 
-        // Get all the companyList where employee equals to employeeId
-        defaultCompanyShouldBeFound("employeeId.equals=" + employeeId);
+        // Get all the companyList where employees equals to employeesId
+        defaultCompanyShouldBeFound("employeesId.equals=" + employeesId);
 
-        // Get all the companyList where employee equals to (employeeId + 1)
-        defaultCompanyShouldNotBeFound("employeeId.equals=" + (employeeId + 1));
+        // Get all the companyList where employees equals to (employeesId + 1)
+        defaultCompanyShouldNotBeFound("employeesId.equals=" + (employeesId + 1));
+    }
+
+    @Test
+    @Transactional
+    void getAllCompaniesByStoragesIsEqualToSomething() throws Exception {
+        Storage storages;
+        if (TestUtil.findAll(em, Storage.class).isEmpty()) {
+            companyRepository.saveAndFlush(company);
+            storages = StorageResourceIT.createEntity(em);
+        } else {
+            storages = TestUtil.findAll(em, Storage.class).get(0);
+        }
+        em.persist(storages);
+        em.flush();
+        company.addStorages(storages);
+        companyRepository.saveAndFlush(company);
+        Long storagesId = storages.getId();
+
+        // Get all the companyList where storages equals to storagesId
+        defaultCompanyShouldBeFound("storagesId.equals=" + storagesId);
+
+        // Get all the companyList where storages equals to (storagesId + 1)
+        defaultCompanyShouldNotBeFound("storagesId.equals=" + (storagesId + 1));
     }
 
     /**

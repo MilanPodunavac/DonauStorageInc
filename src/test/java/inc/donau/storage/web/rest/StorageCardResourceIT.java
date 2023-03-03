@@ -1262,25 +1262,25 @@ class StorageCardResourceIT {
 
     @Test
     @Transactional
-    void getAllStorageCardsByStorageCardTrafficIsEqualToSomething() throws Exception {
-        StorageCardTraffic storageCardTraffic;
+    void getAllStorageCardsByTrafficIsEqualToSomething() throws Exception {
+        StorageCardTraffic traffic;
         if (TestUtil.findAll(em, StorageCardTraffic.class).isEmpty()) {
             storageCardRepository.saveAndFlush(storageCard);
-            storageCardTraffic = StorageCardTrafficResourceIT.createEntity(em);
+            traffic = StorageCardTrafficResourceIT.createEntity(em);
         } else {
-            storageCardTraffic = TestUtil.findAll(em, StorageCardTraffic.class).get(0);
+            traffic = TestUtil.findAll(em, StorageCardTraffic.class).get(0);
         }
-        em.persist(storageCardTraffic);
+        em.persist(traffic);
         em.flush();
-        storageCard.addStorageCardTraffic(storageCardTraffic);
+        storageCard.addTraffic(traffic);
         storageCardRepository.saveAndFlush(storageCard);
-        Long storageCardTrafficId = storageCardTraffic.getId();
+        Long trafficId = traffic.getId();
 
-        // Get all the storageCardList where storageCardTraffic equals to storageCardTrafficId
-        defaultStorageCardShouldBeFound("storageCardTrafficId.equals=" + storageCardTrafficId);
+        // Get all the storageCardList where traffic equals to trafficId
+        defaultStorageCardShouldBeFound("trafficId.equals=" + trafficId);
 
-        // Get all the storageCardList where storageCardTraffic equals to (storageCardTrafficId + 1)
-        defaultStorageCardShouldNotBeFound("storageCardTrafficId.equals=" + (storageCardTrafficId + 1));
+        // Get all the storageCardList where traffic equals to (trafficId + 1)
+        defaultStorageCardShouldNotBeFound("trafficId.equals=" + (trafficId + 1));
     }
 
     @Test

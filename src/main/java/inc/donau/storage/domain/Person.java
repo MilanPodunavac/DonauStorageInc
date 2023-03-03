@@ -1,6 +1,6 @@
 package inc.donau.storage.domain;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import inc.donau.storage.domain.enumeration.Gender;
 import java.io.Serializable;
 import javax.persistence.*;
@@ -47,10 +47,25 @@ public class Person implements Serializable {
     /**
      * Email and phone number\nCascade delete
      */
+    @JsonIgnoreProperties(value = { "person", "legalEntity" }, allowSetters = true)
     @OneToOne(optional = false, cascade = CascadeType.REMOVE)
     @NotNull
     @JoinColumn(unique = true)
     private ContactInfo contactInfo;
+
+    /**
+     * Prevent delete
+     */
+    @JsonIgnoreProperties(value = { "personalInfo", "businessPartner" }, allowSetters = true)
+    @OneToOne(mappedBy = "personalInfo")
+    private BusinessContact businessContact;
+
+    /**
+     * Prevent delete
+     */
+    @JsonIgnoreProperties(value = { "address", "personalInfo", "user", "company" }, allowSetters = true)
+    @OneToOne(mappedBy = "personalInfo")
+    private Employee employee;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
@@ -142,6 +157,44 @@ public class Person implements Serializable {
 
     public Person contactInfo(ContactInfo contactInfo) {
         this.setContactInfo(contactInfo);
+        return this;
+    }
+
+    public BusinessContact getBusinessContact() {
+        return this.businessContact;
+    }
+
+    public void setBusinessContact(BusinessContact businessContact) {
+        if (this.businessContact != null) {
+            this.businessContact.setPersonalInfo(null);
+        }
+        if (businessContact != null) {
+            businessContact.setPersonalInfo(this);
+        }
+        this.businessContact = businessContact;
+    }
+
+    public Person businessContact(BusinessContact businessContact) {
+        this.setBusinessContact(businessContact);
+        return this;
+    }
+
+    public Employee getEmployee() {
+        return this.employee;
+    }
+
+    public void setEmployee(Employee employee) {
+        if (this.employee != null) {
+            this.employee.setPersonalInfo(null);
+        }
+        if (employee != null) {
+            employee.setPersonalInfo(this);
+        }
+        this.employee = employee;
+    }
+
+    public Person employee(Employee employee) {
+        this.setEmployee(employee);
         return this;
     }
 

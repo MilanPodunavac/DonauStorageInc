@@ -11,6 +11,8 @@ import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -57,7 +59,7 @@ public class MeasurementUnitResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PostMapping("/measurement-units")
-    public ResponseEntity<MeasurementUnitDTO> createMeasurementUnit(@RequestBody MeasurementUnitDTO measurementUnitDTO)
+    public ResponseEntity<MeasurementUnitDTO> createMeasurementUnit(@Valid @RequestBody MeasurementUnitDTO measurementUnitDTO)
         throws URISyntaxException {
         log.debug("REST request to save MeasurementUnit : {}", measurementUnitDTO);
         if (measurementUnitDTO.getId() != null) {
@@ -83,7 +85,7 @@ public class MeasurementUnitResource {
     @PutMapping("/measurement-units/{id}")
     public ResponseEntity<MeasurementUnitDTO> updateMeasurementUnit(
         @PathVariable(value = "id", required = false) final Long id,
-        @RequestBody MeasurementUnitDTO measurementUnitDTO
+        @Valid @RequestBody MeasurementUnitDTO measurementUnitDTO
     ) throws URISyntaxException {
         log.debug("REST request to update MeasurementUnit : {}, {}", id, measurementUnitDTO);
         if (measurementUnitDTO.getId() == null) {
@@ -118,7 +120,7 @@ public class MeasurementUnitResource {
     @PatchMapping(value = "/measurement-units/{id}", consumes = { "application/json", "application/merge-patch+json" })
     public ResponseEntity<MeasurementUnitDTO> partialUpdateMeasurementUnit(
         @PathVariable(value = "id", required = false) final Long id,
-        @RequestBody MeasurementUnitDTO measurementUnitDTO
+        @NotNull @RequestBody MeasurementUnitDTO measurementUnitDTO
     ) throws URISyntaxException {
         log.debug("REST request to partial update MeasurementUnit partially : {}, {}", id, measurementUnitDTO);
         if (measurementUnitDTO.getId() == null) {

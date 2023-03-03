@@ -24,7 +24,8 @@
       "maidenName": "Maiden Name",
       "gender": "Gender",
       "contactInfo": "Contact Info",
-      "fullName": "Name"
+      "businessContact": "Business Contact",
+      "employee": "Employee"
     }
   }
 }

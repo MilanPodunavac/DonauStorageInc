@@ -2,6 +2,7 @@ package inc.donau.storage.domain;
 
 import java.io.Serializable;
 import javax.persistence.*;
+import javax.validation.constraints.*;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -22,10 +23,12 @@ public class MeasurementUnit implements Serializable {
     @Column(name = "id")
     private Long id;
 
-    @Column(name = "name")
+    @NotNull
+    @Column(name = "name", nullable = false)
     private String name;
 
-    @Column(name = "abbreviation")
+    @NotNull
+    @Column(name = "abbreviation", nullable = false)
     private String abbreviation;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here

@@ -99,6 +99,15 @@ public class BusinessContactQueryService extends QueryService<BusinessContact> {
                         )
                     );
             }
+            if (criteria.getBusinessPartnerId() != null) {
+                specification =
+                    specification.and(
+                        buildSpecification(
+                            criteria.getBusinessPartnerId(),
+                            root -> root.join(BusinessContact_.businessPartner, JoinType.LEFT).get(BusinessPartner_.id)
+                        )
+                    );
+            }
         }
         return specification;
     }

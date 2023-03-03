@@ -31,10 +31,35 @@
   "readOnly": false,
   "relationships": [
     {
+      "otherEntityField": "name",
       "otherEntityName": "city",
       "relationshipName": "city",
       "relationshipType": "many-to-one",
       "relationshipValidateRules": "required"
+    },
+    {
+      "javadoc": "Prevent delete",
+      "otherEntityName": "employee",
+      "otherEntityRelationshipName": "address",
+      "ownerSide": false,
+      "relationshipName": "employee",
+      "relationshipType": "one-to-one"
+    },
+    {
+      "javadoc": "Prevent delete",
+      "otherEntityName": "legalEntity",
+      "otherEntityRelationshipName": "address",
+      "ownerSide": false,
+      "relationshipName": "legalEntity",
+      "relationshipType": "one-to-one"
+    },
+    {
+      "javadoc": "Prevent deletion",
+      "otherEntityName": "storage",
+      "otherEntityRelationshipName": "address",
+      "ownerSide": false,
+      "relationshipName": "storage",
+      "relationshipType": "one-to-one"
     }
   ],
   "service": "serviceClass"

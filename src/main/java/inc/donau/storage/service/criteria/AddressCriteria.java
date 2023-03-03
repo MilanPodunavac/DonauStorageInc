@@ -31,6 +31,12 @@ public class AddressCriteria implements Serializable, Criteria {
 
     private LongFilter cityId;
 
+    private LongFilter employeeId;
+
+    private LongFilter legalEntityId;
+
+    private LongFilter storageId;
+
     private Boolean distinct;
 
     public AddressCriteria() {}
@@ -41,6 +47,9 @@ public class AddressCriteria implements Serializable, Criteria {
         this.streetCode = other.streetCode == null ? null : other.streetCode.copy();
         this.postalCode = other.postalCode == null ? null : other.postalCode.copy();
         this.cityId = other.cityId == null ? null : other.cityId.copy();
+        this.employeeId = other.employeeId == null ? null : other.employeeId.copy();
+        this.legalEntityId = other.legalEntityId == null ? null : other.legalEntityId.copy();
+        this.storageId = other.storageId == null ? null : other.storageId.copy();
         this.distinct = other.distinct;
     }
 
@@ -124,6 +133,51 @@ public class AddressCriteria implements Serializable, Criteria {
         this.cityId = cityId;
     }
 
+    public LongFilter getEmployeeId() {
+        return employeeId;
+    }
+
+    public LongFilter employeeId() {
+        if (employeeId == null) {
+            employeeId = new LongFilter();
+        }
+        return employeeId;
+    }
+
+    public void setEmployeeId(LongFilter employeeId) {
+        this.employeeId = employeeId;
+    }
+
+    public LongFilter getLegalEntityId() {
+        return legalEntityId;
+    }
+
+    public LongFilter legalEntityId() {
+        if (legalEntityId == null) {
+            legalEntityId = new LongFilter();
+        }
+        return legalEntityId;
+    }
+
+    public void setLegalEntityId(LongFilter legalEntityId) {
+        this.legalEntityId = legalEntityId;
+    }
+
+    public LongFilter getStorageId() {
+        return storageId;
+    }
+
+    public LongFilter storageId() {
+        if (storageId == null) {
+            storageId = new LongFilter();
+        }
+        return storageId;
+    }
+
+    public void setStorageId(LongFilter storageId) {
+        this.storageId = storageId;
+    }
+
     public Boolean getDistinct() {
         return distinct;
     }
@@ -147,13 +201,16 @@ public class AddressCriteria implements Serializable, Criteria {
             Objects.equals(streetCode, that.streetCode) &&
             Objects.equals(postalCode, that.postalCode) &&
             Objects.equals(cityId, that.cityId) &&
+            Objects.equals(employeeId, that.employeeId) &&
+            Objects.equals(legalEntityId, that.legalEntityId) &&
+            Objects.equals(storageId, that.storageId) &&
             Objects.equals(distinct, that.distinct)
         );
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, streetName, streetCode, postalCode, cityId, distinct);
+        return Objects.hash(id, streetName, streetCode, postalCode, cityId, employeeId, legalEntityId, storageId, distinct);
     }
 
     // prettier-ignore
@@ -165,6 +222,9 @@ public class AddressCriteria implements Serializable, Criteria {
             (streetCode != null ? "streetCode=" + streetCode + ", " : "") +
             (postalCode != null ? "postalCode=" + postalCode + ", " : "") +
             (cityId != null ? "cityId=" + cityId + ", " : "") +
+            (employeeId != null ? "employeeId=" + employeeId + ", " : "") +
+            (legalEntityId != null ? "legalEntityId=" + legalEntityId + ", " : "") +
+            (storageId != null ? "storageId=" + storageId + ", " : "") +
             (distinct != null ? "distinct=" + distinct + ", " : "") +
             "}";
     }

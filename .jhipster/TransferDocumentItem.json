@@ -33,6 +33,7 @@
   "readOnly": false,
   "relationships": [
     {
+      "javadoc": "Cascade delete",
       "otherEntityName": "transferDocument",
       "otherEntityRelationshipName": "transferDocumentItem",
       "relationshipName": "transferDocument",
@@ -40,8 +41,9 @@
       "relationshipValidateRules": "required"
     },
     {
+      "otherEntityField": "name",
       "otherEntityName": "resource",
-      "otherEntityRelationshipName": "transferDocumentItem",
+      "otherEntityRelationshipName": "transferItems",
       "relationshipName": "resource",
       "relationshipType": "many-to-one",
       "relationshipValidateRules": "required"

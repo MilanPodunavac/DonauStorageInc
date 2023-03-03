@@ -20,7 +20,10 @@
       "id": "ID",
       "yearCode": "Year Code",
       "completed": "Completed",
-      "company": "Company"
+      "company": "Company",
+      "censusDocuments": "Census Documents",
+      "storageCards": "Storage Cards",
+      "transfers": "Transfers"
     }
   }
 }

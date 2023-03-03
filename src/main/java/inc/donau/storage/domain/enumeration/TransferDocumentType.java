@@ -7,13 +7,23 @@ public enum TransferDocumentType {
     /**
      * sr: PRIMKA
      */
-    RECEIVING,
+    RECEIVING("Receiving"),
     /**
      * sr: OTPREMNICA
      */
-    DISPATCHING,
+    DISPATCHING("Dispatching"),
     /**
      * sr: MEDJUMAGACINSKO POSLOVANJE
      */
-    INTERSTORAGE,
+    INTERSTORAGE("Interstorage");
+
+    private final String value;
+
+    TransferDocumentType(String value) {
+        this.value = value;
+    }
+
+    public String getValue() {
+        return value;
+    }
 }

@@ -8,8 +8,11 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -89,6 +92,57 @@ public class AddressService {
     }
 
     /**
+     * Get all the addresses with eager load of many-to-many relationships.
+     *
+     * @return the list of entities.
+     */
+    public Page<AddressDTO> findAllWithEagerRelationships(Pageable pageable) {
+        return addressRepository.findAllWithEagerRelationships(pageable).map(addressMapper::toDto);
+    }
+
+    /**
+     *  Get all the addresses where Employee is {@code null}.
+     *  @return the list of entities.
+     */
+    @Transactional(readOnly = true)
+    public List<AddressDTO> findAllWhereEmployeeIsNull() {
+        log.debug("Request to get all addresses where Employee is null");
+        return StreamSupport
+            .stream(addressRepository.findAll().spliterator(), false)
+            .filter(address -> address.getEmployee() == null)
+            .map(addressMapper::toDto)
+            .collect(Collectors.toCollection(LinkedList::new));
+    }
+
+    /**
+     *  Get all the addresses where LegalEntity is {@code null}.
+     *  @return the list of entities.
+     */
+    @Transactional(readOnly = true)
+    public List<AddressDTO> findAllWhereLegalEntityIsNull() {
+        log.debug("Request to get all addresses where LegalEntity is null");
+        return StreamSupport
+            .stream(addressRepository.findAll().spliterator(), false)
+            .filter(address -> address.getLegalEntity() == null)
+            .map(addressMapper::toDto)
+            .collect(Collectors.toCollection(LinkedList::new));
+    }
+
+    /**
+     *  Get all the addresses where Storage is {@code null}.
+     *  @return the list of entities.
+     */
+    @Transactional(readOnly = true)
+    public List<AddressDTO> findAllWhereStorageIsNull() {
+        log.debug("Request to get all addresses where Storage is null");
+        return StreamSupport
+            .stream(addressRepository.findAll().spliterator(), false)
+            .filter(address -> address.getStorage() == null)
+            .map(addressMapper::toDto)
+            .collect(Collectors.toCollection(LinkedList::new));
+    }
+
+    /**
      * Get one address by id.
      *
      * @param id the id of the entity.
@@ -97,7 +151,7 @@ public class AddressService {
     @Transactional(readOnly = true)
     public Optional<AddressDTO> findOne(Long id) {
         log.debug("Request to get Address : {}", id);
-        return addressRepository.findById(id).map(addressMapper::toDto);
+        return addressRepository.findOneWithEagerRelationships(id).map(addressMapper::toDto);
     }
 
     /**

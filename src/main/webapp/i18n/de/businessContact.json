@@ -18,7 +18,8 @@
         "title": "Business Contact"
       },
       "id": "ID",
-      "personalInfo": "Personal Info"
+      "personalInfo": "Personal Info",
+      "businessPartner": "Business Partner"
     }
   }
 }

@@ -7,6 +7,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import inc.donau.storage.IntegrationTest;
 import inc.donau.storage.domain.ContactInfo;
+import inc.donau.storage.domain.LegalEntity;
+import inc.donau.storage.domain.Person;
 import inc.donau.storage.repository.ContactInfoRepository;
 import inc.donau.storage.service.criteria.ContactInfoCriteria;
 import inc.donau.storage.service.dto.ContactInfoDTO;
@@ -324,6 +326,54 @@ class ContactInfoResourceIT {
 
         // Get all the contactInfoList where phoneNumber does not contain UPDATED_PHONE_NUMBER
         defaultContactInfoShouldBeFound("phoneNumber.doesNotContain=" + UPDATED_PHONE_NUMBER);
+    }
+
+    @Test
+    @Transactional
+    void getAllContactInfosByPersonIsEqualToSomething() throws Exception {
+        Person person;
+        if (TestUtil.findAll(em, Person.class).isEmpty()) {
+            contactInfoRepository.saveAndFlush(contactInfo);
+            person = PersonResourceIT.createEntity(em);
+        } else {
+            person = TestUtil.findAll(em, Person.class).get(0);
+        }
+        em.persist(person);
+        em.flush();
+        contactInfo.setPerson(person);
+        person.setContactInfo(contactInfo);
+        contactInfoRepository.saveAndFlush(contactInfo);
+        Long personId = person.getId();
+
+        // Get all the contactInfoList where person equals to personId
+        defaultContactInfoShouldBeFound("personId.equals=" + personId);
+
+        // Get all the contactInfoList where person equals to (personId + 1)
+        defaultContactInfoShouldNotBeFound("personId.equals=" + (personId + 1));
+    }
+
+    @Test
+    @Transactional
+    void getAllContactInfosByLegalEntityIsEqualToSomething() throws Exception {
+        LegalEntity legalEntity;
+        if (TestUtil.findAll(em, LegalEntity.class).isEmpty()) {
+            contactInfoRepository.saveAndFlush(contactInfo);
+            legalEntity = LegalEntityResourceIT.createEntity(em);
+        } else {
+            legalEntity = TestUtil.findAll(em, LegalEntity.class).get(0);
+        }
+        em.persist(legalEntity);
+        em.flush();
+        contactInfo.setLegalEntity(legalEntity);
+        legalEntity.setContactInfo(contactInfo);
+        contactInfoRepository.saveAndFlush(contactInfo);
+        Long legalEntityId = legalEntity.getId();
+
+        // Get all the contactInfoList where legalEntity equals to legalEntityId
+        defaultContactInfoShouldBeFound("legalEntityId.equals=" + legalEntityId);
+
+        // Get all the contactInfoList where legalEntity equals to (legalEntityId + 1)
+        defaultContactInfoShouldNotBeFound("legalEntityId.equals=" + (legalEntityId + 1));
     }
 
     /**

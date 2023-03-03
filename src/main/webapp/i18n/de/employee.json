@@ -22,11 +22,11 @@
       "birthDate": "Birth Date",
       "disability": "Disability",
       "employment": "Employment",
-      "profileImage": "Profile Image",
+      "profilePicture": "Profile Picture",
       "address": "Address",
       "personalInfo": "Personal Info",
-      "company": "Company",
       "user": "User",
+      "company": "Company",
       "help": {
         "uniqueIdentificationNumber": "sr: Jedinstveni maticni broj gradjana (JMBG)"
       }

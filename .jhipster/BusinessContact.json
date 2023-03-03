@@ -14,10 +14,19 @@
     {
       "javadoc": "Cascade delete",
       "otherEntityName": "person",
+      "otherEntityRelationshipName": "businessContact",
       "ownerSide": true,
       "relationshipName": "personalInfo",
       "relationshipType": "one-to-one",
       "relationshipValidateRules": "required"
+    },
+    {
+      "javadoc": "Prevent delete",
+      "otherEntityName": "businessPartner",
+      "otherEntityRelationshipName": "businessContact",
+      "ownerSide": false,
+      "relationshipName": "businessPartner",
+      "relationshipType": "one-to-one"
     }
   ],
   "service": "serviceClass"

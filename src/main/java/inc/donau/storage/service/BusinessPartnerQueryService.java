@@ -108,12 +108,12 @@ public class BusinessPartnerQueryService extends QueryService<BusinessPartner> {
                         )
                     );
             }
-            if (criteria.getTransferDocumentId() != null) {
+            if (criteria.getTransfersId() != null) {
                 specification =
                     specification.and(
                         buildSpecification(
-                            criteria.getTransferDocumentId(),
-                            root -> root.join(BusinessPartner_.transferDocuments, JoinType.LEFT).get(TransferDocument_.id)
+                            criteria.getTransfersId(),
+                            root -> root.join(BusinessPartner_.transfers, JoinType.LEFT).get(TransferDocument_.id)
                         )
                     );
             }

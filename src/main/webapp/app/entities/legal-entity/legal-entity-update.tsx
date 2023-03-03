@@ -12,6 +12,10 @@ import { IContactInfo } from 'app/shared/model/contact-info.model';
 import { getEntities as getContactInfos } from 'app/entities/contact-info/contact-info.reducer';
 import { IAddress } from 'app/shared/model/address.model';
 import { getEntities as getAddresses } from 'app/entities/address/address.reducer';
+import { IBusinessPartner } from 'app/shared/model/business-partner.model';
+import { getEntities as getBusinessPartners } from 'app/entities/business-partner/business-partner.reducer';
+import { ICompany } from 'app/shared/model/company.model';
+import { getEntities as getCompanies } from 'app/entities/company/company.reducer';
 import { ILegalEntity } from 'app/shared/model/legal-entity.model';
 import { getEntity, updateEntity, createEntity, reset } from './legal-entity.reducer';
 
@@ -25,6 +29,8 @@ export const LegalEntityUpdate = () => {
 
   const contactInfos = useAppSelector(state => state.contactInfo.entities);
   const addresses = useAppSelector(state => state.address.entities);
+  const businessPartners = useAppSelector(state => state.businessPartner.entities);
+  const companies = useAppSelector(state => state.company.entities);
   const legalEntityEntity = useAppSelector(state => state.legalEntity.entity);
   const loading = useAppSelector(state => state.legalEntity.loading);
   const updating = useAppSelector(state => state.legalEntity.updating);
@@ -43,6 +49,8 @@ export const LegalEntityUpdate = () => {
 
     dispatch(getContactInfos({}));
     dispatch(getAddresses({}));
+    dispatch(getBusinessPartners({}));
+    dispatch(getCompanies({}));
   }, []);
 
   useEffect(() => {

@@ -19,10 +19,11 @@
       },
       "id": "ID",
       "legalEntityInfo": "Legal Entity Info",
-      "resource": "Resource",
-      "businessPartner": "Business Partner",
-      "businessYear": "Business Year",
-      "employee": "Employee"
+      "resources": "Resources",
+      "partners": "Partners",
+      "businessYears": "Business Years",
+      "employees": "Employees",
+      "storages": "Storages"
     }
   }
 }

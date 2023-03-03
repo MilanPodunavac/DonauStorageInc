@@ -2,9 +2,9 @@
   "donauStorageIncApp": {
     "TransferDocumentStatus": {
       "null": "",
-      "IN_PREPARATION": "IN_PREPARATION",
-      "ACCOUNTED": "ACCOUNTED",
-      "REVERSED": "REVERSED"
+      "IN_PREPARATION": "In_preparation",
+      "ACCOUNTED": "Accounted",
+      "REVERSED": "Reversed"
     }
   }
 }

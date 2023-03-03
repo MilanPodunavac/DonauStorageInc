@@ -27,11 +27,18 @@ public class BusinessContact implements Serializable {
     /**
      * Cascade delete
      */
-    @JsonIgnoreProperties(value = { "contactInfo" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "contactInfo", "businessContact", "employee" }, allowSetters = true)
     @OneToOne(optional = false, cascade = CascadeType.REMOVE)
     @NotNull
     @JoinColumn(unique = true)
     private Person personalInfo;
+
+    /**
+     * Prevent delete
+     */
+    @JsonIgnoreProperties(value = { "businessContact", "legalEntityInfo", "transfers", "company" }, allowSetters = true)
+    @OneToOne(mappedBy = "businessContact")
+    private BusinessPartner businessPartner;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
@@ -58,6 +65,25 @@ public class BusinessContact implements Serializable {
 
     public BusinessContact personalInfo(Person person) {
         this.setPersonalInfo(person);
+        return this;
+    }
+
+    public BusinessPartner getBusinessPartner() {
+        return this.businessPartner;
+    }
+
+    public void setBusinessPartner(BusinessPartner businessPartner) {
+        if (this.businessPartner != null) {
+            this.businessPartner.setBusinessContact(null);
+        }
+        if (businessPartner != null) {
+            businessPartner.setBusinessContact(this);
+        }
+        this.businessPartner = businessPartner;
+    }
+
+    public BusinessContact businessPartner(BusinessPartner businessPartner) {
+        this.setBusinessPartner(businessPartner);
         return this;
     }
 

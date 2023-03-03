@@ -11,12 +11,12 @@ import org.mapstruct.*;
  */
 @Mapper(componentModel = "spring")
 public interface CityMapper extends EntityMapper<CityDTO, City> {
-    @Mapping(target = "country", source = "country", qualifiedByName = "countryId")
+    @Mapping(target = "country", source = "country", qualifiedByName = "countryName")
     CityDTO toDto(City s);
 
-    @Named("countryId")
+    @Named("countryName")
     @BeanMapping(ignoreByDefault = true)
     @Mapping(target = "id", source = "id")
     @Mapping(target = "name", source = "name")
-    CountryDTO toDtoCountryId(Country country);
+    CountryDTO toDtoCountryName(Country country);
 }

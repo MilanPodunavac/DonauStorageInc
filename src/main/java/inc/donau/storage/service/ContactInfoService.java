@@ -8,6 +8,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -86,6 +87,34 @@ public class ContactInfoService {
     public List<ContactInfoDTO> findAll() {
         log.debug("Request to get all ContactInfos");
         return contactInfoRepository.findAll().stream().map(contactInfoMapper::toDto).collect(Collectors.toCollection(LinkedList::new));
+    }
+
+    /**
+     *  Get all the contactInfos where Person is {@code null}.
+     *  @return the list of entities.
+     */
+    @Transactional(readOnly = true)
+    public List<ContactInfoDTO> findAllWherePersonIsNull() {
+        log.debug("Request to get all contactInfos where Person is null");
+        return StreamSupport
+            .stream(contactInfoRepository.findAll().spliterator(), false)
+            .filter(contactInfo -> contactInfo.getPerson() == null)
+            .map(contactInfoMapper::toDto)
+            .collect(Collectors.toCollection(LinkedList::new));
+    }
+
+    /**
+     *  Get all the contactInfos where LegalEntity is {@code null}.
+     *  @return the list of entities.
+     */
+    @Transactional(readOnly = true)
+    public List<ContactInfoDTO> findAllWhereLegalEntityIsNull() {
+        log.debug("Request to get all contactInfos where LegalEntity is null");
+        return StreamSupport
+            .stream(contactInfoRepository.findAll().spliterator(), false)
+            .filter(contactInfo -> contactInfo.getLegalEntity() == null)
+            .map(contactInfoMapper::toDto)
+            .collect(Collectors.toCollection(LinkedList::new));
     }
 
     /**

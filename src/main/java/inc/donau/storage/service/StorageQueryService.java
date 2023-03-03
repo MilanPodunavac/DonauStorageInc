@@ -90,11 +90,11 @@ public class StorageQueryService extends QueryService<Storage> {
             if (criteria.getId() != null) {
                 specification = specification.and(buildRangeSpecification(criteria.getId(), Storage_.id));
             }
-            if (criteria.getName() != null) {
-                specification = specification.and(buildStringSpecification(criteria.getName(), Storage_.name));
-            }
             if (criteria.getCode() != null) {
                 specification = specification.and(buildStringSpecification(criteria.getCode(), Storage_.code));
+            }
+            if (criteria.getName() != null) {
+                specification = specification.and(buildStringSpecification(criteria.getName(), Storage_.name));
             }
             if (criteria.getAddressId() != null) {
                 specification =
@@ -102,11 +102,11 @@ public class StorageQueryService extends QueryService<Storage> {
                         buildSpecification(criteria.getAddressId(), root -> root.join(Storage_.address, JoinType.LEFT).get(Address_.id))
                     );
             }
-            if (criteria.getStorageCardId() != null) {
+            if (criteria.getStorageCardsId() != null) {
                 specification =
                     specification.and(
                         buildSpecification(
-                            criteria.getStorageCardId(),
+                            criteria.getStorageCardsId(),
                             root -> root.join(Storage_.storageCards, JoinType.LEFT).get(StorageCard_.id)
                         )
                     );

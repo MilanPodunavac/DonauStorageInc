@@ -7,6 +7,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import inc.donau.storage.IntegrationTest;
 import inc.donau.storage.domain.BusinessContact;
+import inc.donau.storage.domain.BusinessPartner;
 import inc.donau.storage.domain.Person;
 import inc.donau.storage.repository.BusinessContactRepository;
 import inc.donau.storage.service.criteria.BusinessContactCriteria;
@@ -198,6 +199,30 @@ class BusinessContactResourceIT {
 
         // Get all the businessContactList where personalInfo equals to (personalInfoId + 1)
         defaultBusinessContactShouldNotBeFound("personalInfoId.equals=" + (personalInfoId + 1));
+    }
+
+    @Test
+    @Transactional
+    void getAllBusinessContactsByBusinessPartnerIsEqualToSomething() throws Exception {
+        BusinessPartner businessPartner;
+        if (TestUtil.findAll(em, BusinessPartner.class).isEmpty()) {
+            businessContactRepository.saveAndFlush(businessContact);
+            businessPartner = BusinessPartnerResourceIT.createEntity(em);
+        } else {
+            businessPartner = TestUtil.findAll(em, BusinessPartner.class).get(0);
+        }
+        em.persist(businessPartner);
+        em.flush();
+        businessContact.setBusinessPartner(businessPartner);
+        businessPartner.setBusinessContact(businessContact);
+        businessContactRepository.saveAndFlush(businessContact);
+        Long businessPartnerId = businessPartner.getId();
+
+        // Get all the businessContactList where businessPartner equals to businessPartnerId
+        defaultBusinessContactShouldBeFound("businessPartnerId.equals=" + businessPartnerId);
+
+        // Get all the businessContactList where businessPartner equals to (businessPartnerId + 1)
+        defaultBusinessContactShouldNotBeFound("businessPartnerId.equals=" + (businessPartnerId + 1));
     }
 
     /**

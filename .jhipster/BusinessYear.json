@@ -24,10 +24,31 @@
   "relationships": [
     {
       "otherEntityName": "company",
-      "otherEntityRelationshipName": "businessYear",
+      "otherEntityRelationshipName": "businessYears",
       "relationshipName": "company",
       "relationshipType": "many-to-one",
       "relationshipValidateRules": "required"
+    },
+    {
+      "javadoc": "Prevent deletion",
+      "otherEntityName": "censusDocument",
+      "otherEntityRelationshipName": "businessYear",
+      "relationshipName": "censusDocuments",
+      "relationshipType": "one-to-many"
+    },
+    {
+      "javadoc": "Prevent deletion",
+      "otherEntityName": "storageCard",
+      "otherEntityRelationshipName": "businessYear",
+      "relationshipName": "storageCards",
+      "relationshipType": "one-to-many"
+    },
+    {
+      "javadoc": "Prevent deletion",
+      "otherEntityName": "transferDocument",
+      "otherEntityRelationshipName": "businessYear",
+      "relationshipName": "transfers",
+      "relationshipType": "one-to-many"
     }
   ],
   "service": "serviceClass"

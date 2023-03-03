@@ -29,6 +29,9 @@ public class CensusItem implements Serializable {
     @Column(name = "amount", nullable = false)
     private Float amount;
 
+    /**
+     * Cascade delete
+     */
     @ManyToOne(optional = false)
     @NotNull
     @JsonIgnoreProperties(value = { "censusItems", "businessYear", "president", "deputy", "censusTaker", "storage" }, allowSetters = true)
@@ -36,7 +39,7 @@ public class CensusItem implements Serializable {
 
     @ManyToOne(optional = false)
     @NotNull
-    @JsonIgnoreProperties(value = { "censusItems", "transferDocumentItems", "unit", "company" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "censusItems", "transferItems", "unit", "company", "storageCards" }, allowSetters = true)
     private Resource resource;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here

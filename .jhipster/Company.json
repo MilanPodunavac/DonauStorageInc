@@ -14,37 +14,45 @@
     {
       "javadoc": "Cascade delete",
       "otherEntityName": "legalEntity",
+      "otherEntityRelationshipName": "company",
       "ownerSide": true,
       "relationshipName": "legalEntityInfo",
       "relationshipType": "one-to-one",
       "relationshipValidateRules": "required"
     },
     {
-      "javadoc": "Cascade delete",
+      "javadoc": "Prevent delete",
       "otherEntityName": "resource",
       "otherEntityRelationshipName": "company",
-      "relationshipName": "resource",
+      "relationshipName": "resources",
       "relationshipType": "one-to-many"
     },
     {
-      "javadoc": "Cascade delete",
+      "javadoc": "Prevent delete",
       "otherEntityName": "businessPartner",
       "otherEntityRelationshipName": "company",
-      "relationshipName": "businessPartner",
+      "relationshipName": "partners",
       "relationshipType": "one-to-many"
     },
     {
-      "javadoc": "Cascade delete",
+      "javadoc": "Prevent delete",
       "otherEntityName": "businessYear",
       "otherEntityRelationshipName": "company",
-      "relationshipName": "businessYear",
+      "relationshipName": "businessYears",
       "relationshipType": "one-to-many"
     },
     {
-      "javadoc": "Cascade delete",
+      "javadoc": "Prevent delete",
       "otherEntityName": "employee",
       "otherEntityRelationshipName": "company",
-      "relationshipName": "employee",
+      "relationshipName": "employees",
+      "relationshipType": "one-to-many"
+    },
+    {
+      "javadoc": "Prevent deletion",
+      "otherEntityName": "storage",
+      "otherEntityRelationshipName": "company",
+      "relationshipName": "storages",
       "relationshipType": "one-to-many"
     }
   ],

@@ -23,13 +23,13 @@ public class StorageCriteria implements Serializable, Criteria {
 
     private LongFilter id;
 
-    private StringFilter name;
-
     private StringFilter code;
+
+    private StringFilter name;
 
     private LongFilter addressId;
 
-    private StringFilter storageCardId;
+    private StringFilter storageCardsId;
 
     private LongFilter receivedId;
 
@@ -45,10 +45,10 @@ public class StorageCriteria implements Serializable, Criteria {
 
     public StorageCriteria(StorageCriteria other) {
         this.id = other.id == null ? null : other.id.copy();
-        this.name = other.name == null ? null : other.name.copy();
         this.code = other.code == null ? null : other.code.copy();
+        this.name = other.name == null ? null : other.name.copy();
         this.addressId = other.addressId == null ? null : other.addressId.copy();
-        this.storageCardId = other.storageCardId == null ? null : other.storageCardId.copy();
+        this.storageCardsId = other.storageCardsId == null ? null : other.storageCardsId.copy();
         this.receivedId = other.receivedId == null ? null : other.receivedId.copy();
         this.dispatchedId = other.dispatchedId == null ? null : other.dispatchedId.copy();
         this.censusDocumentId = other.censusDocumentId == null ? null : other.censusDocumentId.copy();
@@ -76,21 +76,6 @@ public class StorageCriteria implements Serializable, Criteria {
         this.id = id;
     }
 
-    public StringFilter getName() {
-        return name;
-    }
-
-    public StringFilter name() {
-        if (name == null) {
-            name = new StringFilter();
-        }
-        return name;
-    }
-
-    public void setName(StringFilter name) {
-        this.name = name;
-    }
-
     public StringFilter getCode() {
         return code;
     }
@@ -104,6 +89,21 @@ public class StorageCriteria implements Serializable, Criteria {
 
     public void setCode(StringFilter code) {
         this.code = code;
+    }
+
+    public StringFilter getName() {
+        return name;
+    }
+
+    public StringFilter name() {
+        if (name == null) {
+            name = new StringFilter();
+        }
+        return name;
+    }
+
+    public void setName(StringFilter name) {
+        this.name = name;
     }
 
     public LongFilter getAddressId() {
@@ -121,19 +121,19 @@ public class StorageCriteria implements Serializable, Criteria {
         this.addressId = addressId;
     }
 
-    public StringFilter getStorageCardId() {
-        return storageCardId;
+    public StringFilter getStorageCardsId() {
+        return storageCardsId;
     }
 
-    public StringFilter storageCardId() {
-        if (storageCardId == null) {
-            storageCardId = new StringFilter();
+    public StringFilter storageCardsId() {
+        if (storageCardsId == null) {
+            storageCardsId = new StringFilter();
         }
-        return storageCardId;
+        return storageCardsId;
     }
 
-    public void setStorageCardId(StringFilter storageCardId) {
-        this.storageCardId = storageCardId;
+    public void setStorageCardsId(StringFilter storageCardsId) {
+        this.storageCardsId = storageCardsId;
     }
 
     public LongFilter getReceivedId() {
@@ -215,10 +215,10 @@ public class StorageCriteria implements Serializable, Criteria {
         final StorageCriteria that = (StorageCriteria) o;
         return (
             Objects.equals(id, that.id) &&
-            Objects.equals(name, that.name) &&
             Objects.equals(code, that.code) &&
+            Objects.equals(name, that.name) &&
             Objects.equals(addressId, that.addressId) &&
-            Objects.equals(storageCardId, that.storageCardId) &&
+            Objects.equals(storageCardsId, that.storageCardsId) &&
             Objects.equals(receivedId, that.receivedId) &&
             Objects.equals(dispatchedId, that.dispatchedId) &&
             Objects.equals(censusDocumentId, that.censusDocumentId) &&
@@ -229,7 +229,7 @@ public class StorageCriteria implements Serializable, Criteria {
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, code, addressId, storageCardId, receivedId, dispatchedId, censusDocumentId, companyId, distinct);
+        return Objects.hash(id, code, name, addressId, storageCardsId, receivedId, dispatchedId, censusDocumentId, companyId, distinct);
     }
 
     // prettier-ignore
@@ -237,10 +237,10 @@ public class StorageCriteria implements Serializable, Criteria {
     public String toString() {
         return "StorageCriteria{" +
             (id != null ? "id=" + id + ", " : "") +
-            (name != null ? "name=" + name + ", " : "") +
             (code != null ? "code=" + code + ", " : "") +
+            (name != null ? "name=" + name + ", " : "") +
             (addressId != null ? "addressId=" + addressId + ", " : "") +
-            (storageCardId != null ? "storageCardId=" + storageCardId + ", " : "") +
+            (storageCardsId != null ? "storageCardsId=" + storageCardsId + ", " : "") +
             (receivedId != null ? "receivedId=" + receivedId + ", " : "") +
             (dispatchedId != null ? "dispatchedId=" + dispatchedId + ", " : "") +
             (censusDocumentId != null ? "censusDocumentId=" + censusDocumentId + ", " : "") +

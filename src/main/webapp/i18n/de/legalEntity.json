@@ -23,6 +23,8 @@
       "identificationNumber": "Identification Number",
       "contactInfo": "Contact Info",
       "address": "Address",
+      "businessPartner": "Business Partner",
+      "company": "Company",
       "help": {
         "taxIdentificationNumber": "sr: Poreski identifikacioni broj (PIB)",
         "identificationNumber": "sr: Maticni broj (MB)"

@@ -61,7 +61,7 @@ public class StorageCardTraffic implements Serializable {
 
     @ManyToOne(optional = false)
     @NotNull
-    @JsonIgnoreProperties(value = { "storageCardTraffics", "businessYear", "resource", "storage" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "traffic", "businessYear", "resource", "storage" }, allowSetters = true)
     private StorageCard storageCard;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here

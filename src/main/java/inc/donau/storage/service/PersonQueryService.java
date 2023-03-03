@@ -114,6 +114,21 @@ public class PersonQueryService extends QueryService<Person> {
                         )
                     );
             }
+            if (criteria.getBusinessContactId() != null) {
+                specification =
+                    specification.and(
+                        buildSpecification(
+                            criteria.getBusinessContactId(),
+                            root -> root.join(Person_.businessContact, JoinType.LEFT).get(BusinessContact_.id)
+                        )
+                    );
+            }
+            if (criteria.getEmployeeId() != null) {
+                specification =
+                    specification.and(
+                        buildSpecification(criteria.getEmployeeId(), root -> root.join(Person_.employee, JoinType.LEFT).get(Employee_.id))
+                    );
+            }
         }
         return specification;
     }

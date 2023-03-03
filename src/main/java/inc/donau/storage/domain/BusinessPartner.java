@@ -29,7 +29,7 @@ public class BusinessPartner implements Serializable {
     /**
      * Cascade delete
      */
-    @JsonIgnoreProperties(value = { "personalInfo" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "personalInfo", "businessPartner" }, allowSetters = true)
     @OneToOne(optional = false, cascade = CascadeType.REMOVE)
     @NotNull
     @JoinColumn(unique = true)
@@ -38,7 +38,7 @@ public class BusinessPartner implements Serializable {
     /**
      * Cascade delete
      */
-    @JsonIgnoreProperties(value = { "contactInfo", "address" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "contactInfo", "address", "legalEntity", "company" }, allowSetters = true)
     @OneToOne(optional = false, cascade = CascadeType.REMOVE)
     @NotNull
     @JoinColumn(unique = true)
@@ -50,11 +50,14 @@ public class BusinessPartner implements Serializable {
         value = { "transferDocumentItems", "businessYear", "receivingStorage", "dispatchingStorage", "businessPartner" },
         allowSetters = true
     )
-    private Set<TransferDocument> transferDocuments = new HashSet<>();
+    private Set<TransferDocument> transfers = new HashSet<>();
 
     @ManyToOne(optional = false)
     @NotNull
-    @JsonIgnoreProperties(value = { "legalEntityInfo", "resources", "businessPartners", "businessYears", "employees" }, allowSetters = true)
+    @JsonIgnoreProperties(
+        value = { "legalEntityInfo", "resources", "partners", "businessYears", "employees", "storages" },
+        allowSetters = true
+    )
     private Company company;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
@@ -98,33 +101,33 @@ public class BusinessPartner implements Serializable {
         return this;
     }
 
-    public Set<TransferDocument> getTransferDocuments() {
-        return this.transferDocuments;
+    public Set<TransferDocument> getTransfers() {
+        return this.transfers;
     }
 
-    public void setTransferDocuments(Set<TransferDocument> transferDocuments) {
-        if (this.transferDocuments != null) {
-            this.transferDocuments.forEach(i -> i.setBusinessPartner(null));
+    public void setTransfers(Set<TransferDocument> transferDocuments) {
+        if (this.transfers != null) {
+            this.transfers.forEach(i -> i.setBusinessPartner(null));
         }
         if (transferDocuments != null) {
             transferDocuments.forEach(i -> i.setBusinessPartner(this));
         }
-        this.transferDocuments = transferDocuments;
+        this.transfers = transferDocuments;
     }
 
-    public BusinessPartner transferDocuments(Set<TransferDocument> transferDocuments) {
-        this.setTransferDocuments(transferDocuments);
+    public BusinessPartner transfers(Set<TransferDocument> transferDocuments) {
+        this.setTransfers(transferDocuments);
         return this;
     }
 
-    public BusinessPartner addTransferDocument(TransferDocument transferDocument) {
-        this.transferDocuments.add(transferDocument);
+    public BusinessPartner addTransfers(TransferDocument transferDocument) {
+        this.transfers.add(transferDocument);
         transferDocument.setBusinessPartner(this);
         return this;
     }
 
-    public BusinessPartner removeTransferDocument(TransferDocument transferDocument) {
-        this.transferDocuments.remove(transferDocument);
+    public BusinessPartner removeTransfers(TransferDocument transferDocument) {
+        this.transfers.remove(transferDocument);
         transferDocument.setBusinessPartner(null);
         return this;
     }

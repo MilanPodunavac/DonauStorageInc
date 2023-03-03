@@ -53,6 +53,10 @@ public class PersonCriteria implements Serializable, Criteria {
 
     private LongFilter contactInfoId;
 
+    private LongFilter businessContactId;
+
+    private LongFilter employeeId;
+
     private Boolean distinct;
 
     public PersonCriteria() {}
@@ -65,6 +69,8 @@ public class PersonCriteria implements Serializable, Criteria {
         this.maidenName = other.maidenName == null ? null : other.maidenName.copy();
         this.gender = other.gender == null ? null : other.gender.copy();
         this.contactInfoId = other.contactInfoId == null ? null : other.contactInfoId.copy();
+        this.businessContactId = other.businessContactId == null ? null : other.businessContactId.copy();
+        this.employeeId = other.employeeId == null ? null : other.employeeId.copy();
         this.distinct = other.distinct;
     }
 
@@ -178,6 +184,36 @@ public class PersonCriteria implements Serializable, Criteria {
         this.contactInfoId = contactInfoId;
     }
 
+    public LongFilter getBusinessContactId() {
+        return businessContactId;
+    }
+
+    public LongFilter businessContactId() {
+        if (businessContactId == null) {
+            businessContactId = new LongFilter();
+        }
+        return businessContactId;
+    }
+
+    public void setBusinessContactId(LongFilter businessContactId) {
+        this.businessContactId = businessContactId;
+    }
+
+    public LongFilter getEmployeeId() {
+        return employeeId;
+    }
+
+    public LongFilter employeeId() {
+        if (employeeId == null) {
+            employeeId = new LongFilter();
+        }
+        return employeeId;
+    }
+
+    public void setEmployeeId(LongFilter employeeId) {
+        this.employeeId = employeeId;
+    }
+
     public Boolean getDistinct() {
         return distinct;
     }
@@ -203,13 +239,26 @@ public class PersonCriteria implements Serializable, Criteria {
             Objects.equals(maidenName, that.maidenName) &&
             Objects.equals(gender, that.gender) &&
             Objects.equals(contactInfoId, that.contactInfoId) &&
+            Objects.equals(businessContactId, that.businessContactId) &&
+            Objects.equals(employeeId, that.employeeId) &&
             Objects.equals(distinct, that.distinct)
         );
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, firstName, middleName, lastName, maidenName, gender, contactInfoId, distinct);
+        return Objects.hash(
+            id,
+            firstName,
+            middleName,
+            lastName,
+            maidenName,
+            gender,
+            contactInfoId,
+            businessContactId,
+            employeeId,
+            distinct
+        );
     }
 
     // prettier-ignore
@@ -223,6 +272,8 @@ public class PersonCriteria implements Serializable, Criteria {
             (maidenName != null ? "maidenName=" + maidenName + ", " : "") +
             (gender != null ? "gender=" + gender + ", " : "") +
             (contactInfoId != null ? "contactInfoId=" + contactInfoId + ", " : "") +
+            (businessContactId != null ? "businessContactId=" + businessContactId + ", " : "") +
+            (employeeId != null ? "employeeId=" + employeeId + ", " : "") +
             (distinct != null ? "distinct=" + distinct + ", " : "") +
             "}";
     }

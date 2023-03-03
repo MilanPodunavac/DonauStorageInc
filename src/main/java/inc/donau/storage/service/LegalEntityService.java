@@ -8,8 +8,11 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -89,6 +92,43 @@ public class LegalEntityService {
     }
 
     /**
+     * Get all the legalEntities with eager load of many-to-many relationships.
+     *
+     * @return the list of entities.
+     */
+    public Page<LegalEntityDTO> findAllWithEagerRelationships(Pageable pageable) {
+        return legalEntityRepository.findAllWithEagerRelationships(pageable).map(legalEntityMapper::toDto);
+    }
+
+    /**
+     *  Get all the legalEntities where BusinessPartner is {@code null}.
+     *  @return the list of entities.
+     */
+    @Transactional(readOnly = true)
+    public List<LegalEntityDTO> findAllWhereBusinessPartnerIsNull() {
+        log.debug("Request to get all legalEntities where BusinessPartner is null");
+        return StreamSupport
+            .stream(legalEntityRepository.findAll().spliterator(), false)
+            .filter(legalEntity -> legalEntity.getBusinessPartner() == null)
+            .map(legalEntityMapper::toDto)
+            .collect(Collectors.toCollection(LinkedList::new));
+    }
+
+    /**
+     *  Get all the legalEntities where Company is {@code null}.
+     *  @return the list of entities.
+     */
+    @Transactional(readOnly = true)
+    public List<LegalEntityDTO> findAllWhereCompanyIsNull() {
+        log.debug("Request to get all legalEntities where Company is null");
+        return StreamSupport
+            .stream(legalEntityRepository.findAll().spliterator(), false)
+            .filter(legalEntity -> legalEntity.getCompany() == null)
+            .map(legalEntityMapper::toDto)
+            .collect(Collectors.toCollection(LinkedList::new));
+    }
+
+    /**
      * Get one legalEntity by id.
      *
      * @param id the id of the entity.
@@ -97,7 +137,7 @@ public class LegalEntityService {
     @Transactional(readOnly = true)
     public Optional<LegalEntityDTO> findOne(Long id) {
         log.debug("Request to get LegalEntity : {}", id);
-        return legalEntityRepository.findById(id).map(legalEntityMapper::toDto);
+        return legalEntityRepository.findOneWithEagerRelationships(id).map(legalEntityMapper::toDto);
     }
 
     /**

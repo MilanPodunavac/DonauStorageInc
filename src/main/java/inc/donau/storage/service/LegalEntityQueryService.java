@@ -118,6 +118,21 @@ public class LegalEntityQueryService extends QueryService<LegalEntity> {
                         buildSpecification(criteria.getAddressId(), root -> root.join(LegalEntity_.address, JoinType.LEFT).get(Address_.id))
                     );
             }
+            if (criteria.getBusinessPartnerId() != null) {
+                specification =
+                    specification.and(
+                        buildSpecification(
+                            criteria.getBusinessPartnerId(),
+                            root -> root.join(LegalEntity_.businessPartner, JoinType.LEFT).get(BusinessPartner_.id)
+                        )
+                    );
+            }
+            if (criteria.getCompanyId() != null) {
+                specification =
+                    specification.and(
+                        buildSpecification(criteria.getCompanyId(), root -> root.join(LegalEntity_.company, JoinType.LEFT).get(Company_.id))
+                    );
+            }
         }
         return specification;
     }

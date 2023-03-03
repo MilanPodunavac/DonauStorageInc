@@ -1,7 +1,7 @@
 export enum TransferDocumentStatus {
-  IN_PREPARATION = 'IN_PREPARATION',
+  IN_PREPARATION = 'In_preparation',
 
-  ACCOUNTED = 'ACCOUNTED',
+  ACCOUNTED = 'Accounted',
 
-  REVERSED = 'REVERSED',
+  REVERSED = 'Reversed',
 }

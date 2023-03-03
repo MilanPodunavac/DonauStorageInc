@@ -1,5 +1,6 @@
 package inc.donau.storage.service.dto;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import java.io.Serializable;
 import java.util.Objects;
 import javax.validation.constraints.*;

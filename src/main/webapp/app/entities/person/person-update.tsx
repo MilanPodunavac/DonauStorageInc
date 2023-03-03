@@ -10,6 +10,10 @@ import { useAppDispatch, useAppSelector } from 'app/config/store';
 
 import { IContactInfo } from 'app/shared/model/contact-info.model';
 import { getEntities as getContactInfos } from 'app/entities/contact-info/contact-info.reducer';
+import { IBusinessContact } from 'app/shared/model/business-contact.model';
+import { getEntities as getBusinessContacts } from 'app/entities/business-contact/business-contact.reducer';
+import { IEmployee } from 'app/shared/model/employee.model';
+import { getEntities as getEmployees } from 'app/entities/employee/employee.reducer';
 import { IPerson } from 'app/shared/model/person.model';
 import { Gender } from 'app/shared/model/enumerations/gender.model';
 import { getEntity, updateEntity, createEntity, reset } from './person.reducer';
@@ -23,6 +27,8 @@ export const PersonUpdate = () => {
   const isNew = id === undefined;
 
   const contactInfos = useAppSelector(state => state.contactInfo.entities);
+  const businessContacts = useAppSelector(state => state.businessContact.entities);
+  const employees = useAppSelector(state => state.employee.entities);
   const personEntity = useAppSelector(state => state.person.entity);
   const loading = useAppSelector(state => state.person.loading);
   const updating = useAppSelector(state => state.person.updating);
@@ -41,6 +47,8 @@ export const PersonUpdate = () => {
     }
 
     dispatch(getContactInfos({}));
+    dispatch(getBusinessContacts({}));
+    dispatch(getEmployees({}));
   }, []);
 
   useEffect(() => {

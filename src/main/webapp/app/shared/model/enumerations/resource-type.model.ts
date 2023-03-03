@@ -1,11 +1,11 @@
 export enum ResourceType {
-  MATERIAL = 'MATERIAL',
+  MATERIAL = 'Material',
 
-  PRODUCT = 'PRODUCT',
+  PRODUCT = 'Product',
 
-  HALF_PRODUCT = 'HALF_PRODUCT',
+  HALF_PRODUCT = 'Half_product',
 
-  ENERGY_SOURCE = 'ENERGY_SOURCE',
+  ENERGY_SOURCE = 'Energy_source',
 
-  WRITE_OFF = 'WRITE_OFF',
+  WRITE_OFF = 'Write_off',
 }

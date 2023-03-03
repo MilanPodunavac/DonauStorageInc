@@ -50,7 +50,7 @@ public class Resource implements Serializable {
     @OneToMany(mappedBy = "resource")
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     @JsonIgnoreProperties(value = { "transferDocument", "resource" }, allowSetters = true)
-    private Set<TransferDocumentItem> transferDocumentItems = new HashSet<>();
+    private Set<TransferDocumentItem> transferItems = new HashSet<>();
 
     @ManyToOne(optional = false)
     @NotNull
@@ -58,8 +58,19 @@ public class Resource implements Serializable {
 
     @ManyToOne(optional = false)
     @NotNull
-    @JsonIgnoreProperties(value = { "legalEntityInfo", "resources", "businessPartners", "businessYears", "employees" }, allowSetters = true)
+    @JsonIgnoreProperties(
+        value = { "legalEntityInfo", "resources", "partners", "businessYears", "employees", "storages" },
+        allowSetters = true
+    )
     private Company company;
+
+    /**
+     * Prevent deletion
+     */
+    @OneToMany(mappedBy = "resource")
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+    @JsonIgnoreProperties(value = { "traffic", "businessYear", "resource", "storage" }, allowSetters = true)
+    private Set<StorageCard> storageCards = new HashSet<>();
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
@@ -121,45 +132,45 @@ public class Resource implements Serializable {
         return this;
     }
 
-    public Resource addCensusItem(CensusItem censusItem) {
+    public Resource addCensusItems(CensusItem censusItem) {
         this.censusItems.add(censusItem);
         censusItem.setResource(this);
         return this;
     }
 
-    public Resource removeCensusItem(CensusItem censusItem) {
+    public Resource removeCensusItems(CensusItem censusItem) {
         this.censusItems.remove(censusItem);
         censusItem.setResource(null);
         return this;
     }
 
-    public Set<TransferDocumentItem> getTransferDocumentItems() {
-        return this.transferDocumentItems;
+    public Set<TransferDocumentItem> getTransferItems() {
+        return this.transferItems;
     }
 
-    public void setTransferDocumentItems(Set<TransferDocumentItem> transferDocumentItems) {
-        if (this.transferDocumentItems != null) {
-            this.transferDocumentItems.forEach(i -> i.setResource(null));
+    public void setTransferItems(Set<TransferDocumentItem> transferDocumentItems) {
+        if (this.transferItems != null) {
+            this.transferItems.forEach(i -> i.setResource(null));
         }
         if (transferDocumentItems != null) {
             transferDocumentItems.forEach(i -> i.setResource(this));
         }
-        this.transferDocumentItems = transferDocumentItems;
+        this.transferItems = transferDocumentItems;
     }
 
-    public Resource transferDocumentItems(Set<TransferDocumentItem> transferDocumentItems) {
-        this.setTransferDocumentItems(transferDocumentItems);
+    public Resource transferItems(Set<TransferDocumentItem> transferDocumentItems) {
+        this.setTransferItems(transferDocumentItems);
         return this;
     }
 
-    public Resource addTransferDocumentItem(TransferDocumentItem transferDocumentItem) {
-        this.transferDocumentItems.add(transferDocumentItem);
+    public Resource addTransferItems(TransferDocumentItem transferDocumentItem) {
+        this.transferItems.add(transferDocumentItem);
         transferDocumentItem.setResource(this);
         return this;
     }
 
-    public Resource removeTransferDocumentItem(TransferDocumentItem transferDocumentItem) {
-        this.transferDocumentItems.remove(transferDocumentItem);
+    public Resource removeTransferItems(TransferDocumentItem transferDocumentItem) {
+        this.transferItems.remove(transferDocumentItem);
         transferDocumentItem.setResource(null);
         return this;
     }
@@ -187,6 +198,37 @@ public class Resource implements Serializable {
 
     public Resource company(Company company) {
         this.setCompany(company);
+        return this;
+    }
+
+    public Set<StorageCard> getStorageCards() {
+        return this.storageCards;
+    }
+
+    public void setStorageCards(Set<StorageCard> storageCards) {
+        if (this.storageCards != null) {
+            this.storageCards.forEach(i -> i.setResource(null));
+        }
+        if (storageCards != null) {
+            storageCards.forEach(i -> i.setResource(this));
+        }
+        this.storageCards = storageCards;
+    }
+
+    public Resource storageCards(Set<StorageCard> storageCards) {
+        this.setStorageCards(storageCards);
+        return this;
+    }
+
+    public Resource addStorageCards(StorageCard storageCard) {
+        this.storageCards.add(storageCard);
+        storageCard.setResource(this);
+        return this;
+    }
+
+    public Resource removeStorageCards(StorageCard storageCard) {
+        this.storageCards.remove(storageCard);
+        storageCard.setResource(null);
         return this;
     }
 
