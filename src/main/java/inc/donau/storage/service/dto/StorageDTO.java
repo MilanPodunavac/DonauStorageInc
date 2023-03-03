@@ -18,8 +18,10 @@ public class StorageDTO implements Serializable {
     @Schema(description = "AutoNumber")
     private Long id;
 
+    @NotNull
     private String code;
 
+    @NotNull
     private String name;
 
     private AddressDTO address;

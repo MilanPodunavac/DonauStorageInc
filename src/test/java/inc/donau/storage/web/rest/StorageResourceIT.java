@@ -169,6 +169,42 @@ class StorageResourceIT {
 
     @Test
     @Transactional
+    void checkCodeIsRequired() throws Exception {
+        int databaseSizeBeforeTest = storageRepository.findAll().size();
+        // set the field null
+        storage.setCode(null);
+
+        // Create the Storage, which fails.
+        StorageDTO storageDTO = storageMapper.toDto(storage);
+
+        restStorageMockMvc
+            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(storageDTO)))
+            .andExpect(status().isBadRequest());
+
+        List<Storage> storageList = storageRepository.findAll();
+        assertThat(storageList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
+    void checkNameIsRequired() throws Exception {
+        int databaseSizeBeforeTest = storageRepository.findAll().size();
+        // set the field null
+        storage.setName(null);
+
+        // Create the Storage, which fails.
+        StorageDTO storageDTO = storageMapper.toDto(storage);
+
+        restStorageMockMvc
+            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(storageDTO)))
+            .andExpect(status().isBadRequest());
+
+        List<Storage> storageList = storageRepository.findAll();
+        assertThat(storageList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
     void getAllStorages() throws Exception {
         // Initialize the database
         storageRepository.saveAndFlush(storage);

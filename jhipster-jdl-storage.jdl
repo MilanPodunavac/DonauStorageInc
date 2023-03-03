@@ -2,8 +2,8 @@
 entity Storage {
     /** AutoNumber */
     @id id Long,
-    code String,
-	name String
+    code String required,
+	name String required
 }
 
 /** sr: Prometni dokument */

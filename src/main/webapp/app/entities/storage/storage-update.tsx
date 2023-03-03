@@ -143,6 +143,9 @@ export const StorageUpdate = () => {
                 name="name"
                 data-cy="name"
                 type="text"
+                validate={{
+                  required: { value: true, message: translate('entity.validation.required') },
+                }}
               />
               <ValidatedField
                 label={translate('donauStorageIncApp.storage.code')}

@@ -6,8 +6,8 @@ import { ICompany } from 'app/shared/model/company.model';
 
 export interface IStorage {
   id?: number;
-  code?: string | null;
-  name?: string | null;
+  code?: string;
+  name?: string;
   address?: IAddress;
   storageCards?: IStorageCard[] | null;
   receiveds?: ITransferDocument[] | null;
