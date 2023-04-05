@@ -6,7 +6,8 @@
         "refreshListLabel": "Refresh list",
         "createLabel": "Create a new Measurement Unit",
         "createOrEditLabel": "Create or edit a Measurement Unit",
-        "notFound": "No Measurement Units found"
+        "notFound": "No Measurement Units found",
+        "noBusinessYearChosen": "Business Year not chosen"
       },
       "created": "A new Measurement Unit is created with identifier {{ param }}",
       "updated": "A Measurement Unit is updated with identifier {{ param }}",

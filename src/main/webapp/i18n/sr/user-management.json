@@ -2,7 +2,7 @@
   "userManagement": {
     "home": {
       "title": "Korisnici",
-      "refreshListLabel": "Refresh list",
+      "refreshListLabel": "Osveži listu",
       "createLabel": "Kreiraj novog korisnika",
       "createOrEditLabel": "Kreiraj ili izmeni korisnika"
     },

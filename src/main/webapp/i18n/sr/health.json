@@ -12,14 +12,14 @@
     },
     "indicator": {
       "discoveryComposite": "Discovery Composite",
-      "refreshScope": "Mikroservis Refresh Scope",
+      "refreshScope": "Mikroservis osvežavanje",
       "clientConfigServer": "Mikroservis Konfiguracioni Server",
       "hystrix": "Hystrix",
       "diskSpace": "Veličina diska",
       "mail": "Email",
-      "livenessState": "Liveness state",
-      "readinessState": "Readiness state",
-      "ping": "Application",
+      "livenessState": "Životnost",
+      "readinessState": "Spremnost",
+      "ping": "Aplikacija",
       "db": "SQL baza podataka"
     },
     "table": {
@@ -27,7 +27,7 @@
       "status": "Status"
     },
     "status": {
-      "UNKNOWN": "UNKNOWN",
+      "UNKNOWN": "NEPOZNATO",
       "UP": "AKTIVAN",
       "DOWN": "NEAKTIVAN"
     }

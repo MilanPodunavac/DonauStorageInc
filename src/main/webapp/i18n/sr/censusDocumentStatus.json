@@ -2,8 +2,8 @@
   "donauStorageIncApp": {
     "CensusDocumentStatus": {
       "null": "",
-      "INCOMPLETE": "INCOMPLETE",
-      "ACCOUNTED": "ACCOUNTED"
+      "INCOMPLETE": "NEDOVRŠENO",
+      "ACCOUNTED": "PROKNJIŽENO"
     }
   }
 }

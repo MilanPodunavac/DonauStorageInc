@@ -6,7 +6,8 @@
         "refreshListLabel": "Refresh list",
         "createLabel": "Create a new Legal Entity",
         "createOrEditLabel": "Create or edit a Legal Entity",
-        "notFound": "No Legal Entities found"
+        "notFound": "No Legal Entities found",
+        "noBusinessYearChosen": "Business Year not chosen"
       },
       "created": "A new Legal Entity is created with identifier {{ param }}",
       "updated": "A Legal Entity is updated with identifier {{ param }}",

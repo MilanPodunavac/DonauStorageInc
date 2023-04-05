@@ -6,7 +6,8 @@
         "refreshListLabel": "Refresh list",
         "createLabel": "Create a new Business Contact",
         "createOrEditLabel": "Create or edit a Business Contact",
-        "notFound": "No Business Contacts found"
+        "notFound": "No Business Contacts found",
+        "noBusinessYearChosen": "Business Year not chosen"
       },
       "created": "A new Business Contact is created with identifier {{ param }}",
       "updated": "A Business Contact is updated with identifier {{ param }}",

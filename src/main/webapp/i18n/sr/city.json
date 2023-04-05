@@ -2,27 +2,27 @@
   "donauStorageIncApp": {
     "city": {
       "home": {
-        "title": "Cities",
-        "refreshListLabel": "Refresh list",
-        "createLabel": "Kreiraj novi City",
-        "createOrEditLabel": "Kreirajte ili izmenite City",
-        "notFound": "No Cities found"
+        "title": "Gradovi",
+        "refreshListLabel": "Osveži listu",
+        "createLabel": "Kreiraj novi grad",
+        "createOrEditLabel": "Kreirajte ili izmenite grad",
+        "notFound": "Gradovi nisu nađeni"
       },
-      "created": "Kreiran je novi City pod nazivom {{ param }}",
-      "updated": "City pod nazivom {{ param }} je ažuriran",
-      "deleted": "City pod nazivom {{ param }} je obrisan",
+      "created": "Kreiran je novi grad pod nazivom {{ param }}",
+      "updated": "Grad pod nazivom {{ param }} je ažuriran",
+      "deleted": "Grad pod nazivom {{ param }} je obrisan",
       "delete": {
-        "question": "Da li ste sigurni da želite da obrišete City pod nazivom {{ id }}?"
+        "question": "Da li ste sigurni da želite da obrišete grad pod nazivom {{ id }}?"
       },
       "detail": {
-        "title": "City"
+        "title": "Grad"
       },
       "id": "ID",
-      "name": "Name",
-      "postalCode": "Postal Code",
-      "country": "Country",
+      "name": "Naziv",
+      "postalCode": "Poštanski broj",
+      "country": "Država",
       "help": {
-        "postalCode": "Base postal code of city"
+        "postalCode": "Gradski poštanski broj"
       }
     }
   }

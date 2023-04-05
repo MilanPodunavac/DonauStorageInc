@@ -2,29 +2,30 @@
   "donauStorageIncApp": {
     "transferDocumentItem": {
       "home": {
-        "title": "Transfer Document Items",
-        "refreshListLabel": "Refresh list",
-        "createLabel": "Kreiraj novi Transfer Document Item",
-        "createOrEditLabel": "Kreirajte ili izmenite Transfer Document Item",
-        "notFound": "No Transfer Document Items found"
+        "title": "Stavke prometnog dokumenta",
+        "refreshListLabel": "Osveži listu",
+        "createLabel": "Kreiraj novu stavku prometnog dokumenta",
+        "createOrEditLabel": "Kreirajte ili izmenite stavku prometnog dokumenta",
+        "notFound": "Stavke prometnog dokumenta nisu nađene",
+        "noBusinessYearChosen": "Nije izabrana poslovna godina"
       },
-      "created": "Kreiran je novi Transfer Document Item pod nazivom {{ param }}",
-      "updated": "Transfer Document Item pod nazivom {{ param }} je ažuriran",
-      "deleted": "Transfer Document Item pod nazivom {{ param }} je obrisan",
+      "created": "Kreiran je nova stavka prometnog dokumenta pod nazivom {{ param }}",
+      "updated": "Stavka prometnog dokumenta pod nazivom {{ param }} je ažurirana",
+      "deleted": "Stavka prometnog dokumenta pod nazivom {{ param }} je obrisana",
       "delete": {
-        "question": "Da li ste sigurni da želite da obrišete Transfer Document Item pod nazivom {{ id }}?"
+        "question": "Da li ste sigurni da želite da obrišete stavku prometnog dokumenta pod nazivom {{ id }}?"
       },
       "detail": {
-        "title": "Transfer Document Item"
+        "title": "Stavka prometnog dokumenta"
       },
       "id": "ID",
-      "amount": "Amount",
-      "price": "Price",
-      "transferValue": "Transfer Value",
-      "transferDocument": "Transfer Document",
-      "resource": "Resource",
+      "amount": "Količina",
+      "price": "Cena",
+      "transferValue": "Vrednost prometa",
+      "transferDocument": "Prometni dokument",
+      "resource": "Resurs",
       "help": {
-        "transferValue": "amount x price"
+        "transferValue": "količina * cena"
       }
     }
   }

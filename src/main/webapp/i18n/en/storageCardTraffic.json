@@ -6,7 +6,8 @@
         "refreshListLabel": "Refresh list",
         "createLabel": "Create a new Storage Card Traffic",
         "createOrEditLabel": "Create or edit a Storage Card Traffic",
-        "notFound": "No Storage Card Traffics found"
+        "notFound": "No Storage Card Traffics found",
+        "noBusinessYearChosen": "Business Year not chosen"
       },
       "created": "A new Storage Card Traffic is created with identifier {{ param }}",
       "updated": "A Storage Card Traffic is updated with identifier {{ param }}",

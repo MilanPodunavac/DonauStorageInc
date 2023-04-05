@@ -2,8 +2,8 @@
   "donauStorageIncApp": {
     "StorageCardTrafficDirection": {
       "null": "",
-      "IN": "IN",
-      "OUT": "OUT"
+      "IN": "ULAZ",
+      "OUT": "IZLAZ"
     }
   }
 }

@@ -2,30 +2,31 @@
   "donauStorageIncApp": {
     "person": {
       "home": {
-        "title": "People",
-        "refreshListLabel": "Refresh list",
-        "createLabel": "Kreiraj novi Person",
-        "createOrEditLabel": "Kreirajte ili izmenite Person",
-        "notFound": "No People found"
+        "title": "Osobe",
+        "refreshListLabel": "Osveži listu",
+        "createLabel": "Kreiraj novi osobu",
+        "createOrEditLabel": "Kreirajte ili izmenite osobu",
+        "notFound": "Osobe nisu nađene",
+        "noBusinessYearChosen": "Nije izabrana poslovna godina"
       },
-      "created": "Kreiran je novi Person pod nazivom {{ param }}",
-      "updated": "Person pod nazivom {{ param }} je ažuriran",
-      "deleted": "Person pod nazivom {{ param }} je obrisan",
+      "created": "Kreirana je nova osoba pod nazivom {{ param }}",
+      "updated": "Osoba pod nazivom {{ param }} je ažurirana",
+      "deleted": "Osoba pod nazivom {{ param }} je obrisana",
       "delete": {
-        "question": "Da li ste sigurni da želite da obrišete Person pod nazivom {{ id }}?"
+        "question": "Da li ste sigurni da želite da obrišete osobu pod nazivom {{ id }}?"
       },
       "detail": {
-        "title": "Person"
+        "title": "Osoba"
       },
       "id": "ID",
-      "firstName": "First Name",
-      "middleName": "Middle Name",
-      "lastName": "Last Name",
-      "maidenName": "Maiden Name",
-      "gender": "Gender",
-      "contactInfo": "Contact Info",
-      "businessContact": "Business Contact",
-      "employee": "Employee"
+      "firstName": "Lično ime",
+      "middleName": "Srenje ime",
+      "lastName": "Prezime",
+      "maidenName": "Devojačko prezime",
+      "gender": "Pol",
+      "contactInfo": "Kontakt informacije",
+      "businessContact": "Odgovorno lice",
+      "employee": "Radnik"
     }
   }
 }

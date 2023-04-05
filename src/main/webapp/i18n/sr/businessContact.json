@@ -2,24 +2,24 @@
   "donauStorageIncApp": {
     "businessContact": {
       "home": {
-        "title": "Business Contacts",
-        "refreshListLabel": "Refresh list",
-        "createLabel": "Kreiraj novi Business Contact",
-        "createOrEditLabel": "Kreirajte ili izmenite Business Contact",
-        "notFound": "No Business Contacts found"
+        "title": "Odgovorna lica",
+        "refreshListLabel": "Osveži listu",
+        "createLabel": "Kreiraj novo odgovorno lice",
+        "createOrEditLabel": "Kreirajte ili izmenite odgovorno lice",
+        "notFound": "Odgovorna lica nisu nađena"
       },
-      "created": "Kreiran je novi Business Contact pod nazivom {{ param }}",
-      "updated": "Business Contact pod nazivom {{ param }} je ažuriran",
-      "deleted": "Business Contact pod nazivom {{ param }} je obrisan",
+      "created": "Kreirano je novo odgovorno lice pod nazivom {{ param }}",
+      "updated": "Odgovorno lice pod nazivom {{ param }} je ažurirano",
+      "deleted": "Odgovorno lice pod nazivom {{ param }} je obrisano",
       "delete": {
-        "question": "Da li ste sigurni da želite da obrišete Business Contact pod nazivom {{ id }}?"
+        "question": "Da li ste sigurni da želite da obrišete odgovorno lice pod nazivom {{ id }}?"
       },
       "detail": {
-        "title": "Business Contact"
+        "title": "Odgovorno lice"
       },
       "id": "ID",
-      "personalInfo": "Personal Info",
-      "businessPartner": "Business Partner"
+      "personalInfo": "Lični podaci",
+      "businessPartner": "Poslovni partner"
     }
   }
 }

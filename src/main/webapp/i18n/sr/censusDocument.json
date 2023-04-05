@@ -2,35 +2,36 @@
   "donauStorageIncApp": {
     "censusDocument": {
       "home": {
-        "title": "Census Documents",
-        "refreshListLabel": "Refresh list",
-        "createLabel": "Kreiraj novi Census Document",
-        "createOrEditLabel": "Kreirajte ili izmenite Census Document",
-        "notFound": "No Census Documents found"
+        "title": "Popisni dokumenti",
+        "refreshListLabel": "Osveži listu",
+        "createLabel": "Kreiraj novi popisni dokument",
+        "createOrEditLabel": "Kreirajte ili izmenite popisni dokument",
+        "notFound": "Popisni dokumenti nisu nađeni",
+        "noBusinessYearChosen": "Nije izabrana poslovna godina"
       },
-      "created": "Kreiran je novi Census Document pod nazivom {{ param }}",
-      "updated": "Census Document pod nazivom {{ param }} je ažuriran",
-      "deleted": "Census Document pod nazivom {{ param }} je obrisan",
+      "created": "Kreiran je novi popisni dokument pod nazivom {{ param }}",
+      "updated": "Popisni dokument pod nazivom {{ param }} je ažuriran",
+      "deleted": "Popisni dokument pod nazivom {{ param }} je obrisan",
       "delete": {
-        "question": "Da li ste sigurni da želite da obrišete Census Document pod nazivom {{ id }}?"
+        "question": "Da li ste sigurni da želite da obrišete popisni dokument pod nazivom {{ id }}?"
       },
       "detail": {
-        "title": "Census Document"
+        "title": "Popisni dokument"
       },
       "id": "ID",
-      "censusDate": "Census Date",
+      "censusDate": "Datum popisa",
       "status": "Status",
-      "accountingDate": "Accounting Date",
-      "leveling": "Leveling",
-      "censusItem": "Census Item",
-      "businessYear": "Business Year",
-      "president": "President",
-      "deputy": "Deputy",
-      "censusTaker": "Census Taker",
-      "storage": "Storage",
+      "accountingDate": "Datum knjiženja",
+      "leveling": "Nivelacija",
+      "censusItem": "Stavke popisa",
+      "businessYear": "Poslovna godina",
+      "president": "Predsednik",
+      "deputy": "Zamenik",
+      "censusTaker": "Popisnik",
+      "storage": "Magacin",
       "help": {
         "censusDate": "sr: Popis",
-        "accountingDate": "sr: Knjizenje"
+        "accountingDate": "sr: Knjiženje"
       }
     }
   }

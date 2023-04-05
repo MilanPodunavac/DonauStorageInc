@@ -6,7 +6,8 @@
         "refreshListLabel": "Refresh list",
         "createLabel": "Create a new Resource",
         "createOrEditLabel": "Create or edit a Resource",
-        "notFound": "No Resources found"
+        "notFound": "No Resources found",
+        "noBusinessYearChosen": "Business Year not chosen"
       },
       "created": "A new Resource is created with identifier {{ param }}",
       "updated": "A Resource is updated with identifier {{ param }}",

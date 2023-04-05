@@ -6,7 +6,8 @@
         "refreshListLabel": "Refresh list",
         "createLabel": "Create a new Storage Card",
         "createOrEditLabel": "Create or edit a Storage Card",
-        "notFound": "No Storage Cards found"
+        "notFound": "No Storage Cards found",
+        "noBusinessYearChosen": "Business Year not chosen"
       },
       "created": "A new Storage Card is created with identifier {{ param }}",
       "updated": "A Storage Card is updated with identifier {{ param }}",

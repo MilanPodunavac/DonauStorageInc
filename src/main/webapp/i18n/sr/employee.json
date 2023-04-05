@@ -2,31 +2,32 @@
   "donauStorageIncApp": {
     "employee": {
       "home": {
-        "title": "Employees",
-        "refreshListLabel": "Refresh list",
-        "createLabel": "Kreiraj novi Employee",
-        "createOrEditLabel": "Kreirajte ili izmenite Employee",
-        "notFound": "No Employees found"
+        "title": "Radnik",
+        "refreshListLabel": "Osveži listu",
+        "createLabel": "Kreiraj novog radnika",
+        "createOrEditLabel": "Kreirajte ili izmenite radnika",
+        "notFound": "Radnici nisu nađeni",
+        "noBusinessYearChosen": "Nije izabrana poslovna godina"
       },
-      "created": "Kreiran je novi Employee pod nazivom {{ param }}",
-      "updated": "Employee pod nazivom {{ param }} je ažuriran",
-      "deleted": "Employee pod nazivom {{ param }} je obrisan",
+      "created": "Kreiran je novi radnik pod nazivom {{ param }}",
+      "updated": "Radnik pod nazivom {{ param }} je ažuriran",
+      "deleted": "Radnik pod nazivom {{ param }} je obrisan",
       "delete": {
-        "question": "Da li ste sigurni da želite da obrišete Employee pod nazivom {{ id }}?"
+        "question": "Da li ste sigurni da želite da obrišete radnika pod nazivom {{ id }}?"
       },
       "detail": {
-        "title": "Employee"
+        "title": "Radnik"
       },
       "id": "ID",
-      "uniqueIdentificationNumber": "Unique Identification Number",
-      "birthDate": "Birth Date",
-      "disability": "Disability",
-      "employment": "Employment",
-      "profilePicture": "Profile Picture",
-      "address": "Address",
-      "personalInfo": "Personal Info",
-      "user": "User",
-      "company": "Company",
+      "uniqueIdentificationNumber": "Jedinstveni matični broj građana (JMBG)",
+      "birthDate": "Datum rođenja",
+      "disability": "Invaliditet",
+      "employment": "Zaposlenost",
+      "profilePicture": "Profilna slika",
+      "address": "Adresa",
+      "personalInfo": "Lični podaci",
+      "user": "Korisnik",
+      "company": "Kompanija",
       "help": {
         "uniqueIdentificationNumber": "sr: Jedinstveni maticni broj gradjana (JMBG)"
       }

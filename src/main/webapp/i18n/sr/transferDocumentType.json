@@ -2,9 +2,9 @@
   "donauStorageIncApp": {
     "TransferDocumentType": {
       "null": "",
-      "RECEIVING": "Receiving",
-      "DISPATCHING": "Dispatching",
-      "INTERSTORAGE": "Interstorage"
+      "RECEIVING": "Primka",
+      "DISPATCHING": "Otpremnica",
+      "INTERSTORAGE": "Međumagacinsko poslovanje"
     }
   }
 }

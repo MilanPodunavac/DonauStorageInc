@@ -6,7 +6,8 @@
         "refreshListLabel": "Refresh list",
         "createLabel": "Create a new Census Document",
         "createOrEditLabel": "Create or edit a Census Document",
-        "notFound": "No Census Documents found"
+        "notFound": "No Census Documents found",
+        "noBusinessYearChosen": "Business Year not chosen"
       },
       "created": "A new Census Document is created with identifier {{ param }}",
       "updated": "A Census Document is updated with identifier {{ param }}",

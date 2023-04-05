@@ -6,7 +6,8 @@
         "refreshListLabel": "Refresh list",
         "createLabel": "Create a new Employee",
         "createOrEditLabel": "Create or edit a Employee",
-        "notFound": "No Employees found"
+        "notFound": "No Employees found",
+        "noBusinessYearChosen": "Business Year not chosen"
       },
       "created": "A new Employee is created with identifier {{ param }}",
       "updated": "A Employee is updated with identifier {{ param }}",

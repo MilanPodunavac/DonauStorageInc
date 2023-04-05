@@ -2,32 +2,33 @@
   "donauStorageIncApp": {
     "storageCardTraffic": {
       "home": {
-        "title": "Storage Card Traffics",
-        "refreshListLabel": "Refresh list",
-        "createLabel": "Kreiraj novi Storage Card Traffic",
-        "createOrEditLabel": "Kreirajte ili izmenite Storage Card Traffic",
-        "notFound": "No Storage Card Traffics found"
+        "title": "Prometi magacinske kartice",
+        "refreshListLabel": "Osveži listu",
+        "createLabel": "Kreiraj novi promet magacinske kartice",
+        "createOrEditLabel": "Kreirajte ili izmenite promet magacinske kartice",
+        "notFound": "Prometi magacinske kartice nisu nađeni",
+        "noBusinessYearChosen": "Nije izabrana poslovna godina"
       },
-      "created": "Kreiran je novi Storage Card Traffic pod nazivom {{ param }}",
-      "updated": "Storage Card Traffic pod nazivom {{ param }} je ažuriran",
-      "deleted": "Storage Card Traffic pod nazivom {{ param }} je obrisan",
+      "created": "Kreiran je novi promet magacinske kartice pod nazivom {{ param }}",
+      "updated": "Promet magacinske kartice pod nazivom {{ param }} je ažuriran",
+      "deleted": "Promet magacinske kartice pod nazivom {{ param }} je obrisan",
       "delete": {
-        "question": "Da li ste sigurni da želite da obrišete Storage Card Traffic pod nazivom {{ id }}?"
+        "question": "Da li ste sigurni da želite da obrišete promet magacinske kartice pod nazivom {{ id }}?"
       },
       "detail": {
-        "title": "Storage Card Traffic"
+        "title": "Promet magacinske kartice"
       },
       "id": "ID",
-      "type": "Type",
-      "direction": "Direction",
-      "amount": "Amount",
-      "price": "Price",
-      "trafficValue": "Traffic Value",
-      "document": "Document",
-      "date": "Date",
-      "storageCard": "Storage Card",
+      "type": "Tip",
+      "direction": "Smer",
+      "amount": "Količina",
+      "price": "Cena",
+      "trafficValue": "Vrednost",
+      "document": "Dokument",
+      "date": "Datum",
+      "storageCard": "Magacinska kartica",
       "help": {
-        "trafficValue": "amount x price"
+        "trafficValue": "količina * cena"
       }
     }
   }

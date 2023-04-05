@@ -2,11 +2,11 @@
   "donauStorageIncApp": {
     "ResourceType": {
       "null": "",
-      "MATERIAL": "Material",
-      "PRODUCT": "Product",
-      "HALF_PRODUCT": "Half_product",
-      "ENERGY_SOURCE": "Energy_source",
-      "WRITE_OFF": "Write_off"
+      "MATERIAL": "Materijal",
+      "PRODUCT": "Proizvod",
+      "HALF_PRODUCT": "Poluproizvod",
+      "ENERGY_SOURCE": "Energent",
+      "WRITE_OFF": "Škart"
     }
   }
 }

@@ -2,28 +2,29 @@
   "donauStorageIncApp": {
     "company": {
       "home": {
-        "title": "Companies",
-        "refreshListLabel": "Refresh list",
-        "createLabel": "Kreiraj novi Company",
-        "createOrEditLabel": "Kreirajte ili izmenite Company",
-        "notFound": "No Companies found"
+        "title": "Kompanije",
+        "refreshListLabel": "Osveži listu",
+        "createLabel": "Kreiraj novi kompaniju",
+        "createOrEditLabel": "Kreirajte ili izmenite kompaniju",
+        "notFound": "Kompanije nisu nađene",
+        "noBusinessYearChosen": "Nije izabrana poslovna godina"
       },
-      "created": "Kreiran je novi Company pod nazivom {{ param }}",
-      "updated": "Company pod nazivom {{ param }} je ažuriran",
-      "deleted": "Company pod nazivom {{ param }} je obrisan",
+      "created": "Kreiran je nova kompanija pod nazivom {{ param }}",
+      "updated": "Kompanija pod nazivom {{ param }} je ažurirana",
+      "deleted": "Kompanija pod nazivom {{ param }} je obrisana",
       "delete": {
-        "question": "Da li ste sigurni da želite da obrišete Company pod nazivom {{ id }}?"
+        "question": "Da li ste sigurni da želite da obrišete kompaniju pod nazivom {{ id }}?"
       },
       "detail": {
-        "title": "Company"
+        "title": "Kompanija"
       },
       "id": "ID",
-      "legalEntityInfo": "Legal Entity Info",
-      "resources": "Resources",
-      "partners": "Partners",
-      "businessYears": "Business Years",
-      "employees": "Employees",
-      "storages": "Storages"
+      "legalEntityInfo": "Info pravnog lica",
+      "resources": "Resursi",
+      "partners": "Poslovni partneri",
+      "businessYears": "Poslovne godine",
+      "employees": "Radnici",
+      "storages": "Magacini"
     }
   }
 }

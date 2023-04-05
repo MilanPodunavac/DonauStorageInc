@@ -6,7 +6,8 @@
         "refreshListLabel": "Refresh list",
         "createLabel": "Create a new Storage",
         "createOrEditLabel": "Create or edit a Storage",
-        "notFound": "No Storages found"
+        "notFound": "No Storages found",
+        "noBusinessYearChosen": "Business Year not chosen"
       },
       "created": "A new Storage is created with identifier {{ param }}",
       "updated": "A Storage is updated with identifier {{ param }}",

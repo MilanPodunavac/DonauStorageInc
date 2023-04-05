@@ -2,34 +2,35 @@
   "donauStorageIncApp": {
     "transferDocument": {
       "home": {
-        "title": "Transfer Documents",
-        "refreshListLabel": "Refresh list",
-        "createLabel": "Kreiraj novi Transfer Document",
-        "createOrEditLabel": "Kreirajte ili izmenite Transfer Document",
-        "notFound": "No Transfer Documents found"
+        "title": "Prometni dokumenti",
+        "refreshListLabel": "Osveži listu",
+        "createLabel": "Kreiraj novi prometni dokument",
+        "createOrEditLabel": "Kreirajte ili izmenite prometni dokument",
+        "notFound": "Prometni dokument nisu nađeni",
+        "noBusinessYearChosen": "Nije izabrana poslovna godina"
       },
-      "created": "Kreiran je novi Transfer Document pod nazivom {{ param }}",
-      "updated": "Transfer Document pod nazivom {{ param }} je ažuriran",
-      "deleted": "Transfer Document pod nazivom {{ param }} je obrisan",
+      "created": "Kreiran je novi prometni dokument pod nazivom {{ param }}",
+      "updated": "Prometni dokument pod nazivom {{ param }} je ažuriran",
+      "deleted": "Prometni dokument pod nazivom {{ param }} je obrisan",
       "delete": {
-        "question": "Da li ste sigurni da želite da obrišete Transfer Document pod nazivom {{ id }}?"
+        "question": "Da li ste sigurni da želite da obrišete prometni dokument pod nazivom {{ id }}?"
       },
       "detail": {
-        "title": "Transfer Document"
+        "title": "Prometni dokument"
       },
       "id": "ID",
-      "type": "Type",
-      "transferDate": "Transfer Date",
+      "type": "Tip",
+      "transferDate": "Datum prometa",
       "status": "Status",
-      "accountingDate": "Accounting Date",
-      "reversalDate": "Reversal Date",
-      "transferDocumentItem": "Transfer Document Item",
-      "businessYear": "Business Year",
-      "receivingStorage": "Receiving Storage",
-      "dispatchingStorage": "Dispatching Storage",
-      "businessPartner": "Business Partner",
+      "accountingDate": "Datum knjiženja",
+      "reversalDate": "Datum storniranja",
+      "transferDocumentItem": "Stavke prometa",
+      "businessYear": "Poslovna godina",
+      "receivingStorage": "Primni magacin",
+      "dispatchingStorage": "Otpremni magacin",
+      "businessPartner": "Poslovni partner",
       "help": {
-        "accountingDate": "sr: Knjizenje",
+        "accountingDate": "sr: Knjiženje",
         "reversalDate": "sr: Storniranje"
       }
     }

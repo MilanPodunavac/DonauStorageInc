@@ -6,7 +6,8 @@
         "refreshListLabel": "Refresh list",
         "createLabel": "Create a new Contact Info",
         "createOrEditLabel": "Create or edit a Contact Info",
-        "notFound": "No Contact Infos found"
+        "notFound": "No Contact Infos found",
+        "noBusinessYearChosen": "Business Year not chosen"
       },
       "created": "A new Contact Info is created with identifier {{ param }}",
       "updated": "A Contact Info is updated with identifier {{ param }}",

@@ -2,29 +2,30 @@
   "donauStorageIncApp": {
     "resource": {
       "home": {
-        "title": "Resources",
-        "refreshListLabel": "Refresh list",
-        "createLabel": "Kreiraj novi Resource",
-        "createOrEditLabel": "Kreirajte ili izmenite Resource",
-        "notFound": "No Resources found"
+        "title": "Resursi",
+        "refreshListLabel": "Osveži listu",
+        "createLabel": "Kreiraj novi resurs",
+        "createOrEditLabel": "Kreirajte ili izmenite resurs",
+        "notFound": "Resursi nisu nađeni",
+        "noBusinessYearChosen": "Nije izabrana poslovna godina"
       },
-      "created": "Kreiran je novi Resource pod nazivom {{ param }}",
-      "updated": "Resource pod nazivom {{ param }} je ažuriran",
-      "deleted": "Resource pod nazivom {{ param }} je obrisan",
+      "created": "Kreiran je novi resurs pod nazivom {{ param }}",
+      "updated": "Resurs pod nazivom {{ param }} je ažuriran",
+      "deleted": "Resurs pod nazivom {{ param }} je obrisan",
       "delete": {
-        "question": "Da li ste sigurni da želite da obrišete Resource pod nazivom {{ id }}?"
+        "question": "Da li ste sigurni da želite da obrišete resurs pod nazivom {{ id }}?"
       },
       "detail": {
-        "title": "Resource"
+        "title": "Resurs"
       },
       "id": "ID",
-      "name": "Name",
-      "type": "Type",
-      "censusItems": "Census Items",
-      "transferItems": "Transfer Items",
-      "unit": "Unit",
-      "company": "Company",
-      "storageCards": "Storage Cards"
+      "name": "Naziv",
+      "type": "Tip",
+      "censusItems": "Stavke popisa",
+      "transferItems": "Stavke prometa",
+      "unit": "Jedinica mere",
+      "company": "Kompanija",
+      "storageCards": "Magacinske kartice"
     }
   }
 }

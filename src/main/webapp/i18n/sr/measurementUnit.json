@@ -2,24 +2,25 @@
   "donauStorageIncApp": {
     "measurementUnit": {
       "home": {
-        "title": "Measurement Units",
-        "refreshListLabel": "Refresh list",
-        "createLabel": "Kreiraj novi Measurement Unit",
-        "createOrEditLabel": "Kreirajte ili izmenite Measurement Unit",
-        "notFound": "No Measurement Units found"
+        "title": "Jedinice mere",
+        "refreshListLabel": "Osveži listu",
+        "createLabel": "Kreiraj novu jedinicu mere",
+        "createOrEditLabel": "Kreirajte ili izmenite jedinicu mere",
+        "notFound": "Jedinice mere nisu nađene",
+        "noBusinessYearChosen": "Nije izabrana poslovna godina"
       },
-      "created": "Kreiran je novi Measurement Unit pod nazivom {{ param }}",
-      "updated": "Measurement Unit pod nazivom {{ param }} je ažuriran",
-      "deleted": "Measurement Unit pod nazivom {{ param }} je obrisan",
+      "created": "Kreirana je nova jedinica mere pod nazivom {{ param }}",
+      "updated": "Jedinica mere pod nazivom {{ param }} je ažurirana",
+      "deleted": "Jedinica mere pod nazivom {{ param }} je obrisana",
       "delete": {
-        "question": "Da li ste sigurni da želite da obrišete Measurement Unit pod nazivom {{ id }}?"
+        "question": "Da li ste sigurni da želite da obrišete jedinicu mere pod nazivom {{ id }}?"
       },
       "detail": {
-        "title": "Measurement Unit"
+        "title": "Jedinica mere"
       },
       "id": "ID",
-      "name": "Name",
-      "abbreviation": "Abbreviation"
+      "name": "Naziv",
+      "abbreviation": "Skraćenica"
     }
   }
 }

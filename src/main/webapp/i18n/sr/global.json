@@ -7,26 +7,26 @@
       "jhipster-needle-menu-add-element": "JHipster will add additional menu entries here (do not translate!)",
       "entities": {
         "main": "Entiteti",
-        "country": "Country",
-        "city": "City",
-        "address": "Address",
-        "person": "Person",
-        "legalEntity": "Legal Entity",
-        "employee": "Employee",
-        "contactInfo": "Contact Info",
-        "businessPartner": "Business Partner",
-        "businessContact": "Business Contact",
-        "company": "Company",
-        "businessYear": "Business Year",
-        "resource": "Resource",
-        "measurementUnit": "Measurement Unit",
-        "storage": "Storage",
-        "transferDocument": "Transfer Document",
-        "transferDocumentItem": "Transfer Document Item",
-        "storageCard": "Storage Card",
-        "storageCardTraffic": "Storage Card Traffic",
-        "censusDocument": "Census Document",
-        "censusItem": "Census Item",
+        "country": "Država",
+        "city": "Grad",
+        "address": "Adresa",
+        "person": "Osoba",
+        "legalEntity": "Pravno lice",
+        "employee": "Radnik",
+        "contactInfo": "Kontakt informacije",
+        "businessPartner": "Poslovni partner",
+        "businessContact": "Odgovorno lice",
+        "company": "Kompanija",
+        "businessYear": "Poslovna godina",
+        "resource": "Resurs",
+        "measurementUnit": "Jedinica mere",
+        "storage": "Magacin",
+        "transferDocument": "Prometni dokument",
+        "transferDocumentItem": "Stavka prometnog dokumenta",
+        "storageCard": "Magacinska kartica",
+        "storageCardTraffic": "Promet magacinske kartice",
+        "censusDocument": "Popisni dokument",
+        "censusItem": "Stavka popisa",
         "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)"
       },
       "account": {
@@ -116,7 +116,8 @@
       "open": "Otvori",
       "save": "Sačuvaj",
       "view": "Pregled",
-      "show": "Show {{otherEntity}}"
+      "show": "Prikaži {{otherEntity}}",
+      "choose": "Choose"
     },
     "detail": {
       "field": "Polje",
@@ -138,13 +139,13 @@
       "datetimelocal": "Polje mora biti datum i vreme."
     },
     "filters": {
-      "set": "Following filters are set",
-      "clear": "Clear filter",
-      "clearAll": "Clear all filters"
+      "set": "Filteri su podešeni",
+      "clear": "Očisti filtere",
+      "clearAll": "Očisti sve filtere"
     }
   },
   "error": {
-    "internalServerError": "Internal server error",
+    "internalServerError": "Serverska greška",
     "server.not.reachable": "Server nije dostupan",
     "url.not.found": "Stranica nije pronađena",
     "NotNull": "Polje {{ fieldName }} ne može biti prazno!",
@@ -152,12 +153,12 @@
     "userexists": "Korisiničko ime već postoji!",
     "emailexists": "Email je već upotrebljen!",
     "idexists": "Novi {{ entityName }} ne može sadržati ID",
-    "idnull": "Invalid ID",
-    "idinvalid": "Invalid Id",
-    "idnotfound": "ID cannot be found",
+    "idnull": "Nepravilan ID",
+    "idinvalid": "Nepravilan Id",
+    "idnotfound": "ID se ne može naći",
     "file": {
-      "could.not.extract": "Could not extract file",
-      "not.image": "File was expected to be an image but was found to be \"{{ fileType }}\""
+      "could.not.extract": "Nemoguće preuzeti dokument",
+      "not.image": "Dokument je očekivano da bude slika, ali je \"{{ fileType }}\""
     }
   },
   "footer": "Ovo je vaše podnožje"

@@ -6,7 +6,8 @@
         "refreshListLabel": "Refresh list",
         "createLabel": "Create a new Transfer Document",
         "createOrEditLabel": "Create or edit a Transfer Document",
-        "notFound": "No Transfer Documents found"
+        "notFound": "No Transfer Documents found",
+        "noBusinessYearChosen": "Business Year not chosen"
       },
       "created": "A new Transfer Document is created with identifier {{ param }}",
       "updated": "A Transfer Document is updated with identifier {{ param }}",

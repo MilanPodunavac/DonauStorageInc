@@ -2,23 +2,23 @@
   "donauStorageIncApp": {
     "country": {
       "home": {
-        "title": "Countries",
-        "refreshListLabel": "Refresh list",
-        "createLabel": "Kreiraj novi Country",
-        "createOrEditLabel": "Kreirajte ili izmenite Country",
-        "notFound": "No Countries found"
+        "title": "Države",
+        "refreshListLabel": "Osveži listu",
+        "createLabel": "Kreiraj novu državu",
+        "createOrEditLabel": "Kreirajte ili izmenite državu",
+        "notFound": "Države nisu nađene"
       },
-      "created": "Kreiran je novi Country pod nazivom {{ param }}",
-      "updated": "Country pod nazivom {{ param }} je ažuriran",
-      "deleted": "Country pod nazivom {{ param }} je obrisan",
+      "created": "Kreirana je nova država pod nazivom {{ param }}",
+      "updated": "Država pod nazivom {{ param }} je ažurirana",
+      "deleted": "Država pod nazivom {{ param }} je obrisana",
       "delete": {
-        "question": "Da li ste sigurni da želite da obrišete Country pod nazivom {{ id }}?"
+        "question": "Da li ste sigurni da želite da obrišete državu pod nazivom {{ id }}?"
       },
       "detail": {
-        "title": "Country"
+        "title": "Država"
       },
       "id": "ID",
-      "name": "Name"
+      "name": "Naziv"
     }
   }
 }

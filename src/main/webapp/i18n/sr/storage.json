@@ -2,30 +2,31 @@
   "donauStorageIncApp": {
     "storage": {
       "home": {
-        "title": "Storages",
-        "refreshListLabel": "Refresh list",
-        "createLabel": "Kreiraj novi Storage",
-        "createOrEditLabel": "Kreirajte ili izmenite Storage",
-        "notFound": "No Storages found"
+        "title": "Magacini",
+        "refreshListLabel": "Osveži listu",
+        "createLabel": "Kreiraj novi magacin",
+        "createOrEditLabel": "Kreirajte ili izmenite magacin",
+        "notFound": "Magacini nisu nađeni",
+        "noBusinessYearChosen": "Nije izabrana poslovna godina"
       },
-      "created": "Kreiran je novi Storage pod nazivom {{ param }}",
-      "updated": "Storage pod nazivom {{ param }} je ažuriran",
-      "deleted": "Storage pod nazivom {{ param }} je obrisan",
+      "created": "Kreiran je novi magacin pod nazivom {{ param }}",
+      "updated": "Magacin pod nazivom {{ param }} je ažuriran",
+      "deleted": "Magacin pod nazivom {{ param }} je obrisan",
       "delete": {
-        "question": "Da li ste sigurni da želite da obrišete Storage pod nazivom {{ id }}?"
+        "question": "Da li ste sigurni da želite da obrišete magacin pod nazivom {{ id }}?"
       },
       "detail": {
-        "title": "Storage"
+        "title": "Magacin"
       },
       "id": "Id",
-      "code": "Code",
-      "name": "Name",
-      "address": "Address",
-      "storageCards": "Storage Cards",
-      "received": "Received",
-      "dispatched": "Dispatched",
-      "censusDocument": "Census Document",
-      "company": "Company",
+      "code": "Šifra",
+      "name": "Naziv",
+      "address": "Adresa",
+      "storageCards": "Magacinske kartice",
+      "received": "Primanja",
+      "dispatched": "Otpremanja",
+      "censusDocument": "Popisni dokument",
+      "company": "Kompanija",
       "help": {
         "id": "AutoNumber"
       }

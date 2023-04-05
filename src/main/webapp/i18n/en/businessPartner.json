@@ -6,7 +6,8 @@
         "refreshListLabel": "Refresh list",
         "createLabel": "Create a new Business Partner",
         "createOrEditLabel": "Create or edit a Business Partner",
-        "notFound": "No Business Partners found"
+        "notFound": "No Business Partners found",
+        "noBusinessYearChosen": "Business Year not chosen"
       },
       "created": "A new Business Partner is created with identifier {{ param }}",
       "updated": "A Business Partner is updated with identifier {{ param }}",

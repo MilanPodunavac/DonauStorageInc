@@ -2,31 +2,31 @@
   "donauStorageIncApp": {
     "address": {
       "home": {
-        "title": "Addresses",
-        "refreshListLabel": "Refresh list",
-        "createLabel": "Kreiraj novi Address",
-        "createOrEditLabel": "Kreirajte ili izmenite Address",
-        "notFound": "No Addresses found"
+        "title": "Adrese",
+        "refreshListLabel": "Osveži listu",
+        "createLabel": "Kreiraj novi adresu",
+        "createOrEditLabel": "Kreirajte ili izmenite adresu",
+        "notFound": "Adrese nisu nađene"
       },
-      "created": "Kreiran je novi Address pod nazivom {{ param }}",
-      "updated": "Address pod nazivom {{ param }} je ažuriran",
-      "deleted": "Address pod nazivom {{ param }} je obrisan",
+      "created": "Kreirana je nova adresa pod nazivom {{ param }}",
+      "updated": "Adresa pod nazivom {{ param }} je ažurirana",
+      "deleted": "Adresa pod nazivom {{ param }} je obrisana",
       "delete": {
-        "question": "Da li ste sigurni da želite da obrišete Address pod nazivom {{ id }}?"
+        "question": "Da li ste sigurni da želite da obrišete Adresu pod nazivom {{ id }}?"
       },
       "detail": {
-        "title": "Address"
+        "title": "Adresa"
       },
       "id": "ID",
-      "streetName": "Street Name",
-      "streetCode": "Street Code",
-      "postalCode": "Postal Code",
-      "city": "City",
-      "employee": "Employee",
-      "legalEntity": "Legal Entity",
-      "storage": "Storage",
+      "streetName": "Naziv ulice",
+      "streetCode": "Ulični broj",
+      "postalCode": "Poštanski broj",
+      "city": "Grad",
+      "employee": "Radnik",
+      "legalEntity": "Pravno lice",
+      "storage": "Magacin",
       "help": {
-        "postalCode": "Local postal code"
+        "postalCode": "Poštanski broj"
       }
     }
   }

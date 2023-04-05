@@ -2,28 +2,29 @@
   "donauStorageIncApp": {
     "businessYear": {
       "home": {
-        "title": "Business Years",
-        "refreshListLabel": "Refresh list",
-        "createLabel": "Kreiraj novi Business Year",
-        "createOrEditLabel": "Kreirajte ili izmenite Business Year",
-        "notFound": "No Business Years found"
+        "title": "Poslovne godine",
+        "refreshListLabel": "Osveži listu",
+        "createLabel": "Kreiraj novu poslovnu godinu",
+        "createOrEditLabel": "Kreirajte ili izmenite poslovnu godinu",
+        "notFound": "Poslovne godine nisu nađene",
+        "noBusinessYearChosen": "Nije izabrana poslovna godina"
       },
-      "created": "Kreiran je novi Business Year pod nazivom {{ param }}",
-      "updated": "Business Year pod nazivom {{ param }} je ažuriran",
-      "deleted": "Business Year pod nazivom {{ param }} je obrisan",
+      "created": "Kreirana je nova poslovna godina pod nazivom {{ param }}",
+      "updated": "Poslovna godina pod nazivom {{ param }} je ažurirana",
+      "deleted": "Poslovna godina pod nazivom {{ param }} je obrisana",
       "delete": {
-        "question": "Da li ste sigurni da želite da obrišete Business Year pod nazivom {{ id }}?"
+        "question": "Da li ste sigurni da želite da obrišete poslovnu godinu pod nazivom {{ id }}?"
       },
       "detail": {
-        "title": "Business Year"
+        "title": "Poslovna godina"
       },
       "id": "ID",
-      "yearCode": "Year Code",
-      "completed": "Completed",
-      "company": "Company",
-      "censusDocuments": "Census Documents",
-      "storageCards": "Storage Cards",
-      "transfers": "Transfers"
+      "yearCode": "Šifra",
+      "completed": "Kompletirana",
+      "company": "Kompanija",
+      "censusDocuments": "Popisni dokumenti",
+      "storageCards": "Magacinske kartice",
+      "transfers": "Transferi"
     }
   }
 }
