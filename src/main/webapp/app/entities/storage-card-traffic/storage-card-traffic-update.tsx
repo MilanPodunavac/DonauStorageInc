@@ -121,7 +121,7 @@ export const StorageCardTrafficUpdate = () => {
                 label={translate('donauStorageIncApp.storageCardTraffic.storageCard')}
                 type="select"
                 required
-                disabled={isNew && !isWithCard}
+                disabled={!isNew || isWithCard}
               >
                 <option value="" key="0" />
                 {storageCards
