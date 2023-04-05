@@ -141,7 +141,7 @@ export const CompanyUpdate = () => {
                   >
                     <FontAwesomeIcon icon="plus" />
                     &nbsp;
-                    <Translate contentKey="donauStorageIncApp.person.home.editLabel">Edit Legal Entity</Translate>
+                    <Translate contentKey="entity.action.edit">Edit Legal Entity</Translate>
                   </Link>
                 </div>
               )}
@@ -247,9 +247,6 @@ export const CompanyUpdate = () => {
                     : null}
                 </ValidatedField>
               )}
-              <FormText>
-                <Translate contentKey="entity.validation.required">This field is required.</Translate>
-              </FormText>
               <Button tag={Link} id="cancel-save" data-cy="entityCreateCancelButton" to="/company" replace color="info">
                 <FontAwesomeIcon icon="arrow-left" />
                 &nbsp;

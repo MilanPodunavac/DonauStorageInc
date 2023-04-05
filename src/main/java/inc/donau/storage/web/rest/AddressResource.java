@@ -52,7 +52,8 @@ public class AddressResource {
      * {@code POST  /addresses} : Create a new address.
      *
      * @param addressDTO the addressDTO to create.
-     * @return the {@link ResponseEntity} with status {@code 201 (Created)} and with body the new addressDTO, or with status {@code 400 (Bad Request)} if the address has already an ID.
+     * @return the {@link ResponseEntity} with status {@code 201 (Created)} and with body the new addressDTO,
+     * or with status {@code 400 (Bad Request)} if the address has already an ID.
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PostMapping("/addresses")

@@ -47,7 +47,7 @@ export const ChooseBusinessYear = () => {
       <Row className="justify-content-center">
         <Col md="8">
           <h2 id="donauStorageIncApp.transferDocument.home.createOrEditLabel" data-cy="TransferDocumentCreateUpdateHeading">
-            <Translate contentKey="donauStorageIncApp.transferDocument.home.createOrEditLabel">Create or edit a TransferDocument</Translate>
+            <Translate contentKey="donauStorageIncApp.businessYear.home.choose">Choose a Business Year</Translate>
           </h2>
         </Col>
       </Row>
@@ -74,9 +74,6 @@ export const ChooseBusinessYear = () => {
                     ))
                   : null}
               </ValidatedField>
-              <FormText>
-                <Translate contentKey="entity.validation.required">This field is required.</Translate>
-              </FormText>
 
               <Button color="primary" id="choose-year" data-cy="chooseBusinessYearButton" type="submit">
                 <FontAwesomeIcon icon="asterisk" />

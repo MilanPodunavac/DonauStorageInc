@@ -6,7 +6,8 @@
         "refreshListLabel": "Refresh list",
         "createLabel": "Create a new Business Year",
         "createOrEditLabel": "Create or edit a Business Year",
-        "notFound": "No Business Years found"
+        "notFound": "No Business Years found",
+        "choose": "Choose a Business Year"
       },
       "created": "A new Business Year is created with identifier {{ param }}",
       "updated": "A Business Year is updated with identifier {{ param }}",
