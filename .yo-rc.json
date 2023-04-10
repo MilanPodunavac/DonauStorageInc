@@ -64,7 +64,7 @@
     "skipClient": false,
     "skipFakeData": false,
     "skipUserManagement": false,
-    "testFrameworks": [],
+    "testFrameworks": ["cypress"],
     "websocket": false,
     "withAdminUi": true
   }
