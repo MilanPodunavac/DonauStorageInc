@@ -5,6 +5,7 @@ import { cleanEntity } from 'app/shared/util/entity-utils';
 import { IQueryParams, createEntitySlice, EntityState, serializeAxiosError } from 'app/shared/reducers/reducer.utils';
 import { IStorageCard, defaultValue } from 'app/shared/model/storage-card.model';
 import { useAppSelector } from 'app/config/store';
+import { log } from 'react-jhipster';
 
 const initialState: EntityState<IStorageCard> = {
   loading: false,
@@ -72,6 +73,20 @@ export const deleteEntity = createAsyncThunk(
     const requestUrl = `${apiUrl}/${id}`;
     const result = await axios.delete<IStorageCard>(requestUrl);
     thunkAPI.dispatch(getEntities({}));
+    return result;
+  },
+  { serializeError: serializeAxiosError }
+);
+
+export const generateAnalytics = createAsyncThunk(
+  'storageCard/analytics',
+  async (entity: IStorageCard, thunkAPI) => {
+    console.log(entity);
+    const result = await axios.put<string>(`${apiUrl}/${entity.id}/analytics`, cleanEntity(entity));
+    thunkAPI.dispatch(getEntities({}));
+
+    console.log(result);
+    window.open(result.data, '_blank');
     return result;
   },
   { serializeError: serializeAxiosError }

@@ -120,7 +120,8 @@
       "save": "Save",
       "view": "View",
       "show": "Show {{otherEntity}}",
-      "choose": "Choose"
+      "choose": "Choose",
+      "analytics": "Analytics"
     },
     "detail": {
       "field": "Field",

@@ -10,7 +10,7 @@ import { overridePaginationStateWithQueryParams } from 'app/shared/util/entity-u
 import { useAppDispatch, useAppSelector } from 'app/config/store';
 
 import { IStorageCard } from 'app/shared/model/storage-card.model';
-import { getEntities } from './storage-card.reducer';
+import { generateAnalytics, getEntities } from './storage-card.reducer';
 
 export const StorageCard = () => {
   const dispatch = useAppDispatch();
@@ -84,6 +84,8 @@ export const StorageCard = () => {
   const handleSyncList = () => {
     sortEntities();
   };
+
+  const genAnalytics = entity => dispatch(generateAnalytics(entity));
 
   return (
     <div>
@@ -186,6 +188,12 @@ export const StorageCard = () => {
                         <FontAwesomeIcon icon="trash" />{' '}
                         <span className="d-none d-md-inline">
                           <Translate contentKey="entity.action.delete">Delete</Translate>
+                        </span>
+                      </Button>
+                      <Button onClick={() => genAnalytics(storageCard)} color="primary" size="sm" data-cy="entityAnalyticsButton">
+                        <FontAwesomeIcon icon="pencil" />{' '}
+                        <span className="d-none d-md-inline">
+                          <Translate contentKey="entity.action.analytics">Analytics</Translate>
                         </span>
                       </Button>
                     </div>

@@ -117,7 +117,8 @@
       "save": "Sačuvaj",
       "view": "Pregled",
       "show": "Prikaži {{otherEntity}}",
-      "choose": "Choose"
+      "choose": "Izaberi",
+      "analytics": "Analitika"
     },
     "detail": {
       "field": "Polje",
